@@ -66,11 +66,11 @@ namespace ISO_9506_MMS_1 {
     struct GetDomainAttributes_Response;
     struct CreateProgramInvocation_Request;
     struct Start_Request;
-    struct CS_Start_Request_impl;
+    struct CS_Start_Request;
     struct StartCount;
     struct Stop_Request;
     struct Resume_Request;
-    struct CS_Resume_Request_impl;
+    struct CS_Resume_Request;
     struct Reset_Request;
     struct Kill_Request;
     struct GetProgramInvocationAttributes_Response;
@@ -135,18 +135,18 @@ namespace ISO_9506_MMS_1 {
     struct Output_Request;
     struct TriggerEvent_Request;
     struct EventNotification;
-    struct CS_EventNotification_impl;
+    struct CS_EventNotification;
     struct AcknowledgeEventNotification_Request;
     struct GetAlarmSummary_Request;
     struct GetAlarmSummary_Response;
     struct AlarmSummary;
-    struct EN_Additional_Detail_impl;
+    struct EN_Additional_Detail;
     struct GetAlarmEnrollmentSummary_Request;
     struct GetAlarmEnrollmentSummary_Response;
     struct AlarmEnrollmentSummary;
     struct AttachToEventCondition;
     struct DefineEventCondition_Request;
-    struct CS_DefineEventCondition_Request_impl;
+    struct CS_DefineEventCondition_Request;
     struct DeleteEventCondition_Request;
     struct GetEventConditionAttributes_Response;
     struct CS_GetEventConditionAttributes_Response;
@@ -157,7 +157,7 @@ namespace ISO_9506_MMS_1 {
     struct DeleteEventAction_Request;
     struct GetEventActionAttributes_Response;
     struct DefineEventEnrollment_Request;
-    struct CS_DefineEventEnrollment_Request_impl;
+    struct CS_DefineEventEnrollment_Request;
     struct DeleteEventEnrollment_Request;
     struct GetEventEnrollmentAttributes_Request;
     struct GetEventEnrollmentAttributes_Response;
@@ -188,22 +188,22 @@ namespace ISO_9506_MMS_1 {
     struct Write_Response_sequence_of;
 
 
-    typedef octetstring_type TimeOfDay; //    Sc (  [ 4  ...   6 ]   
-    typedef visiblestring_type Identifier;
+    typedef octet_string TimeOfDay; //    Sc (  [ 4  ...   6 ]   
+    typedef visible_string Identifier;
     typedef int8_t Integer8; //   Ic(  [ -128  ...   127 ]   
     typedef int16_t Integer16; //   Ic(  [ -32768  ...   32767 ]   
     typedef int32_t Integer32; //   Ic(  [ -2147483648  ...   2147483647 ]   
     typedef uint8_t Unsigned8; //   Ic(  [ 0  ...   127 ]   
     typedef uint16_t Unsigned16; //   Ic(  [ 0  ...   32767 ]   
     typedef uint32_t Unsigned32; //   Ic(  [ 0  ...   2147483647 ]   
-    typedef visiblestring_type MMSString;
-    typedef visiblestring_type MMS255String;
+    typedef visible_string MMSString;
+    typedef visible_string MMS255String;
     typedef null_type Conclude_RequestPDU;
     typedef null_type Conclude_ResponsePDU;
     typedef null_type DefineAccessControlList_Response;
     typedef null_type DeleteAccessControlList_Response;
     typedef uint8_t OperationState; //   Ic(  [ 0  ...   5 ]   
-    typedef bitstring_type ExtendedStatus; //    Sc (  [ 4 ]   
+    typedef bit_string ExtendedStatus; //    Sc (  [ 4 ]   
     typedef bool Status_Request;
     typedef null_type Identify_Request;
     typedef null_type Rename_Response;
@@ -238,7 +238,7 @@ namespace ISO_9506_MMS_1 {
     typedef null_type LoadUnitControlFromFile_Response;
     typedef null_type StoreUnitControlToFile_Response;
     typedef null_type DeleteUnitControl_Response;
-    typedef octetstring_type FloatingPoint;
+    typedef octet_string FloatingPoint;
     typedef uint8_t DataAccessError; //   Ic(  [ 0  ...   11 ]   
     typedef null_type DefineNamedVariable_Response;
     typedef null_type DefineNamedVariableList_Response;
@@ -262,7 +262,7 @@ namespace ISO_9506_MMS_1 {
     typedef null_type WriteJournal_Response;
     typedef null_type CreateJournal_Response;
     typedef null_type DeleteJournal_Response;
-    typedef std::vector< graphicstring_type > FileName;
+    typedef sequence_of< graphic_string > FileName;
 
     typedef ServiceError Initiate_ErrorPDU;
     typedef ServiceError Conclude_ErrorPDU;
@@ -280,8 +280,6 @@ namespace ISO_9506_MMS_1 {
     typedef Identifier DeleteDomain_Request;
     typedef Identifier GetDomainAttributes_Request;
     typedef Identifier DeleteProgramInvocation_Request;
-    ITU_T_EXPLICIT_TYPEDEF(CS_Start_Request, CS_Start_Request_impl, 0, CONTEXT_CLASS);
-    ITU_T_EXPLICIT_TYPEDEF(CS_Resume_Request, CS_Resume_Request_impl, 0, CONTEXT_CLASS);
     typedef Identifier GetProgramInvocationAttributes_Request;
     typedef Identifier InitiateUnitControlLoad_Request;
     typedef Identifier UnitControlLoadSegment_Request;
@@ -297,9 +295,6 @@ namespace ISO_9506_MMS_1 {
     typedef ObjectName DeleteSemaphore_Request;
     typedef ObjectName ReportSemaphoreStatus_Request;
     typedef MMSString Input_Response;
-    ITU_T_EXPLICIT_TYPEDEF(CS_EventNotification, CS_EventNotification_impl, 0, CONTEXT_CLASS);
-    ITU_T_EXPLICIT_TYPEDEF(EN_Additional_Detail, EN_Additional_Detail_impl, 0, CONTEXT_CLASS);
-    ITU_T_EXPLICIT_TYPEDEF(CS_DefineEventCondition_Request, CS_DefineEventCondition_Request_impl, 0, CONTEXT_CLASS);
     typedef Unsigned32 DeleteEventCondition_Response; //   Ic(  [ 0  ...   2147483647 ]   
     typedef ObjectName GetEventConditionAttributes_Request;
     typedef ObjectName ReportEventConditionStatus_Request;
@@ -308,7 +303,6 @@ namespace ISO_9506_MMS_1 {
     typedef ObjectName ReportEventActionStatus_Request;
     typedef Unsigned32 ReportEventActionStatus_Response; //   Ic(  [ 0  ...   2147483647 ]   
     typedef ObjectName DefineEventEnrollment_Error;
-    ITU_T_EXPLICIT_TYPEDEF(CS_DefineEventEnrollment_Request, CS_DefineEventEnrollment_Request_impl, 0, CONTEXT_CLASS);
     typedef Unsigned32 DeleteEventEnrollment_Response; //   Ic(  [ 0  ...   2147483647 ]   
     typedef ObjectName ReportEventEnrollmentStatus_Request;
     typedef ObjectName DefineEventConditionList_Error;
@@ -317,8 +311,14 @@ namespace ISO_9506_MMS_1 {
     typedef ObjectName GetEventConditionListAttributes_Request;
     typedef Unsigned32 InitializeJournal_Response; //   Ic(  [ 0  ...   2147483647 ]   
     typedef ObjectName ReportJournalStatus_Request;
-    typedef std::vector< AlternateAccess_sequence_of > AlternateAccess;
-    typedef std::vector< Write_Response_sequence_of > Write_Response;
+    typedef sequence_of< AlternateAccess_sequence_of > AlternateAccess;
+    typedef sequence_of< Write_Response_sequence_of > Write_Response;
+    ITU_T_PREFIXED_DECLARE(CS_EventNotification, ITU_T_ARRAY(prefixed_type(0, CONTEXT_CLASS)), true); //  initial =explicit
+    ITU_T_PREFIXED_DECLARE(CS_DefineEventEnrollment_Request, ITU_T_ARRAY(prefixed_type(0, CONTEXT_CLASS)), true); //  initial =explicit
+    ITU_T_PREFIXED_DECLARE(EN_Additional_Detail, ITU_T_ARRAY(prefixed_type(0, CONTEXT_CLASS)), true); //  initial =explicit
+    ITU_T_PREFIXED_DECLARE(CS_DefineEventCondition_Request, ITU_T_ARRAY(prefixed_type(0, CONTEXT_CLASS)), true); //  initial =explicit
+    ITU_T_PREFIXED_DECLARE(CS_Start_Request, ITU_T_ARRAY(prefixed_type(0, CONTEXT_CLASS)), true); //  initial =explicit
+    ITU_T_PREFIXED_DECLARE(CS_Resume_Request, ITU_T_ARRAY(prefixed_type(0, CONTEXT_CLASS)), true); //  initial =explicit
 
     const integer_type maxIdentifier = 32;
 
@@ -424,7 +424,7 @@ namespace ISO_9506_MMS_1 {
 
     struct Confirmed_RequestPDU {
 
-        typedef std::vector< MMS_Object_Module_1::Modifier > ListOfModifiers_type;
+        typedef sequence_of< MMS_Object_Module_1::Modifier > ListOfModifiers_type;
 
         Confirmed_RequestPDU();
 
@@ -434,7 +434,7 @@ namespace ISO_9506_MMS_1 {
         Confirmed_RequestPDU(shared_ptr< Unsigned32> arg__invokeID,
                 shared_ptr< ListOfModifiers_type> arg__listOfModifiers,
                 shared_ptr< ConfirmedServiceRequest> arg__service,
-                shared_ptr< Request_Detail> arg__service_ext = boost::shared_ptr< Request_Detail>());
+                shared_ptr< Request_Detail> arg__service_ext = shared_ptr< Request_Detail>());
 
         ITU_T_HOLDERH_DECL(invokeID, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_OPTIONAL_DECL(listOfModifiers, ListOfModifiers_type);
@@ -735,7 +735,7 @@ namespace ISO_9506_MMS_1 {
         Unconfirmed_PDU(const UnconfirmedService& arg__service);
 
         Unconfirmed_PDU(shared_ptr< UnconfirmedService> arg__service,
-                shared_ptr< Unconfirmed_Detail> arg__service_ext = boost::shared_ptr< Unconfirmed_Detail>());
+                shared_ptr< Unconfirmed_Detail> arg__service_ext = shared_ptr< Unconfirmed_Detail>());
 
         ITU_T_HOLDERH_DECL(service, UnconfirmedService);
         ITU_T_OPTIONAL_DECL(service_ext, Unconfirmed_Detail);
@@ -796,7 +796,7 @@ namespace ISO_9506_MMS_1 {
 
         Confirmed_ResponsePDU(shared_ptr< Unsigned32> arg__invokeID,
                 shared_ptr< ConfirmedServiceResponse> arg__service,
-                shared_ptr< Response_Detail> arg__service_ext = boost::shared_ptr< Response_Detail>());
+                shared_ptr< Response_Detail> arg__service_ext = shared_ptr< Response_Detail>());
 
         ITU_T_HOLDERH_DECL(invokeID, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_HOLDERH_DECL(service, ConfirmedServiceResponse);
@@ -1261,12 +1261,12 @@ namespace ISO_9506_MMS_1 {
 
         ServiceError(shared_ptr< ErrorClass_type> arg__errorClass,
                 shared_ptr< integer_type> arg__additionalCode,
-                shared_ptr< visiblestring_type> arg__additionalDescription,
+                shared_ptr< visible_string> arg__additionalDescription,
                 shared_ptr< ServiceSpecificInfo_type> arg__serviceSpecificInfo);
 
         ITU_T_HOLDERH_DECL(errorClass, ErrorClass_type);
         ITU_T_OPTIONAL_DECL(additionalCode, integer_type);
-        ITU_T_OPTIONAL_DECL(additionalDescription, visiblestring_type);
+        ITU_T_OPTIONAL_DECL(additionalDescription, visible_string);
         ITU_T_OPTIONAL_DECL(serviceSpecificInfo, ServiceSpecificInfo_type);
 
         ITU_T_ARCHIVE_FUNC;
@@ -1397,16 +1397,16 @@ namespace ISO_9506_MMS_1 {
             InitRequestDetail_type(shared_ptr< Integer16> arg__proposedVersionNumber,
                     shared_ptr< MMS_Object_Module_1::ParameterSupportOptions> arg__proposedParameterCBB,
                     shared_ptr< MMS_Object_Module_1::ServiceSupportOptions> arg__servicesSupportedCalling,
-                    shared_ptr< MMS_Object_Module_1::AdditionalSupportOptions> arg__additionalSupportedCalling = boost::shared_ptr< MMS_Object_Module_1::AdditionalSupportOptions>(),
-                    shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions> arg__additionalCbbSupportedCalling = boost::shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions>(),
-                    shared_ptr< visiblestring_type> arg__privilegeClassIdentityCalling = boost::shared_ptr< visiblestring_type>());
+                    shared_ptr< MMS_Object_Module_1::AdditionalSupportOptions> arg__additionalSupportedCalling = shared_ptr< MMS_Object_Module_1::AdditionalSupportOptions>(),
+                    shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions> arg__additionalCbbSupportedCalling = shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions>(),
+                    shared_ptr< visible_string> arg__privilegeClassIdentityCalling = shared_ptr< visible_string>());
 
             ITU_T_HOLDERH_DECL(proposedVersionNumber, Integer16); //   Ic(  [ -32768  ...   32767 ]   
             ITU_T_HOLDERH_DECL(proposedParameterCBB, MMS_Object_Module_1::ParameterSupportOptions); //    Sc (  [ 18 ]   
             ITU_T_HOLDERH_DECL(servicesSupportedCalling, MMS_Object_Module_1::ServiceSupportOptions); //    Sc (  [ 93 ]   
             ITU_T_OPTIONAL_DECL(additionalSupportedCalling, MMS_Object_Module_1::AdditionalSupportOptions); //    Sc (  [ 23 ]   
             ITU_T_OPTIONAL_DECL(additionalCbbSupportedCalling, MMS_Object_Module_1::AdditionalCBBOptions); //    Sc (  [ 3 ]   
-            ITU_T_OPTIONAL_DECL(privilegeClassIdentityCalling, visiblestring_type);
+            ITU_T_OPTIONAL_DECL(privilegeClassIdentityCalling, visible_string);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -1450,16 +1450,16 @@ namespace ISO_9506_MMS_1 {
             InitResponseDetail_type(shared_ptr< Integer16> arg__negotiatedVersionNumber,
                     shared_ptr< MMS_Object_Module_1::ParameterSupportOptions> arg__negotiatedParameterCBB,
                     shared_ptr< MMS_Object_Module_1::ServiceSupportOptions> arg__servicesSupportedCalled,
-                    shared_ptr< MMS_Object_Module_1::AdditionalSupportOptions> arg__additionalSupportedCalled = boost::shared_ptr< MMS_Object_Module_1::AdditionalSupportOptions>(),
-                    shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions> arg__additionalCbbSupportedCalled = boost::shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions>(),
-                    shared_ptr< visiblestring_type> arg__privilegeClassIdentityCalled = boost::shared_ptr< visiblestring_type>());
+                    shared_ptr< MMS_Object_Module_1::AdditionalSupportOptions> arg__additionalSupportedCalled = shared_ptr< MMS_Object_Module_1::AdditionalSupportOptions>(),
+                    shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions> arg__additionalCbbSupportedCalled = shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions>(),
+                    shared_ptr< visible_string> arg__privilegeClassIdentityCalled = shared_ptr< visible_string>());
 
             ITU_T_HOLDERH_DECL(negotiatedVersionNumber, Integer16); //   Ic(  [ -32768  ...   32767 ]   
             ITU_T_HOLDERH_DECL(negotiatedParameterCBB, MMS_Object_Module_1::ParameterSupportOptions); //    Sc (  [ 18 ]   
             ITU_T_HOLDERH_DECL(servicesSupportedCalled, MMS_Object_Module_1::ServiceSupportOptions); //    Sc (  [ 93 ]   
             ITU_T_OPTIONAL_DECL(additionalSupportedCalled, MMS_Object_Module_1::AdditionalSupportOptions); //    Sc (  [ 23 ]   
             ITU_T_OPTIONAL_DECL(additionalCbbSupportedCalled, MMS_Object_Module_1::AdditionalCBBOptions); //    Sc (  [ 3 ]   
-            ITU_T_OPTIONAL_DECL(privilegeClassIdentityCalled, visiblestring_type);
+            ITU_T_OPTIONAL_DECL(privilegeClassIdentityCalled, visible_string);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -1735,7 +1735,7 @@ namespace ISO_9506_MMS_1 {
 
 
 
-        typedef std::vector< References_type_sequence_of > References_type;
+        typedef sequence_of< References_type_sequence_of > References_type;
 
 
         GetAccessControlListAttributes_Response();
@@ -1784,7 +1784,7 @@ namespace ISO_9506_MMS_1 {
 
     struct ReportAccessControlledObjects_Response {
 
-        typedef std::vector< ObjectName > ListOfNames_type;
+        typedef sequence_of< ObjectName > ListOfNames_type;
 
         static const bool moreFollows__default;
 
@@ -1836,7 +1836,7 @@ namespace ISO_9506_MMS_1 {
 
 
 
-                    typedef std::vector< ObjectName > Specific_type;
+                    typedef sequence_of< ObjectName > Specific_type;
 
 
                     ITU_T_CHOICE_CTORS(ObjectScope_type);
@@ -1919,11 +1919,11 @@ namespace ISO_9506_MMS_1 {
 
         StatusResponse(shared_ptr< uint8_t> arg__vmdLogicalStatus,
                 shared_ptr< uint8_t> arg__vmdPhysicalStatus,
-                shared_ptr< bitstring_type> arg__localDetail);
+                shared_ptr< bit_string> arg__localDetail);
 
         ITU_T_HOLDERH_DECL(vmdLogicalStatus, uint8_t); //   Ic(  [ 0  ...   3 ]   
         ITU_T_HOLDERH_DECL(vmdPhysicalStatus, uint8_t); //   Ic(  [ 0  ...   3 ]   
-        ITU_T_OPTIONAL_DECL(localDetail, bitstring_type); //    Sc (  [ 0  ...   128 ]   
+        ITU_T_OPTIONAL_DECL(localDetail, bit_string); //    Sc (  [ 0  ...   128 ]   
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -2001,10 +2001,10 @@ namespace ISO_9506_MMS_1 {
     const OperationState operationState_motion_paused = 4;
     const OperationState operationState_manualInterventionRequired = 5;
 
-    const ExtendedStatus extendedStatus_safetyInterlocksViolated = bitstring_type(true, 0);
-    const ExtendedStatus extendedStatus_anyPhysicalResourcePowerOn = bitstring_type(true, 1);
-    const ExtendedStatus extendedStatus_allPhysicalResourcesCalibrated = bitstring_type(true, 2);
-    const ExtendedStatus extendedStatus_localControl = bitstring_type(true, 3);
+    const ExtendedStatus extendedStatus_safetyInterlocksViolated = bit_string(true, 0);
+    const ExtendedStatus extendedStatus_anyPhysicalResourcePowerOn = bit_string(true, 1);
+    const ExtendedStatus extendedStatus_allPhysicalResourcesCalibrated = bit_string(true, 2);
+    const ExtendedStatus extendedStatus_localControl = bit_string(true, 3);
 
     // sequence GetNameList-Request
 
@@ -2053,7 +2053,7 @@ namespace ISO_9506_MMS_1 {
 
     struct GetNameList_Response {
 
-        typedef std::vector< Identifier > ListOfIdentifier_type;
+        typedef sequence_of< Identifier > ListOfIdentifier_type;
 
         static const bool moreFollows__default;
 
@@ -2074,7 +2074,7 @@ namespace ISO_9506_MMS_1 {
 
     struct Identify_Response {
 
-        typedef std::vector< oid_type > ListOfAbstractSyntaxes_type;
+        typedef sequence_of< oid_type > ListOfAbstractSyntaxes_type;
 
 
         Identify_Response();
@@ -2130,7 +2130,7 @@ namespace ISO_9506_MMS_1 {
 
     struct GetCapabilityList_Response {
 
-        typedef std::vector< MMSString > ListOfCapabilities_type;
+        typedef sequence_of< MMSString > ListOfCapabilities_type;
 
         static const bool moreFollows__default;
 
@@ -2151,7 +2151,7 @@ namespace ISO_9506_MMS_1 {
 
     struct InitiateDownloadSequence_Request {
 
-        typedef std::vector< MMSString > ListOfCapabilities_type;
+        typedef sequence_of< MMSString > ListOfCapabilities_type;
 
 
         InitiateDownloadSequence_Request();
@@ -2201,9 +2201,9 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_CHOICE_CTORS(LoadData);
 
-        ITU_T_CHOICES_DECL(non_coded, octetstring_type, LoadData_non_coded); // primitive
+        ITU_T_CHOICES_DECL(non_coded, octet_string, LoadData_non_coded); // primitive
         ITU_T_CHOICES_DECL(coded, external_type, LoadData_coded); // primitive
-        ITU_T_CHOICES_DECL(embedded, embeded_type, LoadData_embedded); // primitive
+        ITU_T_CHOICES_DECL(embedded, embeded_pdv, LoadData_embedded); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -2229,7 +2229,7 @@ namespace ISO_9506_MMS_1 {
 
     struct InitiateUploadSequence_Response {
 
-        typedef std::vector< MMSString > ListOfCapabilities_type;
+        typedef sequence_of< MMSString > ListOfCapabilities_type;
 
 
         InitiateUploadSequence_Response();
@@ -2266,7 +2266,7 @@ namespace ISO_9506_MMS_1 {
 
     struct RequestDomainDownload_Request {
 
-        typedef std::vector< MMSString > ListOfCapabilities_type;
+        typedef sequence_of< MMSString > ListOfCapabilities_type;
 
 
         RequestDomainDownload_Request();
@@ -2307,7 +2307,7 @@ namespace ISO_9506_MMS_1 {
 
     struct LoadDomainContent_Request {
 
-        typedef std::vector< MMSString > ListOfCapabilities_type;
+        typedef sequence_of< MMSString > ListOfCapabilities_type;
 
 
         LoadDomainContent_Request();
@@ -2355,8 +2355,8 @@ namespace ISO_9506_MMS_1 {
 
     struct GetDomainAttributes_Response {
 
-        typedef std::vector< MMSString > ListOfCapabilities_type;
-        typedef std::vector< Identifier > ListOfProgramInvocations_type;
+        typedef sequence_of< MMSString > ListOfCapabilities_type;
+        typedef sequence_of< Identifier > ListOfProgramInvocations_type;
 
 
         GetDomainAttributes_Response();
@@ -2391,7 +2391,7 @@ namespace ISO_9506_MMS_1 {
 
     struct CreateProgramInvocation_Request {
 
-        typedef std::vector< Identifier > ListOfDomainNames_type;
+        typedef sequence_of< Identifier > ListOfDomainNames_type;
 
         static const bool reusable__default;
 
@@ -2438,7 +2438,7 @@ namespace ISO_9506_MMS_1 {
 
             ITU_T_CHOICES_DECL(simpleString, MMSString, ExecutionArgument_type_simpleString); // primitive
             ITU_T_CHOICES_DECL(encodedString, external_type, ExecutionArgument_type_encodedString); // primitive
-            ITU_T_CHOICES_DECL(embeddedString, embeded_type, ExecutionArgument_type_embeddedString); // primitive
+            ITU_T_CHOICES_DECL(embeddedString, embeded_pdv, ExecutionArgument_type_embeddedString); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -2459,14 +2459,14 @@ namespace ISO_9506_MMS_1 {
 
     // choice CS-Start-Request
 
-    enum CS_Start_Request_impl_enum {
+    enum CS_Start_Request_enum {
 
-        CS_Start_Request_impl_null = 0,
-        CS_Start_Request_impl_normal,
-        CS_Start_Request_impl_controlling,
+        CS_Start_Request_null = 0,
+        CS_Start_Request_normal,
+        CS_Start_Request_controlling,
     };
 
-    struct CS_Start_Request_impl : public ITU_T_CHOICE(CS_Start_Request_impl_enum) {
+    struct CS_Start_Request : public ITU_T_CHOICE(CS_Start_Request_enum) {
 
 
         struct Controlling_type;
@@ -2475,20 +2475,20 @@ namespace ISO_9506_MMS_1 {
 
             Controlling_type();
 
-            Controlling_type(shared_ptr< visiblestring_type> arg__startLocation,
+            Controlling_type(shared_ptr< visible_string> arg__startLocation,
                     shared_ptr< StartCount> arg__startCount);
 
-            ITU_T_OPTIONAL_DECL(startLocation, visiblestring_type);
+            ITU_T_OPTIONAL_DECL(startLocation, visible_string);
             ITU_T_OPTIONAL_DECL(startCount, StartCount);
 
             ITU_T_ARCHIVE_FUNC;
         };
 
 
-        ITU_T_CHOICE_CTORS(CS_Start_Request_impl);
+        ITU_T_CHOICE_CTORS(CS_Start_Request);
 
-        ITU_T_CHOICES_DECL(normal, null_type, CS_Start_Request_impl_normal); // primitive
-        ITU_T_CHOICEC_DECL(controlling, Controlling_type, CS_Start_Request_impl_controlling);
+        ITU_T_CHOICES_DECL(normal, null_type, CS_Start_Request_normal); // primitive
+        ITU_T_CHOICEC_DECL(controlling, Controlling_type, CS_Start_Request_controlling);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -2549,7 +2549,7 @@ namespace ISO_9506_MMS_1 {
 
             ITU_T_CHOICES_DECL(simpleString, MMSString, ExecutionArgument_type_simpleString); // primitive
             ITU_T_CHOICES_DECL(encodedString, external_type, ExecutionArgument_type_encodedString); // primitive
-            ITU_T_CHOICES_DECL(enmbeddedString, embeded_type, ExecutionArgument_type_enmbeddedString); // primitive
+            ITU_T_CHOICES_DECL(enmbeddedString, embeded_pdv, ExecutionArgument_type_enmbeddedString); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -2570,14 +2570,14 @@ namespace ISO_9506_MMS_1 {
 
     // choice CS-Resume-Request
 
-    enum CS_Resume_Request_impl_enum {
+    enum CS_Resume_Request_enum {
 
-        CS_Resume_Request_impl_null = 0,
-        CS_Resume_Request_impl_normal,
-        CS_Resume_Request_impl_controlling,
+        CS_Resume_Request_null = 0,
+        CS_Resume_Request_normal,
+        CS_Resume_Request_controlling,
     };
 
-    struct CS_Resume_Request_impl : public ITU_T_CHOICE(CS_Resume_Request_impl_enum) {
+    struct CS_Resume_Request : public ITU_T_CHOICE(CS_Resume_Request_enum) {
 
 
         struct Controlling_type;
@@ -2615,10 +2615,10 @@ namespace ISO_9506_MMS_1 {
         };
 
 
-        ITU_T_CHOICE_CTORS(CS_Resume_Request_impl);
+        ITU_T_CHOICE_CTORS(CS_Resume_Request);
 
-        ITU_T_CHOICES_DECL(normal, null_type, CS_Resume_Request_impl_normal); // primitive
-        ITU_T_CHOICEC_DECL(controlling, Controlling_type, CS_Resume_Request_impl_controlling);
+        ITU_T_CHOICES_DECL(normal, null_type, CS_Resume_Request_normal); // primitive
+        ITU_T_CHOICEC_DECL(controlling, Controlling_type, CS_Resume_Request_controlling);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -2670,14 +2670,14 @@ namespace ISO_9506_MMS_1 {
 
             ITU_T_CHOICES_DECL(simpleString, MMSString, ExecutionArgument_type_simpleString); // primitive
             ITU_T_CHOICES_DECL(encodedString, external_type, ExecutionArgument_type_encodedString); // primitive
-            ITU_T_CHOICES_DECL(enmbeddedString, embeded_type, ExecutionArgument_type_enmbeddedString); // primitive
+            ITU_T_CHOICES_DECL(enmbeddedString, embeded_pdv, ExecutionArgument_type_enmbeddedString); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
 
 
 
-        typedef std::vector< Identifier > ListOfDomainNames_type;
+        typedef sequence_of< Identifier > ListOfDomainNames_type;
 
 
         GetProgramInvocationAttributes_Response();
@@ -2754,7 +2754,7 @@ namespace ISO_9506_MMS_1 {
 
 
 
-                typedef std::vector< Identifier > ControlledPI_type;
+                typedef sequence_of< Identifier > ControlledPI_type;
 
 
                 Controlling_type();
@@ -2763,11 +2763,11 @@ namespace ISO_9506_MMS_1 {
                         const RunningMode_type& arg__runningMode);
 
                 Controlling_type(shared_ptr< ControlledPI_type> arg__controlledPI,
-                        shared_ptr< visiblestring_type> arg__programLocation,
+                        shared_ptr< visible_string> arg__programLocation,
                         shared_ptr< RunningMode_type> arg__runningMode);
 
                 ITU_T_HOLDERH_DECL(controlledPI, ControlledPI_type);
-                ITU_T_OPTIONAL_DECL(programLocation, visiblestring_type);
+                ITU_T_OPTIONAL_DECL(programLocation, visible_string);
                 ITU_T_HOLDERH_DECL(runningMode, RunningMode_type);
 
                 ITU_T_ARCHIVE_FUNC;
@@ -2817,7 +2817,7 @@ namespace ISO_9506_MMS_1 {
 
     struct Select_Request {
 
-        typedef std::vector< Identifier > Controlled_type;
+        typedef sequence_of< Identifier > Controlled_type;
 
 
         Select_Request();
@@ -2852,8 +2852,8 @@ namespace ISO_9506_MMS_1 {
 
     struct ReconfigureProgramInvocation_Request {
 
-        typedef std::vector< Identifier > DomainsToAdd_type;
-        typedef std::vector< Identifier > DomainsToRemove_type;
+        typedef sequence_of< Identifier > DomainsToAdd_type;
+        typedef sequence_of< Identifier > DomainsToRemove_type;
 
 
         ReconfigureProgramInvocation_Request();
@@ -2895,7 +2895,7 @@ namespace ISO_9506_MMS_1 {
 
         struct BeginDomainDef_type {
 
-            typedef std::vector< MMSString > Capabilities_type;
+            typedef sequence_of< MMSString > Capabilities_type;
 
 
             BeginDomainDef_type();
@@ -2932,7 +2932,7 @@ namespace ISO_9506_MMS_1 {
 
         struct PiDefinition_type {
 
-            typedef std::vector< Identifier > ListOfDomains_type;
+            typedef sequence_of< Identifier > ListOfDomains_type;
 
             static const bool reusable__default;
 
@@ -2991,7 +2991,7 @@ namespace ISO_9506_MMS_1 {
 
     struct UnitControlLoadSegment_Response {
 
-        typedef std::vector< ControlElement > ControlElements_type;
+        typedef sequence_of< ControlElement > ControlElements_type;
 
         static const bool moreFollows__default;
 
@@ -3076,7 +3076,7 @@ namespace ISO_9506_MMS_1 {
 
 
 
-        typedef std::vector< ControlElement > ControlElements_type;
+        typedef sequence_of< ControlElement > ControlElements_type;
 
 
         UnitControlUpload_Response();
@@ -3113,7 +3113,7 @@ namespace ISO_9506_MMS_1 {
 
             ITU_T_CHOICES_DECL(simpleString, MMSString, ExecutionArgument_type_simpleString); // primitive
             ITU_T_CHOICES_DECL(encodedString, external_type, ExecutionArgument_type_encodedString); // primitive
-            ITU_T_CHOICES_DECL(enmbeddedString, embeded_type, ExecutionArgument_type_enmbeddedString); // primitive
+            ITU_T_CHOICES_DECL(enmbeddedString, embeded_pdv, ExecutionArgument_type_enmbeddedString); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -3166,8 +3166,8 @@ namespace ISO_9506_MMS_1 {
 
     struct CreateUnitControl_Request {
 
-        typedef std::vector< Identifier > Domains_type;
-        typedef std::vector< Identifier > ProgramInvocations_type;
+        typedef sequence_of< Identifier > Domains_type;
+        typedef sequence_of< Identifier > ProgramInvocations_type;
 
 
         CreateUnitControl_Request();
@@ -3187,8 +3187,8 @@ namespace ISO_9506_MMS_1 {
 
     struct AddToUnitControl_Request {
 
-        typedef std::vector< Identifier > Domains_type;
-        typedef std::vector< Identifier > ProgramInvocations_type;
+        typedef sequence_of< Identifier > Domains_type;
+        typedef sequence_of< Identifier > ProgramInvocations_type;
 
 
         AddToUnitControl_Request();
@@ -3208,8 +3208,8 @@ namespace ISO_9506_MMS_1 {
 
     struct RemoveFromUnitControl_Request {
 
-        typedef std::vector< Identifier > Domains_type;
-        typedef std::vector< Identifier > ProgramInvocations_type;
+        typedef sequence_of< Identifier > Domains_type;
+        typedef sequence_of< Identifier > ProgramInvocations_type;
 
 
         RemoveFromUnitControl_Request();
@@ -3229,8 +3229,8 @@ namespace ISO_9506_MMS_1 {
 
     struct GetUnitControlAttributes_Response {
 
-        typedef std::vector< Identifier > Domains_type;
-        typedef std::vector< Identifier > ProgramInvocations_type;
+        typedef sequence_of< Identifier > Domains_type;
+        typedef sequence_of< Identifier > ProgramInvocations_type;
 
 
         GetUnitControlAttributes_Response();
@@ -3542,8 +3542,8 @@ namespace ISO_9506_MMS_1 {
 
 
 
-        typedef std::vector< Data > Array_type;
-        typedef std::vector< Data > Structure_type;
+        typedef sequence_of< Data > Array_type;
+        typedef sequence_of< Data > Structure_type;
 
 
         ITU_T_CHOICE_CTORS(Data);
@@ -3551,16 +3551,16 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICEC_DECL(array, Array_type, Data_array);
         ITU_T_CHOICEC_DECL(structure, Structure_type, Data_structure);
         ITU_T_CHOICES_DECL(boolean, bool, Data_boolean); // primitive
-        ITU_T_CHOICES_DECL(bit_string, bitstring_type, Data_bit_string); // primitive
+        ITU_T_CHOICES_DECL(bit_string, bit_string, Data_bit_string); // primitive
         ITU_T_CHOICES_DECL(integer, integer_type, Data_integer); // primitive
         ITU_T_CHOICES_DECL(unsignedV, integer_type, Data_unsignedV); // primitive
         ITU_T_CHOICES_DECL(floating_point, FloatingPoint, Data_floating_point); // primitive
-        ITU_T_CHOICES_DECL(octet_string, octetstring_type, Data_octet_string); // primitive
-        ITU_T_CHOICES_DECL(visible_string, visiblestring_type, Data_visible_string); // primitive
-        ITU_T_CHOICES_DECL(generalized_time, gentime_type, Data_generalized_time); // primitive
+        ITU_T_CHOICES_DECL(octet_string, octet_string, Data_octet_string); // primitive
+        ITU_T_CHOICES_DECL(visible_string, visible_string, Data_visible_string); // primitive
+        ITU_T_CHOICES_DECL(generalized_time, gentime, Data_generalized_time); // primitive
         ITU_T_CHOICES_DECL(binary_time, TimeOfDay, Data_binary_time); // primitive  //    Sc (  [ 4  ...   6 ]   
         ITU_T_CHOICES_DECL(bcd, integer_type, Data_bcd); // primitive
-        ITU_T_CHOICES_DECL(booleanArray, bitstring_type, Data_booleanArray); // primitive
+        ITU_T_CHOICES_DECL(booleanArray, bit_string, Data_booleanArray); // primitive
         ITU_T_CHOICES_DECL(objId, oid_type, Data_objId); // primitive
         ITU_T_CHOICES_DECL(mMSString, MMSString, Data_mMSString); // primitive
 
@@ -3611,7 +3611,7 @@ namespace ISO_9506_MMS_1 {
 
 
 
-        typedef std::vector< ListOfVariable_type_sequence_of > ListOfVariable_type;
+        typedef sequence_of< ListOfVariable_type_sequence_of > ListOfVariable_type;
 
 
         ITU_T_CHOICE_CTORS(VariableAccessSpecification);
@@ -3687,7 +3687,7 @@ namespace ISO_9506_MMS_1 {
 
     struct Read_Response {
 
-        typedef std::vector< AccessResult > ListOfAccessResult_type;
+        typedef sequence_of< AccessResult > ListOfAccessResult_type;
 
 
         Read_Response();
@@ -3707,7 +3707,7 @@ namespace ISO_9506_MMS_1 {
 
     struct Write_Request {
 
-        typedef std::vector< Data > ListOfData_type;
+        typedef sequence_of< Data > ListOfData_type;
 
 
         Write_Request();
@@ -3743,7 +3743,7 @@ namespace ISO_9506_MMS_1 {
 
     struct InformationReport {
 
-        typedef std::vector< AccessResult > ListOfAccessResult_type;
+        typedef sequence_of< AccessResult > ListOfAccessResult_type;
 
 
         InformationReport();
@@ -3790,13 +3790,13 @@ namespace ISO_9506_MMS_1 {
                 shared_ptr< MMS_Object_Module_1::Address> arg__address,
                 shared_ptr< MMS_Object_Module_1::TypeDescription> arg__typeDescription,
                 shared_ptr< Identifier> arg__accessControlList,
-                shared_ptr< visiblestring_type> arg__meaning);
+                shared_ptr< visible_string> arg__meaning);
 
         ITU_T_HOLDERH_DECL(mmsDeletable, bool);
         ITU_T_OPTIONAL_DECL(address, MMS_Object_Module_1::Address);
         ITU_T_HOLDERH_DECL(typeDescription, MMS_Object_Module_1::TypeDescription);
         ITU_T_OPTIONAL_DECL(accessControlList, Identifier);
-        ITU_T_OPTIONAL_DECL(meaning, visiblestring_type);
+        ITU_T_OPTIONAL_DECL(meaning, visible_string);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3825,7 +3825,7 @@ namespace ISO_9506_MMS_1 {
 
     struct DeleteVariableAccess_Request {
 
-        typedef std::vector< ObjectName > ListOfName_type;
+        typedef sequence_of< ObjectName > ListOfName_type;
 
         static const uint8_t scopeOfDelete_specific;
         static const uint8_t scopeOfDelete_aa_specific;
@@ -3885,7 +3885,7 @@ namespace ISO_9506_MMS_1 {
 
 
 
-        typedef std::vector< ListOfVariable_type_sequence_of > ListOfVariable_type;
+        typedef sequence_of< ListOfVariable_type_sequence_of > ListOfVariable_type;
 
 
         DefineNamedVariableList_Request();
@@ -3922,7 +3922,7 @@ namespace ISO_9506_MMS_1 {
 
 
 
-        typedef std::vector< ListOfVariable_type_sequence_of > ListOfVariable_type;
+        typedef sequence_of< ListOfVariable_type_sequence_of > ListOfVariable_type;
 
 
         GetNamedVariableListAttributes_Response();
@@ -3945,7 +3945,7 @@ namespace ISO_9506_MMS_1 {
 
     struct DeleteNamedVariableList_Request {
 
-        typedef std::vector< ObjectName > ListOfVariableListName_type;
+        typedef sequence_of< ObjectName > ListOfVariableListName_type;
 
         static const uint8_t scopeOfDelete_specific;
         static const uint8_t scopeOfDelete_aa_specific;
@@ -4009,12 +4009,12 @@ namespace ISO_9506_MMS_1 {
         GetNamedTypeAttributes_Response(shared_ptr< bool> arg__mmsDeletable,
                 shared_ptr< TypeSpecification> arg__typeSpecification,
                 shared_ptr< Identifier> arg__accessControlList,
-                shared_ptr< visiblestring_type> arg__meaning);
+                shared_ptr< visible_string> arg__meaning);
 
         ITU_T_HOLDERH_DECL(mmsDeletable, bool);
         ITU_T_HOLDERH_DECL(typeSpecification, TypeSpecification);
         ITU_T_OPTIONAL_DECL(accessControlList, Identifier);
-        ITU_T_OPTIONAL_DECL(meaning, visiblestring_type);
+        ITU_T_OPTIONAL_DECL(meaning, visible_string);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -4023,7 +4023,7 @@ namespace ISO_9506_MMS_1 {
 
     struct DeleteNamedType_Request {
 
-        typedef std::vector< ObjectName > ListOfTypeName_type;
+        typedef sequence_of< ObjectName > ListOfTypeName_type;
 
         static const uint8_t scopeOfDelete_specific;
         static const uint8_t scopeOfDelete_aa_specific;
@@ -4064,7 +4064,7 @@ namespace ISO_9506_MMS_1 {
 
     struct ExchangeData_Request {
 
-        typedef std::vector< Data > ListOfRequestData_type;
+        typedef sequence_of< Data > ListOfRequestData_type;
 
 
         ExchangeData_Request();
@@ -4082,7 +4082,7 @@ namespace ISO_9506_MMS_1 {
 
     struct ExchangeData_Response {
 
-        typedef std::vector< Data > ListOfResponseData_type;
+        typedef sequence_of< Data > ListOfResponseData_type;
 
 
         ExchangeData_Response();
@@ -4098,8 +4098,8 @@ namespace ISO_9506_MMS_1 {
 
     struct GetDataExchangeAttributes_Response {
 
-        typedef std::vector< MMS_Object_Module_1::TypeDescription > ListOfRequestTypeDescriptions_type;
-        typedef std::vector< MMS_Object_Module_1::TypeDescription > ListOfResponseTypeDescriptions_type;
+        typedef sequence_of< MMS_Object_Module_1::TypeDescription > ListOfRequestTypeDescriptions_type;
+        typedef sequence_of< MMS_Object_Module_1::TypeDescription > ListOfResponseTypeDescriptions_type;
 
         GetDataExchangeAttributes_Response();
 
@@ -4284,7 +4284,7 @@ namespace ISO_9506_MMS_1 {
 
 
 
-        typedef std::vector< ListOfNamedTokens_type_sequence_of > ListOfNamedTokens_type;
+        typedef sequence_of< ListOfNamedTokens_type_sequence_of > ListOfNamedTokens_type;
 
         static const bool moreFollows__default;
 
@@ -4317,11 +4317,11 @@ namespace ISO_9506_MMS_1 {
 
         ReportSemaphoreEntryStatus_Request(shared_ptr< ObjectName> arg__semaphoreName,
                 shared_ptr< uint8_t> arg__state,
-                shared_ptr< octetstring_type> arg__entryIDToStartAfter);
+                shared_ptr< octet_string> arg__entryIDToStartAfter);
 
         ITU_T_HOLDERH_DECL(semaphoreName, ObjectName);
         ITU_T_HOLDERH_DECL(state, uint8_t); //   Ic(  [ 0  ...   2 ]   
-        ITU_T_OPTIONAL_DECL(entryIDToStartAfter, octetstring_type);
+        ITU_T_OPTIONAL_DECL(entryIDToStartAfter, octet_string);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -4330,7 +4330,7 @@ namespace ISO_9506_MMS_1 {
 
     struct ReportSemaphoreEntryStatus_Response {
 
-        typedef std::vector< SemaphoreEntry > ListOfSemaphoreEntry_type;
+        typedef sequence_of< SemaphoreEntry > ListOfSemaphoreEntry_type;
 
         static const bool moreFollows__default;
 
@@ -4359,11 +4359,11 @@ namespace ISO_9506_MMS_1 {
 
         SemaphoreEntry();
 
-        SemaphoreEntry(const octetstring_type& arg__entryID,
+        SemaphoreEntry(const octet_string& arg__entryID,
                 const uint8_t& arg__entryClass,
                 const MMS_Environment_1::ApplicationReference& arg__applicationReference);
 
-        SemaphoreEntry(shared_ptr< octetstring_type> arg__entryID,
+        SemaphoreEntry(shared_ptr< octet_string> arg__entryID,
                 shared_ptr< uint8_t> arg__entryClass,
                 shared_ptr< MMS_Environment_1::ApplicationReference> arg__applicationReference,
                 shared_ptr< Identifier> arg__namedToken,
@@ -4372,7 +4372,7 @@ namespace ISO_9506_MMS_1 {
                 shared_ptr< bool> arg__abortOnTimeOut,
                 shared_ptr< bool> arg__relinquishIfConnectionLost);
 
-        ITU_T_HOLDERH_DECL(entryID, octetstring_type);
+        ITU_T_HOLDERH_DECL(entryID, octet_string);
         ITU_T_HOLDERH_DECL(entryClass, uint8_t); //   Ic(  [ 0  ...   1 ]   
         ITU_T_HOLDERH_DECL(applicationReference, MMS_Environment_1::ApplicationReference);
         ITU_T_OPTIONAL_DECL(namedToken, Identifier);
@@ -4418,7 +4418,7 @@ namespace ISO_9506_MMS_1 {
 
     struct Input_Request {
 
-        typedef std::vector< MMSString > ListOfPromptData_type;
+        typedef sequence_of< MMSString > ListOfPromptData_type;
 
         static const bool echo__default;
 
@@ -4443,7 +4443,7 @@ namespace ISO_9506_MMS_1 {
 
     struct Output_Request {
 
-        typedef std::vector< MMSString > ListOfOutputData_type;
+        typedef sequence_of< MMSString > ListOfOutputData_type;
 
 
         Output_Request();
@@ -4580,22 +4580,22 @@ namespace ISO_9506_MMS_1 {
 
     // choice CS-EventNotification
 
-    enum CS_EventNotification_impl_enum {
+    enum CS_EventNotification_enum {
 
-        CS_EventNotification_impl_null = 0,
-        CS_EventNotification_impl_string,
-        CS_EventNotification_impl_index,
-        CS_EventNotification_impl_noEnhancement,
+        CS_EventNotification_null = 0,
+        CS_EventNotification_string,
+        CS_EventNotification_index,
+        CS_EventNotification_noEnhancement,
     };
 
-    struct CS_EventNotification_impl : public ITU_T_CHOICE(CS_EventNotification_impl_enum) {
+    struct CS_EventNotification : public ITU_T_CHOICE(CS_EventNotification_enum) {
 
 
-        ITU_T_CHOICE_CTORS(CS_EventNotification_impl);
+        ITU_T_CHOICE_CTORS(CS_EventNotification);
 
-        ITU_T_CHOICES_DECL(string, visiblestring_type, CS_EventNotification_impl_string); // primitive
-        ITU_T_CHOICES_DECL(index, integer_type, CS_EventNotification_impl_index); // primitive
-        ITU_T_CHOICES_DECL(noEnhancement, null_type, CS_EventNotification_impl_noEnhancement); // primitive
+        ITU_T_CHOICES_DECL(string, visible_string, CS_EventNotification_string); // primitive
+        ITU_T_CHOICES_DECL(index, integer_type, CS_EventNotification_index); // primitive
+        ITU_T_CHOICES_DECL(noEnhancement, null_type, CS_EventNotification_noEnhancement); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -4665,7 +4665,7 @@ namespace ISO_9506_MMS_1 {
 
     struct GetAlarmSummary_Response {
 
-        typedef std::vector< AlarmSummary > ListOfAlarmSummary_type;
+        typedef sequence_of< AlarmSummary > ListOfAlarmSummary_type;
 
         static const bool moreFollows__default;
 
@@ -4720,22 +4720,22 @@ namespace ISO_9506_MMS_1 {
 
     // choice EN-Additional-Detail
 
-    enum EN_Additional_Detail_impl_enum {
+    enum EN_Additional_Detail_enum {
 
-        EN_Additional_Detail_impl_null = 0,
-        EN_Additional_Detail_impl_string,
-        EN_Additional_Detail_impl_index,
-        EN_Additional_Detail_impl_noEnhancement,
+        EN_Additional_Detail_null = 0,
+        EN_Additional_Detail_string,
+        EN_Additional_Detail_index,
+        EN_Additional_Detail_noEnhancement,
     };
 
-    struct EN_Additional_Detail_impl : public ITU_T_CHOICE(EN_Additional_Detail_impl_enum) {
+    struct EN_Additional_Detail : public ITU_T_CHOICE(EN_Additional_Detail_enum) {
 
 
-        ITU_T_CHOICE_CTORS(EN_Additional_Detail_impl);
+        ITU_T_CHOICE_CTORS(EN_Additional_Detail);
 
-        ITU_T_CHOICES_DECL(string, visiblestring_type, EN_Additional_Detail_impl_string); // primitive
-        ITU_T_CHOICES_DECL(index, integer_type, EN_Additional_Detail_impl_index); // primitive
-        ITU_T_CHOICES_DECL(noEnhancement, null_type, EN_Additional_Detail_impl_noEnhancement); // primitive
+        ITU_T_CHOICES_DECL(string, visible_string, EN_Additional_Detail_string); // primitive
+        ITU_T_CHOICES_DECL(index, integer_type, EN_Additional_Detail_index); // primitive
+        ITU_T_CHOICES_DECL(noEnhancement, null_type, EN_Additional_Detail_noEnhancement); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -4788,7 +4788,7 @@ namespace ISO_9506_MMS_1 {
 
     struct GetAlarmEnrollmentSummary_Response {
 
-        typedef std::vector< AlarmEnrollmentSummary > ListOfAlarmEnrollmentSummary_type;
+        typedef sequence_of< AlarmEnrollmentSummary > ListOfAlarmEnrollmentSummary_type;
 
         static const bool moreFollows__default;
 
@@ -4903,22 +4903,22 @@ namespace ISO_9506_MMS_1 {
 
     // choice CS-DefineEventCondition-Request
 
-    enum CS_DefineEventCondition_Request_impl_enum {
+    enum CS_DefineEventCondition_Request_enum {
 
-        CS_DefineEventCondition_Request_impl_null = 0,
-        CS_DefineEventCondition_Request_impl_string,
-        CS_DefineEventCondition_Request_impl_index,
-        CS_DefineEventCondition_Request_impl_noEnhancement,
+        CS_DefineEventCondition_Request_null = 0,
+        CS_DefineEventCondition_Request_string,
+        CS_DefineEventCondition_Request_index,
+        CS_DefineEventCondition_Request_noEnhancement,
     };
 
-    struct CS_DefineEventCondition_Request_impl : public ITU_T_CHOICE(CS_DefineEventCondition_Request_impl_enum) {
+    struct CS_DefineEventCondition_Request : public ITU_T_CHOICE(CS_DefineEventCondition_Request_enum) {
 
 
-        ITU_T_CHOICE_CTORS(CS_DefineEventCondition_Request_impl);
+        ITU_T_CHOICE_CTORS(CS_DefineEventCondition_Request);
 
-        ITU_T_CHOICES_DECL(string, visiblestring_type, CS_DefineEventCondition_Request_impl_string); // primitive
-        ITU_T_CHOICES_DECL(index, integer_type, CS_DefineEventCondition_Request_impl_index); // primitive
-        ITU_T_CHOICES_DECL(noEnhancement, null_type, CS_DefineEventCondition_Request_impl_noEnhancement); // primitive
+        ITU_T_CHOICES_DECL(string, visible_string, CS_DefineEventCondition_Request_string); // primitive
+        ITU_T_CHOICES_DECL(index, integer_type, CS_DefineEventCondition_Request_index); // primitive
+        ITU_T_CHOICES_DECL(noEnhancement, null_type, CS_DefineEventCondition_Request_noEnhancement); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -4938,7 +4938,7 @@ namespace ISO_9506_MMS_1 {
 
 
 
-        typedef std::vector< ObjectName > Specific_type;
+        typedef sequence_of< ObjectName > Specific_type;
 
 
         ITU_T_CHOICE_CTORS(DeleteEventCondition_Request);
@@ -5043,7 +5043,7 @@ namespace ISO_9506_MMS_1 {
 
             ITU_T_CHOICE_CTORS(DisplayEnhancement_type);
 
-            ITU_T_CHOICES_DECL(string, visiblestring_type, DisplayEnhancement_type_string); // primitive
+            ITU_T_CHOICES_DECL(string, visible_string, DisplayEnhancement_type_string); // primitive
             ITU_T_CHOICES_DECL(index, integer_type, DisplayEnhancement_type_index); // primitive
             ITU_T_CHOICES_DECL(noEnhancement, null_type, DisplayEnhancement_type_noEnhancement); // primitive
 
@@ -5052,7 +5052,7 @@ namespace ISO_9506_MMS_1 {
 
 
 
-        typedef std::vector< ObjectName > ListOfReferencingECL_type;
+        typedef sequence_of< ObjectName > ListOfReferencingECL_type;
 
 
         CS_GetEventConditionAttributes_Response();
@@ -5136,7 +5136,7 @@ namespace ISO_9506_MMS_1 {
 
             ITU_T_CHOICE_CTORS(ChangeDisplay_type);
 
-            ITU_T_CHOICES_DECL(string, visiblestring_type, ChangeDisplay_type_string); // primitive
+            ITU_T_CHOICES_DECL(string, visible_string, ChangeDisplay_type_string); // primitive
             ITU_T_CHOICES_DECL(index, integer_type, ChangeDisplay_type_index); // primitive
             ITU_T_CHOICES_DECL(noEnhancement, null_type, ChangeDisplay_type_noEnhancement); // primitive
 
@@ -5157,7 +5157,7 @@ namespace ISO_9506_MMS_1 {
 
     struct DefineEventAction_Request {
 
-        typedef std::vector< MMS_Object_Module_1::Modifier > ListOfModifier_type;
+        typedef sequence_of< MMS_Object_Module_1::Modifier > ListOfModifier_type;
 
         DefineEventAction_Request();
 
@@ -5192,7 +5192,7 @@ namespace ISO_9506_MMS_1 {
 
 
 
-        typedef std::vector< ObjectName > Specific_type;
+        typedef sequence_of< ObjectName > Specific_type;
 
 
         ITU_T_CHOICE_CTORS(DeleteEventAction_Request);
@@ -5209,7 +5209,7 @@ namespace ISO_9506_MMS_1 {
 
     struct GetEventActionAttributes_Response {
 
-        typedef std::vector< MMS_Object_Module_1::Modifier > ListOfModifier_type;
+        typedef sequence_of< MMS_Object_Module_1::Modifier > ListOfModifier_type;
         static const bool mmsDeletable__default;
 
         GetEventActionAttributes_Response();
@@ -5262,22 +5262,22 @@ namespace ISO_9506_MMS_1 {
 
     // choice CS-DefineEventEnrollment-Request
 
-    enum CS_DefineEventEnrollment_Request_impl_enum {
+    enum CS_DefineEventEnrollment_Request_enum {
 
-        CS_DefineEventEnrollment_Request_impl_null = 0,
-        CS_DefineEventEnrollment_Request_impl_string,
-        CS_DefineEventEnrollment_Request_impl_index,
-        CS_DefineEventEnrollment_Request_impl_noEnhancement,
+        CS_DefineEventEnrollment_Request_null = 0,
+        CS_DefineEventEnrollment_Request_string,
+        CS_DefineEventEnrollment_Request_index,
+        CS_DefineEventEnrollment_Request_noEnhancement,
     };
 
-    struct CS_DefineEventEnrollment_Request_impl : public ITU_T_CHOICE(CS_DefineEventEnrollment_Request_impl_enum) {
+    struct CS_DefineEventEnrollment_Request : public ITU_T_CHOICE(CS_DefineEventEnrollment_Request_enum) {
 
 
-        ITU_T_CHOICE_CTORS(CS_DefineEventEnrollment_Request_impl);
+        ITU_T_CHOICE_CTORS(CS_DefineEventEnrollment_Request);
 
-        ITU_T_CHOICES_DECL(string, visiblestring_type, CS_DefineEventEnrollment_Request_impl_string); // primitive
-        ITU_T_CHOICES_DECL(index, integer_type, CS_DefineEventEnrollment_Request_impl_index); // primitive
-        ITU_T_CHOICES_DECL(noEnhancement, null_type, CS_DefineEventEnrollment_Request_impl_noEnhancement); // primitive
+        ITU_T_CHOICES_DECL(string, visible_string, CS_DefineEventEnrollment_Request_string); // primitive
+        ITU_T_CHOICES_DECL(index, integer_type, CS_DefineEventEnrollment_Request_index); // primitive
+        ITU_T_CHOICES_DECL(noEnhancement, null_type, CS_DefineEventEnrollment_Request_noEnhancement); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -5296,7 +5296,7 @@ namespace ISO_9506_MMS_1 {
 
 
 
-        typedef std::vector< ObjectName > Specific_type;
+        typedef sequence_of< ObjectName > Specific_type;
 
 
         ITU_T_CHOICE_CTORS(DeleteEventEnrollment_Request);
@@ -5312,7 +5312,7 @@ namespace ISO_9506_MMS_1 {
 
     struct GetEventEnrollmentAttributes_Request {
 
-        typedef std::vector< ObjectName > EventEnrollmentNames_type;
+        typedef sequence_of< ObjectName > EventEnrollmentNames_type;
 
         static const uint8_t scopeOfRequest_specific;
         static const uint8_t scopeOfRequest_client;
@@ -5344,7 +5344,7 @@ namespace ISO_9506_MMS_1 {
 
     struct GetEventEnrollmentAttributes_Response {
 
-        typedef std::vector< EEAttributes > ListOfEEAttributes_type;
+        typedef sequence_of< EEAttributes > ListOfEEAttributes_type;
 
         static const bool moreFollows__default;
 
@@ -5418,7 +5418,7 @@ namespace ISO_9506_MMS_1 {
 
             ITU_T_CHOICE_CTORS(DisplayEnhancement_type);
 
-            ITU_T_CHOICES_DECL(string, visiblestring_type, DisplayEnhancement_type_string); // primitive
+            ITU_T_CHOICES_DECL(string, visible_string, DisplayEnhancement_type_string); // primitive
             ITU_T_CHOICES_DECL(index, integer_type, DisplayEnhancement_type_index); // primitive
             ITU_T_CHOICES_DECL(noEnhancement, null_type, DisplayEnhancement_type_noEnhancement); // primitive
 
@@ -5561,7 +5561,7 @@ namespace ISO_9506_MMS_1 {
 
             ITU_T_CHOICE_CTORS(ChangeDisplay_type);
 
-            ITU_T_CHOICES_DECL(string, visiblestring_type, ChangeDisplay_type_string); // primitive
+            ITU_T_CHOICES_DECL(string, visible_string, ChangeDisplay_type_string); // primitive
             ITU_T_CHOICES_DECL(index, integer_type, ChangeDisplay_type_index); // primitive
             ITU_T_CHOICES_DECL(noEnhancement, null_type, ChangeDisplay_type_noEnhancement); // primitive
 
@@ -5592,8 +5592,8 @@ namespace ISO_9506_MMS_1 {
 
     struct DefineEventConditionList_Request {
 
-        typedef std::vector< ObjectName > ListOfEventConditionName_type;
-        typedef std::vector< ObjectName > ListOfEventConditionListName_type;
+        typedef sequence_of< ObjectName > ListOfEventConditionName_type;
+        typedef sequence_of< ObjectName > ListOfEventConditionListName_type;
 
 
         DefineEventConditionList_Request();
@@ -5616,8 +5616,8 @@ namespace ISO_9506_MMS_1 {
 
     struct AddEventConditionListReference_Request {
 
-        typedef std::vector< ObjectName > ListOfEventConditionName_type;
-        typedef std::vector< ObjectName > ListOfEventConditionListName_type;
+        typedef sequence_of< ObjectName > ListOfEventConditionName_type;
+        typedef sequence_of< ObjectName > ListOfEventConditionListName_type;
 
 
         AddEventConditionListReference_Request();
@@ -5640,8 +5640,8 @@ namespace ISO_9506_MMS_1 {
 
     struct RemoveEventConditionListReference_Request {
 
-        typedef std::vector< ObjectName > ListOfEventConditionName_type;
-        typedef std::vector< ObjectName > ListOfEventConditionListName_type;
+        typedef sequence_of< ObjectName > ListOfEventConditionName_type;
+        typedef sequence_of< ObjectName > ListOfEventConditionListName_type;
 
 
         RemoveEventConditionListReference_Request();
@@ -5681,8 +5681,8 @@ namespace ISO_9506_MMS_1 {
 
     struct GetEventConditionListAttributes_Response {
 
-        typedef std::vector< ObjectName > ListOfEventConditionName_type;
-        typedef std::vector< ObjectName > ListOfEventConditionListName_type;
+        typedef sequence_of< ObjectName > ListOfEventConditionName_type;
+        typedef sequence_of< ObjectName > ListOfEventConditionListName_type;
 
 
         GetEventConditionListAttributes_Response();
@@ -5719,7 +5719,7 @@ namespace ISO_9506_MMS_1 {
 
     struct ReportEventConditionListStatus_Response {
 
-        typedef std::vector< EventConditionStatus > ListOfEventConditionStatus_type;
+        typedef sequence_of< EventConditionStatus > ListOfEventConditionStatus_type;
 
         static const bool moreFollows__default;
 
@@ -5825,7 +5825,7 @@ namespace ISO_9506_MMS_1 {
             ITU_T_CHOICE_CTORS(RangeStartSpecification_type);
 
             ITU_T_CHOICES_DECL(startingTime, TimeOfDay, RangeStartSpecification_type_startingTime); // primitive  //    Sc (  [ 4  ...   6 ]   
-            ITU_T_CHOICES_DECL(startingEntry, octetstring_type, RangeStartSpecification_type_startingEntry); // primitive
+            ITU_T_CHOICES_DECL(startingEntry, octet_string, RangeStartSpecification_type_startingEntry); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -5853,17 +5853,17 @@ namespace ISO_9506_MMS_1 {
             EntryToStartAfter_type();
 
             EntryToStartAfter_type(const TimeOfDay& arg__timeSpecification,
-                    const octetstring_type& arg__entrySpecification);
+                    const octet_string& arg__entrySpecification);
 
             ITU_T_HOLDERH_DECL(timeSpecification, TimeOfDay); //    Sc (  [ 4  ...   6 ]   
-            ITU_T_HOLDERH_DECL(entrySpecification, octetstring_type);
+            ITU_T_HOLDERH_DECL(entrySpecification, octet_string);
 
             ITU_T_ARCHIVE_FUNC;
         };
 
 
 
-        typedef std::vector< visiblestring_type > ListOfVariables_type; //  struct of ->  
+        typedef sequence_of< visible_string > ListOfVariables_type; //  struct of ->  
 
 
         ReadJournal_Request();
@@ -5889,7 +5889,7 @@ namespace ISO_9506_MMS_1 {
 
     struct ReadJournal_Response {
 
-        typedef std::vector< JournalEntry > ListOfJournalEntry_type;
+        typedef sequence_of< JournalEntry > ListOfJournalEntry_type;
 
         static const bool moreFollows__default;
 
@@ -5912,11 +5912,11 @@ namespace ISO_9506_MMS_1 {
 
         JournalEntry();
 
-        JournalEntry(const octetstring_type& arg__entryIdentifier,
+        JournalEntry(const octet_string& arg__entryIdentifier,
                 const MMS_Environment_1::ApplicationReference& arg__originatingApplication,
                 const EntryContent& arg__entryContent);
 
-        ITU_T_HOLDERH_DECL(entryIdentifier, octetstring_type);
+        ITU_T_HOLDERH_DECL(entryIdentifier, octet_string);
         ITU_T_HOLDERH_DECL(originatingApplication, MMS_Environment_1::ApplicationReference);
         ITU_T_HOLDERH_DECL(entryContent, EntryContent);
 
@@ -5927,7 +5927,7 @@ namespace ISO_9506_MMS_1 {
 
     struct WriteJournal_Request {
 
-        typedef std::vector< EntryContent > ListOfJournalEntry_type;
+        typedef sequence_of< EntryContent > ListOfJournalEntry_type;
 
 
         WriteJournal_Request();
@@ -5954,10 +5954,10 @@ namespace ISO_9506_MMS_1 {
             LimitSpecification_type(const TimeOfDay& arg__limitingTime);
 
             LimitSpecification_type(shared_ptr< TimeOfDay> arg__limitingTime,
-                    shared_ptr< octetstring_type> arg__limitingEntry);
+                    shared_ptr< octet_string> arg__limitingEntry);
 
             ITU_T_HOLDERH_DECL(limitingTime, TimeOfDay); //    Sc (  [ 4  ...   6 ]   
-            ITU_T_OPTIONAL_DECL(limitingEntry, octetstring_type);
+            ITU_T_OPTIONAL_DECL(limitingEntry, octet_string);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -6060,7 +6060,7 @@ namespace ISO_9506_MMS_1 {
 
 
 
-                typedef std::vector< MMS_Object_Module_1::Journal_Variable > ListOfVariables_type;
+                typedef sequence_of< MMS_Object_Module_1::Journal_Variable > ListOfVariables_type;
 
                 Data_type();
 
@@ -6160,15 +6160,15 @@ namespace ISO_9506_MMS_1 {
     ITU_T_ARCHIVE_X690_DECL(CreateProgramInvocation_Request);
     ITU_T_ARCHIVE_X690_DECL(Start_Request);
     ITU_T_ARCHIVE_X690_DECL(Start_Request::ExecutionArgument_type);
-    ITU_T_ARCHIVE_X690_DECL(CS_Start_Request_impl);
-    ITU_T_ARCHIVE_X690_DECL(CS_Start_Request_impl::Controlling_type);
+    ITU_T_ARCHIVE_X690_DECL(CS_Start_Request);
+    ITU_T_ARCHIVE_X690_DECL(CS_Start_Request::Controlling_type);
     ITU_T_ARCHIVE_X690_DECL(StartCount);
     ITU_T_ARCHIVE_X690_DECL(Stop_Request);
     ITU_T_ARCHIVE_X690_DECL(Resume_Request);
     ITU_T_ARCHIVE_X690_DECL(Resume_Request::ExecutionArgument_type);
-    ITU_T_ARCHIVE_X690_DECL(CS_Resume_Request_impl);
-    ITU_T_ARCHIVE_X690_DECL(CS_Resume_Request_impl::Controlling_type);
-    ITU_T_ARCHIVE_X690_DECL(CS_Resume_Request_impl::Controlling_type::ModeType_type);
+    ITU_T_ARCHIVE_X690_DECL(CS_Resume_Request);
+    ITU_T_ARCHIVE_X690_DECL(CS_Resume_Request::Controlling_type);
+    ITU_T_ARCHIVE_X690_DECL(CS_Resume_Request::Controlling_type::ModeType_type);
     ITU_T_ARCHIVE_X690_DECL(Reset_Request);
     ITU_T_ARCHIVE_X690_DECL(Kill_Request);
     ITU_T_ARCHIVE_X690_DECL(GetProgramInvocationAttributes_Response);
@@ -6261,20 +6261,20 @@ namespace ISO_9506_MMS_1 {
     ITU_T_ARCHIVE_X690_DECL(EventNotification::ActionResult_type::SuccessOrFailure_type);
     ITU_T_ARCHIVE_X690_DECL(EventNotification::ActionResult_type::SuccessOrFailure_type::Success_type);
     ITU_T_ARCHIVE_X690_DECL(EventNotification::ActionResult_type::SuccessOrFailure_type::Failure_type);
-    ITU_T_ARCHIVE_X690_DECL(CS_EventNotification_impl);
+    ITU_T_ARCHIVE_X690_DECL(CS_EventNotification);
     ITU_T_ARCHIVE_X690_DECL(AcknowledgeEventNotification_Request);
     ITU_T_ARCHIVE_X690_DECL(GetAlarmSummary_Request);
     ITU_T_ARCHIVE_X690_DECL(GetAlarmSummary_Request::SeverityFilter_type);
     ITU_T_ARCHIVE_X690_DECL(GetAlarmSummary_Response);
     ITU_T_ARCHIVE_X690_DECL(AlarmSummary);
-    ITU_T_ARCHIVE_X690_DECL(EN_Additional_Detail_impl);
+    ITU_T_ARCHIVE_X690_DECL(EN_Additional_Detail);
     ITU_T_ARCHIVE_X690_DECL(GetAlarmEnrollmentSummary_Request);
     ITU_T_ARCHIVE_X690_DECL(GetAlarmEnrollmentSummary_Request::SeverityFilter_type);
     ITU_T_ARCHIVE_X690_DECL(GetAlarmEnrollmentSummary_Response);
     ITU_T_ARCHIVE_X690_DECL(AlarmEnrollmentSummary);
     ITU_T_ARCHIVE_X690_DECL(AttachToEventCondition);
     ITU_T_ARCHIVE_X690_DECL(DefineEventCondition_Request);
-    ITU_T_ARCHIVE_X690_DECL(CS_DefineEventCondition_Request_impl);
+    ITU_T_ARCHIVE_X690_DECL(CS_DefineEventCondition_Request);
     ITU_T_ARCHIVE_X690_DECL(DeleteEventCondition_Request);
     ITU_T_ARCHIVE_X690_DECL(GetEventConditionAttributes_Response);
     ITU_T_ARCHIVE_X690_DECL(GetEventConditionAttributes_Response::MonitoredVariable_type);
@@ -6289,7 +6289,7 @@ namespace ISO_9506_MMS_1 {
     ITU_T_ARCHIVE_X690_DECL(DeleteEventAction_Request);
     ITU_T_ARCHIVE_X690_DECL(GetEventActionAttributes_Response);
     ITU_T_ARCHIVE_X690_DECL(DefineEventEnrollment_Request);
-    ITU_T_ARCHIVE_X690_DECL(CS_DefineEventEnrollment_Request_impl);
+    ITU_T_ARCHIVE_X690_DECL(CS_DefineEventEnrollment_Request);
     ITU_T_ARCHIVE_X690_DECL(DeleteEventEnrollment_Request);
     ITU_T_ARCHIVE_X690_DECL(GetEventEnrollmentAttributes_Request);
     ITU_T_ARCHIVE_X690_DECL(GetEventEnrollmentAttributes_Response);
@@ -6396,15 +6396,15 @@ namespace ISO_9506_MMS_1 {
     ITU_T_ARCHIVE_X691_DECL(CreateProgramInvocation_Request);
     ITU_T_ARCHIVE_X691_DECL(Start_Request);
     ITU_T_ARCHIVE_X691_DECL(Start_Request::ExecutionArgument_type);
-    ITU_T_ARCHIVE_X691_DECL(CS_Start_Request_impl);
-    ITU_T_ARCHIVE_X691_DECL(CS_Start_Request_impl::Controlling_type);
+    ITU_T_ARCHIVE_X691_DECL(CS_Start_Request);
+    ITU_T_ARCHIVE_X691_DECL(CS_Start_Request::Controlling_type);
     ITU_T_ARCHIVE_X691_DECL(StartCount);
     ITU_T_ARCHIVE_X691_DECL(Stop_Request);
     ITU_T_ARCHIVE_X691_DECL(Resume_Request);
     ITU_T_ARCHIVE_X691_DECL(Resume_Request::ExecutionArgument_type);
-    ITU_T_ARCHIVE_X691_DECL(CS_Resume_Request_impl);
-    ITU_T_ARCHIVE_X691_DECL(CS_Resume_Request_impl::Controlling_type);
-    ITU_T_ARCHIVE_X691_DECL(CS_Resume_Request_impl::Controlling_type::ModeType_type);
+    ITU_T_ARCHIVE_X691_DECL(CS_Resume_Request);
+    ITU_T_ARCHIVE_X691_DECL(CS_Resume_Request::Controlling_type);
+    ITU_T_ARCHIVE_X691_DECL(CS_Resume_Request::Controlling_type::ModeType_type);
     ITU_T_ARCHIVE_X691_DECL(Reset_Request);
     ITU_T_ARCHIVE_X691_DECL(Kill_Request);
     ITU_T_ARCHIVE_X691_DECL(GetProgramInvocationAttributes_Response);
@@ -6497,20 +6497,20 @@ namespace ISO_9506_MMS_1 {
     ITU_T_ARCHIVE_X691_DECL(EventNotification::ActionResult_type::SuccessOrFailure_type);
     ITU_T_ARCHIVE_X691_DECL(EventNotification::ActionResult_type::SuccessOrFailure_type::Success_type);
     ITU_T_ARCHIVE_X691_DECL(EventNotification::ActionResult_type::SuccessOrFailure_type::Failure_type);
-    ITU_T_ARCHIVE_X691_DECL(CS_EventNotification_impl);
+    ITU_T_ARCHIVE_X691_DECL(CS_EventNotification);
     ITU_T_ARCHIVE_X691_DECL(AcknowledgeEventNotification_Request);
     ITU_T_ARCHIVE_X691_DECL(GetAlarmSummary_Request);
     ITU_T_ARCHIVE_X691_DECL(GetAlarmSummary_Request::SeverityFilter_type);
     ITU_T_ARCHIVE_X691_DECL(GetAlarmSummary_Response);
     ITU_T_ARCHIVE_X691_DECL(AlarmSummary);
-    ITU_T_ARCHIVE_X691_DECL(EN_Additional_Detail_impl);
+    ITU_T_ARCHIVE_X691_DECL(EN_Additional_Detail);
     ITU_T_ARCHIVE_X691_DECL(GetAlarmEnrollmentSummary_Request);
     ITU_T_ARCHIVE_X691_DECL(GetAlarmEnrollmentSummary_Request::SeverityFilter_type);
     ITU_T_ARCHIVE_X691_DECL(GetAlarmEnrollmentSummary_Response);
     ITU_T_ARCHIVE_X691_DECL(AlarmEnrollmentSummary);
     ITU_T_ARCHIVE_X691_DECL(AttachToEventCondition);
     ITU_T_ARCHIVE_X691_DECL(DefineEventCondition_Request);
-    ITU_T_ARCHIVE_X691_DECL(CS_DefineEventCondition_Request_impl);
+    ITU_T_ARCHIVE_X691_DECL(CS_DefineEventCondition_Request);
     ITU_T_ARCHIVE_X691_DECL(DeleteEventCondition_Request);
     ITU_T_ARCHIVE_X691_DECL(GetEventConditionAttributes_Response);
     ITU_T_ARCHIVE_X691_DECL(GetEventConditionAttributes_Response::MonitoredVariable_type);
@@ -6525,7 +6525,7 @@ namespace ISO_9506_MMS_1 {
     ITU_T_ARCHIVE_X691_DECL(DeleteEventAction_Request);
     ITU_T_ARCHIVE_X691_DECL(GetEventActionAttributes_Response);
     ITU_T_ARCHIVE_X691_DECL(DefineEventEnrollment_Request);
-    ITU_T_ARCHIVE_X691_DECL(CS_DefineEventEnrollment_Request_impl);
+    ITU_T_ARCHIVE_X691_DECL(CS_DefineEventEnrollment_Request);
     ITU_T_ARCHIVE_X691_DECL(DeleteEventEnrollment_Request);
     ITU_T_ARCHIVE_X691_DECL(GetEventEnrollmentAttributes_Request);
     ITU_T_ARCHIVE_X691_DECL(GetEventEnrollmentAttributes_Response);
@@ -6591,11 +6591,11 @@ ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_Status_Response::FullResponse_type::S
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::GetNameList_Request::ObjectScope_type)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::LoadData)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::Start_Request::ExecutionArgument_type)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_Start_Request_impl)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_Start_Request)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::StartCount)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::Resume_Request::ExecutionArgument_type)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_Resume_Request_impl)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_Resume_Request_impl::Controlling_type::ModeType_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_Resume_Request)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_Resume_Request::Controlling_type::ModeType_type)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::GetProgramInvocationAttributes_Response::ExecutionArgument_type)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_GetProgramInvocationAttributes_Response::Control_type)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::RunningMode_type)
@@ -6621,16 +6621,16 @@ ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::GetVariableAccessAttributes_Request)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::TakeControl_Response)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ReportPoolSemaphoreStatus_Response::ListOfNamedTokens_type_sequence_of)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::EventNotification::ActionResult_type::SuccessOrFailure_type)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_EventNotification_impl)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::EN_Additional_Detail_impl)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_DefineEventCondition_Request_impl)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_EventNotification)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::EN_Additional_Detail)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_DefineEventCondition_Request)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::DeleteEventCondition_Request)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::GetEventConditionAttributes_Response::MonitoredVariable_type)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_GetEventConditionAttributes_Response::GroupPriorityOverride_type)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_GetEventConditionAttributes_Response::DisplayEnhancement_type)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_AlterEventConditionMonitoring_Request::ChangeDisplay_type)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::DeleteEventAction_Request)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_DefineEventEnrollment_Request_impl)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_DefineEventEnrollment_Request)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::DeleteEventEnrollment_Request)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::EEAttributes::EventConditionName_type)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::EEAttributes::EventActionName_type)

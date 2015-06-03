@@ -389,7 +389,7 @@ namespace ISO_9506_MMS_1 {
 
     ServiceError::ServiceError(shared_ptr< ErrorClass_type> arg__errorClass,
             shared_ptr< integer_type> arg__additionalCode,
-            shared_ptr< visiblestring_type> arg__additionalDescription,
+            shared_ptr< visible_string> arg__additionalDescription,
             shared_ptr< ServiceSpecificInfo_type> arg__serviceSpecificInfo) :
     errorClass_(arg__errorClass),
     additionalCode_(arg__additionalCode),
@@ -503,7 +503,7 @@ namespace ISO_9506_MMS_1 {
 
     ITU_T_HOLDERH_DEFN(ServiceError::errorClass, errorClass, ServiceError::ErrorClass_type);
     ITU_T_OPTIONAL_DEFN(ServiceError::additionalCode, additionalCode, integer_type);
-    ITU_T_OPTIONAL_DEFN(ServiceError::additionalDescription, additionalDescription, visiblestring_type);
+    ITU_T_OPTIONAL_DEFN(ServiceError::additionalDescription, additionalDescription, visible_string);
     ITU_T_OPTIONAL_DEFN(ServiceError::serviceSpecificInfo, serviceSpecificInfo, ServiceError::ServiceSpecificInfo_type);
 
     // choice AdditionalService-Error
@@ -601,7 +601,7 @@ namespace ISO_9506_MMS_1 {
             shared_ptr< MMS_Object_Module_1::ServiceSupportOptions> arg__servicesSupportedCalling,
             shared_ptr< MMS_Object_Module_1::AdditionalSupportOptions> arg__additionalSupportedCalling,
             shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions> arg__additionalCbbSupportedCalling,
-            shared_ptr< visiblestring_type> arg__privilegeClassIdentityCalling) :
+            shared_ptr< visible_string> arg__privilegeClassIdentityCalling) :
     proposedVersionNumber_(arg__proposedVersionNumber),
     proposedParameterCBB_(arg__proposedParameterCBB),
     servicesSupportedCalling_(arg__servicesSupportedCalling),
@@ -616,7 +616,7 @@ namespace ISO_9506_MMS_1 {
     ITU_T_HOLDERH_DEFN(Initiate_RequestPDU::InitRequestDetail_type::servicesSupportedCalling, servicesSupportedCalling, MMS_Object_Module_1::ServiceSupportOptions);
     ITU_T_OPTIONAL_DEFN(Initiate_RequestPDU::InitRequestDetail_type::additionalSupportedCalling, additionalSupportedCalling, MMS_Object_Module_1::AdditionalSupportOptions);
     ITU_T_OPTIONAL_DEFN(Initiate_RequestPDU::InitRequestDetail_type::additionalCbbSupportedCalling, additionalCbbSupportedCalling, MMS_Object_Module_1::AdditionalCBBOptions);
-    ITU_T_OPTIONAL_DEFN(Initiate_RequestPDU::InitRequestDetail_type::privilegeClassIdentityCalling, privilegeClassIdentityCalling, visiblestring_type);
+    ITU_T_OPTIONAL_DEFN(Initiate_RequestPDU::InitRequestDetail_type::privilegeClassIdentityCalling, privilegeClassIdentityCalling, visible_string);
 
 
     ITU_T_OPTIONAL_DEFN(Initiate_RequestPDU::localDetailCalling, localDetailCalling, Integer32);
@@ -666,7 +666,7 @@ namespace ISO_9506_MMS_1 {
             shared_ptr< MMS_Object_Module_1::ServiceSupportOptions> arg__servicesSupportedCalled,
             shared_ptr< MMS_Object_Module_1::AdditionalSupportOptions> arg__additionalSupportedCalled,
             shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions> arg__additionalCbbSupportedCalled,
-            shared_ptr< visiblestring_type> arg__privilegeClassIdentityCalled) :
+            shared_ptr< visible_string> arg__privilegeClassIdentityCalled) :
     negotiatedVersionNumber_(arg__negotiatedVersionNumber),
     negotiatedParameterCBB_(arg__negotiatedParameterCBB),
     servicesSupportedCalled_(arg__servicesSupportedCalled),
@@ -681,7 +681,7 @@ namespace ISO_9506_MMS_1 {
     ITU_T_HOLDERH_DEFN(Initiate_ResponsePDU::InitResponseDetail_type::servicesSupportedCalled, servicesSupportedCalled, MMS_Object_Module_1::ServiceSupportOptions);
     ITU_T_OPTIONAL_DEFN(Initiate_ResponsePDU::InitResponseDetail_type::additionalSupportedCalled, additionalSupportedCalled, MMS_Object_Module_1::AdditionalSupportOptions);
     ITU_T_OPTIONAL_DEFN(Initiate_ResponsePDU::InitResponseDetail_type::additionalCbbSupportedCalled, additionalCbbSupportedCalled, MMS_Object_Module_1::AdditionalCBBOptions);
-    ITU_T_OPTIONAL_DEFN(Initiate_ResponsePDU::InitResponseDetail_type::privilegeClassIdentityCalled, privilegeClassIdentityCalled, visiblestring_type);
+    ITU_T_OPTIONAL_DEFN(Initiate_ResponsePDU::InitResponseDetail_type::privilegeClassIdentityCalled, privilegeClassIdentityCalled, visible_string);
 
 
     ITU_T_OPTIONAL_DEFN(Initiate_ResponsePDU::localDetailCalled, localDetailCalled, Integer32);
@@ -1051,7 +1051,7 @@ namespace ISO_9506_MMS_1 {
 
     StatusResponse::StatusResponse(shared_ptr< uint8_t> arg__vmdLogicalStatus,
             shared_ptr< uint8_t> arg__vmdPhysicalStatus,
-            shared_ptr< bitstring_type> arg__localDetail) :
+            shared_ptr< bit_string> arg__localDetail) :
     vmdLogicalStatus_(arg__vmdLogicalStatus),
     vmdPhysicalStatus_(arg__vmdPhysicalStatus),
     localDetail_(arg__localDetail) {
@@ -1060,7 +1060,7 @@ namespace ISO_9506_MMS_1 {
 
     ITU_T_HOLDERH_DEFN(StatusResponse::vmdLogicalStatus, vmdLogicalStatus, uint8_t);
     ITU_T_HOLDERH_DEFN(StatusResponse::vmdPhysicalStatus, vmdPhysicalStatus, uint8_t);
-    ITU_T_OPTIONAL_DEFN(StatusResponse::localDetail, localDetail, bitstring_type);
+    ITU_T_OPTIONAL_DEFN(StatusResponse::localDetail, localDetail, bit_string);
 
     // choice CS-Status-Response
 
@@ -1090,7 +1090,7 @@ namespace ISO_9506_MMS_1 {
     ITU_T_CHOICES_DEFN(CS_Status_Response::FullResponse_type::SelectedProgramInvocation_type::programInvocation, programInvocation, Identifier, SelectedProgramInvocation_type_programInvocation);
     ITU_T_CHOICES_DEFN(CS_Status_Response::FullResponse_type::SelectedProgramInvocation_type::noneSelected, noneSelected, null_type, SelectedProgramInvocation_type_noneSelected);
 
-    const ExtendedStatus CS_Status_Response::FullResponse_type::extendedStatusMask__default = ExtendedStatus(boost::asn1::bitstring_type(std::string("\xF", 1), 4));
+    const ExtendedStatus CS_Status_Response::FullResponse_type::extendedStatusMask__default = ExtendedStatus(boost::asn1::bit_string(std::string("\xF", 1), 4));
 
 
     ITU_T_HOLDERH_DEFN(CS_Status_Response::FullResponse_type::operationState, operationState, OperationState);
@@ -1274,9 +1274,9 @@ namespace ISO_9506_MMS_1 {
 
     // choice LoadData
 
-    ITU_T_CHOICES_DEFN(LoadData::non_coded, non_coded, octetstring_type, LoadData_non_coded);
+    ITU_T_CHOICES_DEFN(LoadData::non_coded, non_coded, octet_string, LoadData_non_coded);
     ITU_T_CHOICES_DEFN(LoadData::coded, coded, external_type, LoadData_coded);
-    ITU_T_CHOICES_DEFN(LoadData::embedded, embedded, embeded_type, LoadData_embedded);
+    ITU_T_CHOICES_DEFN(LoadData::embedded, embedded, embeded_pdv, LoadData_embedded);
 
     // sequence TerminateDownloadSequence-Request
 
@@ -1525,7 +1525,7 @@ namespace ISO_9506_MMS_1 {
 
     ITU_T_CHOICES_DEFN(Start_Request::ExecutionArgument_type::simpleString, simpleString, MMSString, ExecutionArgument_type_simpleString);
     ITU_T_CHOICES_DEFN(Start_Request::ExecutionArgument_type::encodedString, encodedString, external_type, ExecutionArgument_type_encodedString);
-    ITU_T_CHOICES_DEFN(Start_Request::ExecutionArgument_type::embeddedString, embeddedString, embeded_type, ExecutionArgument_type_embeddedString);
+    ITU_T_CHOICES_DEFN(Start_Request::ExecutionArgument_type::embeddedString, embeddedString, embeded_pdv, ExecutionArgument_type_embeddedString);
 
 
     ITU_T_HOLDERH_DEFN(Start_Request::programInvocationName, programInvocationName, Identifier);
@@ -1533,22 +1533,22 @@ namespace ISO_9506_MMS_1 {
 
     // choice CS-Start-Request
 
-    CS_Start_Request_impl::Controlling_type::Controlling_type() {
+    CS_Start_Request::Controlling_type::Controlling_type() {
     };
 
-    CS_Start_Request_impl::Controlling_type::Controlling_type(shared_ptr< visiblestring_type> arg__startLocation,
+    CS_Start_Request::Controlling_type::Controlling_type(shared_ptr< visible_string> arg__startLocation,
             shared_ptr< StartCount> arg__startCount) :
     startLocation_(arg__startLocation),
     startCount_(arg__startCount) {
     };
 
 
-    ITU_T_OPTIONAL_DEFN(CS_Start_Request_impl::Controlling_type::startLocation, startLocation, visiblestring_type);
-    ITU_T_OPTIONAL_DEFN(CS_Start_Request_impl::Controlling_type::startCount, startCount, StartCount);
+    ITU_T_OPTIONAL_DEFN(CS_Start_Request::Controlling_type::startLocation, startLocation, visible_string);
+    ITU_T_OPTIONAL_DEFN(CS_Start_Request::Controlling_type::startCount, startCount, StartCount);
 
 
-    ITU_T_CHOICES_DEFN(CS_Start_Request_impl::normal, normal, null_type, CS_Start_Request_impl_normal);
-    ITU_T_CHOICEC_DEFN(CS_Start_Request_impl::controlling, controlling, CS_Start_Request_impl::Controlling_type, CS_Start_Request_impl_controlling);
+    ITU_T_CHOICES_DEFN(CS_Start_Request::normal, normal, null_type, CS_Start_Request_normal);
+    ITU_T_CHOICEC_DEFN(CS_Start_Request::controlling, controlling, CS_Start_Request::Controlling_type, CS_Start_Request_controlling);
 
     // choice StartCount
 
@@ -1587,7 +1587,7 @@ namespace ISO_9506_MMS_1 {
 
     ITU_T_CHOICES_DEFN(Resume_Request::ExecutionArgument_type::simpleString, simpleString, MMSString, ExecutionArgument_type_simpleString);
     ITU_T_CHOICES_DEFN(Resume_Request::ExecutionArgument_type::encodedString, encodedString, external_type, ExecutionArgument_type_encodedString);
-    ITU_T_CHOICES_DEFN(Resume_Request::ExecutionArgument_type::enmbeddedString, enmbeddedString, embeded_type, ExecutionArgument_type_enmbeddedString);
+    ITU_T_CHOICES_DEFN(Resume_Request::ExecutionArgument_type::enmbeddedString, enmbeddedString, embeded_pdv, ExecutionArgument_type_enmbeddedString);
 
 
     ITU_T_HOLDERH_DEFN(Resume_Request::programInvocationName, programInvocationName, Identifier);
@@ -1595,24 +1595,24 @@ namespace ISO_9506_MMS_1 {
 
     // choice CS-Resume-Request
 
-    CS_Resume_Request_impl::Controlling_type::Controlling_type() : modeType_() {
+    CS_Resume_Request::Controlling_type::Controlling_type() : modeType_() {
     };
 
-    CS_Resume_Request_impl::Controlling_type::Controlling_type(const ModeType_type& arg__modeType) :
+    CS_Resume_Request::Controlling_type::Controlling_type(const ModeType_type& arg__modeType) :
     modeType_(arg__modeType) {
     };
 
 
 
-    ITU_T_CHOICES_DEFN(CS_Resume_Request_impl::Controlling_type::ModeType_type::continueMode, continueMode, null_type, ModeType_type_continueMode);
-    ITU_T_CHOICEC_DEFN(CS_Resume_Request_impl::Controlling_type::ModeType_type::changeMode, changeMode, StartCount, ModeType_type_changeMode);
+    ITU_T_CHOICES_DEFN(CS_Resume_Request::Controlling_type::ModeType_type::continueMode, continueMode, null_type, ModeType_type_continueMode);
+    ITU_T_CHOICEC_DEFN(CS_Resume_Request::Controlling_type::ModeType_type::changeMode, changeMode, StartCount, ModeType_type_changeMode);
 
 
-    ITU_T_HOLDERH_DEFN(CS_Resume_Request_impl::Controlling_type::modeType, modeType, CS_Resume_Request_impl::Controlling_type::ModeType_type);
+    ITU_T_HOLDERH_DEFN(CS_Resume_Request::Controlling_type::modeType, modeType, CS_Resume_Request::Controlling_type::ModeType_type);
 
 
-    ITU_T_CHOICES_DEFN(CS_Resume_Request_impl::normal, normal, null_type, CS_Resume_Request_impl_normal);
-    ITU_T_CHOICEC_DEFN(CS_Resume_Request_impl::controlling, controlling, CS_Resume_Request_impl::Controlling_type, CS_Resume_Request_impl_controlling);
+    ITU_T_CHOICES_DEFN(CS_Resume_Request::normal, normal, null_type, CS_Resume_Request_normal);
+    ITU_T_CHOICEC_DEFN(CS_Resume_Request::controlling, controlling, CS_Resume_Request::Controlling_type, CS_Resume_Request_controlling);
 
     // sequence Reset-Request
 
@@ -1677,7 +1677,7 @@ namespace ISO_9506_MMS_1 {
 
     ITU_T_CHOICES_DEFN(GetProgramInvocationAttributes_Response::ExecutionArgument_type::simpleString, simpleString, MMSString, ExecutionArgument_type_simpleString);
     ITU_T_CHOICES_DEFN(GetProgramInvocationAttributes_Response::ExecutionArgument_type::encodedString, encodedString, external_type, ExecutionArgument_type_encodedString);
-    ITU_T_CHOICES_DEFN(GetProgramInvocationAttributes_Response::ExecutionArgument_type::enmbeddedString, enmbeddedString, embeded_type, ExecutionArgument_type_enmbeddedString);
+    ITU_T_CHOICES_DEFN(GetProgramInvocationAttributes_Response::ExecutionArgument_type::enmbeddedString, enmbeddedString, embeded_pdv, ExecutionArgument_type_enmbeddedString);
 
 
     ITU_T_HOLDERH_DEFN(GetProgramInvocationAttributes_Response::state, state, MMS_Object_Module_1::ProgramInvocationState);
@@ -1709,7 +1709,7 @@ namespace ISO_9506_MMS_1 {
     };
 
     CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::Controlling_type(shared_ptr< ControlledPI_type> arg__controlledPI,
-            shared_ptr< visiblestring_type> arg__programLocation,
+            shared_ptr< visible_string> arg__programLocation,
             shared_ptr< RunningMode_type> arg__runningMode) :
     controlledPI_(arg__controlledPI),
     programLocation_(arg__programLocation),
@@ -1724,7 +1724,7 @@ namespace ISO_9506_MMS_1 {
 
 
     ITU_T_HOLDERH_DEFN(CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::controlledPI, controlledPI, CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::ControlledPI_type);
-    ITU_T_OPTIONAL_DEFN(CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::programLocation, programLocation, visiblestring_type);
+    ITU_T_OPTIONAL_DEFN(CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::programLocation, programLocation, visible_string);
     ITU_T_HOLDERH_DEFN(CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::runningMode, runningMode, CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::RunningMode_type);
 
 
@@ -1977,7 +1977,7 @@ namespace ISO_9506_MMS_1 {
 
     ITU_T_CHOICES_DEFN(StartUnitControl_Request::ExecutionArgument_type::simpleString, simpleString, MMSString, ExecutionArgument_type_simpleString);
     ITU_T_CHOICES_DEFN(StartUnitControl_Request::ExecutionArgument_type::encodedString, encodedString, external_type, ExecutionArgument_type_encodedString);
-    ITU_T_CHOICES_DEFN(StartUnitControl_Request::ExecutionArgument_type::enmbeddedString, enmbeddedString, embeded_type, ExecutionArgument_type_enmbeddedString);
+    ITU_T_CHOICES_DEFN(StartUnitControl_Request::ExecutionArgument_type::enmbeddedString, enmbeddedString, embeded_pdv, ExecutionArgument_type_enmbeddedString);
 
 
     ITU_T_HOLDERH_DEFN(StartUnitControl_Request::unitControlName, unitControlName, Identifier);
@@ -2230,16 +2230,16 @@ namespace ISO_9506_MMS_1 {
     ITU_T_CHOICEC_DEFN(Data::array, array, Data::Array_type, Data_array);
     ITU_T_CHOICEC_DEFN(Data::structure, structure, Data::Structure_type, Data_structure);
     ITU_T_CHOICES_DEFN(Data::boolean, boolean, bool, Data_boolean);
-    ITU_T_CHOICES_DEFN(Data::bit_string, bit_string, bitstring_type, Data_bit_string);
+    ITU_T_CHOICES_DEFN(Data::bit_string, bit_string, bit_string, Data_bit_string);
     ITU_T_CHOICES_DEFN(Data::integer, integer, integer_type, Data_integer);
     ITU_T_CHOICES_DEFN(Data::unsignedV, unsignedV, integer_type, Data_unsignedV);
     ITU_T_CHOICES_DEFN(Data::floating_point, floating_point, FloatingPoint, Data_floating_point);
-    ITU_T_CHOICES_DEFN(Data::octet_string, octet_string, octetstring_type, Data_octet_string);
-    ITU_T_CHOICES_DEFN(Data::visible_string, visible_string, visiblestring_type, Data_visible_string);
-    ITU_T_CHOICES_DEFN(Data::generalized_time, generalized_time, gentime_type, Data_generalized_time);
+    ITU_T_CHOICES_DEFN(Data::octet_string, octet_string, octet_string, Data_octet_string);
+    ITU_T_CHOICES_DEFN(Data::visible_string, visible_string, visible_string, Data_visible_string);
+    ITU_T_CHOICES_DEFN(Data::generalized_time, generalized_time, gentime, Data_generalized_time);
     ITU_T_CHOICES_DEFN(Data::binary_time, binary_time, TimeOfDay, Data_binary_time);
     ITU_T_CHOICES_DEFN(Data::bcd, bcd, integer_type, Data_bcd);
-    ITU_T_CHOICES_DEFN(Data::booleanArray, booleanArray, bitstring_type, Data_booleanArray);
+    ITU_T_CHOICES_DEFN(Data::booleanArray, booleanArray, bit_string, Data_booleanArray);
     ITU_T_CHOICES_DEFN(Data::objId, objId, oid_type, Data_objId);
     ITU_T_CHOICES_DEFN(Data::mMSString, mMSString, MMSString, Data_mMSString);
 
@@ -2383,7 +2383,7 @@ namespace ISO_9506_MMS_1 {
             shared_ptr< MMS_Object_Module_1::Address> arg__address,
             shared_ptr< MMS_Object_Module_1::TypeDescription> arg__typeDescription,
             shared_ptr< Identifier> arg__accessControlList,
-            shared_ptr< visiblestring_type> arg__meaning) :
+            shared_ptr< visible_string> arg__meaning) :
     mmsDeletable_(arg__mmsDeletable),
     address_(arg__address),
     typeDescription_(arg__typeDescription),
@@ -2396,7 +2396,7 @@ namespace ISO_9506_MMS_1 {
     ITU_T_OPTIONAL_DEFN(GetVariableAccessAttributes_Response::address, address, MMS_Object_Module_1::Address);
     ITU_T_HOLDERH_DEFN(GetVariableAccessAttributes_Response::typeDescription, typeDescription, MMS_Object_Module_1::TypeDescription);
     ITU_T_OPTIONAL_DEFN(GetVariableAccessAttributes_Response::accessControlList, accessControlList, Identifier);
-    ITU_T_OPTIONAL_DEFN(GetVariableAccessAttributes_Response::meaning, meaning, visiblestring_type);
+    ITU_T_OPTIONAL_DEFN(GetVariableAccessAttributes_Response::meaning, meaning, visible_string);
 
     // sequence DefineNamedVariable-Request
 
@@ -2602,7 +2602,7 @@ namespace ISO_9506_MMS_1 {
     GetNamedTypeAttributes_Response::GetNamedTypeAttributes_Response(shared_ptr< bool> arg__mmsDeletable,
             shared_ptr< TypeSpecification> arg__typeSpecification,
             shared_ptr< Identifier> arg__accessControlList,
-            shared_ptr< visiblestring_type> arg__meaning) :
+            shared_ptr< visible_string> arg__meaning) :
     mmsDeletable_(arg__mmsDeletable),
     typeSpecification_(arg__typeSpecification),
     accessControlList_(arg__accessControlList),
@@ -2613,7 +2613,7 @@ namespace ISO_9506_MMS_1 {
     ITU_T_HOLDERH_DEFN(GetNamedTypeAttributes_Response::mmsDeletable, mmsDeletable, bool);
     ITU_T_HOLDERH_DEFN(GetNamedTypeAttributes_Response::typeSpecification, typeSpecification, TypeSpecification);
     ITU_T_OPTIONAL_DEFN(GetNamedTypeAttributes_Response::accessControlList, accessControlList, Identifier);
-    ITU_T_OPTIONAL_DEFN(GetNamedTypeAttributes_Response::meaning, meaning, visiblestring_type);
+    ITU_T_OPTIONAL_DEFN(GetNamedTypeAttributes_Response::meaning, meaning, visible_string);
 
     // sequence DeleteNamedType-Request
     const uint8_t DeleteNamedType_Request::scopeOfDelete_specific = 0;
@@ -2896,7 +2896,7 @@ namespace ISO_9506_MMS_1 {
 
     ReportSemaphoreEntryStatus_Request::ReportSemaphoreEntryStatus_Request(shared_ptr< ObjectName> arg__semaphoreName,
             shared_ptr< uint8_t> arg__state,
-            shared_ptr< octetstring_type> arg__entryIDToStartAfter) :
+            shared_ptr< octet_string> arg__entryIDToStartAfter) :
     semaphoreName_(arg__semaphoreName),
     state_(arg__state),
     entryIDToStartAfter_(arg__entryIDToStartAfter) {
@@ -2905,7 +2905,7 @@ namespace ISO_9506_MMS_1 {
 
     ITU_T_HOLDERH_DEFN(ReportSemaphoreEntryStatus_Request::semaphoreName, semaphoreName, ObjectName);
     ITU_T_HOLDERH_DEFN(ReportSemaphoreEntryStatus_Request::state, state, uint8_t);
-    ITU_T_OPTIONAL_DEFN(ReportSemaphoreEntryStatus_Request::entryIDToStartAfter, entryIDToStartAfter, octetstring_type);
+    ITU_T_OPTIONAL_DEFN(ReportSemaphoreEntryStatus_Request::entryIDToStartAfter, entryIDToStartAfter, octet_string);
 
     // sequence ReportSemaphoreEntryStatus-Response
 
@@ -2935,7 +2935,7 @@ namespace ISO_9506_MMS_1 {
     SemaphoreEntry::SemaphoreEntry() : entryID_(), entryClass_(), applicationReference_() {
     };
 
-    SemaphoreEntry::SemaphoreEntry(const octetstring_type& arg__entryID,
+    SemaphoreEntry::SemaphoreEntry(const octet_string& arg__entryID,
             const uint8_t& arg__entryClass,
             const MMS_Environment_1::ApplicationReference& arg__applicationReference) :
     entryID_(arg__entryID),
@@ -2943,7 +2943,7 @@ namespace ISO_9506_MMS_1 {
     applicationReference_(arg__applicationReference) {
     };
 
-    SemaphoreEntry::SemaphoreEntry(shared_ptr< octetstring_type> arg__entryID,
+    SemaphoreEntry::SemaphoreEntry(shared_ptr< octet_string> arg__entryID,
             shared_ptr< uint8_t> arg__entryClass,
             shared_ptr< MMS_Environment_1::ApplicationReference> arg__applicationReference,
             shared_ptr< Identifier> arg__namedToken,
@@ -2966,7 +2966,7 @@ namespace ISO_9506_MMS_1 {
     const bool SemaphoreEntry::relinquishIfConnectionLost__default = true;
 
 
-    ITU_T_HOLDERH_DEFN(SemaphoreEntry::entryID, entryID, octetstring_type);
+    ITU_T_HOLDERH_DEFN(SemaphoreEntry::entryID, entryID, octet_string);
     ITU_T_HOLDERH_DEFN(SemaphoreEntry::entryClass, entryClass, uint8_t);
     ITU_T_HOLDERH_DEFN(SemaphoreEntry::applicationReference, applicationReference, MMS_Environment_1::ApplicationReference);
     ITU_T_OPTIONAL_DEFN(SemaphoreEntry::namedToken, namedToken, Identifier);
@@ -3172,9 +3172,9 @@ namespace ISO_9506_MMS_1 {
 
     // choice CS-EventNotification
 
-    ITU_T_CHOICES_DEFN(CS_EventNotification_impl::string, string, visiblestring_type, CS_EventNotification_impl_string);
-    ITU_T_CHOICES_DEFN(CS_EventNotification_impl::index, index, integer_type, CS_EventNotification_impl_index);
-    ITU_T_CHOICES_DEFN(CS_EventNotification_impl::noEnhancement, noEnhancement, null_type, CS_EventNotification_impl_noEnhancement);
+    ITU_T_CHOICES_DEFN(CS_EventNotification::string, string, visible_string, CS_EventNotification_string);
+    ITU_T_CHOICES_DEFN(CS_EventNotification::index, index, integer_type, CS_EventNotification_index);
+    ITU_T_CHOICES_DEFN(CS_EventNotification::noEnhancement, noEnhancement, null_type, CS_EventNotification_noEnhancement);
 
     // sequence AcknowledgeEventNotification-Request
 
@@ -3307,9 +3307,9 @@ namespace ISO_9506_MMS_1 {
 
     // choice EN-Additional-Detail
 
-    ITU_T_CHOICES_DEFN(EN_Additional_Detail_impl::string, string, visiblestring_type, EN_Additional_Detail_impl_string);
-    ITU_T_CHOICES_DEFN(EN_Additional_Detail_impl::index, index, integer_type, EN_Additional_Detail_impl_index);
-    ITU_T_CHOICES_DEFN(EN_Additional_Detail_impl::noEnhancement, noEnhancement, null_type, EN_Additional_Detail_impl_noEnhancement);
+    ITU_T_CHOICES_DEFN(EN_Additional_Detail::string, string, visible_string, EN_Additional_Detail_string);
+    ITU_T_CHOICES_DEFN(EN_Additional_Detail::index, index, integer_type, EN_Additional_Detail_index);
+    ITU_T_CHOICES_DEFN(EN_Additional_Detail::noEnhancement, noEnhancement, null_type, EN_Additional_Detail_noEnhancement);
 
     // sequence GetAlarmEnrollmentSummary-Request
     const uint8_t GetAlarmEnrollmentSummary_Request::acknowledgementFilter_not_acked = 0;
@@ -3506,9 +3506,9 @@ namespace ISO_9506_MMS_1 {
 
     // choice CS-DefineEventCondition-Request
 
-    ITU_T_CHOICES_DEFN(CS_DefineEventCondition_Request_impl::string, string, visiblestring_type, CS_DefineEventCondition_Request_impl_string);
-    ITU_T_CHOICES_DEFN(CS_DefineEventCondition_Request_impl::index, index, integer_type, CS_DefineEventCondition_Request_impl_index);
-    ITU_T_CHOICES_DEFN(CS_DefineEventCondition_Request_impl::noEnhancement, noEnhancement, null_type, CS_DefineEventCondition_Request_impl_noEnhancement);
+    ITU_T_CHOICES_DEFN(CS_DefineEventCondition_Request::string, string, visible_string, CS_DefineEventCondition_Request_string);
+    ITU_T_CHOICES_DEFN(CS_DefineEventCondition_Request::index, index, integer_type, CS_DefineEventCondition_Request_index);
+    ITU_T_CHOICES_DEFN(CS_DefineEventCondition_Request::noEnhancement, noEnhancement, null_type, CS_DefineEventCondition_Request_noEnhancement);
 
     // choice DeleteEventCondition-Request
 
@@ -3591,7 +3591,7 @@ namespace ISO_9506_MMS_1 {
 
 
 
-    ITU_T_CHOICES_DEFN(CS_GetEventConditionAttributes_Response::DisplayEnhancement_type::string, string, visiblestring_type, DisplayEnhancement_type_string);
+    ITU_T_CHOICES_DEFN(CS_GetEventConditionAttributes_Response::DisplayEnhancement_type::string, string, visible_string, DisplayEnhancement_type_string);
     ITU_T_CHOICES_DEFN(CS_GetEventConditionAttributes_Response::DisplayEnhancement_type::index, index, integer_type, DisplayEnhancement_type_index);
     ITU_T_CHOICES_DEFN(CS_GetEventConditionAttributes_Response::DisplayEnhancement_type::noEnhancement, noEnhancement, null_type, DisplayEnhancement_type_noEnhancement);
 
@@ -3669,7 +3669,7 @@ namespace ISO_9506_MMS_1 {
 
 
 
-    ITU_T_CHOICES_DEFN(CS_AlterEventConditionMonitoring_Request::ChangeDisplay_type::string, string, visiblestring_type, ChangeDisplay_type_string);
+    ITU_T_CHOICES_DEFN(CS_AlterEventConditionMonitoring_Request::ChangeDisplay_type::string, string, visible_string, ChangeDisplay_type_string);
     ITU_T_CHOICES_DEFN(CS_AlterEventConditionMonitoring_Request::ChangeDisplay_type::index, index, integer_type, ChangeDisplay_type_index);
     ITU_T_CHOICES_DEFN(CS_AlterEventConditionMonitoring_Request::ChangeDisplay_type::noEnhancement, noEnhancement, null_type, ChangeDisplay_type_noEnhancement);
 
@@ -3781,9 +3781,9 @@ namespace ISO_9506_MMS_1 {
 
     // choice CS-DefineEventEnrollment-Request
 
-    ITU_T_CHOICES_DEFN(CS_DefineEventEnrollment_Request_impl::string, string, visiblestring_type, CS_DefineEventEnrollment_Request_impl_string);
-    ITU_T_CHOICES_DEFN(CS_DefineEventEnrollment_Request_impl::index, index, integer_type, CS_DefineEventEnrollment_Request_impl_index);
-    ITU_T_CHOICES_DEFN(CS_DefineEventEnrollment_Request_impl::noEnhancement, noEnhancement, null_type, CS_DefineEventEnrollment_Request_impl_noEnhancement);
+    ITU_T_CHOICES_DEFN(CS_DefineEventEnrollment_Request::string, string, visible_string, CS_DefineEventEnrollment_Request_string);
+    ITU_T_CHOICES_DEFN(CS_DefineEventEnrollment_Request::index, index, integer_type, CS_DefineEventEnrollment_Request_index);
+    ITU_T_CHOICES_DEFN(CS_DefineEventEnrollment_Request::noEnhancement, noEnhancement, null_type, CS_DefineEventEnrollment_Request_noEnhancement);
 
     // choice DeleteEventEnrollment-Request
 
@@ -3894,7 +3894,7 @@ namespace ISO_9506_MMS_1 {
 
 
 
-    ITU_T_CHOICES_DEFN(EEAttributes::DisplayEnhancement_type::string, string, visiblestring_type, DisplayEnhancement_type_string);
+    ITU_T_CHOICES_DEFN(EEAttributes::DisplayEnhancement_type::string, string, visible_string, DisplayEnhancement_type_string);
     ITU_T_CHOICES_DEFN(EEAttributes::DisplayEnhancement_type::index, index, integer_type, DisplayEnhancement_type_index);
     ITU_T_CHOICES_DEFN(EEAttributes::DisplayEnhancement_type::noEnhancement, noEnhancement, null_type, DisplayEnhancement_type_noEnhancement);
 
@@ -4001,7 +4001,7 @@ namespace ISO_9506_MMS_1 {
 
 
 
-    ITU_T_CHOICES_DEFN(CS_AlterEventEnrollment_Request::ChangeDisplay_type::string, string, visiblestring_type, ChangeDisplay_type_string);
+    ITU_T_CHOICES_DEFN(CS_AlterEventEnrollment_Request::ChangeDisplay_type::string, string, visible_string, ChangeDisplay_type_string);
     ITU_T_CHOICES_DEFN(CS_AlterEventEnrollment_Request::ChangeDisplay_type::index, index, integer_type, ChangeDisplay_type_index);
     ITU_T_CHOICES_DEFN(CS_AlterEventEnrollment_Request::ChangeDisplay_type::noEnhancement, noEnhancement, null_type, ChangeDisplay_type_noEnhancement);
 
@@ -4226,7 +4226,7 @@ namespace ISO_9506_MMS_1 {
 
 
     ITU_T_CHOICES_DEFN(ReadJournal_Request::RangeStartSpecification_type::startingTime, startingTime, TimeOfDay, RangeStartSpecification_type_startingTime);
-    ITU_T_CHOICES_DEFN(ReadJournal_Request::RangeStartSpecification_type::startingEntry, startingEntry, octetstring_type, RangeStartSpecification_type_startingEntry);
+    ITU_T_CHOICES_DEFN(ReadJournal_Request::RangeStartSpecification_type::startingEntry, startingEntry, octet_string, RangeStartSpecification_type_startingEntry);
 
 
 
@@ -4237,14 +4237,14 @@ namespace ISO_9506_MMS_1 {
     };
 
     ReadJournal_Request::EntryToStartAfter_type::EntryToStartAfter_type(const TimeOfDay& arg__timeSpecification,
-            const octetstring_type& arg__entrySpecification) :
+            const octet_string& arg__entrySpecification) :
     timeSpecification_(arg__timeSpecification),
     entrySpecification_(arg__entrySpecification) {
     };
 
 
     ITU_T_HOLDERH_DEFN(ReadJournal_Request::EntryToStartAfter_type::timeSpecification, timeSpecification, TimeOfDay);
-    ITU_T_HOLDERH_DEFN(ReadJournal_Request::EntryToStartAfter_type::entrySpecification, entrySpecification, octetstring_type);
+    ITU_T_HOLDERH_DEFN(ReadJournal_Request::EntryToStartAfter_type::entrySpecification, entrySpecification, octet_string);
 
 
     ITU_T_HOLDERH_DEFN(ReadJournal_Request::journalName, journalName, ObjectName);
@@ -4279,7 +4279,7 @@ namespace ISO_9506_MMS_1 {
     JournalEntry::JournalEntry() : entryIdentifier_(), originatingApplication_(), entryContent_() {
     };
 
-    JournalEntry::JournalEntry(const octetstring_type& arg__entryIdentifier,
+    JournalEntry::JournalEntry(const octet_string& arg__entryIdentifier,
             const MMS_Environment_1::ApplicationReference& arg__originatingApplication,
             const EntryContent& arg__entryContent) :
     entryIdentifier_(arg__entryIdentifier),
@@ -4288,7 +4288,7 @@ namespace ISO_9506_MMS_1 {
     };
 
 
-    ITU_T_HOLDERH_DEFN(JournalEntry::entryIdentifier, entryIdentifier, octetstring_type);
+    ITU_T_HOLDERH_DEFN(JournalEntry::entryIdentifier, entryIdentifier, octet_string);
     ITU_T_HOLDERH_DEFN(JournalEntry::originatingApplication, originatingApplication, MMS_Environment_1::ApplicationReference);
     ITU_T_HOLDERH_DEFN(JournalEntry::entryContent, entryContent, EntryContent);
 
@@ -4330,14 +4330,14 @@ namespace ISO_9506_MMS_1 {
     };
 
     InitializeJournal_Request::LimitSpecification_type::LimitSpecification_type(shared_ptr< TimeOfDay> arg__limitingTime,
-            shared_ptr< octetstring_type> arg__limitingEntry) :
+            shared_ptr< octet_string> arg__limitingEntry) :
     limitingTime_(arg__limitingTime),
     limitingEntry_(arg__limitingEntry) {
     };
 
 
     ITU_T_HOLDERH_DEFN(InitializeJournal_Request::LimitSpecification_type::limitingTime, limitingTime, TimeOfDay);
-    ITU_T_OPTIONAL_DEFN(InitializeJournal_Request::LimitSpecification_type::limitingEntry, limitingEntry, octetstring_type);
+    ITU_T_OPTIONAL_DEFN(InitializeJournal_Request::LimitSpecification_type::limitingEntry, limitingEntry, octet_string);
 
 
     ITU_T_HOLDERH_DEFN(InitializeJournal_Request::journalName, journalName, ObjectName);

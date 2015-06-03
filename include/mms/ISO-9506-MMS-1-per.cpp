@@ -48,13 +48,13 @@ namespace ISO_9506_MMS_1 {
             case MMSpdu_cancel_RequestPDU:
             {
                 ITU_T_SET_CONSTAINED_INDX(5, 13);
-                ITU_T_BIND_NUM_CONSTRS(*value<Cancel_RequestPDU > (false, MMSpdu_cancel_RequestPDU), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<Cancel_RequestPDU > (false, MMSpdu_cancel_RequestPDU), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                 break;
             }
             case MMSpdu_cancel_ResponsePDU:
             {
                 ITU_T_SET_CONSTAINED_INDX(6, 13);
-                ITU_T_BIND_NUM_CONSTRS(*value<Cancel_ResponsePDU > (false, MMSpdu_cancel_ResponsePDU), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<Cancel_ResponsePDU > (false, MMSpdu_cancel_ResponsePDU), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                 break;
             }
             case MMSpdu_cancel_ErrorPDU:
@@ -137,12 +137,12 @@ namespace ISO_9506_MMS_1 {
             }
             case 5:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<Cancel_RequestPDU > (true, MMSpdu_cancel_RequestPDU), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<Cancel_RequestPDU > (true, MMSpdu_cancel_RequestPDU), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                 break;
             }
             case 6:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<Cancel_ResponsePDU > (true, MMSpdu_cancel_ResponsePDU), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<Cancel_ResponsePDU > (true, MMSpdu_cancel_ResponsePDU), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                 break;
             }
             case 7:
@@ -201,7 +201,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_NUM_CONSTRS(*invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(listOfModifiers_);
         ITU_T_BIND_PER(*service_);
 
@@ -210,9 +210,9 @@ namespace ISO_9506_MMS_1 {
             ITU_T_EXTENTION_GROUPS_WRITE;
 
             if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
-                ITU_T_PER_START_OPEN;
+                ITU_T_START_OPEN;
                 ITU_T_BIND_PER(service_ext_);
-                ITU_T_PER_END_OPEN;
+                ITU_T_END_OPEN;
             }
 
         };
@@ -225,7 +225,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_BIND_NUM_CONSTRS(*invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(listOfModifiers_);
         ITU_T_BIND_PER(*service_);
 
@@ -234,12 +234,12 @@ namespace ISO_9506_MMS_1 {
             ITU_T_EXTENTION_GROUPS_READ;
 
             if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
-                ITU_T_PER_START_PARSE_OPEN;
+                ITU_T_START_OPEN;
                 ITU_T_BIND_PER(service_ext_);
-                ITU_T_PER_END_PARSE_OPEN;
+                ITU_T_END_OPEN;
             }
 
-            ITU_T_PER_CLEAR_EXTENTIONS(1);
+            ITU_T_CLEAR_EXTENTIONS(1);
         };
 
     }
@@ -250,7 +250,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_EXTENTION_WRITE_CHOICE(ConfirmedServiceRequest_additionalService, ConfirmedServiceRequest_changeAccessControl);
 
-        if (ITU_T_EXTENTION) {
+        if (!ITU_T_EXTENTION) {
             switch (type()) {
                 case ConfirmedServiceRequest_status:
                 {
@@ -435,13 +435,13 @@ namespace ISO_9506_MMS_1 {
                 case ConfirmedServiceRequest_uploadSegment:
                 {
                     ITU_T_SET_CONSTAINED_INDX(30, 77);
-                    ITU_T_BIND_NUM_CONSTRS(*value<UploadSegment_Request > (false, ConfirmedServiceRequest_uploadSegment), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
+                    ITU_T_BIND_NUM_CONSTRAINT(*value<UploadSegment_Request > (false, ConfirmedServiceRequest_uploadSegment), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 case ConfirmedServiceRequest_terminateUploadSequence:
                 {
                     ITU_T_SET_CONSTAINED_INDX(31, 77);
-                    ITU_T_BIND_NUM_CONSTRS(*value<TerminateUploadSequence_Request > (false, ConfirmedServiceRequest_terminateUploadSequence), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
+                    ITU_T_BIND_NUM_CONSTRAINT(*value<TerminateUploadSequence_Request > (false, ConfirmedServiceRequest_terminateUploadSequence), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 case ConfirmedServiceRequest_requestDomainDownload:
@@ -693,13 +693,13 @@ namespace ISO_9506_MMS_1 {
                 case ConfirmedServiceRequest_fileRead:
                 {
                     ITU_T_SET_CONSTAINED_INDX(73, 77);
-                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1A::FileRead_Request > (false, ConfirmedServiceRequest_fileRead), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
+                    ITU_T_BIND_NUM_CONSTRAINT(*value<ISO_9506_MMS_1A::FileRead_Request > (false, ConfirmedServiceRequest_fileRead), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 case ConfirmedServiceRequest_fileClose:
                 {
                     ITU_T_SET_CONSTAINED_INDX(74, 77);
-                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1A::FileClose_Request > (false, ConfirmedServiceRequest_fileClose), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
+                    ITU_T_BIND_NUM_CONSTRAINT(*value<ISO_9506_MMS_1A::FileClose_Request > (false, ConfirmedServiceRequest_fileClose), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 case ConfirmedServiceRequest_fileRename:
@@ -730,65 +730,65 @@ namespace ISO_9506_MMS_1 {
                 case ConfirmedServiceRequest_additionalService:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(0);
-                    ITU_T_PER_START_OPEN;
-                    ITU_T_BIND_PER(*value<AdditionalService_Request > (false, ConfirmedServiceRequest_additionalService));
-                    ITU_T_PER_END_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<AdditionalService_Request > (false, ConfirmedServiceRequest_additionalService));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceRequest_getDataExchangeAttributes:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(1);
-                    ITU_T_PER_START_OPEN;
-                    ITU_T_BIND_PER(*value<GetDataExchangeAttributes_Request > (false, ConfirmedServiceRequest_getDataExchangeAttributes));
-                    ITU_T_PER_END_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<GetDataExchangeAttributes_Request > (false, ConfirmedServiceRequest_getDataExchangeAttributes));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceRequest_exchangeData:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(2);
-                    ITU_T_PER_START_OPEN;
-                    ITU_T_BIND_PER(*value<ExchangeData_Request > (false, ConfirmedServiceRequest_exchangeData));
-                    ITU_T_PER_END_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<ExchangeData_Request > (false, ConfirmedServiceRequest_exchangeData));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceRequest_defineAccessControlList:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(3);
-                    ITU_T_PER_START_OPEN;
-                    ITU_T_BIND_PER(*value<DefineAccessControlList_Request > (false, ConfirmedServiceRequest_defineAccessControlList));
-                    ITU_T_PER_END_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<DefineAccessControlList_Request > (false, ConfirmedServiceRequest_defineAccessControlList));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceRequest_getAccessControlListAttributes:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(4);
-                    ITU_T_PER_START_OPEN;
-                    ITU_T_BIND_PER(*value<GetAccessControlListAttributes_Request > (false, ConfirmedServiceRequest_getAccessControlListAttributes));
-                    ITU_T_PER_END_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<GetAccessControlListAttributes_Request > (false, ConfirmedServiceRequest_getAccessControlListAttributes));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceRequest_reportAccessControlledObjects:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(5);
-                    ITU_T_PER_START_OPEN;
-                    ITU_T_BIND_PER(*value<ReportAccessControlledObjects_Request > (false, ConfirmedServiceRequest_reportAccessControlledObjects));
-                    ITU_T_PER_END_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<ReportAccessControlledObjects_Request > (false, ConfirmedServiceRequest_reportAccessControlledObjects));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceRequest_deleteAccessControlList:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(6);
-                    ITU_T_PER_START_OPEN;
-                    ITU_T_BIND_PER(*value<DeleteAccessControlList_Request > (false, ConfirmedServiceRequest_deleteAccessControlList));
-                    ITU_T_PER_END_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<DeleteAccessControlList_Request > (false, ConfirmedServiceRequest_deleteAccessControlList));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceRequest_changeAccessControl:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(7);
-                    ITU_T_PER_START_OPEN;
-                    ITU_T_BIND_PER(*value<ChangeAccessControl_Request > (false, ConfirmedServiceRequest_changeAccessControl));
-                    ITU_T_PER_END_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<ChangeAccessControl_Request > (false, ConfirmedServiceRequest_changeAccessControl));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 default:
@@ -802,7 +802,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_EXTENTION_READ;
 
-        if (ITU_T_EXTENTION) {
+        if (!ITU_T_EXTENTION) {
 
             ITU_T_GET_CONSTAINED_INDX(77);
 
@@ -959,12 +959,12 @@ namespace ISO_9506_MMS_1 {
                 }
                 case 30:
                 {
-                    ITU_T_BIND_NUM_CONSTRS(*value<UploadSegment_Request > (true, ConfirmedServiceRequest_uploadSegment), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
+                    ITU_T_BIND_NUM_CONSTRAINT(*value<UploadSegment_Request > (true, ConfirmedServiceRequest_uploadSegment), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 case 31:
                 {
-                    ITU_T_BIND_NUM_CONSTRS(*value<TerminateUploadSequence_Request > (true, ConfirmedServiceRequest_terminateUploadSequence), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
+                    ITU_T_BIND_NUM_CONSTRAINT(*value<TerminateUploadSequence_Request > (true, ConfirmedServiceRequest_terminateUploadSequence), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 case 32:
@@ -1174,12 +1174,12 @@ namespace ISO_9506_MMS_1 {
                 }
                 case 73:
                 {
-                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1A::FileRead_Request > (true, ConfirmedServiceRequest_fileRead), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
+                    ITU_T_BIND_NUM_CONSTRAINT(*value<ISO_9506_MMS_1A::FileRead_Request > (true, ConfirmedServiceRequest_fileRead), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 case 74:
                 {
-                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1A::FileClose_Request > (true, ConfirmedServiceRequest_fileClose), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
+                    ITU_T_BIND_NUM_CONSTRAINT(*value<ISO_9506_MMS_1A::FileClose_Request > (true, ConfirmedServiceRequest_fileClose), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 case 75:
@@ -1209,63 +1209,63 @@ namespace ISO_9506_MMS_1 {
             switch (__indx__) {
                 case 0:
                 {
-                    ITU_T_PER_START_PARSE_OPEN;
-                    ITU_T_BIND_PER(*value<AdditionalService_Request > (false, ConfirmedServiceRequest_additionalService));
-                    ITU_T_PER_END_PARSE_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<AdditionalService_Request > (true, ConfirmedServiceRequest_additionalService));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case 1:
                 {
-                    ITU_T_PER_START_PARSE_OPEN;
-                    ITU_T_BIND_PER(*value<GetDataExchangeAttributes_Request > (false, ConfirmedServiceRequest_getDataExchangeAttributes));
-                    ITU_T_PER_END_PARSE_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<GetDataExchangeAttributes_Request > (true, ConfirmedServiceRequest_getDataExchangeAttributes));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case 2:
                 {
-                    ITU_T_PER_START_PARSE_OPEN;
-                    ITU_T_BIND_PER(*value<ExchangeData_Request > (false, ConfirmedServiceRequest_exchangeData));
-                    ITU_T_PER_END_PARSE_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<ExchangeData_Request > (true, ConfirmedServiceRequest_exchangeData));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case 3:
                 {
-                    ITU_T_PER_START_PARSE_OPEN;
-                    ITU_T_BIND_PER(*value<DefineAccessControlList_Request > (false, ConfirmedServiceRequest_defineAccessControlList));
-                    ITU_T_PER_END_PARSE_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<DefineAccessControlList_Request > (true, ConfirmedServiceRequest_defineAccessControlList));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case 4:
                 {
-                    ITU_T_PER_START_PARSE_OPEN;
-                    ITU_T_BIND_PER(*value<GetAccessControlListAttributes_Request > (false, ConfirmedServiceRequest_getAccessControlListAttributes));
-                    ITU_T_PER_END_PARSE_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<GetAccessControlListAttributes_Request > (true, ConfirmedServiceRequest_getAccessControlListAttributes));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case 5:
                 {
-                    ITU_T_PER_START_PARSE_OPEN;
-                    ITU_T_BIND_PER(*value<ReportAccessControlledObjects_Request > (false, ConfirmedServiceRequest_reportAccessControlledObjects));
-                    ITU_T_PER_END_PARSE_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<ReportAccessControlledObjects_Request > (true, ConfirmedServiceRequest_reportAccessControlledObjects));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case 6:
                 {
-                    ITU_T_PER_START_PARSE_OPEN;
-                    ITU_T_BIND_PER(*value<DeleteAccessControlList_Request > (false, ConfirmedServiceRequest_deleteAccessControlList));
-                    ITU_T_PER_END_PARSE_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<DeleteAccessControlList_Request > (true, ConfirmedServiceRequest_deleteAccessControlList));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case 7:
                 {
-                    ITU_T_PER_START_PARSE_OPEN;
-                    ITU_T_BIND_PER(*value<ChangeAccessControl_Request > (false, ConfirmedServiceRequest_changeAccessControl));
-                    ITU_T_PER_END_PARSE_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<ChangeAccessControl_Request > (true, ConfirmedServiceRequest_changeAccessControl));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 default:
                 {
-                    ITU_T_PER_CLEAR_EXTENTION;
+                    ITU_T_CLEAR_EXTENTION;
                 }
             }
         }
@@ -1558,25 +1558,25 @@ namespace ISO_9506_MMS_1 {
             case Request_Detail_createProgramInvocation:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 7);
-                ITU_T_BIND_NUM_CONSTRS(*value<CS_CreateProgramInvocation_Request > (false, Request_Detail_createProgramInvocation), static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<CS_CreateProgramInvocation_Request > (false, Request_Detail_createProgramInvocation), static_cast<uint8_t> (0), static_cast<uint8_t> (2));
                 break;
             }
             case Request_Detail_start:
             {
                 ITU_T_SET_CONSTAINED_INDX(2, 7);
-                ITU_T_BIND_PER(*(*value<CS_Start_Request > (false, Request_Detail_start)));
+                ITU_T_BIND_PER(*value<CS_Start_Request > (false, Request_Detail_start));
                 break;
             }
             case Request_Detail_resume:
             {
                 ITU_T_SET_CONSTAINED_INDX(3, 7);
-                ITU_T_BIND_PER(*(*value<CS_Resume_Request > (false, Request_Detail_resume)));
+                ITU_T_BIND_PER(*value<CS_Resume_Request > (false, Request_Detail_resume));
                 break;
             }
             case Request_Detail_defineEventCondition:
             {
                 ITU_T_SET_CONSTAINED_INDX(4, 7);
-                ITU_T_BIND_PER(*(*value<CS_DefineEventCondition_Request > (false, Request_Detail_defineEventCondition)));
+                ITU_T_BIND_PER(*value<CS_DefineEventCondition_Request > (false, Request_Detail_defineEventCondition));
                 break;
             }
             case Request_Detail_alterEventConditionMonitoring:
@@ -1588,7 +1588,7 @@ namespace ISO_9506_MMS_1 {
             case Request_Detail_defineEventEnrollment:
             {
                 ITU_T_SET_CONSTAINED_INDX(6, 7);
-                ITU_T_BIND_PER(*(*value<CS_DefineEventEnrollment_Request > (false, Request_Detail_defineEventEnrollment)));
+                ITU_T_BIND_PER(*value<CS_DefineEventEnrollment_Request > (false, Request_Detail_defineEventEnrollment));
                 break;
             }
             case Request_Detail_alterEventEnrollment:
@@ -1615,22 +1615,22 @@ namespace ISO_9506_MMS_1 {
             }
             case 1:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<CS_CreateProgramInvocation_Request > (true, Request_Detail_createProgramInvocation), static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<CS_CreateProgramInvocation_Request > (true, Request_Detail_createProgramInvocation), static_cast<uint8_t> (0), static_cast<uint8_t> (2));
                 break;
             }
             case 2:
             {
-                ITU_T_BIND_PER(*(*value<CS_Start_Request > (true, Request_Detail_start)));
+                ITU_T_BIND_PER(*value<CS_Start_Request > (true, Request_Detail_start));
                 break;
             }
             case 3:
             {
-                ITU_T_BIND_PER(*(*value<CS_Resume_Request > (true, Request_Detail_resume)));
+                ITU_T_BIND_PER(*value<CS_Resume_Request > (true, Request_Detail_resume));
                 break;
             }
             case 4:
             {
-                ITU_T_BIND_PER(*(*value<CS_DefineEventCondition_Request > (true, Request_Detail_defineEventCondition)));
+                ITU_T_BIND_PER(*value<CS_DefineEventCondition_Request > (true, Request_Detail_defineEventCondition));
                 break;
             }
             case 5:
@@ -1640,7 +1640,7 @@ namespace ISO_9506_MMS_1 {
             }
             case 6:
             {
-                ITU_T_BIND_PER(*(*value<CS_DefineEventEnrollment_Request > (true, Request_Detail_defineEventEnrollment)));
+                ITU_T_BIND_PER(*value<CS_DefineEventEnrollment_Request > (true, Request_Detail_defineEventEnrollment));
                 break;
             }
             case 7:
@@ -1671,9 +1671,9 @@ namespace ISO_9506_MMS_1 {
             ITU_T_EXTENTION_GROUPS_WRITE;
 
             if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
-                ITU_T_PER_START_OPEN;
+                ITU_T_START_OPEN;
                 ITU_T_BIND_PER(service_ext_);
-                ITU_T_PER_END_OPEN;
+                ITU_T_END_OPEN;
             }
 
         };
@@ -1690,12 +1690,12 @@ namespace ISO_9506_MMS_1 {
             ITU_T_EXTENTION_GROUPS_READ;
 
             if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
-                ITU_T_PER_START_PARSE_OPEN;
+                ITU_T_START_OPEN;
                 ITU_T_BIND_PER(service_ext_);
-                ITU_T_PER_END_PARSE_OPEN;
+                ITU_T_END_OPEN;
             }
 
-            ITU_T_PER_CLEAR_EXTENTIONS(1);
+            ITU_T_CLEAR_EXTENTIONS(1);
         };
 
     }
@@ -1767,7 +1767,7 @@ namespace ISO_9506_MMS_1 {
             case Unconfirmed_Detail_eventNotification:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 1);
-                ITU_T_BIND_PER(*(*value<CS_EventNotification > (false, Unconfirmed_Detail_eventNotification)));
+                ITU_T_BIND_PER(*value<CS_EventNotification > (false, Unconfirmed_Detail_eventNotification));
                 break;
             }
             default:
@@ -1788,7 +1788,7 @@ namespace ISO_9506_MMS_1 {
             }
             case 1:
             {
-                ITU_T_BIND_PER(*(*value<CS_EventNotification > (true, Unconfirmed_Detail_eventNotification)));
+                ITU_T_BIND_PER(*value<CS_EventNotification > (true, Unconfirmed_Detail_eventNotification));
                 break;
             }
             default:
@@ -1807,7 +1807,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_EXTENTION_WRITE;
 
-        ITU_T_BIND_NUM_CONSTRS(*invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*service_);
 
         if (ITU_T_EXTENTION) {
@@ -1815,9 +1815,9 @@ namespace ISO_9506_MMS_1 {
             ITU_T_EXTENTION_GROUPS_WRITE;
 
             if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
-                ITU_T_PER_START_OPEN;
+                ITU_T_START_OPEN;
                 ITU_T_BIND_PER(service_ext_);
-                ITU_T_PER_END_OPEN;
+                ITU_T_END_OPEN;
             }
 
         };
@@ -1827,7 +1827,7 @@ namespace ISO_9506_MMS_1 {
     template<> void Confirmed_ResponsePDU::serialize(boost::asn1::x691::input_coder& arch) {
 
         ITU_T_EXTENTION_READ;
-        ITU_T_BIND_NUM_CONSTRS(*invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*service_);
 
         if (ITU_T_EXTENTION) {
@@ -1835,12 +1835,12 @@ namespace ISO_9506_MMS_1 {
             ITU_T_EXTENTION_GROUPS_READ;
 
             if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
-                ITU_T_PER_START_PARSE_OPEN;
+                ITU_T_START_OPEN;
                 ITU_T_BIND_PER(service_ext_);
-                ITU_T_PER_END_PARSE_OPEN;
+                ITU_T_END_OPEN;
             }
 
-            ITU_T_PER_CLEAR_EXTENTIONS(1);
+            ITU_T_CLEAR_EXTENTIONS(1);
         };
 
     }
@@ -1851,7 +1851,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_EXTENTION_WRITE_CHOICE(ConfirmedServiceResponse_additionalService, ConfirmedServiceResponse_changeAccessControl);
 
-        if (ITU_T_EXTENTION) {
+        if (!ITU_T_EXTENTION) {
             switch (type()) {
                 case ConfirmedServiceResponse_status:
                 {
@@ -2138,7 +2138,7 @@ namespace ISO_9506_MMS_1 {
                 case ConfirmedServiceResponse_deleteEventCondition:
                 {
                     ITU_T_SET_CONSTAINED_INDX(47, 76);
-                    ITU_T_BIND_NUM_CONSTRS(*value<DeleteEventCondition_Response > (false, ConfirmedServiceResponse_deleteEventCondition), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                    ITU_T_BIND_NUM_CONSTRAINT(*value<DeleteEventCondition_Response > (false, ConfirmedServiceResponse_deleteEventCondition), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 case ConfirmedServiceResponse_getEventConditionAttributes:
@@ -2174,7 +2174,7 @@ namespace ISO_9506_MMS_1 {
                 case ConfirmedServiceResponse_deleteEventAction:
                 {
                     ITU_T_SET_CONSTAINED_INDX(53, 76);
-                    ITU_T_BIND_NUM_CONSTRS(*value<DeleteEventAction_Response > (false, ConfirmedServiceResponse_deleteEventAction), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                    ITU_T_BIND_NUM_CONSTRAINT(*value<DeleteEventAction_Response > (false, ConfirmedServiceResponse_deleteEventAction), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 case ConfirmedServiceResponse_getEventActionAttributes:
@@ -2186,7 +2186,7 @@ namespace ISO_9506_MMS_1 {
                 case ConfirmedServiceResponse_reportEventActionStatus:
                 {
                     ITU_T_SET_CONSTAINED_INDX(55, 76);
-                    ITU_T_BIND_NUM_CONSTRS(*value<ReportEventActionStatus_Response > (false, ConfirmedServiceResponse_reportEventActionStatus), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                    ITU_T_BIND_NUM_CONSTRAINT(*value<ReportEventActionStatus_Response > (false, ConfirmedServiceResponse_reportEventActionStatus), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 case ConfirmedServiceResponse_defineEventEnrollment:
@@ -2198,7 +2198,7 @@ namespace ISO_9506_MMS_1 {
                 case ConfirmedServiceResponse_deleteEventEnrollment:
                 {
                     ITU_T_SET_CONSTAINED_INDX(57, 76);
-                    ITU_T_BIND_NUM_CONSTRS(*value<DeleteEventEnrollment_Response > (false, ConfirmedServiceResponse_deleteEventEnrollment), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                    ITU_T_BIND_NUM_CONSTRAINT(*value<DeleteEventEnrollment_Response > (false, ConfirmedServiceResponse_deleteEventEnrollment), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 case ConfirmedServiceResponse_alterEventEnrollment:
@@ -2252,7 +2252,7 @@ namespace ISO_9506_MMS_1 {
                 case ConfirmedServiceResponse_initializeJournal:
                 {
                     ITU_T_SET_CONSTAINED_INDX(66, 76);
-                    ITU_T_BIND_NUM_CONSTRS(*value<InitializeJournal_Response > (false, ConfirmedServiceResponse_initializeJournal), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                    ITU_T_BIND_NUM_CONSTRAINT(*value<InitializeJournal_Response > (false, ConfirmedServiceResponse_initializeJournal), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 case ConfirmedServiceResponse_reportJournalStatus:
@@ -2325,65 +2325,65 @@ namespace ISO_9506_MMS_1 {
                 case ConfirmedServiceResponse_additionalService:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(0);
-                    ITU_T_PER_START_OPEN;
-                    ITU_T_BIND_PER(*value<AdditionalService_Response > (false, ConfirmedServiceResponse_additionalService));
-                    ITU_T_PER_END_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<AdditionalService_Response > (false, ConfirmedServiceResponse_additionalService));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceResponse_getDataExchangeAttributes:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(1);
-                    ITU_T_PER_START_OPEN;
-                    ITU_T_BIND_PER(*value<GetDataExchangeAttributes_Response > (false, ConfirmedServiceResponse_getDataExchangeAttributes));
-                    ITU_T_PER_END_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<GetDataExchangeAttributes_Response > (false, ConfirmedServiceResponse_getDataExchangeAttributes));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceResponse_exchangeData:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(2);
-                    ITU_T_PER_START_OPEN;
-                    ITU_T_BIND_PER(*value<ExchangeData_Response > (false, ConfirmedServiceResponse_exchangeData));
-                    ITU_T_PER_END_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<ExchangeData_Response > (false, ConfirmedServiceResponse_exchangeData));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceResponse_defineAccessControlList:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(3);
-                    ITU_T_PER_START_OPEN;
-                    ITU_T_BIND_PER(*value<DefineAccessControlList_Response > (false, ConfirmedServiceResponse_defineAccessControlList));
-                    ITU_T_PER_END_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<DefineAccessControlList_Response > (false, ConfirmedServiceResponse_defineAccessControlList));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceResponse_getAccessControlListAttributes:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(4);
-                    ITU_T_PER_START_OPEN;
-                    ITU_T_BIND_PER(*value<GetAccessControlListAttributes_Response > (false, ConfirmedServiceResponse_getAccessControlListAttributes));
-                    ITU_T_PER_END_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<GetAccessControlListAttributes_Response > (false, ConfirmedServiceResponse_getAccessControlListAttributes));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceResponse_reportAccessControlledObjects:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(5);
-                    ITU_T_PER_START_OPEN;
-                    ITU_T_BIND_PER(*value<ReportAccessControlledObjects_Response > (false, ConfirmedServiceResponse_reportAccessControlledObjects));
-                    ITU_T_PER_END_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<ReportAccessControlledObjects_Response > (false, ConfirmedServiceResponse_reportAccessControlledObjects));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceResponse_deleteAccessControlList:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(6);
-                    ITU_T_PER_START_OPEN;
-                    ITU_T_BIND_PER(*value<DeleteAccessControlList_Response > (false, ConfirmedServiceResponse_deleteAccessControlList));
-                    ITU_T_PER_END_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<DeleteAccessControlList_Response > (false, ConfirmedServiceResponse_deleteAccessControlList));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceResponse_changeAccessControl:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(7);
-                    ITU_T_PER_START_OPEN;
-                    ITU_T_BIND_PER(*value<ChangeAccessControl_Response > (false, ConfirmedServiceResponse_changeAccessControl));
-                    ITU_T_PER_END_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<ChangeAccessControl_Response > (false, ConfirmedServiceResponse_changeAccessControl));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 default:
@@ -2397,7 +2397,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_EXTENTION_READ;
 
-        if (ITU_T_EXTENTION) {
+        if (!ITU_T_EXTENTION) {
 
             ITU_T_GET_CONSTAINED_INDX(76);
 
@@ -2639,7 +2639,7 @@ namespace ISO_9506_MMS_1 {
                 }
                 case 47:
                 {
-                    ITU_T_BIND_NUM_CONSTRS(*value<DeleteEventCondition_Response > (true, ConfirmedServiceResponse_deleteEventCondition), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                    ITU_T_BIND_NUM_CONSTRAINT(*value<DeleteEventCondition_Response > (true, ConfirmedServiceResponse_deleteEventCondition), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 case 48:
@@ -2669,7 +2669,7 @@ namespace ISO_9506_MMS_1 {
                 }
                 case 53:
                 {
-                    ITU_T_BIND_NUM_CONSTRS(*value<DeleteEventAction_Response > (true, ConfirmedServiceResponse_deleteEventAction), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                    ITU_T_BIND_NUM_CONSTRAINT(*value<DeleteEventAction_Response > (true, ConfirmedServiceResponse_deleteEventAction), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 case 54:
@@ -2679,7 +2679,7 @@ namespace ISO_9506_MMS_1 {
                 }
                 case 55:
                 {
-                    ITU_T_BIND_NUM_CONSTRS(*value<ReportEventActionStatus_Response > (true, ConfirmedServiceResponse_reportEventActionStatus), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                    ITU_T_BIND_NUM_CONSTRAINT(*value<ReportEventActionStatus_Response > (true, ConfirmedServiceResponse_reportEventActionStatus), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 case 56:
@@ -2689,7 +2689,7 @@ namespace ISO_9506_MMS_1 {
                 }
                 case 57:
                 {
-                    ITU_T_BIND_NUM_CONSTRS(*value<DeleteEventEnrollment_Response > (true, ConfirmedServiceResponse_deleteEventEnrollment), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                    ITU_T_BIND_NUM_CONSTRAINT(*value<DeleteEventEnrollment_Response > (true, ConfirmedServiceResponse_deleteEventEnrollment), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 case 58:
@@ -2734,7 +2734,7 @@ namespace ISO_9506_MMS_1 {
                 }
                 case 66:
                 {
-                    ITU_T_BIND_NUM_CONSTRS(*value<InitializeJournal_Response > (true, ConfirmedServiceResponse_initializeJournal), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                    ITU_T_BIND_NUM_CONSTRAINT(*value<InitializeJournal_Response > (true, ConfirmedServiceResponse_initializeJournal), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 case 67:
@@ -2799,63 +2799,63 @@ namespace ISO_9506_MMS_1 {
             switch (__indx__) {
                 case 0:
                 {
-                    ITU_T_PER_START_PARSE_OPEN;
-                    ITU_T_BIND_PER(*value<AdditionalService_Response > (false, ConfirmedServiceResponse_additionalService));
-                    ITU_T_PER_END_PARSE_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<AdditionalService_Response > (true, ConfirmedServiceResponse_additionalService));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case 1:
                 {
-                    ITU_T_PER_START_PARSE_OPEN;
-                    ITU_T_BIND_PER(*value<GetDataExchangeAttributes_Response > (false, ConfirmedServiceResponse_getDataExchangeAttributes));
-                    ITU_T_PER_END_PARSE_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<GetDataExchangeAttributes_Response > (true, ConfirmedServiceResponse_getDataExchangeAttributes));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case 2:
                 {
-                    ITU_T_PER_START_PARSE_OPEN;
-                    ITU_T_BIND_PER(*value<ExchangeData_Response > (false, ConfirmedServiceResponse_exchangeData));
-                    ITU_T_PER_END_PARSE_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<ExchangeData_Response > (true, ConfirmedServiceResponse_exchangeData));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case 3:
                 {
-                    ITU_T_PER_START_PARSE_OPEN;
-                    ITU_T_BIND_PER(*value<DefineAccessControlList_Response > (false, ConfirmedServiceResponse_defineAccessControlList));
-                    ITU_T_PER_END_PARSE_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<DefineAccessControlList_Response > (true, ConfirmedServiceResponse_defineAccessControlList));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case 4:
                 {
-                    ITU_T_PER_START_PARSE_OPEN;
-                    ITU_T_BIND_PER(*value<GetAccessControlListAttributes_Response > (false, ConfirmedServiceResponse_getAccessControlListAttributes));
-                    ITU_T_PER_END_PARSE_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<GetAccessControlListAttributes_Response > (true, ConfirmedServiceResponse_getAccessControlListAttributes));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case 5:
                 {
-                    ITU_T_PER_START_PARSE_OPEN;
-                    ITU_T_BIND_PER(*value<ReportAccessControlledObjects_Response > (false, ConfirmedServiceResponse_reportAccessControlledObjects));
-                    ITU_T_PER_END_PARSE_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<ReportAccessControlledObjects_Response > (true, ConfirmedServiceResponse_reportAccessControlledObjects));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case 6:
                 {
-                    ITU_T_PER_START_PARSE_OPEN;
-                    ITU_T_BIND_PER(*value<DeleteAccessControlList_Response > (false, ConfirmedServiceResponse_deleteAccessControlList));
-                    ITU_T_PER_END_PARSE_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<DeleteAccessControlList_Response > (true, ConfirmedServiceResponse_deleteAccessControlList));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 case 7:
                 {
-                    ITU_T_PER_START_PARSE_OPEN;
-                    ITU_T_BIND_PER(*value<ChangeAccessControl_Response > (false, ConfirmedServiceResponse_changeAccessControl));
-                    ITU_T_PER_END_PARSE_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<ChangeAccessControl_Response > (true, ConfirmedServiceResponse_changeAccessControl));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 default:
                 {
-                    ITU_T_PER_CLEAR_EXTENTION;
+                    ITU_T_CLEAR_EXTENTION;
                 }
             }
         }
@@ -3208,8 +3208,8 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_NUM_CONSTRS(*invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(modifierPosition_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(modifierPosition_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*serviceError_);
     }
 
@@ -3217,8 +3217,8 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_BIND_NUM_CONSTRS(*invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(modifierPosition_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRAINT(modifierPosition_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*serviceError_);
     }
 
@@ -3255,73 +3255,73 @@ namespace ISO_9506_MMS_1 {
             case ErrorClass_type_vmd_state:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 12);
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, ErrorClass_type_vmd_state), static_cast<uint8_t> (0), static_cast<uint8_t> (4));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (false, ErrorClass_type_vmd_state), static_cast<uint8_t> (0), static_cast<uint8_t> (4));
                 break;
             }
             case ErrorClass_type_application_reference:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 12);
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, ErrorClass_type_application_reference), static_cast<uint8_t> (0), static_cast<uint8_t> (4));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (false, ErrorClass_type_application_reference), static_cast<uint8_t> (0), static_cast<uint8_t> (4));
                 break;
             }
             case ErrorClass_type_definition:
             {
                 ITU_T_SET_CONSTAINED_INDX(2, 12);
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, ErrorClass_type_definition), static_cast<uint8_t> (0), static_cast<uint8_t> (6));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (false, ErrorClass_type_definition), static_cast<uint8_t> (0), static_cast<uint8_t> (6));
                 break;
             }
             case ErrorClass_type_resource:
             {
                 ITU_T_SET_CONSTAINED_INDX(3, 12);
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, ErrorClass_type_resource), static_cast<uint8_t> (0), static_cast<uint8_t> (5));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (false, ErrorClass_type_resource), static_cast<uint8_t> (0), static_cast<uint8_t> (5));
                 break;
             }
             case ErrorClass_type_service:
             {
                 ITU_T_SET_CONSTAINED_INDX(4, 12);
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, ErrorClass_type_service), static_cast<uint8_t> (0), static_cast<uint8_t> (5));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (false, ErrorClass_type_service), static_cast<uint8_t> (0), static_cast<uint8_t> (5));
                 break;
             }
             case ErrorClass_type_service_preempt:
             {
                 ITU_T_SET_CONSTAINED_INDX(5, 12);
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, ErrorClass_type_service_preempt), static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (false, ErrorClass_type_service_preempt), static_cast<uint8_t> (0), static_cast<uint8_t> (3));
                 break;
             }
             case ErrorClass_type_time_resolution:
             {
                 ITU_T_SET_CONSTAINED_INDX(6, 12);
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, ErrorClass_type_time_resolution), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (false, ErrorClass_type_time_resolution), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
                 break;
             }
             case ErrorClass_type_access:
             {
                 ITU_T_SET_CONSTAINED_INDX(7, 12);
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, ErrorClass_type_access), static_cast<uint8_t> (0), static_cast<uint8_t> (4));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (false, ErrorClass_type_access), static_cast<uint8_t> (0), static_cast<uint8_t> (4));
                 break;
             }
             case ErrorClass_type_initiate:
             {
                 ITU_T_SET_CONSTAINED_INDX(8, 12);
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, ErrorClass_type_initiate), static_cast<uint8_t> (0), static_cast<uint8_t> (7));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (false, ErrorClass_type_initiate), static_cast<uint8_t> (0), static_cast<uint8_t> (7));
                 break;
             }
             case ErrorClass_type_conclude:
             {
                 ITU_T_SET_CONSTAINED_INDX(9, 12);
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, ErrorClass_type_conclude), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (false, ErrorClass_type_conclude), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
                 break;
             }
             case ErrorClass_type_cancel:
             {
                 ITU_T_SET_CONSTAINED_INDX(10, 12);
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, ErrorClass_type_cancel), static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (false, ErrorClass_type_cancel), static_cast<uint8_t> (0), static_cast<uint8_t> (2));
                 break;
             }
             case ErrorClass_type_file:
             {
                 ITU_T_SET_CONSTAINED_INDX(11, 12);
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, ErrorClass_type_file), static_cast<uint8_t> (0), static_cast<uint8_t> (9));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (false, ErrorClass_type_file), static_cast<uint8_t> (0), static_cast<uint8_t> (9));
                 break;
             }
             case ErrorClass_type_others:
@@ -3343,62 +3343,62 @@ namespace ISO_9506_MMS_1 {
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, ErrorClass_type_vmd_state), static_cast<uint8_t> (0), static_cast<uint8_t> (4));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (true, ErrorClass_type_vmd_state), static_cast<uint8_t> (0), static_cast<uint8_t> (4));
                 break;
             }
             case 1:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, ErrorClass_type_application_reference), static_cast<uint8_t> (0), static_cast<uint8_t> (4));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (true, ErrorClass_type_application_reference), static_cast<uint8_t> (0), static_cast<uint8_t> (4));
                 break;
             }
             case 2:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, ErrorClass_type_definition), static_cast<uint8_t> (0), static_cast<uint8_t> (6));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (true, ErrorClass_type_definition), static_cast<uint8_t> (0), static_cast<uint8_t> (6));
                 break;
             }
             case 3:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, ErrorClass_type_resource), static_cast<uint8_t> (0), static_cast<uint8_t> (5));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (true, ErrorClass_type_resource), static_cast<uint8_t> (0), static_cast<uint8_t> (5));
                 break;
             }
             case 4:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, ErrorClass_type_service), static_cast<uint8_t> (0), static_cast<uint8_t> (5));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (true, ErrorClass_type_service), static_cast<uint8_t> (0), static_cast<uint8_t> (5));
                 break;
             }
             case 5:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, ErrorClass_type_service_preempt), static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (true, ErrorClass_type_service_preempt), static_cast<uint8_t> (0), static_cast<uint8_t> (3));
                 break;
             }
             case 6:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, ErrorClass_type_time_resolution), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (true, ErrorClass_type_time_resolution), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
                 break;
             }
             case 7:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, ErrorClass_type_access), static_cast<uint8_t> (0), static_cast<uint8_t> (4));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (true, ErrorClass_type_access), static_cast<uint8_t> (0), static_cast<uint8_t> (4));
                 break;
             }
             case 8:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, ErrorClass_type_initiate), static_cast<uint8_t> (0), static_cast<uint8_t> (7));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (true, ErrorClass_type_initiate), static_cast<uint8_t> (0), static_cast<uint8_t> (7));
                 break;
             }
             case 9:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, ErrorClass_type_conclude), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (true, ErrorClass_type_conclude), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
                 break;
             }
             case 10:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, ErrorClass_type_cancel), static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (true, ErrorClass_type_cancel), static_cast<uint8_t> (0), static_cast<uint8_t> (2));
                 break;
             }
             case 11:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, ErrorClass_type_file), static_cast<uint8_t> (0), static_cast<uint8_t> (9));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (true, ErrorClass_type_file), static_cast<uint8_t> (0), static_cast<uint8_t> (9));
                 break;
             }
             case 12:
@@ -3419,49 +3419,49 @@ namespace ISO_9506_MMS_1 {
             case ServiceSpecificInfo_type_obtainFile:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 11);
-                ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1A::ObtainFile_Error > (false, ServiceSpecificInfo_type_obtainFile), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<ISO_9506_MMS_1A::ObtainFile_Error > (false, ServiceSpecificInfo_type_obtainFile), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
                 break;
             }
             case ServiceSpecificInfo_type_start:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 11);
-                ITU_T_BIND_NUM_CONSTRS(*value<Start_Error > (false, ServiceSpecificInfo_type_start), static_cast<uint8_t> (0), static_cast<uint8_t> (8));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<Start_Error > (false, ServiceSpecificInfo_type_start), static_cast<uint8_t> (0), static_cast<uint8_t> (8));
                 break;
             }
             case ServiceSpecificInfo_type_stop:
             {
                 ITU_T_SET_CONSTAINED_INDX(2, 11);
-                ITU_T_BIND_NUM_CONSTRS(*value<Stop_Error > (false, ServiceSpecificInfo_type_stop), static_cast<uint8_t> (0), static_cast<uint8_t> (8));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<Stop_Error > (false, ServiceSpecificInfo_type_stop), static_cast<uint8_t> (0), static_cast<uint8_t> (8));
                 break;
             }
             case ServiceSpecificInfo_type_resume:
             {
                 ITU_T_SET_CONSTAINED_INDX(3, 11);
-                ITU_T_BIND_NUM_CONSTRS(*value<Resume_Error > (false, ServiceSpecificInfo_type_resume), static_cast<uint8_t> (0), static_cast<uint8_t> (8));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<Resume_Error > (false, ServiceSpecificInfo_type_resume), static_cast<uint8_t> (0), static_cast<uint8_t> (8));
                 break;
             }
             case ServiceSpecificInfo_type_reset:
             {
                 ITU_T_SET_CONSTAINED_INDX(4, 11);
-                ITU_T_BIND_NUM_CONSTRS(*value<Reset_Error > (false, ServiceSpecificInfo_type_reset), static_cast<uint8_t> (0), static_cast<uint8_t> (8));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<Reset_Error > (false, ServiceSpecificInfo_type_reset), static_cast<uint8_t> (0), static_cast<uint8_t> (8));
                 break;
             }
             case ServiceSpecificInfo_type_deleteVariableAccess:
             {
                 ITU_T_SET_CONSTAINED_INDX(5, 11);
-                ITU_T_BIND_NUM_CONSTRS(*value<DeleteVariableAccess_Error > (false, ServiceSpecificInfo_type_deleteVariableAccess), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<DeleteVariableAccess_Error > (false, ServiceSpecificInfo_type_deleteVariableAccess), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                 break;
             }
             case ServiceSpecificInfo_type_deleteNamedVariableList:
             {
                 ITU_T_SET_CONSTAINED_INDX(6, 11);
-                ITU_T_BIND_NUM_CONSTRS(*value<DeleteNamedVariableList_Error > (false, ServiceSpecificInfo_type_deleteNamedVariableList), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<DeleteNamedVariableList_Error > (false, ServiceSpecificInfo_type_deleteNamedVariableList), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                 break;
             }
             case ServiceSpecificInfo_type_deleteNamedType:
             {
                 ITU_T_SET_CONSTAINED_INDX(7, 11);
-                ITU_T_BIND_NUM_CONSTRS(*value<DeleteNamedType_Error > (false, ServiceSpecificInfo_type_deleteNamedType), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<DeleteNamedType_Error > (false, ServiceSpecificInfo_type_deleteNamedType), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                 break;
             }
             case ServiceSpecificInfo_type_defineEventEnrollment_Error:
@@ -3473,7 +3473,7 @@ namespace ISO_9506_MMS_1 {
             case ServiceSpecificInfo_type_fileRename:
             {
                 ITU_T_SET_CONSTAINED_INDX(9, 11);
-                ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1A::FileRename_Error > (false, ServiceSpecificInfo_type_fileRename), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<ISO_9506_MMS_1A::FileRename_Error > (false, ServiceSpecificInfo_type_fileRename), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
                 break;
             }
             case ServiceSpecificInfo_type_additionalService:
@@ -3485,7 +3485,7 @@ namespace ISO_9506_MMS_1 {
             case ServiceSpecificInfo_type_changeAccessControl:
             {
                 ITU_T_SET_CONSTAINED_INDX(11, 11);
-                ITU_T_BIND_NUM_CONSTRS(*value<ChangeAccessControl_Error > (false, ServiceSpecificInfo_type_changeAccessControl), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<ChangeAccessControl_Error > (false, ServiceSpecificInfo_type_changeAccessControl), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                 break;
             }
             default:
@@ -3501,42 +3501,42 @@ namespace ISO_9506_MMS_1 {
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1A::ObtainFile_Error > (true, ServiceSpecificInfo_type_obtainFile), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<ISO_9506_MMS_1A::ObtainFile_Error > (true, ServiceSpecificInfo_type_obtainFile), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
                 break;
             }
             case 1:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<Start_Error > (true, ServiceSpecificInfo_type_start), static_cast<uint8_t> (0), static_cast<uint8_t> (8));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<Start_Error > (true, ServiceSpecificInfo_type_start), static_cast<uint8_t> (0), static_cast<uint8_t> (8));
                 break;
             }
             case 2:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<Stop_Error > (true, ServiceSpecificInfo_type_stop), static_cast<uint8_t> (0), static_cast<uint8_t> (8));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<Stop_Error > (true, ServiceSpecificInfo_type_stop), static_cast<uint8_t> (0), static_cast<uint8_t> (8));
                 break;
             }
             case 3:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<Resume_Error > (true, ServiceSpecificInfo_type_resume), static_cast<uint8_t> (0), static_cast<uint8_t> (8));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<Resume_Error > (true, ServiceSpecificInfo_type_resume), static_cast<uint8_t> (0), static_cast<uint8_t> (8));
                 break;
             }
             case 4:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<Reset_Error > (true, ServiceSpecificInfo_type_reset), static_cast<uint8_t> (0), static_cast<uint8_t> (8));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<Reset_Error > (true, ServiceSpecificInfo_type_reset), static_cast<uint8_t> (0), static_cast<uint8_t> (8));
                 break;
             }
             case 5:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<DeleteVariableAccess_Error > (true, ServiceSpecificInfo_type_deleteVariableAccess), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<DeleteVariableAccess_Error > (true, ServiceSpecificInfo_type_deleteVariableAccess), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                 break;
             }
             case 6:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<DeleteNamedVariableList_Error > (true, ServiceSpecificInfo_type_deleteNamedVariableList), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<DeleteNamedVariableList_Error > (true, ServiceSpecificInfo_type_deleteNamedVariableList), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                 break;
             }
             case 7:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<DeleteNamedType_Error > (true, ServiceSpecificInfo_type_deleteNamedType), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<DeleteNamedType_Error > (true, ServiceSpecificInfo_type_deleteNamedType), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                 break;
             }
             case 8:
@@ -3546,7 +3546,7 @@ namespace ISO_9506_MMS_1 {
             }
             case 9:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1A::FileRename_Error > (true, ServiceSpecificInfo_type_fileRename), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<ISO_9506_MMS_1A::FileRename_Error > (true, ServiceSpecificInfo_type_fileRename), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
                 break;
             }
             case 10:
@@ -3556,7 +3556,7 @@ namespace ISO_9506_MMS_1 {
             }
             case 11:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<ChangeAccessControl_Error > (true, ServiceSpecificInfo_type_changeAccessControl), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<ChangeAccessControl_Error > (true, ServiceSpecificInfo_type_changeAccessControl), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                 break;
             }
             default:
@@ -3746,17 +3746,17 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_EXTENTION_WRITE_CHOICE(ObjectClass_csObjectClass, ObjectClass_csObjectClass);
 
-        if (ITU_T_EXTENTION) {
-            ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, ObjectClass_basicObjectClass), static_cast<uint8_t> (0), static_cast<uint8_t> (13))
+        if (!ITU_T_EXTENTION) {
+            ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (false, ObjectClass_basicObjectClass), static_cast<uint8_t> (0), static_cast<uint8_t> (13));
         }
         else {
             switch (type()) {
                 case ObjectClass_csObjectClass:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(0);
-                    ITU_T_PER_START_OPEN;
-                    ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, ObjectClass_csObjectClass), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
-                    ITU_T_PER_END_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_NUM_CONSTRAINT(value<uint8_t > (false, ObjectClass_csObjectClass), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 default:
@@ -3770,8 +3770,8 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_EXTENTION_READ;
 
-        if (ITU_T_EXTENTION) {
-            ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, ObjectClass_basicObjectClass), static_cast<uint8_t> (0), static_cast<uint8_t> (13))
+        if (!ITU_T_EXTENTION) {
+            ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (true, ObjectClass_basicObjectClass), static_cast<uint8_t> (0), static_cast<uint8_t> (13));
         }
         else {
 
@@ -3780,14 +3780,14 @@ namespace ISO_9506_MMS_1 {
             switch (__indx__) {
                 case 0:
                 {
-                    ITU_T_PER_START_PARSE_OPEN;
-                    ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, ObjectClass_csObjectClass), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
-                    ITU_T_PER_END_PARSE_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_NUM_CONSTRAINT(value<uint8_t > (true, ObjectClass_csObjectClass), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 default:
                 {
-                    ITU_T_PER_CLEAR_EXTENTION;
+                    ITU_T_CLEAR_EXTENTION;
                 }
             }
         }
@@ -3802,10 +3802,10 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_NUM_CONSTRS(localDetailCalling_, static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*proposedMaxServOutstandingCalling_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*proposedMaxServOutstandingCalled_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(proposedDataStructureNestingLevel_, static_cast<int8_t> (-128), static_cast<int8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(localDetailCalling_, static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*proposedMaxServOutstandingCalling_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*proposedMaxServOutstandingCalled_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(proposedDataStructureNestingLevel_, static_cast<int8_t> (-128), static_cast<int8_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(*initRequestDetail_);
     }
 
@@ -3813,10 +3813,10 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(localDetailCalling_, static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*proposedMaxServOutstandingCalling_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*proposedMaxServOutstandingCalled_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRS(proposedDataStructureNestingLevel_, static_cast<int8_t> (-128), static_cast<int8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRAINT(localDetailCalling_, static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*proposedMaxServOutstandingCalling_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*proposedMaxServOutstandingCalled_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRAINT(proposedDataStructureNestingLevel_, static_cast<int8_t> (-128), static_cast<int8_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(*initRequestDetail_);
     }
 
@@ -3832,30 +3832,30 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_EXTENTION_WRITE;
 
-        ITU_T_BIND_NUM_CONSTRS(*proposedVersionNumber_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_SIZE_SNGLCONSTRS(*proposedParameterCBB_, 18);
-        ITU_T_BIND_SIZE_SNGLCONSTRS(*servicesSupportedCalling_, 93);
+        ITU_T_BIND_NUM_CONSTRAINT(*proposedVersionNumber_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_SIZE_SNGLCONSTRAINT(*proposedParameterCBB_, 18);
+        ITU_T_BIND_SIZE_SNGLCONSTRAINT(*servicesSupportedCalling_, 93);
 
         if (ITU_T_EXTENTION) {
 
             ITU_T_EXTENTION_GROUPS_WRITE;
 
             if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
-                ITU_T_PER_START_OPEN;
-                ITU_T_BIND_SIZE_SNGLCONSTRS(*additionalSupportedCalling_, 23);
-                ITU_T_PER_END_OPEN;
+                ITU_T_START_OPEN;
+                ITU_T_BIND_SIZE_SNGLCONSTRAINT(additionalSupportedCalling_, 23);
+                ITU_T_END_OPEN;
             }
 
             if (ITU_T_EXTENTION_GROUPS_CHECK(1)) {
-                ITU_T_PER_START_OPEN;
-                ITU_T_BIND_SIZE_SNGLCONSTRS(*additionalCbbSupportedCalling_, 3);
-                ITU_T_PER_END_OPEN;
+                ITU_T_START_OPEN;
+                ITU_T_BIND_SIZE_SNGLCONSTRAINT(additionalCbbSupportedCalling_, 3);
+                ITU_T_END_OPEN;
             }
 
             if (ITU_T_EXTENTION_GROUPS_CHECK(2)) {
-                ITU_T_PER_START_OPEN;
-                ITU_T_BIND_PER(*privilegeClassIdentityCalling_);
-                ITU_T_PER_END_OPEN;
+                ITU_T_START_OPEN;
+                ITU_T_BIND_PER(privilegeClassIdentityCalling_);
+                ITU_T_END_OPEN;
             }
 
         };
@@ -3865,33 +3865,33 @@ namespace ISO_9506_MMS_1 {
     template<> void Initiate_RequestPDU::InitRequestDetail_type::serialize(boost::asn1::x691::input_coder& arch) {
 
         ITU_T_EXTENTION_READ;
-        ITU_T_BIND_NUM_CONSTRS(*proposedVersionNumber_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_SIZE_SNGLCONSTRS(*proposedParameterCBB_, 18);
-        ITU_T_BIND_SIZE_SNGLCONSTRS(*servicesSupportedCalling_, 93);
+        ITU_T_BIND_NUM_CONSTRAINT(*proposedVersionNumber_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_SIZE_SNGLCONSTRAINT(*proposedParameterCBB_, 18);
+        ITU_T_BIND_SIZE_SNGLCONSTRAINT(*servicesSupportedCalling_, 93);
 
         if (ITU_T_EXTENTION) {
 
             ITU_T_EXTENTION_GROUPS_READ;
 
             if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
-                ITU_T_PER_START_PARSE_OPEN;
-                ITU_T_BIND_SIZE_SNGLCONSTRS(*additionalSupportedCalling_, 23);
-                ITU_T_PER_END_PARSE_OPEN;
+                ITU_T_START_OPEN;
+                ITU_T_BIND_SIZE_SNGLCONSTRAINT(additionalSupportedCalling_, 23);
+                ITU_T_END_OPEN;
             }
 
             if (ITU_T_EXTENTION_GROUPS_CHECK(1)) {
-                ITU_T_PER_START_PARSE_OPEN;
-                ITU_T_BIND_SIZE_SNGLCONSTRS(*additionalCbbSupportedCalling_, 3);
-                ITU_T_PER_END_PARSE_OPEN;
+                ITU_T_START_OPEN;
+                ITU_T_BIND_SIZE_SNGLCONSTRAINT(additionalCbbSupportedCalling_, 3);
+                ITU_T_END_OPEN;
             }
 
             if (ITU_T_EXTENTION_GROUPS_CHECK(2)) {
-                ITU_T_PER_START_PARSE_OPEN;
-                ITU_T_BIND_PER(*privilegeClassIdentityCalling_);
-                ITU_T_PER_END_PARSE_OPEN;
+                ITU_T_START_OPEN;
+                ITU_T_BIND_PER(privilegeClassIdentityCalling_);
+                ITU_T_END_OPEN;
             }
 
-            ITU_T_PER_CLEAR_EXTENTIONS(3);
+            ITU_T_CLEAR_EXTENTIONS(3);
         };
 
     }
@@ -3905,10 +3905,10 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_NUM_CONSTRS(localDetailCalled_, static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*negotiatedMaxServOutstandingCalling_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*negotiatedMaxServOutstandingCalled_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(negotiatedDataStructureNestingLevel_, static_cast<int8_t> (-128), static_cast<int8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(localDetailCalled_, static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*negotiatedMaxServOutstandingCalling_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*negotiatedMaxServOutstandingCalled_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(negotiatedDataStructureNestingLevel_, static_cast<int8_t> (-128), static_cast<int8_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(*initResponseDetail_);
     }
 
@@ -3916,10 +3916,10 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(localDetailCalled_, static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*negotiatedMaxServOutstandingCalling_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*negotiatedMaxServOutstandingCalled_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRS(negotiatedDataStructureNestingLevel_, static_cast<int8_t> (-128), static_cast<int8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRAINT(localDetailCalled_, static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*negotiatedMaxServOutstandingCalling_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*negotiatedMaxServOutstandingCalled_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRAINT(negotiatedDataStructureNestingLevel_, static_cast<int8_t> (-128), static_cast<int8_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(*initResponseDetail_);
     }
 
@@ -3935,30 +3935,30 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_EXTENTION_WRITE;
 
-        ITU_T_BIND_NUM_CONSTRS(*negotiatedVersionNumber_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_SIZE_SNGLCONSTRS(*negotiatedParameterCBB_, 18);
-        ITU_T_BIND_SIZE_SNGLCONSTRS(*servicesSupportedCalled_, 93);
+        ITU_T_BIND_NUM_CONSTRAINT(*negotiatedVersionNumber_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_SIZE_SNGLCONSTRAINT(*negotiatedParameterCBB_, 18);
+        ITU_T_BIND_SIZE_SNGLCONSTRAINT(*servicesSupportedCalled_, 93);
 
         if (ITU_T_EXTENTION) {
 
             ITU_T_EXTENTION_GROUPS_WRITE;
 
             if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
-                ITU_T_PER_START_OPEN;
-                ITU_T_BIND_SIZE_SNGLCONSTRS(*additionalSupportedCalled_, 23);
-                ITU_T_PER_END_OPEN;
+                ITU_T_START_OPEN;
+                ITU_T_BIND_SIZE_SNGLCONSTRAINT(additionalSupportedCalled_, 23);
+                ITU_T_END_OPEN;
             }
 
             if (ITU_T_EXTENTION_GROUPS_CHECK(1)) {
-                ITU_T_PER_START_OPEN;
-                ITU_T_BIND_SIZE_SNGLCONSTRS(*additionalCbbSupportedCalled_, 3);
-                ITU_T_PER_END_OPEN;
+                ITU_T_START_OPEN;
+                ITU_T_BIND_SIZE_SNGLCONSTRAINT(additionalCbbSupportedCalled_, 3);
+                ITU_T_END_OPEN;
             }
 
             if (ITU_T_EXTENTION_GROUPS_CHECK(2)) {
-                ITU_T_PER_START_OPEN;
-                ITU_T_BIND_PER(*privilegeClassIdentityCalled_);
-                ITU_T_PER_END_OPEN;
+                ITU_T_START_OPEN;
+                ITU_T_BIND_PER(privilegeClassIdentityCalled_);
+                ITU_T_END_OPEN;
             }
 
         };
@@ -3968,33 +3968,33 @@ namespace ISO_9506_MMS_1 {
     template<> void Initiate_ResponsePDU::InitResponseDetail_type::serialize(boost::asn1::x691::input_coder& arch) {
 
         ITU_T_EXTENTION_READ;
-        ITU_T_BIND_NUM_CONSTRS(*negotiatedVersionNumber_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_SIZE_SNGLCONSTRS(*negotiatedParameterCBB_, 18);
-        ITU_T_BIND_SIZE_SNGLCONSTRS(*servicesSupportedCalled_, 93);
+        ITU_T_BIND_NUM_CONSTRAINT(*negotiatedVersionNumber_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_SIZE_SNGLCONSTRAINT(*negotiatedParameterCBB_, 18);
+        ITU_T_BIND_SIZE_SNGLCONSTRAINT(*servicesSupportedCalled_, 93);
 
         if (ITU_T_EXTENTION) {
 
             ITU_T_EXTENTION_GROUPS_READ;
 
             if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
-                ITU_T_PER_START_PARSE_OPEN;
-                ITU_T_BIND_SIZE_SNGLCONSTRS(*additionalSupportedCalled_, 23);
-                ITU_T_PER_END_PARSE_OPEN;
+                ITU_T_START_OPEN;
+                ITU_T_BIND_SIZE_SNGLCONSTRAINT(additionalSupportedCalled_, 23);
+                ITU_T_END_OPEN;
             }
 
             if (ITU_T_EXTENTION_GROUPS_CHECK(1)) {
-                ITU_T_PER_START_PARSE_OPEN;
-                ITU_T_BIND_SIZE_SNGLCONSTRS(*additionalCbbSupportedCalled_, 3);
-                ITU_T_PER_END_PARSE_OPEN;
+                ITU_T_START_OPEN;
+                ITU_T_BIND_SIZE_SNGLCONSTRAINT(additionalCbbSupportedCalled_, 3);
+                ITU_T_END_OPEN;
             }
 
             if (ITU_T_EXTENTION_GROUPS_CHECK(2)) {
-                ITU_T_PER_START_PARSE_OPEN;
-                ITU_T_BIND_PER(*privilegeClassIdentityCalled_);
-                ITU_T_PER_END_PARSE_OPEN;
+                ITU_T_START_OPEN;
+                ITU_T_BIND_PER(privilegeClassIdentityCalled_);
+                ITU_T_END_OPEN;
             }
 
-            ITU_T_PER_CLEAR_EXTENTIONS(3);
+            ITU_T_CLEAR_EXTENTIONS(3);
         };
 
     }
@@ -4002,12 +4002,12 @@ namespace ISO_9506_MMS_1 {
     // sequence Cancel-ErrorPDU
 
     template<> void Cancel_ErrorPDU::serialize(boost::asn1::x691::output_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRS(*originalInvokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*originalInvokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*serviceError_);
     }
 
     template<> void Cancel_ErrorPDU::serialize(boost::asn1::x691::input_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRS(*originalInvokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*originalInvokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*serviceError_);
     }
 
@@ -4019,7 +4019,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_NUM_CONSTRS(originalInvokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(originalInvokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*rejectReason_);
     }
 
@@ -4027,7 +4027,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(originalInvokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRAINT(originalInvokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*rejectReason_);
     }
 
@@ -4038,25 +4038,25 @@ namespace ISO_9506_MMS_1 {
             case RejectReason_type_confirmed_requestPDU:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 10);
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, RejectReason_type_confirmed_requestPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (9));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (false, RejectReason_type_confirmed_requestPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (9));
                 break;
             }
             case RejectReason_type_confirmed_responsePDU:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 10);
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, RejectReason_type_confirmed_responsePDU), static_cast<uint8_t> (0), static_cast<uint8_t> (6));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (false, RejectReason_type_confirmed_responsePDU), static_cast<uint8_t> (0), static_cast<uint8_t> (6));
                 break;
             }
             case RejectReason_type_confirmed_errorPDU:
             {
                 ITU_T_SET_CONSTAINED_INDX(2, 10);
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, RejectReason_type_confirmed_errorPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (4));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (false, RejectReason_type_confirmed_errorPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (4));
                 break;
             }
             case RejectReason_type_unconfirmedPDU:
             {
                 ITU_T_SET_CONSTAINED_INDX(3, 10);
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, RejectReason_type_unconfirmedPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (4));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (false, RejectReason_type_unconfirmedPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (4));
                 break;
             }
             case RejectReason_type_pdu_error:
@@ -4068,37 +4068,37 @@ namespace ISO_9506_MMS_1 {
             case RejectReason_type_cancel_requestPDU:
             {
                 ITU_T_SET_CONSTAINED_INDX(5, 10);
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, RejectReason_type_cancel_requestPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (false, RejectReason_type_cancel_requestPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
                 break;
             }
             case RejectReason_type_cancel_responsePDU:
             {
                 ITU_T_SET_CONSTAINED_INDX(6, 10);
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, RejectReason_type_cancel_responsePDU), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (false, RejectReason_type_cancel_responsePDU), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
                 break;
             }
             case RejectReason_type_cancel_errorPDU:
             {
                 ITU_T_SET_CONSTAINED_INDX(7, 10);
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, RejectReason_type_cancel_errorPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (false, RejectReason_type_cancel_errorPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (3));
                 break;
             }
             case RejectReason_type_conclude_requestPDU:
             {
                 ITU_T_SET_CONSTAINED_INDX(8, 10);
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, RejectReason_type_conclude_requestPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (false, RejectReason_type_conclude_requestPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
                 break;
             }
             case RejectReason_type_conclude_responsePDU:
             {
                 ITU_T_SET_CONSTAINED_INDX(9, 10);
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, RejectReason_type_conclude_responsePDU), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (false, RejectReason_type_conclude_responsePDU), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
                 break;
             }
             case RejectReason_type_conclude_errorPDU:
             {
                 ITU_T_SET_CONSTAINED_INDX(10, 10);
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, RejectReason_type_conclude_errorPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (false, RejectReason_type_conclude_errorPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (2));
                 break;
             }
             default:
@@ -4114,22 +4114,22 @@ namespace ISO_9506_MMS_1 {
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, RejectReason_type_confirmed_requestPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (9));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (true, RejectReason_type_confirmed_requestPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (9));
                 break;
             }
             case 1:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, RejectReason_type_confirmed_responsePDU), static_cast<uint8_t> (0), static_cast<uint8_t> (6));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (true, RejectReason_type_confirmed_responsePDU), static_cast<uint8_t> (0), static_cast<uint8_t> (6));
                 break;
             }
             case 2:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, RejectReason_type_confirmed_errorPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (4));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (true, RejectReason_type_confirmed_errorPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (4));
                 break;
             }
             case 3:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, RejectReason_type_unconfirmedPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (4));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (true, RejectReason_type_unconfirmedPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (4));
                 break;
             }
             case 4:
@@ -4139,32 +4139,32 @@ namespace ISO_9506_MMS_1 {
             }
             case 5:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, RejectReason_type_cancel_requestPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (true, RejectReason_type_cancel_requestPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
                 break;
             }
             case 6:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, RejectReason_type_cancel_responsePDU), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (true, RejectReason_type_cancel_responsePDU), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
                 break;
             }
             case 7:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, RejectReason_type_cancel_errorPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (true, RejectReason_type_cancel_errorPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (3));
                 break;
             }
             case 8:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, RejectReason_type_conclude_requestPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (true, RejectReason_type_conclude_requestPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
                 break;
             }
             case 9:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, RejectReason_type_conclude_responsePDU), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (true, RejectReason_type_conclude_responsePDU), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
                 break;
             }
             case 10:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, RejectReason_type_conclude_errorPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<uint8_t > (true, RejectReason_type_conclude_errorPDU), static_cast<uint8_t> (0), static_cast<uint8_t> (2));
                 break;
             }
             default:
@@ -4538,13 +4538,13 @@ namespace ISO_9506_MMS_1 {
     // sequence ChangeAccessControl-Response
 
     template<> void ChangeAccessControl_Response::serialize(boost::asn1::x691::output_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRS(*numberMatched_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*numberChanged_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberMatched_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberChanged_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     template<> void ChangeAccessControl_Response::serialize(boost::asn1::x691::input_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRS(*numberMatched_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*numberChanged_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberMatched_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberChanged_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     // sequence StatusResponse
@@ -4555,18 +4555,18 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_NUM_CONSTRS(*vmdLogicalStatus_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
-        ITU_T_BIND_NUM_CONSTRS(*vmdPhysicalStatus_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
-        ITU_T_BIND_SIZE_CONSTRS(localDetail_, 0, 128);
+        ITU_T_BIND_NUM_CONSTRAINT(*vmdLogicalStatus_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_BIND_NUM_CONSTRAINT(*vmdPhysicalStatus_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_BIND_SIZE_CONSTRAINT(localDetail_, 0, 128);
     }
 
     template<> void StatusResponse::serialize(boost::asn1::x691::input_coder& arch) {
 
         ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_BIND_NUM_CONSTRS(*vmdLogicalStatus_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
-        ITU_T_BIND_NUM_CONSTRS(*vmdPhysicalStatus_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
-        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_CONSTRS(localDetail_, 0, 128);
+        ITU_T_BIND_NUM_CONSTRAINT(*vmdLogicalStatus_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_BIND_NUM_CONSTRAINT(*vmdPhysicalStatus_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_CONSTRAINT(localDetail_, 0, 128);
     }
 
     // choice CS-Status-Response
@@ -4620,9 +4620,9 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_NUM_CONSTRS(*operationState_, static_cast<uint8_t> (0), static_cast<uint8_t> (5));
-        ITU_T_BIND_SIZE_SNGLCONSTRS(*extendedStatus_, 4);
-        ITU_T_BIND_SIZE_SNGLCONSTRS(extendedStatusMask_, 4);
+        ITU_T_BIND_NUM_CONSTRAINT(*operationState_, static_cast<uint8_t> (0), static_cast<uint8_t> (5));
+        ITU_T_BIND_SIZE_SNGLCONSTRAINT(*extendedStatus_, 4);
+        ITU_T_BIND_SIZE_SNGLCONSTRAINT(extendedStatusMask_, 4);
         ITU_T_BIND_PER(*selectedProgramInvocation_);
     }
 
@@ -4630,9 +4630,9 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_BIND_NUM_CONSTRS(*operationState_, static_cast<uint8_t> (0), static_cast<uint8_t> (5));
-        ITU_T_BIND_SIZE_SNGLCONSTRS(*extendedStatus_, 4);
-        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_SNGLCONSTRS(extendedStatusMask_, 4);
+        ITU_T_BIND_NUM_CONSTRAINT(*operationState_, static_cast<uint8_t> (0), static_cast<uint8_t> (5));
+        ITU_T_BIND_SIZE_SNGLCONSTRAINT(*extendedStatus_, 4);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_SNGLCONSTRAINT(extendedStatusMask_, 4);
         ITU_T_BIND_PER(*selectedProgramInvocation_);
     }
 
@@ -4898,13 +4898,13 @@ namespace ISO_9506_MMS_1 {
             case LoadData_embedded:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 2);
-                ITU_T_BIND_PER(*value<embeded_type > (false, LoadData_embedded));
+                ITU_T_BIND_PER(*value<embeded_pdv > (false, LoadData_embedded));
                 break;
             }
             case LoadData_non_coded:
             {
                 ITU_T_SET_CONSTAINED_INDX(2, 2);
-                ITU_T_BIND_PER(*value<octetstring_type > (false, LoadData_non_coded));
+                ITU_T_BIND_PER(*value<octet_string > (false, LoadData_non_coded));
                 break;
             }
             default:
@@ -4925,12 +4925,12 @@ namespace ISO_9506_MMS_1 {
             }
             case 1:
             {
-                ITU_T_BIND_PER(*value<embeded_type > (true, LoadData_embedded));
+                ITU_T_BIND_PER(*value<embeded_pdv > (true, LoadData_embedded));
                 break;
             }
             case 2:
             {
-                ITU_T_BIND_PER(*value<octetstring_type > (true, LoadData_non_coded));
+                ITU_T_BIND_PER(*value<octet_string > (true, LoadData_non_coded));
                 break;
             }
             default:
@@ -4962,12 +4962,12 @@ namespace ISO_9506_MMS_1 {
     // sequence InitiateUploadSequence-Response
 
     template<> void InitiateUploadSequence_Response::serialize(boost::asn1::x691::output_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRS(*ulsmID_, static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*ulsmID_, static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*listOfCapabilities_);
     }
 
     template<> void InitiateUploadSequence_Response::serialize(boost::asn1::x691::input_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRS(*ulsmID_, static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*ulsmID_, static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*listOfCapabilities_);
     }
 
@@ -5085,11 +5085,11 @@ namespace ISO_9506_MMS_1 {
         ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*listOfCapabilities_);
-        ITU_T_BIND_NUM_CONSTRS(*state_, static_cast<uint8_t> (0), static_cast<uint8_t> (15));
+        ITU_T_BIND_NUM_CONSTRAINT(*state_, static_cast<uint8_t> (0), static_cast<uint8_t> (15));
         ITU_T_BIND_PER(*mmsDeletable_);
         ITU_T_BIND_PER(*sharable_);
         ITU_T_BIND_PER(*listOfProgramInvocations_);
-        ITU_T_BIND_NUM_CONSTRS(*uploadInProgress_, static_cast<int8_t> (-128), static_cast<int8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*uploadInProgress_, static_cast<int8_t> (-128), static_cast<int8_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(accessControlList_);
     }
 
@@ -5098,11 +5098,11 @@ namespace ISO_9506_MMS_1 {
         ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*listOfCapabilities_);
-        ITU_T_BIND_NUM_CONSTRS(*state_, static_cast<uint8_t> (0), static_cast<uint8_t> (15));
+        ITU_T_BIND_NUM_CONSTRAINT(*state_, static_cast<uint8_t> (0), static_cast<uint8_t> (15));
         ITU_T_BIND_PER(*mmsDeletable_);
         ITU_T_BIND_PER(*sharable_);
         ITU_T_BIND_PER(*listOfProgramInvocations_);
-        ITU_T_BIND_NUM_CONSTRS(*uploadInProgress_, static_cast<int8_t> (-128), static_cast<int8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*uploadInProgress_, static_cast<int8_t> (-128), static_cast<int8_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(accessControlList_);
     }
 
@@ -5164,7 +5164,7 @@ namespace ISO_9506_MMS_1 {
             case ExecutionArgument_type_embeddedString:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 2);
-                ITU_T_BIND_PER(*value<embeded_type > (false, ExecutionArgument_type_embeddedString));
+                ITU_T_BIND_PER(*value<embeded_pdv > (false, ExecutionArgument_type_embeddedString));
                 break;
             }
             case ExecutionArgument_type_simpleString:
@@ -5191,7 +5191,7 @@ namespace ISO_9506_MMS_1 {
             }
             case 1:
             {
-                ITU_T_BIND_PER(*value<embeded_type > (true, ExecutionArgument_type_embeddedString));
+                ITU_T_BIND_PER(*value<embeded_pdv > (true, ExecutionArgument_type_embeddedString));
                 break;
             }
             case 2:
@@ -5207,18 +5207,18 @@ namespace ISO_9506_MMS_1 {
 
     // choice CS-Start-Request
 
-    template<> void CS_Start_Request_impl::serialize(boost::asn1::x691::output_coder& arch) {
+    template<> void CS_Start_Request::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
-            case CS_Start_Request_impl_normal:
+            case CS_Start_Request_normal:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 1);
-                ITU_T_BIND_PER(*value<null_type > (false, CS_Start_Request_impl_normal));
+                ITU_T_BIND_PER(*value<null_type > (false, CS_Start_Request_normal));
                 break;
             }
-            case CS_Start_Request_impl_controlling:
+            case CS_Start_Request_controlling:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 1);
-                ITU_T_BIND_PER(*value<Controlling_type > (false, CS_Start_Request_impl_controlling));
+                ITU_T_BIND_PER(*value<Controlling_type > (false, CS_Start_Request_controlling));
                 break;
             }
             default:
@@ -5227,19 +5227,19 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void CS_Start_Request_impl::serialize(boost::asn1::x691::input_coder& arch) {
+    template<> void CS_Start_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
         ITU_T_GET_CONSTAINED_INDX(1);
 
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_PER(*value<null_type > (true, CS_Start_Request_impl_normal));
+                ITU_T_BIND_PER(*value<null_type > (true, CS_Start_Request_normal));
                 break;
             }
             case 1:
             {
-                ITU_T_BIND_PER(*value<Controlling_type > (true, CS_Start_Request_impl_controlling));
+                ITU_T_BIND_PER(*value<Controlling_type > (true, CS_Start_Request_controlling));
                 break;
             }
             default:
@@ -5250,7 +5250,7 @@ namespace ISO_9506_MMS_1 {
 
     // sequence controlling
 
-    template<> void CS_Start_Request_impl::Controlling_type::serialize(boost::asn1::x691::output_coder& arch) {
+    template<> void CS_Start_Request::Controlling_type::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(startLocation_) +
                 ITU_T_EXISTS_BMP(startCount_);
@@ -5261,7 +5261,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_PER(startCount_);
     }
 
-    template<> void CS_Start_Request_impl::Controlling_type::serialize(boost::asn1::x691::input_coder& arch) {
+    template<> void CS_Start_Request::Controlling_type::serialize(boost::asn1::x691::input_coder& arch) {
 
         ITU_T_OPTIONAL_READ(2);
 
@@ -5366,7 +5366,7 @@ namespace ISO_9506_MMS_1 {
             case ExecutionArgument_type_enmbeddedString:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 2);
-                ITU_T_BIND_PER(*value<embeded_type > (false, ExecutionArgument_type_enmbeddedString));
+                ITU_T_BIND_PER(*value<embeded_pdv > (false, ExecutionArgument_type_enmbeddedString));
                 break;
             }
             case ExecutionArgument_type_simpleString:
@@ -5393,7 +5393,7 @@ namespace ISO_9506_MMS_1 {
             }
             case 1:
             {
-                ITU_T_BIND_PER(*value<embeded_type > (true, ExecutionArgument_type_enmbeddedString));
+                ITU_T_BIND_PER(*value<embeded_pdv > (true, ExecutionArgument_type_enmbeddedString));
                 break;
             }
             case 2:
@@ -5409,18 +5409,18 @@ namespace ISO_9506_MMS_1 {
 
     // choice CS-Resume-Request
 
-    template<> void CS_Resume_Request_impl::serialize(boost::asn1::x691::output_coder& arch) {
+    template<> void CS_Resume_Request::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
-            case CS_Resume_Request_impl_normal:
+            case CS_Resume_Request_normal:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 1);
-                ITU_T_BIND_PER(*value<null_type > (false, CS_Resume_Request_impl_normal));
+                ITU_T_BIND_PER(*value<null_type > (false, CS_Resume_Request_normal));
                 break;
             }
-            case CS_Resume_Request_impl_controlling:
+            case CS_Resume_Request_controlling:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 1);
-                ITU_T_BIND_PER(*value<Controlling_type > (false, CS_Resume_Request_impl_controlling));
+                ITU_T_BIND_PER(*value<Controlling_type > (false, CS_Resume_Request_controlling));
                 break;
             }
             default:
@@ -5429,19 +5429,19 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void CS_Resume_Request_impl::serialize(boost::asn1::x691::input_coder& arch) {
+    template<> void CS_Resume_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
         ITU_T_GET_CONSTAINED_INDX(1);
 
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_PER(*value<null_type > (true, CS_Resume_Request_impl_normal));
+                ITU_T_BIND_PER(*value<null_type > (true, CS_Resume_Request_normal));
                 break;
             }
             case 1:
             {
-                ITU_T_BIND_PER(*value<Controlling_type > (true, CS_Resume_Request_impl_controlling));
+                ITU_T_BIND_PER(*value<Controlling_type > (true, CS_Resume_Request_controlling));
                 break;
             }
             default:
@@ -5452,17 +5452,17 @@ namespace ISO_9506_MMS_1 {
 
     // sequence controlling
 
-    template<> void CS_Resume_Request_impl::Controlling_type::serialize(boost::asn1::x691::output_coder& arch) {
+    template<> void CS_Resume_Request::Controlling_type::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*modeType_);
     }
 
-    template<> void CS_Resume_Request_impl::Controlling_type::serialize(boost::asn1::x691::input_coder& arch) {
+    template<> void CS_Resume_Request::Controlling_type::serialize(boost::asn1::x691::input_coder& arch) {
         ITU_T_BIND_PER(*modeType_);
     }
 
     // choice modeType
 
-    template<> void CS_Resume_Request_impl::Controlling_type::ModeType_type::serialize(boost::asn1::x691::output_coder& arch) {
+    template<> void CS_Resume_Request::Controlling_type::ModeType_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
             case ModeType_type_continueMode:
             {
@@ -5482,7 +5482,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void CS_Resume_Request_impl::Controlling_type::ModeType_type::serialize(boost::asn1::x691::input_coder& arch) {
+    template<> void CS_Resume_Request::Controlling_type::ModeType_type::serialize(boost::asn1::x691::input_coder& arch) {
 
         ITU_T_GET_CONSTAINED_INDX(1);
 
@@ -5531,7 +5531,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_NUM_CONSTRS(*state_, static_cast<uint8_t> (0), static_cast<uint8_t> (8));
+        ITU_T_BIND_NUM_CONSTRAINT(*state_, static_cast<uint8_t> (0), static_cast<uint8_t> (8));
         ITU_T_BIND_PER(*listOfDomainNames_);
         ITU_T_BIND_PER(*mmsDeletable_);
         ITU_T_BIND_PER(*reusable_);
@@ -5544,7 +5544,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_BIND_NUM_CONSTRS(*state_, static_cast<uint8_t> (0), static_cast<uint8_t> (8));
+        ITU_T_BIND_NUM_CONSTRAINT(*state_, static_cast<uint8_t> (0), static_cast<uint8_t> (8));
         ITU_T_BIND_PER(*listOfDomainNames_);
         ITU_T_BIND_PER(*mmsDeletable_);
         ITU_T_BIND_PER(*reusable_);
@@ -5566,7 +5566,7 @@ namespace ISO_9506_MMS_1 {
             case ExecutionArgument_type_enmbeddedString:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 2);
-                ITU_T_BIND_PER(*value<embeded_type > (false, ExecutionArgument_type_enmbeddedString));
+                ITU_T_BIND_PER(*value<embeded_pdv > (false, ExecutionArgument_type_enmbeddedString));
                 break;
             }
             case ExecutionArgument_type_simpleString:
@@ -5593,7 +5593,7 @@ namespace ISO_9506_MMS_1 {
             }
             case 1:
             {
-                ITU_T_BIND_PER(*value<embeded_type > (true, ExecutionArgument_type_enmbeddedString));
+                ITU_T_BIND_PER(*value<embeded_pdv > (true, ExecutionArgument_type_enmbeddedString));
                 break;
             }
             case 2:
@@ -5972,7 +5972,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_PER(*listOfDomains_);
         ITU_T_BIND_PER(reusable_);
         ITU_T_BIND_PER(monitorType_);
-        ITU_T_BIND_NUM_CONSTRS(pIState_, static_cast<uint8_t> (0), static_cast<uint8_t> (8));
+        ITU_T_BIND_NUM_CONSTRAINT(pIState_, static_cast<uint8_t> (0), static_cast<uint8_t> (8));
     }
 
     template<> void ControlElement::PiDefinition_type::serialize(boost::asn1::x691::input_coder& arch) {
@@ -5983,7 +5983,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_PER(*listOfDomains_);
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(reusable_);
         ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(monitorType_);
-        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRS(pIState_, static_cast<uint8_t> (0), static_cast<uint8_t> (8));
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRAINT(pIState_, static_cast<uint8_t> (0), static_cast<uint8_t> (8));
     }
 
     // choice InitiateUnitControl-Error
@@ -6230,7 +6230,7 @@ namespace ISO_9506_MMS_1 {
             case ExecutionArgument_type_enmbeddedString:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 2);
-                ITU_T_BIND_PER(*value<embeded_type > (false, ExecutionArgument_type_enmbeddedString));
+                ITU_T_BIND_PER(*value<embeded_pdv > (false, ExecutionArgument_type_enmbeddedString));
                 break;
             }
             case ExecutionArgument_type_simpleString:
@@ -6257,7 +6257,7 @@ namespace ISO_9506_MMS_1 {
             }
             case 1:
             {
-                ITU_T_BIND_PER(*value<embeded_type > (true, ExecutionArgument_type_enmbeddedString));
+                ITU_T_BIND_PER(*value<embeded_pdv > (true, ExecutionArgument_type_enmbeddedString));
                 break;
             }
             case 2:
@@ -6275,24 +6275,24 @@ namespace ISO_9506_MMS_1 {
 
     template<> void StartUnitControl_Error::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*programInvocationName_);
-        ITU_T_BIND_NUM_CONSTRS(*programInvocationState_, static_cast<uint8_t> (0), static_cast<uint8_t> (8));
+        ITU_T_BIND_NUM_CONSTRAINT(*programInvocationState_, static_cast<uint8_t> (0), static_cast<uint8_t> (8));
     }
 
     template<> void StartUnitControl_Error::serialize(boost::asn1::x691::input_coder& arch) {
         ITU_T_BIND_PER(*programInvocationName_);
-        ITU_T_BIND_NUM_CONSTRS(*programInvocationState_, static_cast<uint8_t> (0), static_cast<uint8_t> (8));
+        ITU_T_BIND_NUM_CONSTRAINT(*programInvocationState_, static_cast<uint8_t> (0), static_cast<uint8_t> (8));
     }
 
     // sequence StopUnitControl-Error
 
     template<> void StopUnitControl_Error::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*programInvocationName_);
-        ITU_T_BIND_NUM_CONSTRS(*programInvocationState_, static_cast<uint8_t> (0), static_cast<uint8_t> (8));
+        ITU_T_BIND_NUM_CONSTRAINT(*programInvocationState_, static_cast<uint8_t> (0), static_cast<uint8_t> (8));
     }
 
     template<> void StopUnitControl_Error::serialize(boost::asn1::x691::input_coder& arch) {
         ITU_T_BIND_PER(*programInvocationName_);
-        ITU_T_BIND_NUM_CONSTRS(*programInvocationState_, static_cast<uint8_t> (0), static_cast<uint8_t> (8));
+        ITU_T_BIND_NUM_CONSTRAINT(*programInvocationState_, static_cast<uint8_t> (0), static_cast<uint8_t> (8));
     }
 
     // sequence CreateUnitControl-Request
@@ -6656,7 +6656,7 @@ namespace ISO_9506_MMS_1 {
             case AccessSelection_type_index:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 3);
-                ITU_T_BIND_NUM_CONSTRS(*value<Unsigned32 > (false, AccessSelection_type_index), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<Unsigned32 > (false, AccessSelection_type_index), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                 break;
             }
             case AccessSelection_type_indexRange:
@@ -6689,7 +6689,7 @@ namespace ISO_9506_MMS_1 {
             }
             case 1:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<Unsigned32 > (true, AccessSelection_type_index), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<Unsigned32 > (true, AccessSelection_type_index), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                 break;
             }
             case 2:
@@ -6711,13 +6711,13 @@ namespace ISO_9506_MMS_1 {
     // sequence indexRange
 
     template<> void AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::IndexRange_type::serialize(boost::asn1::x691::output_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRS(*lowIndex_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*numberOfElements_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*lowIndex_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberOfElements_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     template<> void AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::IndexRange_type::serialize(boost::asn1::x691::input_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRS(*lowIndex_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*numberOfElements_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*lowIndex_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberOfElements_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     // choice selectAccess
@@ -6733,7 +6733,7 @@ namespace ISO_9506_MMS_1 {
             case SelectAccess_type_index:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 3);
-                ITU_T_BIND_NUM_CONSTRS(*value<Unsigned32 > (false, SelectAccess_type_index), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<Unsigned32 > (false, SelectAccess_type_index), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                 break;
             }
             case SelectAccess_type_indexRange:
@@ -6766,7 +6766,7 @@ namespace ISO_9506_MMS_1 {
             }
             case 1:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<Unsigned32 > (true, SelectAccess_type_index), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<Unsigned32 > (true, SelectAccess_type_index), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                 break;
             }
             case 2:
@@ -6788,13 +6788,13 @@ namespace ISO_9506_MMS_1 {
     // sequence indexRange
 
     template<> void AlternateAccessSelection::SelectAccess_type::IndexRange_type::serialize(boost::asn1::x691::output_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRS(*lowIndex_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*numberOfElements_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*lowIndex_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberOfElements_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     template<> void AlternateAccessSelection::SelectAccess_type::IndexRange_type::serialize(boost::asn1::x691::input_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRS(*lowIndex_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*numberOfElements_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*lowIndex_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberOfElements_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     // choice AccessResult
@@ -6810,7 +6810,7 @@ namespace ISO_9506_MMS_1 {
             case AccessResult_failure:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 1);
-                ITU_T_BIND_NUM_CONSTRS(*value<DataAccessError > (false, AccessResult_failure), static_cast<uint8_t> (0), static_cast<uint8_t> (11));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<DataAccessError > (false, AccessResult_failure), static_cast<uint8_t> (0), static_cast<uint8_t> (11));
                 break;
             }
             default:
@@ -6831,7 +6831,7 @@ namespace ISO_9506_MMS_1 {
             }
             case 1:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<DataAccessError > (true, AccessResult_failure), static_cast<uint8_t> (0), static_cast<uint8_t> (11));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<DataAccessError > (true, AccessResult_failure), static_cast<uint8_t> (0), static_cast<uint8_t> (11));
                 break;
             }
             default:
@@ -6846,7 +6846,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_EXTENTION_WRITE_CHOICE(Data_mMSString, Data_mMSString);
 
-        if (ITU_T_EXTENTION) {
+        if (!ITU_T_EXTENTION) {
             switch (type()) {
                 case Data_array:
                 {
@@ -6869,7 +6869,7 @@ namespace ISO_9506_MMS_1 {
                 case Data_bit_string:
                 {
                     ITU_T_SET_CONSTAINED_INDX(3, 13);
-                    ITU_T_BIND_PER(*value<bitstring_type > (false, Data_bit_string));
+                    ITU_T_BIND_PER(*value<bit_string > (false, Data_bit_string));
                     break;
                 }
                 case Data_integer:
@@ -6893,25 +6893,25 @@ namespace ISO_9506_MMS_1 {
                 case Data_octet_string:
                 {
                     ITU_T_SET_CONSTAINED_INDX(7, 13);
-                    ITU_T_BIND_PER(*value<octetstring_type > (false, Data_octet_string));
+                    ITU_T_BIND_PER(*value<octet_string > (false, Data_octet_string));
                     break;
                 }
                 case Data_visible_string:
                 {
                     ITU_T_SET_CONSTAINED_INDX(8, 13);
-                    ITU_T_BIND_PER(*value<visiblestring_type > (false, Data_visible_string));
+                    ITU_T_BIND_PER(*value<visible_string > (false, Data_visible_string));
                     break;
                 }
                 case Data_generalized_time:
                 {
                     ITU_T_SET_CONSTAINED_INDX(9, 13);
-                    ITU_T_BIND_PER(*value<gentime_type > (false, Data_generalized_time));
+                    ITU_T_BIND_PER(*value<gentime > (false, Data_generalized_time));
                     break;
                 }
                 case Data_binary_time:
                 {
                     ITU_T_SET_CONSTAINED_INDX(10, 13);
-                    ITU_T_BIND_SIZE_CONSTRS(*value<TimeOfDay > (false, Data_binary_time), 4, 6);
+                    ITU_T_BIND_SIZE_CONSTRAINT(*value<TimeOfDay > (false, Data_binary_time), 4, 6);
                     break;
                 }
                 case Data_bcd:
@@ -6923,7 +6923,7 @@ namespace ISO_9506_MMS_1 {
                 case Data_booleanArray:
                 {
                     ITU_T_SET_CONSTAINED_INDX(12, 13);
-                    ITU_T_BIND_PER(*value<bitstring_type > (false, Data_booleanArray));
+                    ITU_T_BIND_PER(*value<bit_string > (false, Data_booleanArray));
                     break;
                 }
                 case Data_objId:
@@ -6942,9 +6942,9 @@ namespace ISO_9506_MMS_1 {
                 case Data_mMSString:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(0);
-                    ITU_T_PER_START_OPEN;
-                    ITU_T_BIND_PER(*value<MMSString > (false, Data_mMSString));
-                    ITU_T_PER_END_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<MMSString > (false, Data_mMSString));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 default:
@@ -6958,7 +6958,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_EXTENTION_READ;
 
-        if (ITU_T_EXTENTION) {
+        if (!ITU_T_EXTENTION) {
 
             ITU_T_GET_CONSTAINED_INDX(13);
 
@@ -6980,7 +6980,7 @@ namespace ISO_9506_MMS_1 {
                 }
                 case 3:
                 {
-                    ITU_T_BIND_PER(*value<bitstring_type > (true, Data_bit_string));
+                    ITU_T_BIND_PER(*value<bit_string > (true, Data_bit_string));
                     break;
                 }
                 case 4:
@@ -7000,22 +7000,22 @@ namespace ISO_9506_MMS_1 {
                 }
                 case 7:
                 {
-                    ITU_T_BIND_PER(*value<octetstring_type > (true, Data_octet_string));
+                    ITU_T_BIND_PER(*value<octet_string > (true, Data_octet_string));
                     break;
                 }
                 case 8:
                 {
-                    ITU_T_BIND_PER(*value<visiblestring_type > (true, Data_visible_string));
+                    ITU_T_BIND_PER(*value<visible_string > (true, Data_visible_string));
                     break;
                 }
                 case 9:
                 {
-                    ITU_T_BIND_PER(*value<gentime_type > (true, Data_generalized_time));
+                    ITU_T_BIND_PER(*value<gentime > (true, Data_generalized_time));
                     break;
                 }
                 case 10:
                 {
-                    ITU_T_BIND_SIZE_CONSTRS(*value<TimeOfDay > (true, Data_binary_time), 4, 6);
+                    ITU_T_BIND_SIZE_CONSTRAINT(*value<TimeOfDay > (true, Data_binary_time), 4, 6);
                     break;
                 }
                 case 11:
@@ -7025,7 +7025,7 @@ namespace ISO_9506_MMS_1 {
                 }
                 case 12:
                 {
-                    ITU_T_BIND_PER(*value<bitstring_type > (true, Data_booleanArray));
+                    ITU_T_BIND_PER(*value<bit_string > (true, Data_booleanArray));
                     break;
                 }
                 case 13:
@@ -7045,14 +7045,14 @@ namespace ISO_9506_MMS_1 {
             switch (__indx__) {
                 case 0:
                 {
-                    ITU_T_PER_START_PARSE_OPEN;
-                    ITU_T_BIND_PER(*value<MMSString > (false, Data_mMSString));
-                    ITU_T_PER_END_PARSE_OPEN;
+                    ITU_T_START_OPEN;
+                    ITU_T_BIND_PER(value<MMSString > (true, Data_mMSString));
+                    ITU_T_END_OPEN;
                     break;
                 }
                 default:
                 {
-                    ITU_T_PER_CLEAR_EXTENTION;
+                    ITU_T_CLEAR_EXTENTION;
                 }
             }
         }
@@ -7268,7 +7268,7 @@ namespace ISO_9506_MMS_1 {
             case Write_Response_sequence_of_failure:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 1);
-                ITU_T_BIND_NUM_CONSTRS(*value<DataAccessError > (false, Write_Response_sequence_of_failure), static_cast<uint8_t> (0), static_cast<uint8_t> (11));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<DataAccessError > (false, Write_Response_sequence_of_failure), static_cast<uint8_t> (0), static_cast<uint8_t> (11));
                 break;
             }
             case Write_Response_sequence_of_success:
@@ -7290,7 +7290,7 @@ namespace ISO_9506_MMS_1 {
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<DataAccessError > (true, Write_Response_sequence_of_failure), static_cast<uint8_t> (0), static_cast<uint8_t> (11));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<DataAccessError > (true, Write_Response_sequence_of_failure), static_cast<uint8_t> (0), static_cast<uint8_t> (11));
                 break;
             }
             case 1:
@@ -7419,7 +7419,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_NUM_CONSTRS(scopeOfDelete_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_BIND_NUM_CONSTRAINT(scopeOfDelete_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_BIND_PER(listOfName_);
         ITU_T_BIND_PER(domainName_);
     }
@@ -7428,7 +7428,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_READ(3);
 
-        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(scopeOfDelete_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRAINT(scopeOfDelete_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(listOfName_);
         ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(domainName_);
     }
@@ -7436,13 +7436,13 @@ namespace ISO_9506_MMS_1 {
     // sequence DeleteVariableAccess-Response
 
     template<> void DeleteVariableAccess_Response::serialize(boost::asn1::x691::output_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRS(*numberMatched_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*numberDeleted_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberMatched_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberDeleted_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     template<> void DeleteVariableAccess_Response::serialize(boost::asn1::x691::input_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRS(*numberMatched_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*numberDeleted_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberMatched_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberDeleted_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     // sequence DefineNamedVariableList-Request
@@ -7529,7 +7529,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_NUM_CONSTRS(scopeOfDelete_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_BIND_NUM_CONSTRAINT(scopeOfDelete_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_BIND_PER(listOfVariableListName_);
         ITU_T_BIND_PER(domainName_);
     }
@@ -7538,7 +7538,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_READ(3);
 
-        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(scopeOfDelete_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRAINT(scopeOfDelete_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(listOfVariableListName_);
         ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(domainName_);
     }
@@ -7546,13 +7546,13 @@ namespace ISO_9506_MMS_1 {
     // sequence DeleteNamedVariableList-Response
 
     template<> void DeleteNamedVariableList_Response::serialize(boost::asn1::x691::output_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRS(*numberMatched_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*numberDeleted_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberMatched_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberDeleted_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     template<> void DeleteNamedVariableList_Response::serialize(boost::asn1::x691::input_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRS(*numberMatched_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*numberDeleted_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberMatched_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberDeleted_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     // sequence DefineNamedType-Request
@@ -7602,7 +7602,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_NUM_CONSTRS(scopeOfDelete_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_BIND_NUM_CONSTRAINT(scopeOfDelete_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_BIND_PER(listOfTypeName_);
         ITU_T_BIND_PER(domainName_);
     }
@@ -7611,7 +7611,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_READ(3);
 
-        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(scopeOfDelete_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRAINT(scopeOfDelete_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(listOfTypeName_);
         ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(domainName_);
     }
@@ -7619,13 +7619,13 @@ namespace ISO_9506_MMS_1 {
     // sequence DeleteNamedType-Response
 
     template<> void DeleteNamedType_Response::serialize(boost::asn1::x691::output_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRS(*numberMatched_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*numberDeleted_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberMatched_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberDeleted_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     template<> void DeleteNamedType_Response::serialize(boost::asn1::x691::input_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRS(*numberMatched_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*numberDeleted_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberMatched_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberDeleted_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     // sequence ExchangeData-Request
@@ -7693,9 +7693,9 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_BIND_PER(*semaphoreName_);
         ITU_T_BIND_PER(namedToken_);
-        ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(acceptableDelay_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(controlTimeOut_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(acceptableDelay_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(controlTimeOut_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(abortOnTimeOut_);
         ITU_T_BIND_PER(relinquishIfConnectionLost_);
         ITU_T_BIND_PER(applicationToPreempt_);
@@ -7707,9 +7707,9 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_BIND_PER(*semaphoreName_);
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(namedToken_);
-        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRS(acceptableDelay_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_NUM_CONSTRS(controlTimeOut_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRAINT(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRAINT(acceptableDelay_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_NUM_CONSTRAINT(controlTimeOut_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(abortOnTimeOut_);
         ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_PER(relinquishIfConnectionLost_);
         ITU_T_OPTIONAL_CHECK(6) ITU_T_BIND_PER(applicationToPreempt_);
@@ -7782,12 +7782,12 @@ namespace ISO_9506_MMS_1 {
 
     template<> void DefineSemaphore_Request::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*semaphoreName_);
-        ITU_T_BIND_NUM_CONSTRS(*numberOfTokens_, static_cast<uint16_t> (0), static_cast<uint16_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberOfTokens_, static_cast<uint16_t> (0), static_cast<uint16_t> (std::numeric_limits<int8_t>::max()));
     }
 
     template<> void DefineSemaphore_Request::serialize(boost::asn1::x691::input_coder& arch) {
         ITU_T_BIND_PER(*semaphoreName_);
-        ITU_T_BIND_NUM_CONSTRS(*numberOfTokens_, static_cast<uint16_t> (0), static_cast<uint16_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberOfTokens_, static_cast<uint16_t> (0), static_cast<uint16_t> (std::numeric_limits<int8_t>::max()));
     }
 
     // sequence ReportSemaphoreStatus-Response
@@ -7799,10 +7799,10 @@ namespace ISO_9506_MMS_1 {
         ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*mmsDeletable_);
-        ITU_T_BIND_NUM_CONSTRS(*classV_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
-        ITU_T_BIND_NUM_CONSTRS(*numberOfTokens_, static_cast<uint16_t> (0), static_cast<uint16_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*numberOfOwnedTokens_, static_cast<uint16_t> (0), static_cast<uint16_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*numberOfHungTokens_, static_cast<uint16_t> (0), static_cast<uint16_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*classV_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberOfTokens_, static_cast<uint16_t> (0), static_cast<uint16_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberOfOwnedTokens_, static_cast<uint16_t> (0), static_cast<uint16_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberOfHungTokens_, static_cast<uint16_t> (0), static_cast<uint16_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(accessControlList_);
     }
 
@@ -7811,10 +7811,10 @@ namespace ISO_9506_MMS_1 {
         ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*mmsDeletable_);
-        ITU_T_BIND_NUM_CONSTRS(*classV_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
-        ITU_T_BIND_NUM_CONSTRS(*numberOfTokens_, static_cast<uint16_t> (0), static_cast<uint16_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*numberOfOwnedTokens_, static_cast<uint16_t> (0), static_cast<uint16_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*numberOfHungTokens_, static_cast<uint16_t> (0), static_cast<uint16_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*classV_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberOfTokens_, static_cast<uint16_t> (0), static_cast<uint16_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberOfOwnedTokens_, static_cast<uint16_t> (0), static_cast<uint16_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberOfHungTokens_, static_cast<uint16_t> (0), static_cast<uint16_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(accessControlList_);
     }
 
@@ -7921,7 +7921,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*semaphoreName_);
-        ITU_T_BIND_NUM_CONSTRS(*state_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_BIND_NUM_CONSTRAINT(*state_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
         ITU_T_BIND_PER(entryIDToStartAfter_);
     }
 
@@ -7930,7 +7930,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*semaphoreName_);
-        ITU_T_BIND_NUM_CONSTRS(*state_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_BIND_NUM_CONSTRAINT(*state_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(entryIDToStartAfter_);
     }
 
@@ -7967,11 +7967,11 @@ namespace ISO_9506_MMS_1 {
         ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*entryID_);
-        ITU_T_BIND_NUM_CONSTRS(*entryClass_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+        ITU_T_BIND_NUM_CONSTRAINT(*entryClass_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
         ITU_T_BIND_PER(*applicationReference_);
         ITU_T_BIND_PER(namedToken_);
-        ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(remainingTimeOut_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(remainingTimeOut_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(abortOnTimeOut_);
         ITU_T_BIND_PER(relinquishIfConnectionLost_);
     }
@@ -7981,11 +7981,11 @@ namespace ISO_9506_MMS_1 {
         ITU_T_OPTIONAL_READ(5);
 
         ITU_T_BIND_PER(*entryID_);
-        ITU_T_BIND_NUM_CONSTRS(*entryClass_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+        ITU_T_BIND_NUM_CONSTRAINT(*entryClass_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
         ITU_T_BIND_PER(*applicationReference_);
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(namedToken_);
-        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRS(remainingTimeOut_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRAINT(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRAINT(remainingTimeOut_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(abortOnTimeOut_);
         ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(relinquishIfConnectionLost_);
     }
@@ -8005,9 +8005,9 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_BIND_PER(*semaphoreName_);
         ITU_T_BIND_PER(namedToken_);
-        ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(acceptableDelay_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(controlTimeOut_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(acceptableDelay_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(controlTimeOut_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(abortOnTimeOut_);
         ITU_T_BIND_PER(relinquishIfConnectionLost_);
     }
@@ -8018,9 +8018,9 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_BIND_PER(*semaphoreName_);
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(namedToken_);
-        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRS(acceptableDelay_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_NUM_CONSTRS(controlTimeOut_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRAINT(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRAINT(acceptableDelay_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_NUM_CONSTRAINT(controlTimeOut_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(abortOnTimeOut_);
         ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_PER(relinquishIfConnectionLost_);
     }
@@ -8038,7 +8038,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_PER(*operatorStationName_);
         ITU_T_BIND_PER(echo_);
         ITU_T_BIND_PER(listOfPromptData_);
-        ITU_T_BIND_NUM_CONSTRS(inputTimeOut_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(inputTimeOut_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     template<> void Input_Request::serialize(boost::asn1::x691::input_coder& arch) {
@@ -8048,7 +8048,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_PER(*operatorStationName_);
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(echo_);
         ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(listOfPromptData_);
-        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRS(inputTimeOut_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRAINT(inputTimeOut_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     // sequence Output-Request
@@ -8072,7 +8072,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*eventConditionName_);
-        ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
     }
 
     template<> void TriggerEvent_Request::serialize(boost::asn1::x691::input_coder& arch) {
@@ -8080,7 +8080,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*eventConditionName_);
-        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRAINT(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
     }
 
     // sequence EventNotification
@@ -8096,11 +8096,11 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_BIND_PER(*eventEnrollmentName_);
         ITU_T_BIND_PER(*eventConditionName_);
-        ITU_T_BIND_NUM_CONSTRS(*severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_BIND_NUM_CONSTRAINT(*severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
         ITU_T_BIND_PER(*transitionTime_);
         ITU_T_BIND_PER(notificationLost_);
-        ITU_T_BIND_NUM_CONSTRS(alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_BIND_NUM_CONSTRAINT(alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_BIND_PER(actionResult_);
     }
 
@@ -8110,11 +8110,11 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_BIND_PER(*eventEnrollmentName_);
         ITU_T_BIND_PER(*eventConditionName_);
-        ITU_T_BIND_NUM_CONSTRS(*severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_BIND_NUM_CONSTRAINT(*severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRAINT(currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
         ITU_T_BIND_PER(*transitionTime_);
         ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(notificationLost_);
-        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRS(alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRAINT(alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(actionResult_);
     }
 
@@ -8201,7 +8201,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_NUM_CONSTRS(modifierPosition_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(modifierPosition_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*serviceError_);
     }
 
@@ -8209,30 +8209,30 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(modifierPosition_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRAINT(modifierPosition_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*serviceError_);
     }
 
     // choice CS-EventNotification
 
-    template<> void CS_EventNotification_impl::serialize(boost::asn1::x691::output_coder& arch) {
+    template<> void CS_EventNotification::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
-            case CS_EventNotification_impl_noEnhancement:
+            case CS_EventNotification_noEnhancement:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 2);
-                ITU_T_BIND_PER(*value<null_type > (false, CS_EventNotification_impl_noEnhancement));
+                ITU_T_BIND_PER(*value<null_type > (false, CS_EventNotification_noEnhancement));
                 break;
             }
-            case CS_EventNotification_impl_string:
+            case CS_EventNotification_string:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 2);
-                ITU_T_BIND_PER(*value<visiblestring_type > (false, CS_EventNotification_impl_string));
+                ITU_T_BIND_PER(*value<visible_string > (false, CS_EventNotification_string));
                 break;
             }
-            case CS_EventNotification_impl_index:
+            case CS_EventNotification_index:
             {
                 ITU_T_SET_CONSTAINED_INDX(2, 2);
-                ITU_T_BIND_PER(*value<integer_type > (false, CS_EventNotification_impl_index));
+                ITU_T_BIND_PER(*value<integer_type > (false, CS_EventNotification_index));
                 break;
             }
             default:
@@ -8241,24 +8241,24 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void CS_EventNotification_impl::serialize(boost::asn1::x691::input_coder& arch) {
+    template<> void CS_EventNotification::serialize(boost::asn1::x691::input_coder& arch) {
 
         ITU_T_GET_CONSTAINED_INDX(2);
 
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_PER(*value<null_type > (true, CS_EventNotification_impl_noEnhancement));
+                ITU_T_BIND_PER(*value<null_type > (true, CS_EventNotification_noEnhancement));
                 break;
             }
             case 1:
             {
-                ITU_T_BIND_PER(*value<visiblestring_type > (true, CS_EventNotification_impl_string));
+                ITU_T_BIND_PER(*value<visible_string > (true, CS_EventNotification_string));
                 break;
             }
             case 2:
             {
-                ITU_T_BIND_PER(*value<integer_type > (true, CS_EventNotification_impl_index));
+                ITU_T_BIND_PER(*value<integer_type > (true, CS_EventNotification_index));
                 break;
             }
             default:
@@ -8271,13 +8271,13 @@ namespace ISO_9506_MMS_1 {
 
     template<> void AcknowledgeEventNotification_Request::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*eventEnrollmentName_);
-        ITU_T_BIND_NUM_CONSTRS(*acknowledgedState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_BIND_NUM_CONSTRAINT(*acknowledgedState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
         ITU_T_BIND_PER(*timeOfAcknowledgedTransition_);
     }
 
     template<> void AcknowledgeEventNotification_Request::serialize(boost::asn1::x691::input_coder& arch) {
         ITU_T_BIND_PER(*eventEnrollmentName_);
-        ITU_T_BIND_NUM_CONSTRS(*acknowledgedState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_BIND_NUM_CONSTRAINT(*acknowledgedState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
         ITU_T_BIND_PER(*timeOfAcknowledgedTransition_);
     }
 
@@ -8295,7 +8295,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_BIND_PER(enrollmentsOnly_);
         ITU_T_BIND_PER(activeAlarmsOnly_);
-        ITU_T_BIND_NUM_CONSTRS(acknowledgementFilter_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_BIND_NUM_CONSTRAINT(acknowledgementFilter_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
         ITU_T_BIND_PER(severityFilter_);
         ITU_T_BIND_PER(continueAfter_);
     }
@@ -8306,7 +8306,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(enrollmentsOnly_);
         ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(activeAlarmsOnly_);
-        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRS(acknowledgementFilter_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRAINT(acknowledgementFilter_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
         ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(severityFilter_);
         ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(continueAfter_);
     }
@@ -8314,13 +8314,13 @@ namespace ISO_9506_MMS_1 {
     // sequence severityFilter
 
     template<> void GetAlarmSummary_Request::SeverityFilter_type::serialize(boost::asn1::x691::output_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRS(*mostSevere_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*leastSevere_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*mostSevere_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*leastSevere_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
     }
 
     template<> void GetAlarmSummary_Request::SeverityFilter_type::serialize(boost::asn1::x691::input_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRS(*mostSevere_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*leastSevere_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*mostSevere_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*leastSevere_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
     }
 
     // sequence GetAlarmSummary-Response
@@ -8354,10 +8354,10 @@ namespace ISO_9506_MMS_1 {
         ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*eventConditionName_);
-        ITU_T_BIND_NUM_CONSTRS(*severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
-        ITU_T_BIND_NUM_CONSTRS(*unacknowledgedState_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
-        ITU_T_BIND_PER(*(*displayEnhancement_));
+        ITU_T_BIND_NUM_CONSTRAINT(*severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_BIND_NUM_CONSTRAINT(*unacknowledgedState_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_BIND_PER(displayEnhancement_);
         ITU_T_BIND_PER(timeOfLastTransitionToActive_);
         ITU_T_BIND_PER(timeOfLastTransitionToIdle_);
     }
@@ -8367,34 +8367,34 @@ namespace ISO_9506_MMS_1 {
         ITU_T_OPTIONAL_READ(3);
 
         ITU_T_BIND_PER(*eventConditionName_);
-        ITU_T_BIND_NUM_CONSTRS(*severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
-        ITU_T_BIND_NUM_CONSTRS(*unacknowledgedState_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
-        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(*(*displayEnhancement_));
+        ITU_T_BIND_NUM_CONSTRAINT(*severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_BIND_NUM_CONSTRAINT(*unacknowledgedState_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(displayEnhancement_);
         ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(timeOfLastTransitionToActive_);
         ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(timeOfLastTransitionToIdle_);
     }
 
     // choice EN-Additional-Detail
 
-    template<> void EN_Additional_Detail_impl::serialize(boost::asn1::x691::output_coder& arch) {
+    template<> void EN_Additional_Detail::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
-            case EN_Additional_Detail_impl_noEnhancement:
+            case EN_Additional_Detail_noEnhancement:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 2);
-                ITU_T_BIND_PER(*value<null_type > (false, EN_Additional_Detail_impl_noEnhancement));
+                ITU_T_BIND_PER(*value<null_type > (false, EN_Additional_Detail_noEnhancement));
                 break;
             }
-            case EN_Additional_Detail_impl_string:
+            case EN_Additional_Detail_string:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 2);
-                ITU_T_BIND_PER(*value<visiblestring_type > (false, EN_Additional_Detail_impl_string));
+                ITU_T_BIND_PER(*value<visible_string > (false, EN_Additional_Detail_string));
                 break;
             }
-            case EN_Additional_Detail_impl_index:
+            case EN_Additional_Detail_index:
             {
                 ITU_T_SET_CONSTAINED_INDX(2, 2);
-                ITU_T_BIND_PER(*value<integer_type > (false, EN_Additional_Detail_impl_index));
+                ITU_T_BIND_PER(*value<integer_type > (false, EN_Additional_Detail_index));
                 break;
             }
             default:
@@ -8403,24 +8403,24 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void EN_Additional_Detail_impl::serialize(boost::asn1::x691::input_coder& arch) {
+    template<> void EN_Additional_Detail::serialize(boost::asn1::x691::input_coder& arch) {
 
         ITU_T_GET_CONSTAINED_INDX(2);
 
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_PER(*value<null_type > (true, EN_Additional_Detail_impl_noEnhancement));
+                ITU_T_BIND_PER(*value<null_type > (true, EN_Additional_Detail_noEnhancement));
                 break;
             }
             case 1:
             {
-                ITU_T_BIND_PER(*value<visiblestring_type > (true, EN_Additional_Detail_impl_string));
+                ITU_T_BIND_PER(*value<visible_string > (true, EN_Additional_Detail_string));
                 break;
             }
             case 2:
             {
-                ITU_T_BIND_PER(*value<integer_type > (true, EN_Additional_Detail_impl_index));
+                ITU_T_BIND_PER(*value<integer_type > (true, EN_Additional_Detail_index));
                 break;
             }
             default:
@@ -8443,7 +8443,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_BIND_PER(enrollmentsOnly_);
         ITU_T_BIND_PER(activeAlarmsOnly_);
-        ITU_T_BIND_NUM_CONSTRS(acknowledgementFilter_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_BIND_NUM_CONSTRAINT(acknowledgementFilter_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
         ITU_T_BIND_PER(severityFilter_);
         ITU_T_BIND_PER(continueAfter_);
     }
@@ -8454,7 +8454,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(enrollmentsOnly_);
         ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(activeAlarmsOnly_);
-        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRS(acknowledgementFilter_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRAINT(acknowledgementFilter_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
         ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(severityFilter_);
         ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(continueAfter_);
     }
@@ -8462,13 +8462,13 @@ namespace ISO_9506_MMS_1 {
     // sequence severityFilter
 
     template<> void GetAlarmEnrollmentSummary_Request::SeverityFilter_type::serialize(boost::asn1::x691::output_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRS(*mostSevere_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*leastSevere_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*mostSevere_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*leastSevere_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
     }
 
     template<> void GetAlarmEnrollmentSummary_Request::SeverityFilter_type::serialize(boost::asn1::x691::input_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRS(*mostSevere_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*leastSevere_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*mostSevere_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*leastSevere_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
     }
 
     // sequence GetAlarmEnrollmentSummary-Response
@@ -8508,11 +8508,11 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_BIND_PER(*eventEnrollmentName_);
         ITU_T_BIND_PER(clientApplication_);
-        ITU_T_BIND_NUM_CONSTRS(*severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
-        ITU_T_BIND_PER(*(*displayEnhancement_));
+        ITU_T_BIND_NUM_CONSTRAINT(*severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_BIND_PER(displayEnhancement_);
         ITU_T_BIND_PER(notificationLost_);
-        ITU_T_BIND_NUM_CONSTRS(*alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_BIND_NUM_CONSTRAINT(*alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_BIND_PER(enrollmentState_);
         ITU_T_BIND_PER(timeOfLastTransitionToActive_);
         ITU_T_BIND_PER(timeActiveAcknowledged_);
@@ -8526,11 +8526,11 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_BIND_PER(*eventEnrollmentName_);
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(clientApplication_);
-        ITU_T_BIND_NUM_CONSTRS(*severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
-        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(*(*displayEnhancement_));
+        ITU_T_BIND_NUM_CONSTRAINT(*severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(displayEnhancement_);
         ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(notificationLost_);
-        ITU_T_BIND_NUM_CONSTRS(*alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_BIND_NUM_CONSTRAINT(*alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(enrollmentState_);
         ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(timeOfLastTransitionToActive_);
         ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_PER(timeActiveAcknowledged_);
@@ -8548,8 +8548,8 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_BIND_PER(*eventEnrollmentName_);
         ITU_T_BIND_PER(*eventConditionName_);
-        ITU_T_BIND_SIZE_SNGLCONSTRS(*causingTransitions_, 7);
-        ITU_T_BIND_NUM_CONSTRS(acceptableDelay_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_SIZE_SNGLCONSTRAINT(*causingTransitions_, 7);
+        ITU_T_BIND_NUM_CONSTRAINT(acceptableDelay_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     template<> void AttachToEventCondition::serialize(boost::asn1::x691::input_coder& arch) {
@@ -8558,8 +8558,8 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_BIND_PER(*eventEnrollmentName_);
         ITU_T_BIND_PER(*eventConditionName_);
-        ITU_T_BIND_SIZE_SNGLCONSTRS(*causingTransitions_, 7);
-        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(acceptableDelay_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_SIZE_SNGLCONSTRAINT(*causingTransitions_, 7);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRAINT(acceptableDelay_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     // sequence DefineEventCondition-Request
@@ -8575,12 +8575,12 @@ namespace ISO_9506_MMS_1 {
         ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*eventConditionName_);
-        ITU_T_BIND_NUM_CONSTRS(*classV_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
-        ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*classV_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+        ITU_T_BIND_NUM_CONSTRAINT(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(alarmSummaryReports_);
         ITU_T_BIND_PER(monitoredVariable_);
-        ITU_T_BIND_NUM_CONSTRS(evaluationInterval_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(evaluationInterval_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     template<> void DefineEventCondition_Request::serialize(boost::asn1::x691::input_coder& arch) {
@@ -8588,34 +8588,34 @@ namespace ISO_9506_MMS_1 {
         ITU_T_OPTIONAL_READ(5);
 
         ITU_T_BIND_PER(*eventConditionName_);
-        ITU_T_BIND_NUM_CONSTRS(*classV_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
-        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRS(severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*classV_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRAINT(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRAINT(severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(alarmSummaryReports_);
         ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(monitoredVariable_);
-        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_NUM_CONSTRS(evaluationInterval_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_NUM_CONSTRAINT(evaluationInterval_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     // choice CS-DefineEventCondition-Request
 
-    template<> void CS_DefineEventCondition_Request_impl::serialize(boost::asn1::x691::output_coder& arch) {
+    template<> void CS_DefineEventCondition_Request::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
-            case CS_DefineEventCondition_Request_impl_noEnhancement:
+            case CS_DefineEventCondition_Request_noEnhancement:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 2);
-                ITU_T_BIND_PER(*value<null_type > (false, CS_DefineEventCondition_Request_impl_noEnhancement));
+                ITU_T_BIND_PER(*value<null_type > (false, CS_DefineEventCondition_Request_noEnhancement));
                 break;
             }
-            case CS_DefineEventCondition_Request_impl_string:
+            case CS_DefineEventCondition_Request_string:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 2);
-                ITU_T_BIND_PER(*value<visiblestring_type > (false, CS_DefineEventCondition_Request_impl_string));
+                ITU_T_BIND_PER(*value<visible_string > (false, CS_DefineEventCondition_Request_string));
                 break;
             }
-            case CS_DefineEventCondition_Request_impl_index:
+            case CS_DefineEventCondition_Request_index:
             {
                 ITU_T_SET_CONSTAINED_INDX(2, 2);
-                ITU_T_BIND_PER(*value<integer_type > (false, CS_DefineEventCondition_Request_impl_index));
+                ITU_T_BIND_PER(*value<integer_type > (false, CS_DefineEventCondition_Request_index));
                 break;
             }
             default:
@@ -8624,24 +8624,24 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void CS_DefineEventCondition_Request_impl::serialize(boost::asn1::x691::input_coder& arch) {
+    template<> void CS_DefineEventCondition_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
         ITU_T_GET_CONSTAINED_INDX(2);
 
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_PER(*value<null_type > (true, CS_DefineEventCondition_Request_impl_noEnhancement));
+                ITU_T_BIND_PER(*value<null_type > (true, CS_DefineEventCondition_Request_noEnhancement));
                 break;
             }
             case 1:
             {
-                ITU_T_BIND_PER(*value<visiblestring_type > (true, CS_DefineEventCondition_Request_impl_string));
+                ITU_T_BIND_PER(*value<visible_string > (true, CS_DefineEventCondition_Request_string));
                 break;
             }
             case 2:
             {
-                ITU_T_BIND_PER(*value<integer_type > (true, CS_DefineEventCondition_Request_impl_index));
+                ITU_T_BIND_PER(*value<integer_type > (true, CS_DefineEventCondition_Request_index));
                 break;
             }
             default:
@@ -8730,12 +8730,12 @@ namespace ISO_9506_MMS_1 {
         ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(mmsDeletable_);
-        ITU_T_BIND_NUM_CONSTRS(*classV_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
-        ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*classV_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+        ITU_T_BIND_NUM_CONSTRAINT(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(alarmSummaryReports_);
         ITU_T_BIND_PER(monitoredVariable_);
-        ITU_T_BIND_NUM_CONSTRS(evaluationInterval_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(evaluationInterval_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(accessControlList_);
     }
 
@@ -8744,12 +8744,12 @@ namespace ISO_9506_MMS_1 {
         ITU_T_OPTIONAL_READ(7);
 
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(mmsDeletable_);
-        ITU_T_BIND_NUM_CONSTRS(*classV_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
-        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRS(severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*classV_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRAINT(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRAINT(severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(alarmSummaryReports_);
         ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(monitoredVariable_);
-        ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_NUM_CONSTRS(evaluationInterval_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_NUM_CONSTRAINT(evaluationInterval_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_OPTIONAL_CHECK(6) ITU_T_BIND_PER(accessControlList_);
     }
 
@@ -8826,7 +8826,7 @@ namespace ISO_9506_MMS_1 {
             case GroupPriorityOverride_type_priority:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 1);
-                ITU_T_BIND_NUM_CONSTRS(*value<MMS_Object_Module_1::Priority > (false, GroupPriorityOverride_type_priority), static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<MMS_Object_Module_1::Priority > (false, GroupPriorityOverride_type_priority), static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
                 break;
             }
             case GroupPriorityOverride_type_undefined:
@@ -8848,7 +8848,7 @@ namespace ISO_9506_MMS_1 {
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<MMS_Object_Module_1::Priority > (true, GroupPriorityOverride_type_priority), static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<MMS_Object_Module_1::Priority > (true, GroupPriorityOverride_type_priority), static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
                 break;
             }
             case 1:
@@ -8869,7 +8869,7 @@ namespace ISO_9506_MMS_1 {
             case DisplayEnhancement_type_string:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 2);
-                ITU_T_BIND_PER(*value<visiblestring_type > (false, DisplayEnhancement_type_string));
+                ITU_T_BIND_PER(*value<visible_string > (false, DisplayEnhancement_type_string));
                 break;
             }
             case DisplayEnhancement_type_index:
@@ -8897,7 +8897,7 @@ namespace ISO_9506_MMS_1 {
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_PER(*value<visiblestring_type > (true, DisplayEnhancement_type_string));
+                ITU_T_BIND_PER(*value<visible_string > (true, DisplayEnhancement_type_string));
                 break;
             }
             case 1:
@@ -8926,8 +8926,8 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_NUM_CONSTRS(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
-        ITU_T_BIND_NUM_CONSTRS(*numberOfEventEnrollments_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberOfEventEnrollments_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(enabled_);
         ITU_T_BIND_PER(timeOfLastTransitionToActive_);
         ITU_T_BIND_PER(timeOfLastTransitionToIdle_);
@@ -8937,8 +8937,8 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_READ(3);
 
-        ITU_T_BIND_NUM_CONSTRS(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
-        ITU_T_BIND_NUM_CONSTRS(*numberOfEventEnrollments_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberOfEventEnrollments_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(enabled_);
         ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(timeOfLastTransitionToActive_);
         ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(timeOfLastTransitionToIdle_);
@@ -8957,9 +8957,9 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_BIND_PER(*eventConditionName_);
         ITU_T_BIND_PER(enabled_);
-        ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(alarmSummaryReports_);
-        ITU_T_BIND_NUM_CONSTRS(evaluationInterval_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(evaluationInterval_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     template<> void AlterEventConditionMonitoring_Request::serialize(boost::asn1::x691::input_coder& arch) {
@@ -8968,9 +8968,9 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_BIND_PER(*eventConditionName_);
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(enabled_);
-        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRAINT(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(alarmSummaryReports_);
-        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_NUM_CONSTRS(evaluationInterval_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_NUM_CONSTRAINT(evaluationInterval_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     // sequence CS-AlterEventConditionMonitoring-Request
@@ -8998,7 +8998,7 @@ namespace ISO_9506_MMS_1 {
             case ChangeDisplay_type_string:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 2);
-                ITU_T_BIND_PER(*value<visiblestring_type > (false, ChangeDisplay_type_string));
+                ITU_T_BIND_PER(*value<visible_string > (false, ChangeDisplay_type_string));
                 break;
             }
             case ChangeDisplay_type_index:
@@ -9026,7 +9026,7 @@ namespace ISO_9506_MMS_1 {
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_PER(*value<visiblestring_type > (true, ChangeDisplay_type_string));
+                ITU_T_BIND_PER(*value<visible_string > (true, ChangeDisplay_type_string));
                 break;
             }
             case 1:
@@ -9174,8 +9174,8 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_BIND_PER(*eventEnrollmentName_);
         ITU_T_BIND_PER(*eventConditionName_);
-        ITU_T_BIND_SIZE_SNGLCONSTRS(*eventConditionTransitions_, 7);
-        ITU_T_BIND_NUM_CONSTRS(*alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_BIND_SIZE_SNGLCONSTRAINT(*eventConditionTransitions_, 7);
+        ITU_T_BIND_NUM_CONSTRAINT(*alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_BIND_PER(eventActionName_);
         ITU_T_BIND_PER(clientApplication_);
     }
@@ -9186,32 +9186,32 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_BIND_PER(*eventEnrollmentName_);
         ITU_T_BIND_PER(*eventConditionName_);
-        ITU_T_BIND_SIZE_SNGLCONSTRS(*eventConditionTransitions_, 7);
-        ITU_T_BIND_NUM_CONSTRS(*alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_BIND_SIZE_SNGLCONSTRAINT(*eventConditionTransitions_, 7);
+        ITU_T_BIND_NUM_CONSTRAINT(*alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(eventActionName_);
         ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(clientApplication_);
     }
 
     // choice CS-DefineEventEnrollment-Request
 
-    template<> void CS_DefineEventEnrollment_Request_impl::serialize(boost::asn1::x691::output_coder& arch) {
+    template<> void CS_DefineEventEnrollment_Request::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
-            case CS_DefineEventEnrollment_Request_impl_noEnhancement:
+            case CS_DefineEventEnrollment_Request_noEnhancement:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 2);
-                ITU_T_BIND_PER(*value<null_type > (false, CS_DefineEventEnrollment_Request_impl_noEnhancement));
+                ITU_T_BIND_PER(*value<null_type > (false, CS_DefineEventEnrollment_Request_noEnhancement));
                 break;
             }
-            case CS_DefineEventEnrollment_Request_impl_string:
+            case CS_DefineEventEnrollment_Request_string:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 2);
-                ITU_T_BIND_PER(*value<visiblestring_type > (false, CS_DefineEventEnrollment_Request_impl_string));
+                ITU_T_BIND_PER(*value<visible_string > (false, CS_DefineEventEnrollment_Request_string));
                 break;
             }
-            case CS_DefineEventEnrollment_Request_impl_index:
+            case CS_DefineEventEnrollment_Request_index:
             {
                 ITU_T_SET_CONSTAINED_INDX(2, 2);
-                ITU_T_BIND_PER(*value<integer_type > (false, CS_DefineEventEnrollment_Request_impl_index));
+                ITU_T_BIND_PER(*value<integer_type > (false, CS_DefineEventEnrollment_Request_index));
                 break;
             }
             default:
@@ -9220,24 +9220,24 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void CS_DefineEventEnrollment_Request_impl::serialize(boost::asn1::x691::input_coder& arch) {
+    template<> void CS_DefineEventEnrollment_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
         ITU_T_GET_CONSTAINED_INDX(2);
 
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_PER(*value<null_type > (true, CS_DefineEventEnrollment_Request_impl_noEnhancement));
+                ITU_T_BIND_PER(*value<null_type > (true, CS_DefineEventEnrollment_Request_noEnhancement));
                 break;
             }
             case 1:
             {
-                ITU_T_BIND_PER(*value<visiblestring_type > (true, CS_DefineEventEnrollment_Request_impl_string));
+                ITU_T_BIND_PER(*value<visible_string > (true, CS_DefineEventEnrollment_Request_string));
                 break;
             }
             case 2:
             {
-                ITU_T_BIND_PER(*value<integer_type > (true, CS_DefineEventEnrollment_Request_impl_index));
+                ITU_T_BIND_PER(*value<integer_type > (true, CS_DefineEventEnrollment_Request_index));
                 break;
             }
             default:
@@ -9313,7 +9313,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_NUM_CONSTRS(scopeOfRequest_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_BIND_NUM_CONSTRAINT(scopeOfRequest_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_BIND_PER(eventEnrollmentNames_);
         ITU_T_BIND_PER(clientApplication_);
         ITU_T_BIND_PER(eventConditionName_);
@@ -9325,7 +9325,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_READ(6);
 
-        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(scopeOfRequest_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRAINT(scopeOfRequest_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(eventEnrollmentNames_);
         ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(clientApplication_);
         ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(eventConditionName_);
@@ -9371,10 +9371,10 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_PER(eventActionName_);
         ITU_T_BIND_PER(clientApplication_);
         ITU_T_BIND_PER(mmsDeletable_);
-        ITU_T_BIND_NUM_CONSTRS(*enrollmentClass_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
-        ITU_T_BIND_NUM_CONSTRS(duration_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
-        ITU_T_BIND_NUM_CONSTRS(invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_BIND_NUM_CONSTRS(remainingAcceptableDelay_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*enrollmentClass_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+        ITU_T_BIND_NUM_CONSTRAINT(duration_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+        ITU_T_BIND_NUM_CONSTRAINT(invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(remainingAcceptableDelay_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*displayEnhancement_);
     }
 
@@ -9387,10 +9387,10 @@ namespace ISO_9506_MMS_1 {
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(eventActionName_);
         ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(clientApplication_);
         ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(mmsDeletable_);
-        ITU_T_BIND_NUM_CONSTRS(*enrollmentClass_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
-        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_NUM_CONSTRS(duration_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
-        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_NUM_CONSTRS(invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_NUM_CONSTRS(remainingAcceptableDelay_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*enrollmentClass_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_NUM_CONSTRAINT(duration_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_NUM_CONSTRAINT(invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_NUM_CONSTRAINT(remainingAcceptableDelay_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*displayEnhancement_);
     }
 
@@ -9493,7 +9493,7 @@ namespace ISO_9506_MMS_1 {
             case DisplayEnhancement_type_string:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 2);
-                ITU_T_BIND_PER(*value<visiblestring_type > (false, DisplayEnhancement_type_string));
+                ITU_T_BIND_PER(*value<visible_string > (false, DisplayEnhancement_type_string));
                 break;
             }
             case DisplayEnhancement_type_index:
@@ -9520,7 +9520,7 @@ namespace ISO_9506_MMS_1 {
             }
             case 1:
             {
-                ITU_T_BIND_PER(*value<visiblestring_type > (true, DisplayEnhancement_type_string));
+                ITU_T_BIND_PER(*value<visible_string > (true, DisplayEnhancement_type_string));
                 break;
             }
             case 2:
@@ -9543,10 +9543,10 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_SIZE_SNGLCONSTRS(*eventConditionTransitions_, 7);
+        ITU_T_BIND_SIZE_SNGLCONSTRAINT(*eventConditionTransitions_, 7);
         ITU_T_BIND_PER(notificationLost_);
-        ITU_T_BIND_NUM_CONSTRS(*duration_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
-        ITU_T_BIND_NUM_CONSTRS(alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_BIND_NUM_CONSTRAINT(*duration_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+        ITU_T_BIND_NUM_CONSTRAINT(alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_BIND_PER(*currentState_);
     }
 
@@ -9554,10 +9554,10 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_BIND_SIZE_SNGLCONSTRS(*eventConditionTransitions_, 7);
+        ITU_T_BIND_SIZE_SNGLCONSTRAINT(*eventConditionTransitions_, 7);
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(notificationLost_);
-        ITU_T_BIND_NUM_CONSTRS(*duration_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
-        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRS(alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_BIND_NUM_CONSTRAINT(*duration_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRAINT(alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_BIND_PER(*currentState_);
     }
 
@@ -9571,8 +9571,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*eventEnrollmentName_);
-        ITU_T_BIND_SIZE_SNGLCONSTRS(eventConditionTransitions_, 7);
-        ITU_T_BIND_NUM_CONSTRS(alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_BIND_SIZE_SNGLCONSTRAINT(eventConditionTransitions_, 7);
+        ITU_T_BIND_NUM_CONSTRAINT(alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
     }
 
     template<> void AlterEventEnrollment_Request::serialize(boost::asn1::x691::input_coder& arch) {
@@ -9580,8 +9580,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_OPTIONAL_READ(2);
 
         ITU_T_BIND_PER(*eventEnrollmentName_);
-        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_SNGLCONSTRS(eventConditionTransitions_, 7);
-        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRS(alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_SNGLCONSTRAINT(eventConditionTransitions_, 7);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRAINT(alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
     }
 
     // sequence AlterEventEnrollment-Response
@@ -9664,7 +9664,7 @@ namespace ISO_9506_MMS_1 {
             case ChangeDisplay_type_string:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 2);
-                ITU_T_BIND_PER(*value<visiblestring_type > (false, ChangeDisplay_type_string));
+                ITU_T_BIND_PER(*value<visible_string > (false, ChangeDisplay_type_string));
                 break;
             }
             case ChangeDisplay_type_index:
@@ -9692,7 +9692,7 @@ namespace ISO_9506_MMS_1 {
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_PER(*value<visiblestring_type > (true, ChangeDisplay_type_string));
+                ITU_T_BIND_PER(*value<visible_string > (true, ChangeDisplay_type_string));
                 break;
             }
             case 1:
@@ -9883,8 +9883,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*eventConditionName_);
-        ITU_T_BIND_NUM_CONSTRS(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
-        ITU_T_BIND_NUM_CONSTRS(*numberOfEventEnrollments_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberOfEventEnrollments_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(enabled_);
         ITU_T_BIND_PER(timeOfLastTransitionToActive_);
         ITU_T_BIND_PER(timeOfLastTransitionToIdle_);
@@ -9895,8 +9895,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_OPTIONAL_READ(3);
 
         ITU_T_BIND_PER(*eventConditionName_);
-        ITU_T_BIND_NUM_CONSTRS(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
-        ITU_T_BIND_NUM_CONSTRS(*numberOfEventEnrollments_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_BIND_NUM_CONSTRAINT(*numberOfEventEnrollments_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(enabled_);
         ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(timeOfLastTransitionToActive_);
         ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(timeOfLastTransitionToIdle_);
@@ -10003,13 +10003,13 @@ namespace ISO_9506_MMS_1 {
             case RangeStartSpecification_type_startingTime:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 1);
-                ITU_T_BIND_SIZE_CONSTRS(*value<TimeOfDay > (false, RangeStartSpecification_type_startingTime), 4, 6);
+                ITU_T_BIND_SIZE_CONSTRAINT(*value<TimeOfDay > (false, RangeStartSpecification_type_startingTime), 4, 6);
                 break;
             }
             case RangeStartSpecification_type_startingEntry:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 1);
-                ITU_T_BIND_PER(*value<octetstring_type > (false, RangeStartSpecification_type_startingEntry));
+                ITU_T_BIND_PER(*value<octet_string > (false, RangeStartSpecification_type_startingEntry));
                 break;
             }
             default:
@@ -10025,12 +10025,12 @@ namespace ISO_9506_MMS_1 {
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_SIZE_CONSTRS(*value<TimeOfDay > (true, RangeStartSpecification_type_startingTime), 4, 6);
+                ITU_T_BIND_SIZE_CONSTRAINT(*value<TimeOfDay > (true, RangeStartSpecification_type_startingTime), 4, 6);
                 break;
             }
             case 1:
             {
-                ITU_T_BIND_PER(*value<octetstring_type > (true, RangeStartSpecification_type_startingEntry));
+                ITU_T_BIND_PER(*value<octet_string > (true, RangeStartSpecification_type_startingEntry));
                 break;
             }
             default:
@@ -10046,13 +10046,13 @@ namespace ISO_9506_MMS_1 {
             case RangeStopSpecification_type_endingTime:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 1);
-                ITU_T_BIND_SIZE_CONSTRS(*value<TimeOfDay > (false, RangeStopSpecification_type_endingTime), 4, 6);
+                ITU_T_BIND_SIZE_CONSTRAINT(*value<TimeOfDay > (false, RangeStopSpecification_type_endingTime), 4, 6);
                 break;
             }
             case RangeStopSpecification_type_numberOfEntries:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 1);
-                ITU_T_BIND_NUM_CONSTRS(*value<Integer32 > (false, RangeStopSpecification_type_numberOfEntries), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<Integer32 > (false, RangeStopSpecification_type_numberOfEntries), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
                 break;
             }
             default:
@@ -10068,12 +10068,12 @@ namespace ISO_9506_MMS_1 {
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_SIZE_CONSTRS(*value<TimeOfDay > (true, RangeStopSpecification_type_endingTime), 4, 6);
+                ITU_T_BIND_SIZE_CONSTRAINT(*value<TimeOfDay > (true, RangeStopSpecification_type_endingTime), 4, 6);
                 break;
             }
             case 1:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<Integer32 > (true, RangeStopSpecification_type_numberOfEntries), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
+                ITU_T_BIND_NUM_CONSTRAINT(*value<Integer32 > (true, RangeStopSpecification_type_numberOfEntries), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
                 break;
             }
             default:
@@ -10085,12 +10085,12 @@ namespace ISO_9506_MMS_1 {
     // sequence entryToStartAfter
 
     template<> void ReadJournal_Request::EntryToStartAfter_type::serialize(boost::asn1::x691::output_coder& arch) {
-        ITU_T_BIND_SIZE_CONSTRS(*timeSpecification_, 4, 6);
+        ITU_T_BIND_SIZE_CONSTRAINT(*timeSpecification_, 4, 6);
         ITU_T_BIND_PER(*entrySpecification_);
     }
 
     template<> void ReadJournal_Request::EntryToStartAfter_type::serialize(boost::asn1::x691::input_coder& arch) {
-        ITU_T_BIND_SIZE_CONSTRS(*timeSpecification_, 4, 6);
+        ITU_T_BIND_SIZE_CONSTRAINT(*timeSpecification_, 4, 6);
         ITU_T_BIND_PER(*entrySpecification_);
     }
 
@@ -10168,7 +10168,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_SIZE_CONSTRS(*limitingTime_, 4, 6);
+        ITU_T_BIND_SIZE_CONSTRAINT(*limitingTime_, 4, 6);
         ITU_T_BIND_PER(limitingEntry_);
     }
 
@@ -10176,7 +10176,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_BIND_SIZE_CONSTRS(*limitingTime_, 4, 6);
+        ITU_T_BIND_SIZE_CONSTRAINT(*limitingTime_, 4, 6);
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(limitingEntry_);
     }
 
@@ -10188,7 +10188,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_NUM_CONSTRS(*currentEntries_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*currentEntries_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*mmsDeletable_);
         ITU_T_BIND_PER(accessControlList_);
     }
@@ -10197,7 +10197,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_BIND_NUM_CONSTRS(*currentEntries_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT(*currentEntries_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*mmsDeletable_);
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(accessControlList_);
     }
@@ -10225,12 +10225,12 @@ namespace ISO_9506_MMS_1 {
     // sequence EntryContent
 
     template<> void EntryContent::serialize(boost::asn1::x691::output_coder& arch) {
-        ITU_T_BIND_SIZE_CONSTRS(*occurrenceTime_, 4, 6);
+        ITU_T_BIND_SIZE_CONSTRAINT(*occurrenceTime_, 4, 6);
         ITU_T_BIND_PER(*entryForm_);
     }
 
     template<> void EntryContent::serialize(boost::asn1::x691::input_coder& arch) {
-        ITU_T_BIND_SIZE_CONSTRS(*occurrenceTime_, 4, 6);
+        ITU_T_BIND_SIZE_CONSTRAINT(*occurrenceTime_, 4, 6);
         ITU_T_BIND_PER(*entryForm_);
     }
 
@@ -10302,12 +10302,12 @@ namespace ISO_9506_MMS_1 {
 
     template<> void EntryContent::EntryForm_type::Data_type::Event_type::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*eventConditionName_);
-        ITU_T_BIND_NUM_CONSTRS(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_BIND_NUM_CONSTRAINT(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
     }
 
     template<> void EntryContent::EntryForm_type::Data_type::Event_type::serialize(boost::asn1::x691::input_coder& arch) {
         ITU_T_BIND_PER(*eventConditionName_);
-        ITU_T_BIND_NUM_CONSTRS(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_BIND_NUM_CONSTRAINT(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
     }
 
 }
