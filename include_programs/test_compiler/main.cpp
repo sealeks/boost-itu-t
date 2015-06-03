@@ -49,7 +49,7 @@ int main(int argc, char* argv[]) {
 
        std::cout << "!!!!!!!!!!!!: " << rsl << std::endl;
        
-       x680::cpp::fileout fls(rsl, IN_FILE/*,"out", getOptRev(argc, argv ), getOptHolder(argc, argv)*/) ;
+       x680::cpp::cppout fls(rsl, IN_FILE/*,"out", getOptRev(argc, argv ), getOptHolder(argc, argv)*/) ;
        fls.execute();
        
     } catch (const x680::syntactic::synxtas_error& e) {
