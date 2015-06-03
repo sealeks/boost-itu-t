@@ -127,55 +127,55 @@ namespace boost {
         
         ///  OCTETSTRING TYPE        
 
-        typedef boost::itu::vector<octet_type, 4> octetstring_type;
+        typedef boost::itu::vector<octet_type, 4> octet_string;
         
-        std::ostream& operator<<(std::ostream& stream, const octetstring_type& vl);        
+        std::ostream& operator<<(std::ostream& stream, const octet_string& vl);        
         
 
          ///  BITSTRING TYPE       
         
-        class bitstring_type : public itu::octet_sequnce {
+        class bit_string : public itu::octet_sequnce {
 
         public:
 
             typedef std::vector<bool> bool_vector_type;
             typedef boost::dynamic_bitset<> dynamic_bitset_type;
 
-            bitstring_type();
+            bit_string();
 
-            explicit bitstring_type(uint8_t vl, std::size_t unuse = 0);
+            explicit bit_string(uint8_t vl, std::size_t unuse = 0);
 
-            explicit bitstring_type(uint16_t vl, std::size_t unuse = 0);
+            explicit bit_string(uint16_t vl, std::size_t unuse = 0);
 
-            explicit bitstring_type(uint32_t vl, std::size_t unuse = 0);
+            explicit bit_string(uint32_t vl, std::size_t unuse = 0);
 
-            explicit bitstring_type(uint64_t vl, std::size_t unuse = 0);
+            explicit bit_string(uint64_t vl, std::size_t unuse = 0);
 
-            explicit bitstring_type(int8_t vl, std::size_t unuse = 0);
+            explicit bit_string(int8_t vl, std::size_t unuse = 0);
 
-            explicit bitstring_type(int16_t vl, std::size_t unuse = 0);
+            explicit bit_string(int16_t vl, std::size_t unuse = 0);
 
-            explicit bitstring_type(int32_t vl, std::size_t unuse = 0);
+            explicit bit_string(int32_t vl, std::size_t unuse = 0);
 
-            explicit bitstring_type(int64_t vl, std::size_t unuse = 0);
+            explicit bit_string(int64_t vl, std::size_t unuse = 0);
 
-            explicit bitstring_type(const octet_sequnce& vl, std::size_t unuse = 0);
+            explicit bit_string(const octet_sequnce& vl, std::size_t unuse = 0);
 
-            explicit bitstring_type(const std::vector<bool>& vl);
+            explicit bit_string(const std::vector<bool>& vl);
 
-            explicit bitstring_type(bool vl, std::size_t n = 0);
+            explicit bit_string(bool vl, std::size_t n = 0);
 
-            explicit bitstring_type(const std::string& vl, std::size_t unuse = 0);
+            explicit bit_string(const std::string& vl, std::size_t unuse = 0);
 
-            explicit bitstring_type(bool const * const arr, std::size_t cnt);
+            explicit bit_string(bool const * const arr, std::size_t cnt);
 
-            bitstring_type(const dynamic_bitset_type& vl) : std::vector<octet_type>() {
+            bit_string(const dynamic_bitset_type& vl) : std::vector<octet_type>() {
                 construct(vl);
             };
 
             void insert_bitstring(const octet_sequnce& val, std::size_t unuse = 0);
 
-            static bitstring_type create_from_string(const std::string& vl);
+            static bit_string create_from_string(const std::string& vl);
 
             std::size_t unusebits() const {
                 return empty() ? 0 : (unuse_);
@@ -219,19 +219,19 @@ namespace boost {
 
             octet_sequnce as_octet_sequnce() const;
 
-            bitstring_type operator~() const;
+            bit_string operator~() const;
 
-            friend bitstring_type operator|(const bitstring_type& ls, const bitstring_type& rs);
+            friend bit_string operator|(const bit_string& ls, const bit_string& rs);
 
-            friend bitstring_type operator&(const bitstring_type& ls, const bitstring_type& rs);
+            friend bit_string operator&(const bit_string& ls, const bit_string& rs);
 
-            friend bitstring_type operator^(const bitstring_type& ls, const bitstring_type& rs);
+            friend bit_string operator^(const bit_string& ls, const bit_string& rs);
 
-            friend bitstring_type operator+(const bitstring_type& ls, const bitstring_type& rs);
+            friend bit_string operator+(const bit_string& ls, const bit_string& rs);
 
-            void append(const bitstring_type& vl);
+            void append(const bit_string& vl);
 
-            void append(const octetstring_type& vl);
+            void append(const octet_string& vl);
 
 
 
@@ -278,22 +278,22 @@ namespace boost {
         };
 
 
-        std::ostream& operator<<(std::ostream& stream, const bitstring_type& vl);
+        std::ostream& operator<<(std::ostream& stream, const bit_string& vl);
 
 
         ///  OCTETSTRING TYPE           
 
-        /*class octetstring_type : public itu::octet_sequnce {
+        /*class octet_string : public itu::octet_sequnce {
 
         public:
 
-            octetstring_type() : std::vector<octet_type>() {
+            octet_string() : std::vector<octet_type>() {
             }
 
-            explicit octetstring_type(const octet_sequnce& vl) : std::vector<octet_type>(vl.begin(), vl.end()) {
+            explicit octet_string(const octet_sequnce& vl) : std::vector<octet_type>(vl.begin(), vl.end()) {
             }
 
-            octetstring_type(const std::string& vl) : std::vector<octet_type>(vl.begin(), vl.end()) {
+            octet_string(const std::string& vl) : std::vector<octet_type>(vl.begin(), vl.end()) {
             }
 
             operator octet_sequnce() const;
@@ -313,8 +313,8 @@ namespace boost {
     namespace itu {
 
 
-        typedef asn1::bitstring_type bitmap_type;
-        using asn1::octetstring_type;
+        typedef asn1::bit_string bitmap_type;
+        using asn1::octet_string;
 
 
         std::string binary_to_hexsequence_debug(const std::string& vl, std::size_t group = 1);

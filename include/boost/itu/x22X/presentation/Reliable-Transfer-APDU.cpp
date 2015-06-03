@@ -101,7 +101,7 @@ namespace Reliable_Transfer_APDU {
     };
 
     RTABapdu::RTABapdu(shared_ptr< AbortReason> arg__abortReason,
-            shared_ptr< bitstring_type> arg__reflectedParameter,
+            shared_ptr< bit_string> arg__reflectedParameter,
             shared_ptr< any_type> arg__userdataAB) :
     abortReason_(arg__abortReason),
     reflectedParameter_(arg__reflectedParameter),
@@ -110,7 +110,7 @@ namespace Reliable_Transfer_APDU {
 
 
     ITU_T_OPTIONAL_DEFN(RTABapdu::abortReason, abortReason, AbortReason);
-    ITU_T_OPTIONAL_DEFN(RTABapdu::reflectedParameter, reflectedParameter, bitstring_type);
+    ITU_T_OPTIONAL_DEFN(RTABapdu::reflectedParameter, reflectedParameter, bit_string);
     ITU_T_OPTIONAL_DEFN(RTABapdu::userdataAB, userdataAB, any_type);
 
     // choice ConnectionData
@@ -144,8 +144,8 @@ namespace Reliable_Transfer_APDU {
 
     // choice CallingSSuserReference
 
-    ITU_T_CHOICES_DEFN(CallingSSuserReference::t61String, t61String, t61string_type, CallingSSuserReference_t61String);
-    ITU_T_CHOICES_DEFN(CallingSSuserReference::octetString, octetString, octetstring_type, CallingSSuserReference_octetString);
+    ITU_T_CHOICES_DEFN(CallingSSuserReference::t61String, t61String, t61_string, CallingSSuserReference_t61String);
+    ITU_T_CHOICES_DEFN(CallingSSuserReference::octetString, octetString, octet_string, CallingSSuserReference_octetString);
 
 }
 

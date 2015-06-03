@@ -40,17 +40,17 @@ namespace ACSE_1 {
     struct P_context_result_list_sequence_of;
 
 
-    typedef enumerated_type ABRT_diagnostic;
+    typedef enumerated ABRT_diagnostic;
     typedef integer_type ABRT_source; //   Ic(  [ 0  ...   1 ]   ...ext...) 
-    typedef bitstring_type ACSE_requirements;
+    typedef bit_string ACSE_requirements;
     typedef oid_type ASO_context_name;
-    typedef octetstring_type AP_title_form1;
-    typedef octetstring_type ASO_qualifier_form1;
+    typedef octet_string AP_title_form1;
+    typedef octet_string ASO_qualifier_form1;
     typedef oid_type AP_title_form2;
     typedef integer_type ASO_qualifier_form2;
-    typedef printablestring_type AP_title_form3;
-    typedef printablestring_type ASO_qualifier_form3;
-    typedef octetstring_type AE_title_form1;
+    typedef printable_string AP_title_form3;
+    typedef printable_string ASO_qualifier_form3;
+    typedef octet_string AE_title_form1;
     typedef oid_type AE_title_form2;
     typedef integer_type AE_invocation_identifier;
     typedef integer_type AP_invocation_identifier;
@@ -59,9 +59,9 @@ namespace ACSE_1 {
     typedef integer_type Result;
     typedef oid_type Transfer_syntax_name;
     typedef integer_type Associate_result; //   Ic(  [ 0  ...   2 ]   ...ext...) 
-    typedef octetstring_type Simply_encoded_data;
+    typedef octet_string Simply_encoded_data;
     typedef integer_type Presentation_context_identifier;
-    typedef graphicstring_type Implementation_data;
+    typedef graphic_string Implementation_data;
     typedef oid_type Mechanism_name;
     typedef integer_type Release_request_reason; //   Ic(  [ 0  ...   30 ]   ...ext...) 
     typedef integer_type Release_response_reason; //   Ic(  [ 0  ...   30 ]   ...ext...) 
@@ -130,15 +130,15 @@ namespace ACSE_1 {
 
     struct AARQ_apdu {
 
-        static const bitstring_type protocol_version_version1;
+        static const bit_string protocol_version_version1;
 
-        static const bitstring_type protocol_version__default;
+        static const bit_string protocol_version__default;
 
         AARQ_apdu();
 
         AARQ_apdu(const ASO_context_name& arg__aSO_context_name);
 
-        AARQ_apdu(shared_ptr< bitstring_type> arg__protocol_version,
+        AARQ_apdu(shared_ptr< bit_string> arg__protocol_version,
                 shared_ptr< ASO_context_name> arg__aSO_context_name,
                 shared_ptr< AP_title> arg__called_AP_title,
                 shared_ptr< AE_qualifier> arg__called_AE_qualifier,
@@ -158,7 +158,7 @@ namespace ACSE_1 {
                 shared_ptr< ASOI_tag> arg__calling_asoi_tag,
                 shared_ptr< Association_data> arg__user_information);
 
-        ITU_T_DEFAULTH_DECL(protocol_version, bitstring_type, protocol_version__default);
+        ITU_T_DEFAULTH_DECL(protocol_version, bit_string, protocol_version__default);
         ITU_T_HOLDERH_DECL(aSO_context_name, ASO_context_name);
         ITU_T_OPTIONAL_DECL(called_AP_title, AP_title);
         ITU_T_OPTIONAL_DECL(called_AE_qualifier, AE_qualifier);
@@ -185,9 +185,9 @@ namespace ACSE_1 {
 
     struct AARE_apdu {
 
-        static const bitstring_type protocol_version_version1;
+        static const bit_string protocol_version_version1;
 
-        static const bitstring_type protocol_version__default;
+        static const bit_string protocol_version__default;
 
         AARE_apdu();
 
@@ -195,7 +195,7 @@ namespace ACSE_1 {
                 const Associate_result& arg__result,
                 const Associate_source_diagnostic& arg__result_source_diagnostic);
 
-        AARE_apdu(shared_ptr< bitstring_type> arg__protocol_version,
+        AARE_apdu(shared_ptr< bit_string> arg__protocol_version,
                 shared_ptr< ASO_context_name> arg__aSO_context_name,
                 shared_ptr< Associate_result> arg__result,
                 shared_ptr< Associate_source_diagnostic> arg__result_source_diagnostic,
@@ -213,7 +213,7 @@ namespace ACSE_1 {
                 shared_ptr< ASOI_tag> arg__calling_asoi_tag,
                 shared_ptr< Association_data> arg__user_information);
 
-        ITU_T_DEFAULTH_DECL(protocol_version, bitstring_type, protocol_version__default);
+        ITU_T_DEFAULTH_DECL(protocol_version, bit_string, protocol_version__default);
         ITU_T_HOLDERH_DECL(aSO_context_name, ASO_context_name);
         ITU_T_HOLDERH_DECL(result, Associate_result); //   Ic(  [ 0  ...   2 ]   ...ext...) 
         ITU_T_HOLDERH_DECL(result_source_diagnostic, Associate_source_diagnostic);
@@ -368,10 +368,10 @@ namespace ACSE_1 {
     const ABRT_source aBRT_source_acse_service_user = 0;
     const ABRT_source aBRT_source_acse_service_provider = 1;
 
-    const ACSE_requirements aCSE_requirements_authentication = bitstring_type(true, 0);
-    const ACSE_requirements aCSE_requirements_aSO_context_negotiation = bitstring_type(true, 1);
-    const ACSE_requirements aCSE_requirements_higher_level_association = bitstring_type(true, 2);
-    const ACSE_requirements aCSE_requirements_nested_association = bitstring_type(true, 3);
+    const ACSE_requirements aCSE_requirements_authentication = bit_string(true, 0);
+    const ACSE_requirements aCSE_requirements_aSO_context_negotiation = bit_string(true, 1);
+    const ACSE_requirements aCSE_requirements_higher_level_association = bit_string(true, 2);
+    const ACSE_requirements aCSE_requirements_nested_association = bit_string(true, 3);
 
     // choice AP-title
 
@@ -616,8 +616,8 @@ namespace ACSE_1 {
             ITU_T_CHOICE_CTORS(Presentation_data_values_type);
 
             ITU_T_CHOICES_DECL(simple_ASN1_type, any_type, Presentation_data_values_type_simple_ASN1_type); // primitive
-            ITU_T_CHOICES_DECL(octet_aligned, octetstring_type, Presentation_data_values_type_octet_aligned); // primitive
-            ITU_T_CHOICES_DECL(arbitrary, bitstring_type, Presentation_data_values_type_arbitrary); // primitive
+            ITU_T_CHOICES_DECL(octet_aligned, octet_string, Presentation_data_values_type_octet_aligned); // primitive
+            ITU_T_CHOICES_DECL(arbitrary, bit_string, Presentation_data_values_type_arbitrary); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -671,8 +671,8 @@ namespace ACSE_1 {
 
         ITU_T_CHOICE_CTORS(Authentication_value);
 
-        ITU_T_CHOICES_DECL(charstring, graphicstring_type, Authentication_value_charstring); // primitive
-        ITU_T_CHOICES_DECL(bitstring, bitstring_type, Authentication_value_bitstring); // primitive
+        ITU_T_CHOICES_DECL(charstring, graphic_string, Authentication_value_charstring); // primitive
+        ITU_T_CHOICES_DECL(bitstring, bit_string, Authentication_value_bitstring); // primitive
         ITU_T_CHOICES_DECL(external, external_type, Authentication_value_external); // primitive
         ITU_T_CHOICEC_DECL(other, Other_type, Authentication_value_other);
 

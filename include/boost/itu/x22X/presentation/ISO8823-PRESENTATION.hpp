@@ -41,15 +41,15 @@ namespace ISO8823_PRESENTATION {
     typedef oid_type Abstract_syntax_name;
     typedef integer_type Event_identifier;
     typedef integer_type Presentation_context_identifier; //   Ic(  [ 1  ...   127 ]   ...ext...) 
-    typedef bitstring_type Presentation_requirements;
-    typedef octetstring_type Presentation_selector; //    Sc (  [ 1  ...   4 ]   ...ext...) 
-    typedef bitstring_type Protocol_options;
-    typedef bitstring_type Protocol_version;
+    typedef bit_string Presentation_requirements;
+    typedef octet_string Presentation_selector; //    Sc (  [ 1  ...   4 ]   ...ext...) 
+    typedef bit_string Protocol_options;
+    typedef bit_string Protocol_version;
     typedef integer_type Provider_reason;
     typedef integer_type Result;
     typedef oid_type Transfer_syntax_name;
-    typedef octetstring_type Simply_encoded_data;
-    typedef bitstring_type User_session_requirements;
+    typedef octet_string Simply_encoded_data;
+    typedef bit_string User_session_requirements;
     typedef sequence_of< integer_type > Presentation_context_deletion_result_list; //    Sc (  [ 0  ...   7 ]   ...ext...)   //  struct of ->  
 
     typedef User_data CPC_type;
@@ -349,11 +349,11 @@ namespace ISO8823_PRESENTATION {
             X400_mode_parameters_type();
 
             X400_mode_parameters_type(shared_ptr< Reliable_Transfer_APDU::AbortReason> arg__abortReason,
-                    shared_ptr< bitstring_type> arg__reflectedParameter,
+                    shared_ptr< bit_string> arg__reflectedParameter,
                     shared_ptr< any_type> arg__userdataAB);
 
             ITU_T_OPTIONAL_DECL(abortReason, Reliable_Transfer_APDU::AbortReason);
-            ITU_T_OPTIONAL_DECL(reflectedParameter, bitstring_type);
+            ITU_T_OPTIONAL_DECL(reflectedParameter, bit_string);
             ITU_T_OPTIONAL_DECL(userdataAB, any_type);
 
             ITU_T_ARCHIVE_FUNC;
@@ -587,14 +587,14 @@ namespace ISO8823_PRESENTATION {
         ITU_T_ARCHIVE_FUNC;
     };
 
-    const Presentation_requirements presentation_requirements_context_management = bitstring_type(true, 0);
-    const Presentation_requirements presentation_requirements_restoration = bitstring_type(true, 1);
+    const Presentation_requirements presentation_requirements_context_management = bit_string(true, 0);
+    const Presentation_requirements presentation_requirements_restoration = bit_string(true, 1);
 
-    const Protocol_options protocol_options_nominated_context = bitstring_type(true, 0);
-    const Protocol_options protocol_options_short_encoding = bitstring_type(true, 1);
-    const Protocol_options protocol_options_packed_encoding_rules = bitstring_type(true, 2);
+    const Protocol_options protocol_options_nominated_context = bit_string(true, 0);
+    const Protocol_options protocol_options_short_encoding = bit_string(true, 1);
+    const Protocol_options protocol_options_packed_encoding_rules = bit_string(true, 2);
 
-    const Protocol_version protocol_version_version_1 = bitstring_type(true, 0);
+    const Protocol_version protocol_version_version_1 = bit_string(true, 0);
 
     const Provider_reason provider_reason_reason_not_specified = 0;
     const Provider_reason provider_reason_temporary_congestion = 1;
@@ -672,8 +672,8 @@ namespace ISO8823_PRESENTATION {
             ITU_T_CHOICE_CTORS(Presentation_data_values_type);
 
             ITU_T_CHOICES_DECL(single_ASN1_type, any_type, Presentation_data_values_type_single_ASN1_type); // primitive
-            ITU_T_CHOICES_DECL(octet_aligned, octetstring_type, Presentation_data_values_type_octet_aligned); // primitive
-            ITU_T_CHOICES_DECL(arbitrary, bitstring_type, Presentation_data_values_type_arbitrary); // primitive
+            ITU_T_CHOICES_DECL(octet_aligned, octet_string, Presentation_data_values_type_octet_aligned); // primitive
+            ITU_T_CHOICES_DECL(arbitrary, bit_string, Presentation_data_values_type_arbitrary); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -695,19 +695,19 @@ namespace ISO8823_PRESENTATION {
         ITU_T_ARCHIVE_FUNC;
     };
 
-    const User_session_requirements user_session_requirements_half_duplex = bitstring_type(true, 0);
-    const User_session_requirements user_session_requirements_duplex = bitstring_type(true, 1);
-    const User_session_requirements user_session_requirements_expedited_data = bitstring_type(true, 2);
-    const User_session_requirements user_session_requirements_minor_synchronize = bitstring_type(true, 3);
-    const User_session_requirements user_session_requirements_major_synchronize = bitstring_type(true, 4);
-    const User_session_requirements user_session_requirements_resynchronize = bitstring_type(true, 5);
-    const User_session_requirements user_session_requirements_activity_management = bitstring_type(true, 6);
-    const User_session_requirements user_session_requirements_negotiated_release = bitstring_type(true, 7);
-    const User_session_requirements user_session_requirements_capability_data = bitstring_type(true, 8);
-    const User_session_requirements user_session_requirements_exceptions = bitstring_type(true, 9);
-    const User_session_requirements user_session_requirements_typed_data = bitstring_type(true, 10);
-    const User_session_requirements user_session_requirements_symmetric_synchronize = bitstring_type(true, 11);
-    const User_session_requirements user_session_requirements_data_separation = bitstring_type(true, 12);
+    const User_session_requirements user_session_requirements_half_duplex = bit_string(true, 0);
+    const User_session_requirements user_session_requirements_duplex = bit_string(true, 1);
+    const User_session_requirements user_session_requirements_expedited_data = bit_string(true, 2);
+    const User_session_requirements user_session_requirements_minor_synchronize = bit_string(true, 3);
+    const User_session_requirements user_session_requirements_major_synchronize = bit_string(true, 4);
+    const User_session_requirements user_session_requirements_resynchronize = bit_string(true, 5);
+    const User_session_requirements user_session_requirements_activity_management = bit_string(true, 6);
+    const User_session_requirements user_session_requirements_negotiated_release = bit_string(true, 7);
+    const User_session_requirements user_session_requirements_capability_data = bit_string(true, 8);
+    const User_session_requirements user_session_requirements_exceptions = bit_string(true, 9);
+    const User_session_requirements user_session_requirements_typed_data = bit_string(true, 10);
+    const User_session_requirements user_session_requirements_symmetric_synchronize = bit_string(true, 11);
+    const User_session_requirements user_session_requirements_data_separation = bit_string(true, 12);
 
     ITU_T_ARCHIVE_X690_DECL(CP_type);
     ITU_T_ARCHIVE_X690_DECL(CP_type::X410_mode_parameters_type);

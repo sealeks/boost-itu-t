@@ -646,12 +646,12 @@ namespace ISO8823_PRESENTATION {
             }
             case Presentation_data_values_type_octet_aligned:
             {
-                ITU_T_BIND_IMPLICIT(*value<octetstring_type > (false, Presentation_data_values_type_octet_aligned), 1, CONTEXT_CLASS);
+                ITU_T_BIND_IMPLICIT(*value<octet_string > (false, Presentation_data_values_type_octet_aligned), 1, CONTEXT_CLASS);
                 break;
             }
             case Presentation_data_values_type_arbitrary:
             {
-                ITU_T_BIND_IMPLICIT(*value<bitstring_type > (false, Presentation_data_values_type_arbitrary), 2, CONTEXT_CLASS);
+                ITU_T_BIND_IMPLICIT(*value<bit_string > (false, Presentation_data_values_type_arbitrary), 2, CONTEXT_CLASS);
                 break;
             }
             default:
@@ -674,13 +674,13 @@ namespace ISO8823_PRESENTATION {
                     }
                     case 1:
                     {
-                        if (ITU_T_BIND_IMPLICIT(*value<octetstring_type > (true, Presentation_data_values_type_octet_aligned), 1, CONTEXT_CLASS)) return;
+                        if (ITU_T_BIND_IMPLICIT(*value<octet_string > (true, Presentation_data_values_type_octet_aligned), 1, CONTEXT_CLASS)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_BIND_IMPLICIT(*value<bitstring_type > (true, Presentation_data_values_type_arbitrary), 2, CONTEXT_CLASS)) return;
+                        if (ITU_T_BIND_IMPLICIT(*value<bit_string > (true, Presentation_data_values_type_arbitrary), 2, CONTEXT_CLASS)) return;
                         else free();
                         break;
                     }

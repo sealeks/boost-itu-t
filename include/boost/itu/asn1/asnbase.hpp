@@ -34,15 +34,15 @@
 #if ((__WCHAR_MAX__) && (__WCHAR_MAX__ > 0x10000))
 typedef wchar_t universalchar_t; // 32 bit
 typedef boost::uint16_t bmpchar_t; // 16 bit
-typedef std::wstring base_universalstring_type;
-typedef std::basic_string<universalchar_t> base_bmpstring_type;
+typedef std::wstring base_universal_string;
+typedef std::basic_string<universalchar_t> base_bmp_string;
 BOOST_STATIC_ASSERT(sizeof (wchar_t) == 4);
 #else   
 #define __ITU_ISBPM_WCHAR__         
 typedef wchar_t bmpchar_t; // 16 bit
 typedef boost::uint32_t universalchar_t;
-typedef std::wstring base_bmpstring_type;
-typedef std::basic_string<universalchar_t> base_universalstring_type;
+typedef std::wstring base_bmp_string;
+typedef std::basic_string<universalchar_t> base_universal_string;
 BOOST_STATIC_ASSERT(sizeof (wchar_t) == 2);
 #endif
 
@@ -118,30 +118,28 @@ namespace boost {\
             
 
 #define ITU_T_USE_UNIVESAL_DECL using boost::asn1::null_type;\
-    using boost::asn1::enumerated_type;\
-    using boost::asn1::bitstring_type;\
-    using boost::asn1::octetstring_type;\
+    using boost::asn1::enumerated;\
+    using boost::asn1::bit_string;\
+    using boost::asn1::octet_string;\
     using boost::asn1::oid_type;\
     using boost::asn1::reloid_type;\
-    using boost::asn1::utctime_type;\
-    using boost::asn1::gentime_type;\
-    using boost::asn1::ia5string_type;\
-    using boost::asn1::printablestring_type;\
-    using boost::asn1::visiblestring_type;\
-    using boost::asn1::visiblestring_type;\
-    using boost::asn1::numericstring_type;\
-    using boost::asn1::universalstring_type;\
-    using boost::asn1::bmpstring_type;\
-    using boost::asn1::utf8string_type;\
-    using boost::asn1::generalstring_type;\
-    using boost::asn1::graphicstring_type;\
-    using boost::asn1::t61string_type;\
-    using boost::asn1::t61string_type;\
-    using boost::asn1::videotexstring_type;\
-    using boost::asn1::objectdescriptor_type;\
+    using boost::asn1::utctime;\
+    using boost::asn1::gentime;\
+    using boost::asn1::ia5_string;\
+    using boost::asn1::printable_string;\
+    using boost::asn1::visible_string;\
+    using boost::asn1::numeric_string;\
+    using boost::asn1::universal_string;\
+    using boost::asn1::bmp_string;\
+    using boost::asn1::utf8_string;\
+    using boost::asn1::general_string;\
+    using boost::asn1::graphic_string;\
+    using boost::asn1::t61_string;\
+    using boost::asn1::videotex_string;\
+    using boost::asn1::object_descriptor;\
     using boost::asn1::external_type;\
-    using boost::asn1::embeded_type;\
-    using boost::asn1::characterstring_type;\
+    using boost::asn1::embeded_pdv;\
+    using boost::asn1::character_string;\
     using boost::asn1::any_type;\
     using boost::asn1::value_holder;\
     using boost::asn1::default_holder;\
@@ -164,27 +162,27 @@ namespace boost {\
     using boost::asn1::prefixed_type;
 
 #define ITU_T_EXTENTION_READ  bool __is_extention__ =  arch.get_pop_bmp(1).bit(0);
-#define ITU_T_EXTENTION_WRITE_NULL  bool __is_extention__ = false;boost::asn1::bitstring_type __extention_bmp__ =  boost::asn1::bitstring_type(__is_extention__); arch.add_bitmap(__extention_bmp__);
-#define ITU_T_EXTENTION_WRITE_CHOICE( x0, xn)  bool __is_extention__ = ((static_cast<int>(type())>=static_cast<int>(x0 )) && (static_cast<int>(type())<=static_cast<int>(xn )));boost::asn1::bitstring_type __extention_bmp__ =  boost::asn1::bitstring_type(__is_extention__); arch.add_bitmap(__extention_bmp__);
-#define ITU_T_EXTENTION_WRITE  bool __is_extention__ = static_cast<bool>( __ext_optional_groups_bmp__);boost::asn1::bitstring_type __extention_bmp__ =  boost::asn1::bitstring_type(__is_extention__); arch.add_bitmap(__extention_bmp__);
+#define ITU_T_EXTENTION_WRITE_NULL  bool __is_extention__ = false;boost::asn1::bit_string __extention_bmp__ =  boost::asn1::bit_string(__is_extention__); arch.add_bitmap(__extention_bmp__);
+#define ITU_T_EXTENTION_WRITE_CHOICE( x0, xn)  bool __is_extention__ = ((static_cast<int>(type())>=static_cast<int>(x0 )) && (static_cast<int>(type())<=static_cast<int>(xn )));boost::asn1::bit_string __extention_bmp__ =  boost::asn1::bit_string(__is_extention__); arch.add_bitmap(__extention_bmp__);
+#define ITU_T_EXTENTION_WRITE  bool __is_extention__ = static_cast<bool>( __ext_optional_groups_bmp__);boost::asn1::bit_string __extention_bmp__ =  boost::asn1::bit_string(__is_extention__); arch.add_bitmap(__extention_bmp__);
 #define ITU_T_EXTENTION  __is_extention__
 
 #define ITU_T_EXTENTION_GROUP_BOOL( num )  bool __is_ext_optional_ ## num
-#define ITU_T_EXTENTION_GROUP_AS_BMP( num )  boost::asn1::bitstring_type(__is_ext_optional_ ## num )
+#define ITU_T_EXTENTION_GROUP_AS_BMP( num )  boost::asn1::bit_string(__is_ext_optional_ ## num )
 
-#define ITU_T_EXTENTION_GROUPS_BMP  boost::asn1::bitstring_type __ext_optional_groups_bmp__
+#define ITU_T_EXTENTION_GROUPS_BMP  boost::asn1::bit_string __ext_optional_groups_bmp__
 #define ITU_T_EXTENTION_GROUPS_CHECK( num )  __ext_optional_groups_bmp__.bit( num )
 #define ITU_T_EXTENTION_GROUPS_WRITE  arch.set_extentions_marker(__ext_optional_groups_bmp__);
-#define ITU_T_EXTENTION_GROUPS_READ  boost::asn1::bitstring_type __ext_optional_groups_bmp__; arch.get_extentions_marker(__ext_optional_groups_bmp__);
+#define ITU_T_EXTENTION_GROUPS_READ  boost::asn1::bit_string __ext_optional_groups_bmp__; arch.get_extentions_marker(__ext_optional_groups_bmp__);
 
 
-#define ITU_T_OPTIONAL_READ(sz)  boost::asn1::bitstring_type __optional_bmp__ =  arch.get_pop_bmp(sz);
+#define ITU_T_OPTIONAL_READ(sz)  boost::asn1::bit_string __optional_bmp__ =  arch.get_pop_bmp(sz);
 #define ITU_T_OPTIONAL_WRITE arch.add_bitmap(__optional_bmp__);
 #define ITU_T_OPTIONAL_CHECK(num)   if (__optional_bmp__.bit( num ))
-#define ITU_T_OPTIONAL_BMP  boost::asn1::bitstring_type __optional_bmp__ 
+#define ITU_T_OPTIONAL_BMP  boost::asn1::bit_string __optional_bmp__ 
 
 
-#define ITU_T_EXISTS_BMP(name)  boost::asn1::bitstring_type(static_cast<bool>(name))
+#define ITU_T_EXISTS_BMP(name)  boost::asn1::bit_string(static_cast<bool>(name))
 #define ITU_T_EXISTS_BOOL(name)  static_cast<bool>(name)
 
 #define ITU_T_TYPEDEF(regtype, type , id, cl)  typedef type  regtype;
@@ -412,16 +410,16 @@ namespace boost {
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        // enumerated_type
+        // enumerated
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         typedef int32_t enum_base_type;
 
-        class enumerated_type {
+        class enumerated {
 
         public:
 
-            enumerated_type(enum_base_type vl = 0) : value_(vl) {
+            enumerated(enum_base_type vl = 0) : value_(vl) {
             }
 
             void value(enum_base_type vl) {
@@ -436,11 +434,11 @@ namespace boost {
                 return value_;
             }
 
-            friend bool operator<(const enumerated_type& ls, const enumerated_type& rs) {
+            friend bool operator<(const enumerated& ls, const enumerated& rs) {
                 return ls.value_ < rs.value_;
             }
 
-            friend bool operator==(const enumerated_type& ls, const enumerated_type& rs) {
+            friend bool operator==(const enumerated& ls, const enumerated& rs) {
                 return ls.value_ == rs.value_;
             }
 
@@ -450,8 +448,8 @@ namespace boost {
         };
 
 
-        typedef std::map<std::size_t, enumerated_type > indx_enumerated_map;
-        typedef std::map<enumerated_type, std::size_t> enumerated_indx_map;
+        typedef std::map<std::size_t, enumerated > indx_enumerated_map;
+        typedef std::map<enumerated, std::size_t> enumerated_indx_map;
 
         indx_enumerated_map create_indx_enumerated(const enum_base_type* ev, std::size_t sz);
         enumerated_indx_map create_enumerated_indx(const enum_base_type* ev, std::size_t sz);
@@ -473,23 +471,23 @@ namespace boost {
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        // utf8string_type
+        // utf8_string
         ////////////////////////////////////////////////////////////////////////////////////////////////////           
 
-        class utf8string_type : public std::string {
+        class utf8_string : public std::string {
 
         public:
 
-            utf8string_type() : std::string() {
+            utf8_string() : std::string() {
             }
 
-            explicit utf8string_type(const octet_sequnce& vl) : std::string(vl.begin(), vl.end()) {
+            explicit utf8_string(const octet_sequnce& vl) : std::string(vl.begin(), vl.end()) {
             }
 
-            explicit utf8string_type(const std::string& vl) : std::string(vl) {
+            explicit utf8_string(const std::string& vl) : std::string(vl) {
             }
 
-            utf8string_type(const std::wstring& vl) : std::string(wstr_to_utf8(vl)) {
+            utf8_string(const std::wstring& vl) : std::string(wstr_to_utf8(vl)) {
             }
 
             operator std::wstring() const {
@@ -515,7 +513,7 @@ namespace boost {
         };
 
 
-        std::ostream& operator<<(std::ostream& stream, const utf8string_type& vl);
+        std::ostream& operator<<(std::ostream& stream, const utf8_string& vl);
 
 
 
@@ -528,7 +526,7 @@ namespace boost {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-        ITU_T_SIMPLE_STRING_TRAITS(numericstring_traits); // known-multi 1 oct
+        /*ITU_T_SIMPLE_STRING_TRAITS(numericstring_traits); // known-multi 1 oct
         ITU_T_SIMPLE_STRING_TRAITS(printablestring_traits); // known-multi 1 oct
         ITU_T_SIMPLE_STRING_TRAITS(t61string_traits);
         ITU_T_SIMPLE_STRING_TRAITS(videotexstring_traits);
@@ -540,16 +538,27 @@ namespace boost {
 
         typedef std::string::value_type main_char_type;
 
-        typedef std::basic_string<main_char_type, numericstring_traits > numericstring_type; // known-multi 1 oct
-        typedef std::basic_string<main_char_type, printablestring_traits > printablestring_type; // known-multi 1 oct
-        typedef std::basic_string<main_char_type, t61string_traits > t61string_type;
-        typedef std::basic_string<main_char_type, videotexstring_traits > videotexstring_type;
-        //typedef std::basic_string<main_char_type, ia5string_traits > ia5string_type; // known-multi 1 oct
-        typedef std::string ia5string_type; // known-multi 1 oct
-        typedef std::basic_string<main_char_type, graphicstring_traits > graphicstring_type;
-        typedef std::basic_string<main_char_type, objectdescriptor_traits > objectdescriptor_type;
-        typedef std::basic_string<main_char_type, visiblestring_traits > visiblestring_type; // known-multi 1 oct
-        typedef std::basic_string<main_char_type, generalstring_traits > generalstring_type;
+        typedef std::basic_string<main_char_type, numericstring_traits > numeric_string; // known-multi 1 oct
+        typedef std::basic_string<main_char_type, printablestring_traits > printable_string; // known-multi 1 oct
+        typedef std::basic_string<main_char_type, t61string_traits > t61_string;
+        typedef std::basic_string<main_char_type, videotexstring_traits > videotex_string;
+        //typedef std::basic_string<main_char_type, ia5string_traits > ia5_string; // known-multi 1 oct
+        typedef std::string ia5_string; // known-multi 1 oct
+        typedef std::basic_string<main_char_type, graphicstring_traits > graphic_string;
+        typedef std::basic_string<main_char_type, objectdescriptor_traits > object_descriptor;
+        typedef std::basic_string<main_char_type, visiblestring_traits > visible_string; // known-multi 1 oct
+        typedef std::basic_string<main_char_type, generalstring_traits > general_string;*/      
+        
+        typedef smpl_string<TYPE_NUMERICSTRING > numeric_string; // known-multi 1 oct
+        typedef smpl_string<TYPE_PRINTABLESTRING > printable_string; // known-multi 1 oct
+        typedef smpl_string<TYPE_T61STRING > t61_string;
+        typedef smpl_string<TYPE_VIDEOTEXSTRING  > videotex_string;
+        //typedef smpl_string<TYPE_IA5STRINGs > ia5_string; // known-multi 1 oct
+        typedef std::string ia5_string; // known-multi 1 oct
+        typedef smpl_string<TYPE_GRAPHICSTRING > graphic_string;
+        typedef smpl_string<TYPE_OBJECT_DESCRIPTOR> object_descriptor;
+        typedef smpl_string<TYPE_VISIBLESTRING > visible_string; // known-multi 1 oct
+        typedef smpl_string<TYPE_CHARACTERSTRING > general_string;        
 
         template<typename T>
         octet_sequnce as_octet_sequnce(const T& vl) {
@@ -561,36 +570,36 @@ namespace boost {
             return std::string(vl.begin(), vl.end());
         }
 
-        inline std::ostream& operator<<(std::ostream& stream, const numericstring_type& vl) {
+        inline std::ostream& operator<<(std::ostream& stream, const numeric_string& vl) {
             return stream << std::string(vl.begin(), vl.end());
         }
 
-        inline std::ostream& operator<<(std::ostream& stream, const printablestring_type& vl) {
+        inline std::ostream& operator<<(std::ostream& stream, const printable_string& vl) {
             return stream << std::string(vl.begin(), vl.end());
         }
 
-        inline std::ostream& operator<<(std::ostream& stream, const t61string_type& vl) {
+        inline std::ostream& operator<<(std::ostream& stream, const t61_string& vl) {
             return stream << std::string(vl.begin(), vl.end());
         }
 
-        inline std::ostream& operator<<(std::ostream& stream, const videotexstring_type& vl) {
+        inline std::ostream& operator<<(std::ostream& stream, const videotex_string& vl) {
             return stream << std::string(vl.begin(), vl.end());
         }
 
-        /*inline std::ostream& operator<<(std::ostream& stream, const ia5string_type& vl) {
+        /*inline std::ostream& operator<<(std::ostream& stream, const ia5_string& vl) {
             return stream << std::string(vl.begin(), vl.end());
             //return stream << vl;            
         }*/
 
-        inline std::ostream& operator<<(std::ostream& stream, const graphicstring_type& vl) {
+        inline std::ostream& operator<<(std::ostream& stream, const graphic_string& vl) {
             return stream << std::string(vl.begin(), vl.end());
         }
 
-        inline std::ostream& operator<<(std::ostream& stream, const visiblestring_type& vl) {
+        inline std::ostream& operator<<(std::ostream& stream, const visible_string& vl) {
             return stream << std::string(vl.begin(), vl.end());
         }
 
-        inline std::ostream& operator<<(std::ostream& stream, const generalstring_type& vl) {
+        inline std::ostream& operator<<(std::ostream& stream, const general_string& vl) {
             return stream << std::string(vl.begin(), vl.end());
         }
 
@@ -604,44 +613,44 @@ namespace boost {
         //  32bit
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        // universalstring_type
+        // universal_string
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        class universalstring_type : public base_universalstring_type {
+        class universal_string : public base_universal_string {
 
             // known-multi 4 oct
 
         public:
 
-            universalstring_type() : base_universalstring_type() {
+            universal_string() : base_universal_string() {
             }
 
             // from utf-8
 
-            explicit universalstring_type(const std::string& vl) :
-            base_universalstring_type(utf8_to_32str<base_universalstring_type>(vl)) {
+            explicit universal_string(const std::string& vl) :
+            base_universal_string(utf8_to_32str<base_universal_string>(vl)) {
             }
 
 
 #ifdef __ITU_ISBPM_WCHAR__
 
-            universalstring_type(const std::wstring& vl) :
-            base_universalstring_type(utf_to_utf<base_universalstring_type, std::wstring>(vl)) {
+            universal_string(const std::wstring& vl) :
+            base_universal_string(utf_to_utf<base_universal_string, std::wstring>(vl)) {
             }
 
             operator std::wstring() const {
-                return utf_to_utf< std::wstring, base_universalstring_type>(*this);
+                return utf_to_utf< std::wstring, base_universal_string>(*this);
             }
 
             std::wstring to_wstring() const {
-                return utf_to_utf< std::wstring, base_universalstring_type>(*this);
+                return utf_to_utf< std::wstring, base_universal_string>(*this);
             }
 
 
 #else            
 
-            universalstring_type(const std::wstring& vl) :
-            base_universalstring_type(vl) {
+            universal_string(const std::wstring& vl) :
+            base_universal_string(vl) {
             }
 
             operator std::wstring() const {
@@ -676,7 +685,7 @@ namespace boost {
 
         };
 
-        std::ostream& operator<<(std::ostream& stream, const universalstring_type& vl);
+        std::ostream& operator<<(std::ostream& stream, const universal_string& vl);
 
 
 
@@ -688,27 +697,27 @@ namespace boost {
         //  16bit
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        // bmpstring_type
+        // bmp_string
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        class bmpstring_type : public /*std::string*/ base_bmpstring_type {
+        class bmp_string : public /*std::string*/ base_bmp_string {
 
             // known-multi 2 oct
 
         public:
 
-            bmpstring_type() : base_bmpstring_type() {
+            bmp_string() : base_bmp_string() {
             }
 
             // frrom utf-8
 
-            explicit bmpstring_type(const std::string& vl) :
-            base_bmpstring_type(utf8_to_16str<base_bmpstring_type>(vl)) {
+            explicit bmp_string(const std::string& vl) :
+            base_bmp_string(utf8_to_16str<base_bmp_string>(vl)) {
             }
 
 #ifdef __ITU_ISBPM_WCHAR__     
 
-            bmpstring_type(const std::wstring& vl) : base_bmpstring_type(vl) {
+            bmp_string(const std::wstring& vl) : base_bmp_string(vl) {
             }
 
             operator std::wstring() const {
@@ -723,16 +732,16 @@ namespace boost {
 
 #else          
 
-            bmpstring_type(const std::wstring& vl) :
-            base_bmpstring_type(utf_to_utf<base_bmpstring_type, std::wstring>(vl)) {
+            bmp_string(const std::wstring& vl) :
+            base_bmp_string(utf_to_utf<base_bmp_string, std::wstring>(vl)) {
             }
 
             operator std::wstring() const {
-                return utf_to_utf<std::wstring, base_bmpstring_type>(*this);
+                return utf_to_utf<std::wstring, base_bmp_string>(*this);
             }
 
             std::wstring to_wstring() const {
-                return utf_to_utf<std::wstring, base_bmpstring_type>(*this);
+                return utf_to_utf<std::wstring, base_bmp_string>(*this);
             }
 
 
@@ -760,7 +769,7 @@ namespace boost {
 
         };
 
-        std::ostream& operator<<(std::ostream& stream, const bmpstring_type& vl);
+        std::ostream& operator<<(std::ostream& stream, const bmp_string& vl);
 
 
 
@@ -769,20 +778,20 @@ namespace boost {
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        // utctime_type
+        // utctime
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        typedef boost::posix_time::ptime utctime_type;
+        typedef boost::posix_time::ptime utctime;
 
-        octet_sequnce from_utctime(const utctime_type& val);
+        octet_sequnce from_utctime(const utctime& val);
 
-        visiblestring_type as_visiblestring(const utctime_type& val);
+        visible_string as_visiblestring(const utctime& val);
 
-        utctime_type to_utctime(const octet_sequnce& val);
+        utctime to_utctime(const octet_sequnce& val);
 
-        utctime_type to_utctime(const visiblestring_type& val);
+        utctime to_utctime(const visible_string& val);
 
-        inline utctime_type now_generator() {
+        inline utctime now_generator() {
             return boost::posix_time::microsec_clock::universal_time();
         }
 
@@ -790,17 +799,17 @@ namespace boost {
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        // gentime_type
+        // gentime
         ////////////////////////////////////////////////////////////////////////////////////////////////////  
 
-        class gentime_type {
+        class gentime {
 
         public:
 
-            gentime_type() : val_() {
+            gentime() : val_() {
             }
 
-            gentime_type(const boost::posix_time::ptime& vl) : val_(vl) {
+            gentime(const boost::posix_time::ptime& vl) : val_(vl) {
             }
 
             boost::posix_time::ptime value() const {
@@ -821,13 +830,13 @@ namespace boost {
 
 
 
-        octet_sequnce from_gentime(const gentime_type& val);
+        octet_sequnce from_gentime(const gentime& val);
 
-        visiblestring_type as_visiblestring(const gentime_type& val);
+        visible_string as_visiblestring(const gentime& val);
 
-        gentime_type to_gentime(const octet_sequnce& val);
+        gentime to_gentime(const octet_sequnce& val);
 
-        gentime_type to_gentime(const visiblestring_type& val);
+        gentime to_gentime(const visible_string& val);
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -888,7 +897,7 @@ namespace boost {
 
 
 
-        std::ostream& operator<<(std::ostream& stream, const gentime_type& vl);
+        std::ostream& operator<<(std::ostream& stream, const gentime& vl);
 
 
 
@@ -953,23 +962,23 @@ namespace boost {
         ITU_T_INTERNAL_REGESTRATE(oid_type, TYPE_OBJECT_IDENTIFIER)
         ITU_T_INTERNAL_REGESTRATE(reloid_type, TYPE_RELATIVE_OID)
         ITU_T_INTERNAL_REGESTRATE(null_type, TYPE_NULL)
-        ITU_T_INTERNAL_REGESTRATE(bitstring_type, TYPE_BITSTRING)
-        ITU_T_INTERNAL_REGESTRATE(octetstring_type, TYPE_OCTETSTRING)
-        ITU_T_INTERNAL_REGESTRATE(enumerated_type, TYPE_ENUMERATED)
-        ITU_T_INTERNAL_REGESTRATE(utf8string_type, TYPE_UTF8STRING)
-        ITU_T_INTERNAL_REGESTRATE(numericstring_type, TYPE_NUMERICSTRING)
-        ITU_T_INTERNAL_REGESTRATE(printablestring_type, TYPE_PRINTABLESTRING)
-        ITU_T_INTERNAL_REGESTRATE(t61string_type, TYPE_T61STRING)
-        ITU_T_INTERNAL_REGESTRATE(videotexstring_type, TYPE_VIDEOTEXSTRING)
-        ITU_T_INTERNAL_REGESTRATE(ia5string_type, TYPE_IA5STRING)
-        ITU_T_INTERNAL_REGESTRATE(graphicstring_type, TYPE_GRAPHICSTRING)
-        ITU_T_INTERNAL_REGESTRATE(objectdescriptor_type, TYPE_OBJECT_DESCRIPTOR)
-        ITU_T_INTERNAL_REGESTRATE(visiblestring_type, TYPE_VISIBLESTRING)
-        ITU_T_INTERNAL_REGESTRATE(generalstring_type, TYPE_GENERALSTRING)
-        ITU_T_INTERNAL_REGESTRATE(universalstring_type, TYPE_UNIVERSALSTRING)
-        ITU_T_INTERNAL_REGESTRATE(bmpstring_type, TYPE_BMPSTRING)
-        ITU_T_INTERNAL_REGESTRATE(utctime_type, TYPE_UTCTIME)
-        ITU_T_INTERNAL_REGESTRATE(gentime_type, TYPE_GENERALZEDTIME)
+        ITU_T_INTERNAL_REGESTRATE(bit_string, TYPE_BITSTRING)
+        ITU_T_INTERNAL_REGESTRATE(octet_string, TYPE_OCTETSTRING)
+        ITU_T_INTERNAL_REGESTRATE(enumerated, TYPE_ENUMERATED)
+        ITU_T_INTERNAL_REGESTRATE(utf8_string, TYPE_UTF8STRING)
+        ITU_T_INTERNAL_REGESTRATE(numeric_string, TYPE_NUMERICSTRING)
+        ITU_T_INTERNAL_REGESTRATE(printable_string, TYPE_PRINTABLESTRING)
+        ITU_T_INTERNAL_REGESTRATE(t61_string, TYPE_T61STRING)
+        ITU_T_INTERNAL_REGESTRATE(videotex_string, TYPE_VIDEOTEXSTRING)
+        ITU_T_INTERNAL_REGESTRATE(ia5_string, TYPE_IA5STRING)
+        ITU_T_INTERNAL_REGESTRATE(graphic_string, TYPE_GRAPHICSTRING)
+        ITU_T_INTERNAL_REGESTRATE(object_descriptor, TYPE_OBJECT_DESCRIPTOR)
+        ITU_T_INTERNAL_REGESTRATE(visible_string, TYPE_VISIBLESTRING)
+        ITU_T_INTERNAL_REGESTRATE(general_string, TYPE_GENERALSTRING)
+        ITU_T_INTERNAL_REGESTRATE(universal_string, TYPE_UNIVERSALSTRING)
+        ITU_T_INTERNAL_REGESTRATE(bmp_string, TYPE_BMPSTRING)
+        ITU_T_INTERNAL_REGESTRATE(utctime, TYPE_UTCTIME)
+        ITU_T_INTERNAL_REGESTRATE(gentime, TYPE_GENERALZEDTIME)
 
 
 
@@ -2143,8 +2152,8 @@ namespace boost {
                 }
 
                 ITU_T_CHOICES_DECL(single_ASN1_type, any_type, Encoding_type_single_ASN1_type); // primitive
-                ITU_T_CHOICES_DECL(octet_aligned, octetstring_type, Encoding_type_octet_aligned); // primitive
-                ITU_T_CHOICES_DECL(arbitrary, bitstring_type, Encoding_type_arbitrary); // primitive
+                ITU_T_CHOICES_DECL(octet_aligned, octet_string, Encoding_type_octet_aligned); // primitive
+                ITU_T_CHOICES_DECL(arbitrary, bit_string, Encoding_type_arbitrary); // primitive
 
                 ITU_T_ARCHIVE_FUNC;
             };
@@ -2156,12 +2165,12 @@ namespace boost {
 
             external_type(shared_ptr< oid_type> arg__direct_reference,
                     shared_ptr< int> arg__indirect_reference,
-                    shared_ptr< objectdescriptor_type> arg__data_value_descriptor,
+                    shared_ptr< object_descriptor> arg__data_value_descriptor,
                     shared_ptr< Encoding_type> arg__encoding);
 
             ITU_T_OPTIONAL_DECL(direct_reference, oid_type);
             ITU_T_OPTIONAL_DECL(indirect_reference, int);
-            ITU_T_OPTIONAL_DECL(data_value_descriptor, objectdescriptor_type);
+            ITU_T_OPTIONAL_DECL(data_value_descriptor, object_descriptor);
             ITU_T_HOLDERH_DECL(encoding, Encoding_type);
 
             ITU_T_ARCHIVE_FUNC;
@@ -2173,7 +2182,7 @@ namespace boost {
         /////////////////////////////////////////////////////////////////////////////////////////////////   
 
 
-        struct embeded_type {
+        struct embeded_pdv {
 
             struct Identification_type;
 
@@ -2238,25 +2247,25 @@ namespace boost {
             };
 
 
-            embeded_type();
+            embeded_pdv();
 
-            embeded_type(const Identification_type& arg__identification,
-                    const octetstring_type& arg__data_value);
+            embeded_pdv(const Identification_type& arg__identification,
+                    const octet_string& arg__data_value);
 
             ITU_T_HOLDERH_DECL(identification, Identification_type);
-            ITU_T_HOLDERH_DECL(data_value, octetstring_type);
+            ITU_T_HOLDERH_DECL(data_value, octet_string);
 
             ITU_T_ARCHIVE_FUNC;
         };
 
-        ITU_T_INTERNAL_REGESTRATE(embeded_type, TYPE_EMBEDDED_PDV)
+        ITU_T_INTERNAL_REGESTRATE(embeded_pdv, TYPE_EMBEDDED_PDV)
 
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-        struct characterstring_type {
+        struct character_string {
 
             struct Identification_type;
 
@@ -2321,18 +2330,18 @@ namespace boost {
             };
 
 
-            characterstring_type();
+            character_string();
 
-            characterstring_type(const Identification_type& arg__identification,
-                    const octetstring_type& arg__string_value);
+            character_string(const Identification_type& arg__identification,
+                    const octet_string& arg__string_value);
 
             ITU_T_HOLDERH_DECL(identification, Identification_type);
-            ITU_T_HOLDERH_DECL(string_value, octetstring_type);
+            ITU_T_HOLDERH_DECL(string_value, octet_string);
 
             ITU_T_ARCHIVE_FUNC;
         };
 
-        ITU_T_INTERNAL_REGESTRATE(characterstring_type, TYPE_CHARACTERSTRING)
+        ITU_T_INTERNAL_REGESTRATE(character_string, TYPE_CHARACTERSTRING)
 
     }
 }

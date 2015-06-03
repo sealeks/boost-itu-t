@@ -59,15 +59,15 @@ namespace boost {
             // STRING REALISZATION
 
             template<>
-            void x690_string_to_stream_cast(const bitstring_type& val, output_coder& stream, octet_type lentype) {
+            void x690_string_to_stream_cast(const bit_string& val, output_coder& stream, octet_type lentype) {
                 if (!lentype) {
                     stream.add(octet_sequnce(1, static_cast<octet_type> (val.unusebits() % 8)));
                     stream.add(val);
                     return;
                 } else {
 
-                    typedef bitstring_type::const_iterator const_iterator_type;
-                    typedef bitstring_type::difference_type difference_type;
+                    typedef bit_string::const_iterator const_iterator_type;
+                    typedef bit_string::difference_type difference_type;
 
                     const_iterator_type it = val.begin();
                     while (it != val.end()) {
@@ -90,62 +90,62 @@ namespace boost {
             }
 
             template<>            
-            void x690_string_to_stream_cast(const octetstring_type& val, output_coder& stream, octet_type lentype) {
+            void x690_string_to_stream_cast(const octet_string& val, output_coder& stream, octet_type lentype) {
                 x690_string_to_stream_cast(val.as_base(), stream, lentype);
             }
             
             template<>
-            void x690_string_to_stream_cast(const bmpstring_type& val, output_coder& stream, octet_type lentype) {
+            void x690_string_to_stream_cast(const bmp_string& val, output_coder& stream, octet_type lentype) {
                 x690_string_to_stream_cast(val.as_octets(), stream, lentype);
             }
 
             template<>
-            void x690_string_to_stream_cast(const universalstring_type& val, output_coder& stream, octet_type lentype) {
+            void x690_string_to_stream_cast(const universal_string& val, output_coder& stream, octet_type lentype) {
                 x690_string_to_stream_cast(val.as_octets(), stream, lentype);
             }
 
             template<>
-            void x690_string_to_stream_cast(const numericstring_type& val, output_coder& stream, octet_type lentype) {
+            void x690_string_to_stream_cast(const numeric_string& val, output_coder& stream, octet_type lentype) {
                 x690_string_to_stream_cast(as_octet_sequnce(val), stream, lentype);
             }
 
             template<>
-            void x690_string_to_stream_cast(const printablestring_type& val, output_coder& stream, octet_type lentype) {
+            void x690_string_to_stream_cast(const printable_string& val, output_coder& stream, octet_type lentype) {
                 x690_string_to_stream_cast(as_octet_sequnce(val), stream, lentype);
             }
 
             template<>
-            void x690_string_to_stream_cast(const t61string_type & val, output_coder& stream, octet_type lentype) {
+            void x690_string_to_stream_cast(const t61_string & val, output_coder& stream, octet_type lentype) {
                 x690_string_to_stream_cast(as_octet_sequnce(val), stream, lentype);
             }
 
             template<>
-            void x690_string_to_stream_cast(const videotexstring_type& val, output_coder& stream, octet_type lentype) {
+            void x690_string_to_stream_cast(const videotex_string& val, output_coder& stream, octet_type lentype) {
                 x690_string_to_stream_cast(as_octet_sequnce(val), stream, lentype);
             }
 
             template<>
-            void x690_string_to_stream_cast(const ia5string_type& val, output_coder& stream, octet_type lentype) {
+            void x690_string_to_stream_cast(const ia5_string& val, output_coder& stream, octet_type lentype) {
                 x690_string_to_stream_cast(as_octet_sequnce(val), stream, lentype);
             }
 
             template<>
-            void x690_string_to_stream_cast(const graphicstring_type& val, output_coder& stream, octet_type lentype) {
+            void x690_string_to_stream_cast(const graphic_string& val, output_coder& stream, octet_type lentype) {
                 x690_string_to_stream_cast(as_octet_sequnce(val), stream, lentype);
             }
 
             template<>
-            void x690_string_to_stream_cast(const objectdescriptor_type & val, output_coder& stream, octet_type lentype) {
+            void x690_string_to_stream_cast(const object_descriptor & val, output_coder& stream, octet_type lentype) {
                 x690_string_to_stream_cast(as_octet_sequnce(val), stream, lentype);
             }
 
             template<>
-            void x690_string_to_stream_cast(const visiblestring_type& val, output_coder& stream, octet_type lentype) {
+            void x690_string_to_stream_cast(const visible_string& val, output_coder& stream, octet_type lentype) {
                 x690_string_to_stream_cast(as_octet_sequnce(val), stream, lentype);
             }
 
             template<>
-            void x690_string_to_stream_cast(const generalstring_type& val, output_coder& stream, octet_type lentype) {
+            void x690_string_to_stream_cast(const general_string& val, output_coder& stream, octet_type lentype) {
                 x690_string_to_stream_cast(as_octet_sequnce(val), stream, lentype);
             }
 
@@ -190,7 +190,7 @@ namespace boost {
             }
 
             template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<enumerated_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const implicit_value<enumerated>& vl) {
                 return primitive_serialize(stream, vl);
             }
 
@@ -244,96 +244,96 @@ namespace boost {
             }
 
             template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<bitstring_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const implicit_value<bit_string>& vl) {
                 stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<octetstring_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const implicit_value<octet_string>& vl) {
                 stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<utf8string_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const implicit_value<utf8_string>& vl) {
                 stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<numericstring_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const implicit_value<numeric_string>& vl) {
                 stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<printablestring_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const implicit_value<printable_string>& vl) {
                 stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<t61string_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const implicit_value<t61_string>& vl) {
                 stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<videotexstring_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const implicit_value<videotex_string>& vl) {
                 stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<ia5string_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const implicit_value<ia5_string>& vl) {
                 stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<graphicstring_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const implicit_value<graphic_string>& vl) {
                 stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value< objectdescriptor_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const implicit_value< object_descriptor>& vl) {
                 stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<visiblestring_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const implicit_value<visible_string>& vl) {
                 stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<generalstring_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const implicit_value<general_string>& vl) {
                 stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<universalstring_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const implicit_value<universal_string>& vl) {
                 stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<bmpstring_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const implicit_value<bmp_string>& vl) {
                 stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<utctime_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const implicit_value<utctime>& vl) {
                 return primitive_serialize(stream, vl);
             }
 
             template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<gentime_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const implicit_value<gentime>& vl) {
                 return primitive_serialize(stream, vl);
             }
 
@@ -430,7 +430,7 @@ namespace boost {
             }
 
             template<>
-            octet_sequnce::iterator reader_setunuse(octet_sequnce& seq, bitstring_type & vl) {
+            octet_sequnce::iterator reader_setunuse(octet_sequnce& seq, bit_string & vl) {
                 octet_sequnce::iterator it = seq.begin();
                 if (it != seq.end()) {
                     vl.unusebits(static_cast<std::size_t> (*it));
@@ -440,12 +440,12 @@ namespace boost {
             }
 
             template<>
-            void stringtype_inserter(universalstring_type& vl, octet_sequnce::iterator beg, octet_sequnce::iterator end) {
+            void stringtype_inserter(universal_string& vl, octet_sequnce::iterator beg, octet_sequnce::iterator end) {
                 vl.append_octets(octet_sequnce(beg, end));
             }
 
             template<>
-            void stringtype_inserter(bmpstring_type& vl, octet_sequnce::iterator beg, octet_sequnce::iterator end) {
+            void stringtype_inserter(bmp_string& vl, octet_sequnce::iterator beg, octet_sequnce::iterator end) {
                 vl.append_octets(octet_sequnce(beg, end));
             }
 
@@ -492,7 +492,7 @@ namespace boost {
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, implicit_value<enumerated_type>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<enumerated>& vl) {
                 return primitive_deserialize(stream, vl);
             }
 
@@ -545,96 +545,96 @@ namespace boost {
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, implicit_value<bitstring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<bit_string>& vl) {
                 stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, implicit_value<octetstring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<octet_string>& vl) {
                 stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, implicit_value<utf8string_type>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<utf8_string>& vl) {
                 stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, implicit_value<numericstring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<numeric_string>& vl) {
                 stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, implicit_value<printablestring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<printable_string>& vl) {
                 stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, implicit_value<t61string_type>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<t61_string>& vl) {
                 stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, implicit_value<videotexstring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<videotex_string>& vl) {
                 stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, implicit_value<ia5string_type>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<ia5_string>& vl) {
                 stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, implicit_value<graphicstring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<graphic_string>& vl) {
                 stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, implicit_value<objectdescriptor_type>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<object_descriptor>& vl) {
                 stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, implicit_value<visiblestring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<visible_string>& vl) {
                 stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, implicit_value<generalstring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<general_string>& vl) {
                 stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, implicit_value<universalstring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<universal_string>& vl) {
                 stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, implicit_value<bmpstring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<bmp_string>& vl) {
                 stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, implicit_value<utctime_type>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<utctime>& vl) {
                 return primitive_deserialize(stream, vl);
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, implicit_value<gentime_type>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<gentime>& vl) {
                 return primitive_deserialize(stream, vl);
             }
 
@@ -801,12 +801,12 @@ namespace boost {
                 }
                 case Encoding_type_octet_aligned:
                 {
-                    ITU_T_IMPLICIT_TAG(value<octetstring_type > (false, Encoding_type_octet_aligned), 1);
+                    ITU_T_IMPLICIT_TAG(value<octet_string > (false, Encoding_type_octet_aligned), 1);
                     break;
                 }
                 case Encoding_type_arbitrary:
                 {
-                    ITU_T_IMPLICIT_TAG(value<bitstring_type > (false, Encoding_type_arbitrary), 2);
+                    ITU_T_IMPLICIT_TAG(value<bit_string > (false, Encoding_type_arbitrary), 2);
                     break;
                 }
                 default:
@@ -845,13 +845,13 @@ namespace boost {
                         }
                         case 1:
                         {
-                            if (ITU_T_IMPLICIT_TAG(value<octetstring_type > (true, Encoding_type_octet_aligned), 1)) return;
+                            if (ITU_T_IMPLICIT_TAG(value<octet_string > (true, Encoding_type_octet_aligned), 1)) return;
                             else free();
                             break;
                         }
                         case 2:
                         {
-                            if (ITU_T_IMPLICIT_TAG(value<bitstring_type > (true, Encoding_type_arbitrary), 2)) return;
+                            if (ITU_T_IMPLICIT_TAG(value<bit_string > (true, Encoding_type_arbitrary), 2)) return;
                             else free();
                             break;
                         }
@@ -892,29 +892,29 @@ namespace boost {
 
 
         //////////////////////////////////////////////////////////
-        //embeded_type
+        //embeded_pdv
 
-        template<> void embeded_type::Identification_type::Syntaxes_type::serialize(boost::asn1::x690::output_coder& arch) {
+        template<> void embeded_pdv::Identification_type::Syntaxes_type::serialize(boost::asn1::x690::output_coder& arch) {
             ITU_T_IMPLICIT_TAG(*abstract_, 0);
             ITU_T_IMPLICIT_TAG(*transfer_, 1);
         }
 
-        template<> void embeded_type::Identification_type::Syntaxes_type::serialize(boost::asn1::x690::input_coder& arch) {
+        template<> void embeded_pdv::Identification_type::Syntaxes_type::serialize(boost::asn1::x690::input_coder& arch) {
             ITU_T_IMPLICIT_TAG(*abstract_, 0);
             ITU_T_IMPLICIT_TAG(*transfer_, 1);
         }
 
-        template<> void embeded_type::Identification_type::Context_negotiation_type::serialize(boost::asn1::x690::output_coder& arch) {
+        template<> void embeded_pdv::Identification_type::Context_negotiation_type::serialize(boost::asn1::x690::output_coder& arch) {
             ITU_T_IMPLICIT_TAG(*presentation_context_id_, 0);
             ITU_T_IMPLICIT_TAG(*transfer_syntax_, 1);
         }
 
-        template<> void embeded_type::Identification_type::Context_negotiation_type::serialize(boost::asn1::x690::input_coder& arch) {
+        template<> void embeded_pdv::Identification_type::Context_negotiation_type::serialize(boost::asn1::x690::input_coder& arch) {
             ITU_T_IMPLICIT_TAG(*presentation_context_id_, 0);
             ITU_T_IMPLICIT_TAG(*transfer_syntax_, 1);
         }
 
-        template<> void embeded_type::Identification_type::serialize(boost::asn1::x690::output_coder& arch) {
+        template<> void embeded_pdv::Identification_type::serialize(boost::asn1::x690::output_coder& arch) {
             switch (type()) {
                 case Identification_type_syntaxes:
                 {
@@ -952,7 +952,7 @@ namespace boost {
             }
         }
 
-        template<> void embeded_type::Identification_type::serialize(boost::asn1::x690::input_coder& arch) {
+        template<> void embeded_pdv::Identification_type::serialize(boost::asn1::x690::input_coder& arch) {
             int __tag_id__ = arch.test_id();
             switch (arch.test_class()) {
                 case 0x0:
@@ -1029,12 +1029,12 @@ namespace boost {
             }
         }
 
-        template<> void embeded_type::serialize(boost::asn1::x690::output_coder& arch) {
+        template<> void embeded_pdv::serialize(boost::asn1::x690::output_coder& arch) {
             ITU_T_CHOICE_TAG(*identification_, 0);
             ITU_T_IMPLICIT_TAG(*data_value_, 1);
         }
 
-        template<> void embeded_type::serialize(boost::asn1::x690::input_coder& arch) {
+        template<> void embeded_pdv::serialize(boost::asn1::x690::input_coder& arch) {
             ITU_T_CHOICE_TAG(*identification_, 0);
             ITU_T_IMPLICIT_TAG(*data_value_, 1);
         }
@@ -1043,27 +1043,27 @@ namespace boost {
 
         //////////////////////////////////////////////////////////////
 
-        template<> void characterstring_type::Identification_type::Syntaxes_type::serialize(boost::asn1::x690::output_coder& arch) {
+        template<> void character_string::Identification_type::Syntaxes_type::serialize(boost::asn1::x690::output_coder& arch) {
             ITU_T_IMPLICIT_TAG(*abstract_, 0);
             ITU_T_IMPLICIT_TAG(*transfer_, 1);
         }
 
-        template<> void characterstring_type::Identification_type::Syntaxes_type::serialize(boost::asn1::x690::input_coder& arch) {
+        template<> void character_string::Identification_type::Syntaxes_type::serialize(boost::asn1::x690::input_coder& arch) {
             ITU_T_IMPLICIT_TAG(*abstract_, 0);
             ITU_T_IMPLICIT_TAG(*transfer_, 1);
         }
 
-        template<> void characterstring_type::Identification_type::Context_negotiation_type::serialize(boost::asn1::x690::output_coder& arch) {
+        template<> void character_string::Identification_type::Context_negotiation_type::serialize(boost::asn1::x690::output_coder& arch) {
             ITU_T_IMPLICIT_TAG(*presentation_context_id_, 0);
             ITU_T_IMPLICIT_TAG(*transfer_syntax_, 1);
         }
 
-        template<> void characterstring_type::Identification_type::Context_negotiation_type::serialize(boost::asn1::x690::input_coder& arch) {
+        template<> void character_string::Identification_type::Context_negotiation_type::serialize(boost::asn1::x690::input_coder& arch) {
             ITU_T_IMPLICIT_TAG(*presentation_context_id_, 0);
             ITU_T_IMPLICIT_TAG(*transfer_syntax_, 1);
         }
 
-        template<> void characterstring_type::Identification_type::serialize(boost::asn1::x690::output_coder& arch) {
+        template<> void character_string::Identification_type::serialize(boost::asn1::x690::output_coder& arch) {
             switch (type()) {
                 case Identification_type_syntaxes:
                 {
@@ -1101,7 +1101,7 @@ namespace boost {
             }
         }
 
-        template<> void characterstring_type::Identification_type::serialize(boost::asn1::x690::input_coder& arch) {
+        template<> void character_string::Identification_type::serialize(boost::asn1::x690::input_coder& arch) {
             int __tag_id__ = arch.test_id();
             switch (arch.test_class()) {
                 case 0x0:
@@ -1178,12 +1178,12 @@ namespace boost {
             }
         }
 
-        template<> void characterstring_type::serialize(boost::asn1::x690::output_coder& arch) {
+        template<> void character_string::serialize(boost::asn1::x690::output_coder& arch) {
             ITU_T_CHOICE_TAG(*identification_, 0);
             ITU_T_IMPLICIT_TAG(*string_value_, 1);
         }
 
-        template<> void characterstring_type::serialize(boost::asn1::x690::input_coder& arch) {
+        template<> void character_string::serialize(boost::asn1::x690::input_coder& arch) {
             ITU_T_CHOICE_TAG(*identification_, 0);
             ITU_T_IMPLICIT_TAG(*string_value_, 1);
         }

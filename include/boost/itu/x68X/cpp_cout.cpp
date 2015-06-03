@@ -238,35 +238,35 @@ namespace x680 {
             switch (tp) {
                 case t_BOOLEAN: return "bool";
                 case t_INTEGER: return builtin_int_str(intconstr); //"int";
-                case t_BIT_STRING: return "bitstring_type";
-                case t_OCTET_STRING: return "octetstring_type";
+                case t_BIT_STRING: return "bit_string";
+                case t_OCTET_STRING: return "octet_string";
                 case t_NULL: return "null_type";
                 case t_OBJECT_IDENTIFIER: return "oid_type";
-                case t_ObjectDescriptor: return "objectdescriptor_type";
+                case t_ObjectDescriptor: return "object_descriptor";
                 case t_EXTERNAL: return "external_type";
                 case t_REAL: return "double";
-                case t_ENUMERATED: return "enumerated_type";
-                case t_EMBEDDED_PDV: return "embeded_type";
-                case t_UTF8String: return "utf8string_type";
+                case t_ENUMERATED: return "enumerated";
+                case t_EMBEDDED_PDV: return "embeded_pdv";
+                case t_UTF8String: return "utf8_string";
                 case t_RELATIVE_OID: return "reloid_type";
-                case t_NumericString: return "numericstring_type";
-                case t_PrintableString: return "printablestring_type";
-                case t_T61String: return "t61string_type";
-                case t_VideotexString: return "videotexstring_type";
-                case t_IA5String: return "ia5string_type";
-                case t_UTCTime: return "utctime_type";
-                case t_GeneralizedTime: return "gentime_type";
-                case t_GraphicString: return "graphicstring_type";
-                case t_VisibleString: return "visiblestring_type";
-                case t_GeneralString: return "generalstring_type";
-                case t_UniversalString: return "universalstring_type";
-                case t_CHARACTER_STRING: return "characterstring_type";
-                case t_BMPString: return "bmpstring_type";
+                case t_NumericString: return "numeric_string";
+                case t_PrintableString: return "printable_string";
+                case t_T61String: return "t61_string";
+                case t_VideotexString: return "videotex_string";
+                case t_IA5String: return "ia5_string";
+                case t_UTCTime: return "utctime";
+                case t_GeneralizedTime: return "gentime";
+                case t_GraphicString: return "graphic_string";
+                case t_VisibleString: return "visible_string";
+                case t_GeneralString: return "general_string";
+                case t_UniversalString: return "universal_string";
+                case t_CHARACTER_STRING: return "character_string";
+                case t_BMPString: return "bmp_string";
                 case t_TIME:
                 case t_TIME_OF_DAY:
                 case t_DATE:
                 case t_DATE_TIME:
-                case t_DURATION: return "printablestring_type";
+                case t_DURATION: return "printable_string";
                 case t_OID_IRI: return "null_type";
                 case t_ANY: return "any_type";
                 case t_ClassField: return "any_type";
@@ -487,11 +487,11 @@ namespace x680 {
                 if (self->get_value<bstring_initer>()) {
                     boost::shared_ptr<bstring_initer> tmp = self->get_value<bstring_initer>();
                     if (!tmp->str.empty())
-                        return "boost::asn1::bitstring_type(std::string(\"" + string_to_literal(tmp->str) + "\", "
+                        return "boost::asn1::bit_string(std::string(\"" + string_to_literal(tmp->str) + "\", "
                         + boost::lexical_cast<std::string >(tmp->str.size()) + "), "
                         + boost::lexical_cast<std::string >(tmp->unused) + ")";
                     else
-                        return "boost::asn1::bitstring_type()";
+                        return "boost::asn1::bit_string()";
                 }
             } else if (self->as_assign())
                 return nameconvert(self->as_assign()->name());
@@ -502,10 +502,10 @@ namespace x680 {
             if (self->get_value<hstring_initer>()) {
                 boost::shared_ptr<hstring_initer> tmp = self->get_value<hstring_initer>();
                 if (!tmp->str.empty())
-                    return "boost::asn1::octetstring_type(std::string(\"" + string_to_literal(tmp->str) + "\", "
+                    return "boost::asn1::octet_string(std::string(\"" + string_to_literal(tmp->str) + "\", "
                     + boost::lexical_cast<std::string >(tmp->str.size()) + "))";
                 else
-                    return "boost::asn1::octetstring_type()";
+                    return "boost::asn1::octet_string()";
             };
             return "?octetsting?";
         }
@@ -1612,7 +1612,7 @@ namespace x680 {
                     stream << type_str(self) << " ";
                     stream << ((namelower(nameconvert(self->name()) + "_"))) << nameconvert(vlass->name());
                     if (!is_local_scope)
-                        stream << " = " << nested_init_str(self->type(), "bitstring_type(true, " + value_int_str(vlass->value()) + ")");
+                        stream << " = " << nested_init_str(self->type(), "bit_string(true, " + value_int_str(vlass->value()) + ")");
                     stream << ";\n";
                 }
             }
@@ -2202,7 +2202,7 @@ namespace x680 {
                         if ((self->islocaldefined()) && ansec)
                             stream << fulltype_str(ansec, false) << "::";
                         stream << ((namelower(nameconvert(self->name()) + "_"))) << nameconvert(vlass->name()) << " = ";
-                        stream << nested_init_str(self->type(), "bitstring_type(true, " + value_int_str(vlass->value()) + ")") << ";\n";
+                        stream << nested_init_str(self->type(), "bit_string(true, " + value_int_str(vlass->value()) + ")") << ";\n";
                     }
                 }
             }

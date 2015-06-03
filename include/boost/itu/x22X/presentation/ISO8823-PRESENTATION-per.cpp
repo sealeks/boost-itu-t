@@ -781,13 +781,13 @@ namespace ISO8823_PRESENTATION {
             case Presentation_data_values_type_octet_aligned:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 2);
-                ITU_T_BIND_PER(*value<octetstring_type > (false, Presentation_data_values_type_octet_aligned));
+                ITU_T_BIND_PER(*value<octet_string > (false, Presentation_data_values_type_octet_aligned));
                 break;
             }
             case Presentation_data_values_type_arbitrary:
             {
                 ITU_T_SET_CONSTAINED_INDX(2, 2);
-                ITU_T_BIND_PER(*value<bitstring_type > (false, Presentation_data_values_type_arbitrary));
+                ITU_T_BIND_PER(*value<bit_string > (false, Presentation_data_values_type_arbitrary));
                 break;
             }
             default:
@@ -808,12 +808,12 @@ namespace ISO8823_PRESENTATION {
             }
             case 1:
             {
-                ITU_T_BIND_PER(*value<octetstring_type > (true, Presentation_data_values_type_octet_aligned));
+                ITU_T_BIND_PER(*value<octet_string > (true, Presentation_data_values_type_octet_aligned));
                 break;
             }
             case 2:
             {
-                ITU_T_BIND_PER(*value<bitstring_type > (true, Presentation_data_values_type_arbitrary));
+                ITU_T_BIND_PER(*value<bit_string > (true, Presentation_data_values_type_arbitrary));
                 break;
             }
             default:

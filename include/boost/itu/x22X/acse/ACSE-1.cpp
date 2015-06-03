@@ -21,7 +21,7 @@ namespace ACSE_1 {
     ITU_T_CHOICEC_DEFN(ACSE_apdu::acrp, acrp, ACRP_apdu, ACSE_apdu_acrp);
 
     // sequence AARQ-apdu
-    const bitstring_type AARQ_apdu::protocol_version_version1 = bitstring_type(true, 0);
+    const bit_string AARQ_apdu::protocol_version_version1 = bit_string(true, 0);
 
     AARQ_apdu::AARQ_apdu() : aSO_context_name_() {
     };
@@ -30,7 +30,7 @@ namespace ACSE_1 {
     aSO_context_name_(arg__aSO_context_name) {
     };
 
-    AARQ_apdu::AARQ_apdu(shared_ptr< bitstring_type> arg__protocol_version,
+    AARQ_apdu::AARQ_apdu(shared_ptr< bit_string> arg__protocol_version,
             shared_ptr< ASO_context_name> arg__aSO_context_name,
             shared_ptr< AP_title> arg__called_AP_title,
             shared_ptr< AE_qualifier> arg__called_AE_qualifier,
@@ -70,10 +70,10 @@ namespace ACSE_1 {
     user_information_(arg__user_information) {
     };
 
-    const bitstring_type AARQ_apdu::protocol_version__default = protocol_version_version1;
+    const bit_string AARQ_apdu::protocol_version__default = protocol_version_version1;
 
 
-    ITU_T_DEFAULTH_DEFN(AARQ_apdu::protocol_version, protocol_version, bitstring_type);
+    ITU_T_DEFAULTH_DEFN(AARQ_apdu::protocol_version, protocol_version, bit_string);
     ITU_T_HOLDERH_DEFN(AARQ_apdu::aSO_context_name, aSO_context_name, ASO_context_name);
     ITU_T_OPTIONAL_DEFN(AARQ_apdu::called_AP_title, called_AP_title, AP_title);
     ITU_T_OPTIONAL_DEFN(AARQ_apdu::called_AE_qualifier, called_AE_qualifier, AE_qualifier);
@@ -94,7 +94,7 @@ namespace ACSE_1 {
     ITU_T_OPTIONAL_DEFN(AARQ_apdu::user_information, user_information, Association_data);
 
     // sequence AARE-apdu
-    const bitstring_type AARE_apdu::protocol_version_version1 = bitstring_type(true, 0);
+    const bit_string AARE_apdu::protocol_version_version1 = bit_string(true, 0);
 
     AARE_apdu::AARE_apdu() : aSO_context_name_(), result_(), result_source_diagnostic_() {
     };
@@ -107,7 +107,7 @@ namespace ACSE_1 {
     result_source_diagnostic_(arg__result_source_diagnostic) {
     };
 
-    AARE_apdu::AARE_apdu(shared_ptr< bitstring_type> arg__protocol_version,
+    AARE_apdu::AARE_apdu(shared_ptr< bit_string> arg__protocol_version,
             shared_ptr< ASO_context_name> arg__aSO_context_name,
             shared_ptr< Associate_result> arg__result,
             shared_ptr< Associate_source_diagnostic> arg__result_source_diagnostic,
@@ -143,10 +143,10 @@ namespace ACSE_1 {
     user_information_(arg__user_information) {
     };
 
-    const bitstring_type AARE_apdu::protocol_version__default = protocol_version_version1;
+    const bit_string AARE_apdu::protocol_version__default = protocol_version_version1;
 
 
-    ITU_T_DEFAULTH_DEFN(AARE_apdu::protocol_version, protocol_version, bitstring_type);
+    ITU_T_DEFAULTH_DEFN(AARE_apdu::protocol_version, protocol_version, bit_string);
     ITU_T_HOLDERH_DEFN(AARE_apdu::aSO_context_name, aSO_context_name, ASO_context_name);
     ITU_T_HOLDERH_DEFN(AARE_apdu::result, result, Associate_result);
     ITU_T_HOLDERH_DEFN(AARE_apdu::result_source_diagnostic, result_source_diagnostic, Associate_source_diagnostic);
@@ -454,8 +454,8 @@ namespace ACSE_1 {
 
 
     ITU_T_CHOICES_DEFN(PDV_list::Presentation_data_values_type::simple_ASN1_type, simple_ASN1_type, any_type, Presentation_data_values_type_simple_ASN1_type);
-    ITU_T_CHOICES_DEFN(PDV_list::Presentation_data_values_type::octet_aligned, octet_aligned, octetstring_type, Presentation_data_values_type_octet_aligned);
-    ITU_T_CHOICES_DEFN(PDV_list::Presentation_data_values_type::arbitrary, arbitrary, bitstring_type, Presentation_data_values_type_arbitrary);
+    ITU_T_CHOICES_DEFN(PDV_list::Presentation_data_values_type::octet_aligned, octet_aligned, octet_string, Presentation_data_values_type_octet_aligned);
+    ITU_T_CHOICES_DEFN(PDV_list::Presentation_data_values_type::arbitrary, arbitrary, bit_string, Presentation_data_values_type_arbitrary);
 
 
     ITU_T_OPTIONAL_DEFN(PDV_list::transfer_syntax_name, transfer_syntax_name, Transfer_syntax_name);
@@ -478,8 +478,8 @@ namespace ACSE_1 {
     ITU_T_HOLDERH_DEFN(Authentication_value::Other_type::other_mechanism_value, other_mechanism_value, any_type);
 
 
-    ITU_T_CHOICES_DEFN(Authentication_value::charstring, charstring, graphicstring_type, Authentication_value_charstring);
-    ITU_T_CHOICES_DEFN(Authentication_value::bitstring, bitstring, bitstring_type, Authentication_value_bitstring);
+    ITU_T_CHOICES_DEFN(Authentication_value::charstring, charstring, graphic_string, Authentication_value_charstring);
+    ITU_T_CHOICES_DEFN(Authentication_value::bitstring, bitstring, bit_string, Authentication_value_bitstring);
     ITU_T_CHOICES_DEFN(Authentication_value::external, external, external_type, Authentication_value_external);
     ITU_T_CHOICEC_DEFN(Authentication_value::other, other, Authentication_value::Other_type, Authentication_value_other);
 

@@ -239,12 +239,12 @@ namespace Reliable_Transfer_APDU {
         switch (type()) {
             case CallingSSuserReference_t61String:
             {
-                ITU_T_BIND_TAG(*value<t61string_type > (false, CallingSSuserReference_t61String));
+                ITU_T_BIND_TAG(*value<t61_string > (false, CallingSSuserReference_t61String));
                 break;
             }
             case CallingSSuserReference_octetString:
             {
-                ITU_T_BIND_TAG(*value<octetstring_type > (false, CallingSSuserReference_octetString));
+                ITU_T_BIND_TAG(*value<octet_string > (false, CallingSSuserReference_octetString));
                 break;
             }
             default:
@@ -261,13 +261,13 @@ namespace Reliable_Transfer_APDU {
                 switch (__tag_id__) {
                     case 20:
                     {
-                        if (ITU_T_BIND_TAG(*value<t61string_type > (true, CallingSSuserReference_t61String))) return;
+                        if (ITU_T_BIND_TAG(*value<t61_string > (true, CallingSSuserReference_t61String))) return;
                         else free();
                         break;
                     }
                     case 4:
                     {
-                        if (ITU_T_BIND_TAG(*value<octetstring_type > (true, CallingSSuserReference_octetString))) return;
+                        if (ITU_T_BIND_TAG(*value<octet_string > (true, CallingSSuserReference_octetString))) return;
                         else free();
                         break;
                     }

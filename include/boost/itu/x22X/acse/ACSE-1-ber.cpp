@@ -728,12 +728,12 @@ namespace ACSE_1 {
             }
             case Presentation_data_values_type_octet_aligned:
             {
-                ITU_T_BIND_IMPLICIT(*value<octetstring_type > (false, Presentation_data_values_type_octet_aligned), 1, CONTEXT_CLASS);
+                ITU_T_BIND_IMPLICIT(*value<octet_string > (false, Presentation_data_values_type_octet_aligned), 1, CONTEXT_CLASS);
                 break;
             }
             case Presentation_data_values_type_arbitrary:
             {
-                ITU_T_BIND_IMPLICIT(*value<bitstring_type > (false, Presentation_data_values_type_arbitrary), 2, CONTEXT_CLASS);
+                ITU_T_BIND_IMPLICIT(*value<bit_string > (false, Presentation_data_values_type_arbitrary), 2, CONTEXT_CLASS);
                 break;
             }
             default:
@@ -756,13 +756,13 @@ namespace ACSE_1 {
                     }
                     case 1:
                     {
-                        if (ITU_T_BIND_IMPLICIT(*value<octetstring_type > (true, Presentation_data_values_type_octet_aligned), 1, CONTEXT_CLASS)) return;
+                        if (ITU_T_BIND_IMPLICIT(*value<octet_string > (true, Presentation_data_values_type_octet_aligned), 1, CONTEXT_CLASS)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_BIND_IMPLICIT(*value<bitstring_type > (true, Presentation_data_values_type_arbitrary), 2, CONTEXT_CLASS)) return;
+                        if (ITU_T_BIND_IMPLICIT(*value<bit_string > (true, Presentation_data_values_type_arbitrary), 2, CONTEXT_CLASS)) return;
                         else free();
                         break;
                     }
@@ -783,12 +783,12 @@ namespace ACSE_1 {
         switch (type()) {
             case Authentication_value_charstring:
             {
-                ITU_T_BIND_IMPLICIT(*value<graphicstring_type > (false, Authentication_value_charstring), 0, CONTEXT_CLASS);
+                ITU_T_BIND_IMPLICIT(*value<graphic_string > (false, Authentication_value_charstring), 0, CONTEXT_CLASS);
                 break;
             }
             case Authentication_value_bitstring:
             {
-                ITU_T_BIND_IMPLICIT(*value<bitstring_type > (false, Authentication_value_bitstring), 1, CONTEXT_CLASS);
+                ITU_T_BIND_IMPLICIT(*value<bit_string > (false, Authentication_value_bitstring), 1, CONTEXT_CLASS);
                 break;
             }
             case Authentication_value_external:
@@ -815,13 +815,13 @@ namespace ACSE_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_BIND_IMPLICIT(*value<graphicstring_type > (true, Authentication_value_charstring), 0, CONTEXT_CLASS)) return;
+                        if (ITU_T_BIND_IMPLICIT(*value<graphic_string > (true, Authentication_value_charstring), 0, CONTEXT_CLASS)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_BIND_IMPLICIT(*value<bitstring_type > (true, Authentication_value_bitstring), 1, CONTEXT_CLASS)) return;
+                        if (ITU_T_BIND_IMPLICIT(*value<bit_string > (true, Authentication_value_bitstring), 1, CONTEXT_CLASS)) return;
                         else free();
                         break;
                     }

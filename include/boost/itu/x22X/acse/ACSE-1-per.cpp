@@ -831,13 +831,13 @@ namespace ACSE_1 {
             case Presentation_data_values_type_octet_aligned:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 2);
-                ITU_T_BIND_PER(*value<octetstring_type > (false, Presentation_data_values_type_octet_aligned));
+                ITU_T_BIND_PER(*value<octet_string > (false, Presentation_data_values_type_octet_aligned));
                 break;
             }
             case Presentation_data_values_type_arbitrary:
             {
                 ITU_T_SET_CONSTAINED_INDX(2, 2);
-                ITU_T_BIND_PER(*value<bitstring_type > (false, Presentation_data_values_type_arbitrary));
+                ITU_T_BIND_PER(*value<bit_string > (false, Presentation_data_values_type_arbitrary));
                 break;
             }
             default:
@@ -858,12 +858,12 @@ namespace ACSE_1 {
             }
             case 1:
             {
-                ITU_T_BIND_PER(*value<octetstring_type > (true, Presentation_data_values_type_octet_aligned));
+                ITU_T_BIND_PER(*value<octet_string > (true, Presentation_data_values_type_octet_aligned));
                 break;
             }
             case 2:
             {
-                ITU_T_BIND_PER(*value<bitstring_type > (true, Presentation_data_values_type_arbitrary));
+                ITU_T_BIND_PER(*value<bit_string > (true, Presentation_data_values_type_arbitrary));
                 break;
             }
             default:
@@ -879,13 +879,13 @@ namespace ACSE_1 {
             case Authentication_value_charstring:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 3);
-                ITU_T_BIND_PER(*value<graphicstring_type > (false, Authentication_value_charstring));
+                ITU_T_BIND_PER(*value<graphic_string > (false, Authentication_value_charstring));
                 break;
             }
             case Authentication_value_bitstring:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 3);
-                ITU_T_BIND_PER(*value<bitstring_type > (false, Authentication_value_bitstring));
+                ITU_T_BIND_PER(*value<bit_string > (false, Authentication_value_bitstring));
                 break;
             }
             case Authentication_value_external:
@@ -913,12 +913,12 @@ namespace ACSE_1 {
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_PER(*value<graphicstring_type > (true, Authentication_value_charstring));
+                ITU_T_BIND_PER(*value<graphic_string > (true, Authentication_value_charstring));
                 break;
             }
             case 1:
             {
-                ITU_T_BIND_PER(*value<bitstring_type > (true, Authentication_value_bitstring));
+                ITU_T_BIND_PER(*value<bit_string > (true, Authentication_value_bitstring));
                 break;
             }
             case 2:

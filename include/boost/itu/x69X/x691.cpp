@@ -55,13 +55,13 @@ namespace boost {
 
             // element constrainter
 
-            void numericstring_ec::out(boost::asn1::x691::output_coder& stream, numericstring_type::value_type vl) {
-                stream.add_bitmap(bitstring_type(octet_sequnce(1, 
+            void numericstring_ec::out(boost::asn1::x691::output_coder& stream, numeric_string::value_type vl) {
+                stream.add_bitmap(bit_string(octet_sequnce(1, 
                         octet_sequnce::value_type((vl != '\x20') ? ((vl - '\x2F') << 4) : 0)), 4));
             }
 
-            numericstring_type::value_type numericstring_ec::in(boost::asn1::x691::input_coder& stream) {
-                bitstring_type vl = stream.get_pop_bmp(4);
+            numeric_string::value_type numericstring_ec::in(boost::asn1::x691::input_coder& stream) {
+                bit_string vl = stream.get_pop_bmp(4);
                 octet_sequnce tmp = vl.as_octet_sequnce();
                 if (!tmp.empty()) {
                     tmp[0] >>= 4;
@@ -71,63 +71,63 @@ namespace boost {
                 return 0;
             }
 
-            void printablestring_ec::out(boost::asn1::x691::output_coder& stream, printablestring_type::value_type vl) {
-                stream.add_bitmap(bitstring_type(octet_sequnce(1, stream.aligned() ?
+            void printablestring_ec::out(boost::asn1::x691::output_coder& stream, printable_string::value_type vl) {
+                stream.add_bitmap(bit_string(octet_sequnce(1, stream.aligned() ?
                         octet_sequnce::value_type(vl) : octet_sequnce::value_type(vl << 1)), stream.aligned() ? 0 : 1));
             }
 
-            printablestring_type::value_type printablestring_ec::in(boost::asn1::x691::input_coder& stream) {
-                bitstring_type vl = stream.get_pop_bmp(stream.aligned() ? 8 : 7);
+            printable_string::value_type printablestring_ec::in(boost::asn1::x691::input_coder& stream) {
+                bit_string vl = stream.get_pop_bmp(stream.aligned() ? 8 : 7);
                 octet_sequnce tmp = vl.as_octet_sequnce();
                 if (!tmp.empty())
                     return stream.aligned() ? (tmp[0] & '\x7F') : ((tmp[0] >> 1) & '\x7F');
                 return 0;
             }
 
-            void ia5string_ec::out(boost::asn1::x691::output_coder& stream, ia5string_type::value_type vl) {
-                stream.add_bitmap(bitstring_type(octet_sequnce(1, stream.aligned() ?
+            void ia5string_ec::out(boost::asn1::x691::output_coder& stream, ia5_string::value_type vl) {
+                stream.add_bitmap(bit_string(octet_sequnce(1, stream.aligned() ?
                         octet_sequnce::value_type(vl) : octet_sequnce::value_type(vl << 1)), stream.aligned() ? 0 : 1));
             }
 
-            ia5string_type::value_type ia5string_ec::in(boost::asn1::x691::input_coder& stream) {
-                bitstring_type vl = stream.get_pop_bmp(stream.aligned() ? 8 : 7);
+            ia5_string::value_type ia5string_ec::in(boost::asn1::x691::input_coder& stream) {
+                bit_string vl = stream.get_pop_bmp(stream.aligned() ? 8 : 7);
                 octet_sequnce tmp = vl.as_octet_sequnce();
                 if (!tmp.empty())
                     return stream.aligned() ? (tmp[0] & '\x7F') : ((tmp[0] >> 1) & '\x7F');
                 return 0;
             }
 
-            void visiblestring_ec::out(boost::asn1::x691::output_coder& stream, visiblestring_type::value_type vl) {
-                stream.add_bitmap(bitstring_type(octet_sequnce(1, stream.aligned() ?
+            void visiblestring_ec::out(boost::asn1::x691::output_coder& stream, visible_string::value_type vl) {
+                stream.add_bitmap(bit_string(octet_sequnce(1, stream.aligned() ?
                         octet_sequnce::value_type(vl) : octet_sequnce::value_type(vl << 1)), stream.aligned() ? 0 : 1));
             }
 
-            visiblestring_type::value_type visiblestring_ec::in(boost::asn1::x691::input_coder& stream) {
-                bitstring_type vl = stream.get_pop_bmp(stream.aligned() ? 8 : 7);
+            visible_string::value_type visiblestring_ec::in(boost::asn1::x691::input_coder& stream) {
+                bit_string vl = stream.get_pop_bmp(stream.aligned() ? 8 : 7);
                 octet_sequnce tmp = vl.as_octet_sequnce();
                 if (!tmp.empty())
                     return stream.aligned() ? (tmp[0] & '\x7F') : ((tmp[0] >> 1) & '\x7F');
                 return 0;
             }
 
-            void bmpstring_ec::out(boost::asn1::x691::output_coder& stream, bmpstring_type::value_type vl) {
+            void bmpstring_ec::out(boost::asn1::x691::output_coder& stream, bmp_string::value_type vl) {
                 stream.add_octets(octet_sequnce(reinterpret_cast<const octet_sequnce::value_type*> (&vl),
                         reinterpret_cast<const octet_sequnce::value_type*> (&vl) + 2), stream.aligned());
             }
 
-            bmpstring_type::value_type bmpstring_ec::in(boost::asn1::x691::input_coder& stream) {
+            bmp_string::value_type bmpstring_ec::in(boost::asn1::x691::input_coder& stream) {
                 octet_sequnce tmp = stream.get_pop_octs(2, stream.aligned());
-                return *reinterpret_cast<const bmpstring_type::value_type*> (tmp.data());
+                return *reinterpret_cast<const bmp_string::value_type*> (tmp.data());
             }
 
-            void universalstring_ec::out(boost::asn1::x691::output_coder& stream, universalstring_type::value_type vl) {
+            void universalstring_ec::out(boost::asn1::x691::output_coder& stream, universal_string::value_type vl) {
                 stream.add_octets(octet_sequnce(reinterpret_cast<const octet_sequnce::value_type*> (&vl),
                         reinterpret_cast<const octet_sequnce::value_type*> (&vl) + 4), stream.aligned());
             }
 
-            universalstring_type::value_type universalstring_ec::in(boost::asn1::x691::input_coder& stream) {
+            universal_string::value_type universalstring_ec::in(boost::asn1::x691::input_coder& stream) {
                 octet_sequnce tmp = stream.get_pop_octs(4, stream.aligned());
-                return *reinterpret_cast<const universalstring_type::value_type*> (tmp.data());
+                return *reinterpret_cast<const universal_string::value_type*> (tmp.data());
             }
 
 
@@ -136,7 +136,7 @@ namespace boost {
             /*OUTPUT STREAM                                                                                                                                                                                               */
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////            
 
-            void output_coder::add_bitmap(const bitstring_type & vl, bool alighn) {
+            void output_coder::add_bitmap(const bit_string & vl, bool alighn) {
                 if (unusebits()) {
                     //const_sequences::reverse_iterator it = listbuffers_->rbegin();
                     boost::itu::octet_sequnce_ptr_vect::reverse_iterator dit = rows_vect().rbegin();
@@ -163,7 +163,7 @@ namespace boost {
                 }
             }
 
-            void output_coder::add_octets(const octetstring_type & vl, bool alighn) {
+            void output_coder::add_octets(const octet_string & vl, bool alighn) {
                 add_octets(vl.as_base(), alighn);
             }
 
@@ -189,7 +189,7 @@ namespace boost {
                 }
             }
 
-            void output_coder::set_extentions_marker(const bitstring_type & vl) {
+            void output_coder::set_extentions_marker(const bit_string & vl) {
                 if (vl.sizebits()) {
                     add_nsn_small(vl.sizebits() - 1);
                     add_bitmap(vl);
@@ -210,29 +210,29 @@ namespace boost {
                 return octets_writer(stream, elms, align);
             }
 
-            output_coder& octets_writer(output_coder& stream, const bitstring_type& elms, bool align) {
+            output_coder& octets_writer(output_coder& stream, const bit_string& elms, bool align) {
                 stream.add_bitmap(elms, stream.aligned());
                 return stream;
             }
 
-            output_coder& octets_writer(output_coder& stream, const octet_sequnce& sz, const bitstring_type& elms, bool align) {
+            output_coder& octets_writer(output_coder& stream, const octet_sequnce& sz, const bit_string& elms, bool align) {
                 stream.add_octets(sz, align);
                 return octets_writer(stream, elms, align);
             }
 
             template<>
-            bool check_alighn(const size_constrainter<bitstring_type >& vl) {
+            bool check_alighn(const size_constrainter<bit_string >& vl) {
                 return (!(vl.is_single()) || ((vl.is_single()) && (vl.value().sizebits() > MIN_NOT_ALIGN_BITSIZE)));
             }
 
             template<>
-            output_coder& octet_writer_undefsz(output_coder& stream, const bitstring_type& vl) {
+            output_coder& octet_writer_undefsz(output_coder& stream, const bit_string& vl) {
                 std::size_t sz = vl.sizebits();
                 std::size_t beg = 0;
                 while (beg < sz) {
                     if ((sz - beg) < LENGH_16K) {
                         octets_writer(stream, to_x691_cast(size_class(sz - beg)),
-                                bitstring_type(octet_sequnce(vl.begin() + beg / 8, vl.end()), vl.unusebits()), stream.aligned());
+                                bit_string(octet_sequnce(vl.begin() + beg / 8, vl.end()), vl.unusebits()), stream.aligned());
                         beg = sz;
                     } else {
                         if ((sz - beg) < LENGH_64K) {
@@ -255,11 +255,11 @@ namespace boost {
             }
 
             template<>
-            output_coder& octet_writer_defsz(output_coder& stream, const size_constrainter<bitstring_type>& vl) {
+            output_coder& octet_writer_defsz(output_coder& stream, const size_constrainter<bit_string>& vl) {
 
                 if (vl.available()) {
                     if (vl.can_extended())
-                        stream.add_bitmap(bitstring_type(vl.extended(vl.value().size())));
+                        stream.add_bitmap(bit_string(vl.extended(vl.value().size())));
 
                     if ((!vl.extended(vl.value().size())) && (vl.constrained())) {
 
@@ -321,7 +321,7 @@ namespace boost {
             }
 
             output_coder& operator<<(output_coder& stream, const bool& vl) {
-                stream.add_bitmap(bitstring_type(vl));
+                stream.add_bitmap(bit_string(vl));
                 return stream;
             }
 
@@ -341,125 +341,125 @@ namespace boost {
                 return stream;
             }
 
-            output_coder& operator<<(output_coder& stream, const bitstring_type& vl) {
+            output_coder& operator<<(output_coder& stream, const bit_string& vl) {
                 return octet_writer_undefsz(stream, vl.as_octet_sequnce());
             }
 
-            output_coder& operator<<(output_coder& stream, const size_constrainter<bitstring_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const size_constrainter<bit_string>& vl) {
                 return stream << vl.value();
             }
 
-            output_coder& operator<<(output_coder& stream, const octetstring_type& vl) {
+            output_coder& operator<<(output_coder& stream, const octet_string& vl) {
                 return octet_writer_undefsz(stream, vl.as_base());
             }
 
-            output_coder& operator<<(output_coder& stream, const size_constrainter<octetstring_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const size_constrainter<octet_string>& vl) {
                 return stream << vl.value();
             }
 
-            output_coder& operator<<(output_coder& stream, const utf8string_type& vl) {
+            output_coder& operator<<(output_coder& stream, const utf8_string& vl) {
                 return octet_writer_undefsz(stream, vl.as_octet_sequnce());
             }
 
-            output_coder& operator<<(output_coder& stream, const size_constrainter<utf8string_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const size_constrainter<utf8_string>& vl) {
                 return stream << vl.value();
             }
 
-            output_coder& operator<<(output_coder& stream, const numericstring_type& vl) {
-                return stream << size_constrainter<numericstring_type, numericstring_ec>(const_cast<numericstring_type&> (vl)); // known-multi 1 oct
+            output_coder& operator<<(output_coder& stream, const numeric_string& vl) {
+                return stream << size_constrainter<numeric_string, numericstring_ec>(const_cast<numeric_string&> (vl)); // known-multi 1 oct
             }
 
-            output_coder& operator<<(output_coder& stream, const size_constrainter<numericstring_type>& vl) {
-                return stream << size_constrainter<numericstring_type, numericstring_ec>(const_cast<numericstring_type&> (vl.value()), vl.min(), vl.max(), vl.can_extended()); // known-multi 1 oct
+            output_coder& operator<<(output_coder& stream, const size_constrainter<numeric_string>& vl) {
+                return stream << size_constrainter<numeric_string, numericstring_ec>(const_cast<numeric_string&> (vl.value()), vl.min(), vl.max(), vl.can_extended()); // known-multi 1 oct
             }
 
-            output_coder& operator<<(output_coder& stream, const printablestring_type& vl) {
-                return stream << size_constrainter<printablestring_type, printablestring_ec>(const_cast<printablestring_type&> (vl)); // known-multi 1 oct
+            output_coder& operator<<(output_coder& stream, const printable_string& vl) {
+                return stream << size_constrainter<printable_string, printablestring_ec>(const_cast<printable_string&> (vl)); // known-multi 1 oct
             }
 
-            output_coder& operator<<(output_coder& stream, const size_constrainter<printablestring_type>& vl) {
-                return stream << size_constrainter<printablestring_type, printablestring_ec>(const_cast<printablestring_type&> (vl.value()), vl.min(), vl.max(), vl.can_extended()); // known-multi 1 oct
+            output_coder& operator<<(output_coder& stream, const size_constrainter<printable_string>& vl) {
+                return stream << size_constrainter<printable_string, printablestring_ec>(const_cast<printable_string&> (vl.value()), vl.min(), vl.max(), vl.can_extended()); // known-multi 1 oct
             }
 
-            output_coder& operator<<(output_coder& stream, const t61string_type& vl) {
+            output_coder& operator<<(output_coder& stream, const t61_string& vl) {
                 return octet_writer_undefsz(stream, as_octet_sequnce(vl));
             }
 
-            output_coder& operator<<(output_coder& stream, const size_constrainter<t61string_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const size_constrainter<t61_string>& vl) {
                 return stream << vl.value();
             }
 
-            output_coder& operator<<(output_coder& stream, const videotexstring_type& vl) {
+            output_coder& operator<<(output_coder& stream, const videotex_string& vl) {
                 return octet_writer_undefsz(stream, as_octet_sequnce(vl));
             }
 
-            output_coder& operator<<(output_coder& stream, const size_constrainter<videotexstring_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const size_constrainter<videotex_string>& vl) {
                 return stream << vl.value();
             }
 
-            output_coder& operator<<(output_coder& stream, const ia5string_type& vl) {
-                return stream << size_constrainter< ia5string_type, ia5string_ec>(const_cast<ia5string_type&> (vl)); // known-multi 1 oct
+            output_coder& operator<<(output_coder& stream, const ia5_string& vl) {
+                return stream << size_constrainter< ia5_string, ia5string_ec>(const_cast<ia5_string&> (vl)); // known-multi 1 oct
             }
 
-            output_coder& operator<<(output_coder& stream, const size_constrainter< ia5string_type>& vl) {
-                return stream << size_constrainter< ia5string_type, ia5string_ec>(const_cast<ia5string_type&> (vl.value()), vl.min(), vl.max(), vl.can_extended()); // known-multi 1 oct
+            output_coder& operator<<(output_coder& stream, const size_constrainter< ia5_string>& vl) {
+                return stream << size_constrainter< ia5_string, ia5string_ec>(const_cast<ia5_string&> (vl.value()), vl.min(), vl.max(), vl.can_extended()); // known-multi 1 oct
             }
 
-            output_coder& operator<<(output_coder& stream, const graphicstring_type& vl) {
+            output_coder& operator<<(output_coder& stream, const graphic_string& vl) {
                 return octet_writer_undefsz(stream, as_octet_sequnce(vl));
             }
 
-            output_coder& operator<<(output_coder& stream, const size_constrainter<graphicstring_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const size_constrainter<graphic_string>& vl) {
                 return stream << vl.value();
             }
 
-            output_coder& operator<<(output_coder& stream, const objectdescriptor_type& vl) {
+            output_coder& operator<<(output_coder& stream, const object_descriptor& vl) {
                 return octet_writer_undefsz(stream, as_octet_sequnce(vl));
             }
 
-            output_coder& operator<<(output_coder& stream, const size_constrainter<objectdescriptor_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const size_constrainter<object_descriptor>& vl) {
                 return stream << vl.value();
             }
 
-            output_coder& operator<<(output_coder& stream, const visiblestring_type& vl) {
-                return stream << size_constrainter<visiblestring_type, visiblestring_ec>(const_cast<visiblestring_type&> (vl)); // known-multi 1 oct
+            output_coder& operator<<(output_coder& stream, const visible_string& vl) {
+                return stream << size_constrainter<visible_string, visiblestring_ec>(const_cast<visible_string&> (vl)); // known-multi 1 oct
             }
 
-            output_coder& operator<<(output_coder& stream, const size_constrainter<visiblestring_type>& vl) {
-                return stream << size_constrainter<visiblestring_type, visiblestring_ec>(const_cast<visiblestring_type&> (vl.value()), vl.min(), vl.max(), vl.can_extended()); // known-multi 1 oct
+            output_coder& operator<<(output_coder& stream, const size_constrainter<visible_string>& vl) {
+                return stream << size_constrainter<visible_string, visiblestring_ec>(const_cast<visible_string&> (vl.value()), vl.min(), vl.max(), vl.can_extended()); // known-multi 1 oct
             }
 
-            output_coder& operator<<(output_coder& stream, const generalstring_type& vl) {
+            output_coder& operator<<(output_coder& stream, const general_string& vl) {
                 return octet_writer_undefsz(stream, as_octet_sequnce(vl));
             }
 
-            output_coder& operator<<(output_coder& stream, const size_constrainter<generalstring_type>& vl) {
+            output_coder& operator<<(output_coder& stream, const size_constrainter<general_string>& vl) {
                 return stream << vl.value();
             }
 
-            output_coder& operator<<(output_coder& stream, const universalstring_type& vl) {
-                return stream << size_constrainter<universalstring_type, universalstring_ec>(const_cast<universalstring_type&> (vl)); // known-multi 4 oct
+            output_coder& operator<<(output_coder& stream, const universal_string& vl) {
+                return stream << size_constrainter<universal_string, universalstring_ec>(const_cast<universal_string&> (vl)); // known-multi 4 oct
             }
 
-            output_coder& operator<<(output_coder& stream, const size_constrainter<universalstring_type>& vl) {
-                return stream << size_constrainter<universalstring_type, universalstring_ec>(const_cast<universalstring_type&> (vl.value()), vl.min(), vl.max(), vl.can_extended()); // known-multi 4 oct
+            output_coder& operator<<(output_coder& stream, const size_constrainter<universal_string>& vl) {
+                return stream << size_constrainter<universal_string, universalstring_ec>(const_cast<universal_string&> (vl.value()), vl.min(), vl.max(), vl.can_extended()); // known-multi 4 oct
             }
 
-            output_coder& operator<<(output_coder& stream, const bmpstring_type& vl) {
-                return stream << size_constrainter< bmpstring_type, bmpstring_ec>(const_cast<bmpstring_type&> (vl)); // known-multi 2 oct
+            output_coder& operator<<(output_coder& stream, const bmp_string& vl) {
+                return stream << size_constrainter< bmp_string, bmpstring_ec>(const_cast<bmp_string&> (vl)); // known-multi 2 oct
             }
 
-            output_coder& operator<<(output_coder& stream, const size_constrainter< bmpstring_type>& vl) {
-                return stream << size_constrainter< bmpstring_type, bmpstring_ec>(const_cast<bmpstring_type&> (vl.value()), vl.min(), vl.max(), vl.can_extended()); // known-multi 2 oct
+            output_coder& operator<<(output_coder& stream, const size_constrainter< bmp_string>& vl) {
+                return stream << size_constrainter< bmp_string, bmpstring_ec>(const_cast<bmp_string&> (vl.value()), vl.min(), vl.max(), vl.can_extended()); // known-multi 2 oct
             }
 
-            output_coder& operator<<(output_coder& stream, const utctime_type& vl) {
-                visiblestring_type tmp = as_visiblestring(vl);
+            output_coder& operator<<(output_coder& stream, const utctime& vl) {
+                visible_string tmp = as_visiblestring(vl);
                 return stream << tmp;
             }
 
-            output_coder& operator<<(output_coder& stream, const gentime_type& vl) {
-                visiblestring_type tmp = as_visiblestring(vl);
+            output_coder& operator<<(output_coder& stream, const gentime& vl) {
+                visible_string tmp = as_visiblestring(vl);
                 return stream << tmp;
             }
 
@@ -473,7 +473,7 @@ namespace boost {
             /*INPUT STREAM                                                                                                                                                                                               */
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            std::size_t input_coder::get_bitmap(std::size_t sz, bitstring_type& vl, bool alighn) {
+            std::size_t input_coder::get_bitmap(std::size_t sz, bit_string& vl, bool alighn) {
                 if (sz) {
                     std::size_t usbit = usebits();
                     std::size_t octsize = 1;
@@ -488,7 +488,7 @@ namespace boost {
                         if (bmp_octsize < raw.size())
                             raw.erase(raw.begin() + bmp_octsize, raw.end());
                     };
-                    vl = bitstring_type(raw, sz ? (8 - sz % 8) : 0);
+                    vl = bit_string(raw, sz ? (8 - sz % 8) : 0);
                 }
                 return sz;
             }
@@ -535,7 +535,7 @@ namespace boost {
                 return sz;
             }
 
-            std::size_t input_coder::get_pop_bitmap(std::size_t sz, bitstring_type& vl, bool alighn) {
+            std::size_t input_coder::get_pop_bitmap(std::size_t sz, bit_string& vl, bool alighn) {
                 std::size_t rslt = get_bitmap(sz, vl, alighn);
                 if (rslt) {
                     pop_bitmap(sz, alighn);
@@ -557,8 +557,8 @@ namespace boost {
                 return rslt;
             }
 
-            bitstring_type input_coder::get_pop_bmp(std::size_t sz, bool alighn) {
-                bitstring_type tmp;
+            bit_string input_coder::get_pop_bmp(std::size_t sz, bool alighn) {
+                bit_string tmp;
                 get_pop_bitmap(sz, tmp, alighn);
                 return tmp;
             }
@@ -587,12 +587,12 @@ namespace boost {
                 datastate_pop();
             }
 
-            void input_coder::get_extentions_marker(bitstring_type& vl) {
+            void input_coder::get_extentions_marker(bit_string& vl) {
                 std::size_t rslt = get_nsn_small() + 1;
                 vl = get_pop_bmp(rslt);
             }
 
-            void input_coder::clear_extentions(const bitstring_type& exbmp, std::size_t cnt) {
+            void input_coder::clear_extentions(const bit_string& exbmp, std::size_t cnt) {
                 if (exbmp.sizebits() > cnt) {
                     std::size_t clear_cnt = exbmp.sizebits() - cnt;
                     while (clear_cnt--) {
@@ -614,9 +614,9 @@ namespace boost {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////                     
 
             template<>
-            input_coder& octet_reader(input_coder& stream, bitstring_type& vl, std::size_t sz, bool alighn) {
+            input_coder& octet_reader(input_coder& stream, bit_string& vl, std::size_t sz, bool alighn) {
                 if (sz) {
-                    bitstring_type readvl = stream.get_pop_bmp(sz, alighn);
+                    bit_string readvl = stream.get_pop_bmp(sz, alighn);
                     vl.append(readvl);
                 }
                 return stream;
@@ -657,7 +657,7 @@ namespace boost {
                 return primitive_int_deserialize(stream, vl);
             }
 
-            input_coder& operator>>(input_coder& stream, enumerated_type& vl) {
+            input_coder& operator>>(input_coder& stream, enumerated& vl) {
                 return stream;
             }
 
@@ -674,7 +674,7 @@ namespace boost {
             }
 
             input_coder& operator>>(input_coder& stream, bool& vl) {
-                bitstring_type rslt = stream.get_pop_bmp(1);
+                bit_string rslt = stream.get_pop_bmp(1);
                 vl = rslt.bit(0);
                 return stream;
             }
@@ -695,147 +695,147 @@ namespace boost {
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, bitstring_type& vl) {
+            input_coder& operator>>(input_coder& stream, bit_string& vl) {
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, size_constrainter<bitstring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, size_constrainter<bit_string>& vl) {
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, octetstring_type& vl) {
+            input_coder& operator>>(input_coder& stream, octet_string& vl) {
                 octet_reader_undefsz(stream, vl);
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, size_constrainter<octetstring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, size_constrainter<octet_string>& vl) {
                 octet_reader_defsz(stream, vl);
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, utf8string_type& vl) {
+            input_coder& operator>>(input_coder& stream, utf8_string& vl) {
                 octet_reader_undefsz(stream, vl);
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, size_constrainter<utf8string_type>& vl) {
+            input_coder& operator>>(input_coder& stream, size_constrainter<utf8_string>& vl) {
                 return stream >> vl.value();
             }
 
-            input_coder& operator>>(input_coder& stream, numericstring_type& vl) {
-                size_constrainter<numericstring_type, numericstring_ec> tmp(vl);
+            input_coder& operator>>(input_coder& stream, numeric_string& vl) {
+                size_constrainter<numeric_string, numericstring_ec> tmp(vl);
                 return stream >> tmp; // known-multi 1 oct
             }
 
-            input_coder& operator>>(input_coder& stream, size_constrainter<numericstring_type>& vl) {
-                size_constrainter<numericstring_type, numericstring_ec> tmp(vl.value(), vl.min(), vl.max(), vl.can_extended());
+            input_coder& operator>>(input_coder& stream, size_constrainter<numeric_string>& vl) {
+                size_constrainter<numeric_string, numericstring_ec> tmp(vl.value(), vl.min(), vl.max(), vl.can_extended());
                 return stream >> tmp; // known-multi 1 oct
             }
 
-            input_coder& operator>>(input_coder& stream, printablestring_type& vl) {
-                size_constrainter<printablestring_type, printablestring_ec> tmp(vl);
+            input_coder& operator>>(input_coder& stream, printable_string& vl) {
+                size_constrainter<printable_string, printablestring_ec> tmp(vl);
                 return stream >> tmp; // known-multi 1 oct
             }
 
-            input_coder& operator>>(input_coder& stream, size_constrainter<printablestring_type>& vl) {
-                size_constrainter<printablestring_type, printablestring_ec> tmp(vl.value(), vl.min(), vl.max(), vl.can_extended());
+            input_coder& operator>>(input_coder& stream, size_constrainter<printable_string>& vl) {
+                size_constrainter<printable_string, printablestring_ec> tmp(vl.value(), vl.min(), vl.max(), vl.can_extended());
                 return stream >> tmp; // known-multi 1 oct
             }
 
-            input_coder& operator>>(input_coder& stream, t61string_type& vl) {
+            input_coder& operator>>(input_coder& stream, t61_string& vl) {
                 octet_reader_undefsz(stream, vl);
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, size_constrainter<t61string_type>& vl) {
+            input_coder& operator>>(input_coder& stream, size_constrainter<t61_string>& vl) {
                 return stream >> vl.value();
             }
 
-            input_coder& operator>>(input_coder& stream, videotexstring_type& vl) {
+            input_coder& operator>>(input_coder& stream, videotex_string& vl) {
                 octet_reader_undefsz(stream, vl);
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, size_constrainter<videotexstring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, size_constrainter<videotex_string>& vl) {
                 return stream >> vl.value();
             }
 
-            input_coder& operator>>(input_coder& stream, ia5string_type& vl) {
-                size_constrainter< ia5string_type, ia5string_ec> tmp(vl);
+            input_coder& operator>>(input_coder& stream, ia5_string& vl) {
+                size_constrainter< ia5_string, ia5string_ec> tmp(vl);
                 return stream >> tmp; // known-multi 1 oct
             }
 
-            input_coder& operator>>(input_coder& stream, size_constrainter< ia5string_type>& vl) {
-                size_constrainter< ia5string_type, ia5string_ec> tmp(vl.value(), vl.min(), vl.max(), vl.can_extended());
+            input_coder& operator>>(input_coder& stream, size_constrainter< ia5_string>& vl) {
+                size_constrainter< ia5_string, ia5string_ec> tmp(vl.value(), vl.min(), vl.max(), vl.can_extended());
                 return stream >> tmp; // known-multi 1 oct
             }
 
-            input_coder& operator>>(input_coder& stream, graphicstring_type& vl) {
+            input_coder& operator>>(input_coder& stream, graphic_string& vl) {
                 octet_reader_undefsz(stream, vl);
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, size_constrainter<graphicstring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, size_constrainter<graphic_string>& vl) {
                 return stream >> vl.value();
             }
 
-            input_coder& operator>>(input_coder& stream, objectdescriptor_type& vl) {
+            input_coder& operator>>(input_coder& stream, object_descriptor& vl) {
                 octet_reader_undefsz(stream, vl);
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, size_constrainter<objectdescriptor_type>& vl) {
+            input_coder& operator>>(input_coder& stream, size_constrainter<object_descriptor>& vl) {
                 return stream >> vl.value();
             }
 
-            input_coder& operator>>(input_coder& stream, visiblestring_type& vl) {
-                size_constrainter<visiblestring_type, visiblestring_ec> tmp(vl);
+            input_coder& operator>>(input_coder& stream, visible_string& vl) {
+                size_constrainter<visible_string, visiblestring_ec> tmp(vl);
                 return stream >> tmp; // known-multi 1 oct
             }
 
-            input_coder& operator>>(input_coder& stream, size_constrainter<visiblestring_type>& vl) {
-                size_constrainter<visiblestring_type, visiblestring_ec> tmp(vl.value(), vl.min(), vl.max(), vl.can_extended());
+            input_coder& operator>>(input_coder& stream, size_constrainter<visible_string>& vl) {
+                size_constrainter<visible_string, visiblestring_ec> tmp(vl.value(), vl.min(), vl.max(), vl.can_extended());
                 return stream >> tmp; // known-multi 1 oct
             }
 
-            input_coder& operator>>(input_coder& stream, generalstring_type& vl) {
+            input_coder& operator>>(input_coder& stream, general_string& vl) {
                 octet_reader_undefsz(stream, vl);
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, size_constrainter<generalstring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, size_constrainter<general_string>& vl) {
                 return stream >> vl.value();
             }
 
-            input_coder& operator>>(input_coder& stream, universalstring_type& vl) {
-                size_constrainter<universalstring_type, universalstring_ec> tmp(vl);
+            input_coder& operator>>(input_coder& stream, universal_string& vl) {
+                size_constrainter<universal_string, universalstring_ec> tmp(vl);
                 return stream >> tmp; // known-multi 4 oct
             }
 
-            input_coder& operator>>(input_coder& stream, size_constrainter<universalstring_type>& vl) {
-                size_constrainter<universalstring_type, universalstring_ec> tmp(vl.value(), vl.min(), vl.max(), vl.can_extended());
+            input_coder& operator>>(input_coder& stream, size_constrainter<universal_string>& vl) {
+                size_constrainter<universal_string, universalstring_ec> tmp(vl.value(), vl.min(), vl.max(), vl.can_extended());
                 return stream >> tmp; // known-multi 4 oct
             }
 
-            input_coder& operator>>(input_coder& stream, bmpstring_type& vl) {
-                size_constrainter< bmpstring_type, bmpstring_ec> tmp(vl);
+            input_coder& operator>>(input_coder& stream, bmp_string& vl) {
+                size_constrainter< bmp_string, bmpstring_ec> tmp(vl);
                 return stream >> tmp; // known-multi 2 oct
             }
 
-            input_coder& operator>>(input_coder& stream, size_constrainter< bmpstring_type>& vl) {
-                size_constrainter< bmpstring_type, bmpstring_ec> tmp(vl.value(), vl.min(), vl.max(), vl.can_extended());
+            input_coder& operator>>(input_coder& stream, size_constrainter< bmp_string>& vl) {
+                size_constrainter< bmp_string, bmpstring_ec> tmp(vl.value(), vl.min(), vl.max(), vl.can_extended());
                 return stream >> tmp; // known-multi 2 oct
             }
 
-            input_coder& operator>>(input_coder& stream, utctime_type& vl) {
-                visiblestring_type tmp;
+            input_coder& operator>>(input_coder& stream, utctime& vl) {
+                visible_string tmp;
                 stream >> tmp;
                 vl = to_utctime(tmp);
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, gentime_type& vl) {
-                visiblestring_type tmp;
+            input_coder& operator>>(input_coder& stream, gentime& vl) {
+                visible_string tmp;
                 stream >> tmp;
                 vl = to_gentime(tmp);
                 return stream;
@@ -862,12 +862,12 @@ namespace boost {
                   }
                   case Encoding_type_octet_aligned:
                   {
-                      ITU_T_IMPLICIT_TAG(value<octetstring_type > (false, Encoding_type_octet_aligned), 1);
+                      ITU_T_IMPLICIT_TAG(value<octet_string > (false, Encoding_type_octet_aligned), 1);
                       break;
                   }
                   case Encoding_type_arbitrary:
                   {
-                      ITU_T_IMPLICIT_TAG(value<bitstring_type > (false, Encoding_type_arbitrary), 2);
+                      ITU_T_IMPLICIT_TAG(value<bit_string > (false, Encoding_type_arbitrary), 2);
                       break;
                   }
                   default:
@@ -906,13 +906,13 @@ namespace boost {
                            }
                            case 1:
                            {
-                               if (ITU_T_IMPLICIT_TAG(value<octetstring_type > (true, Encoding_type_octet_aligned), 1)) return;
+                               if (ITU_T_IMPLICIT_TAG(value<octet_string > (true, Encoding_type_octet_aligned), 1)) return;
                                else free();
                                break;
                            }
                            case 2:
                            {
-                               if (ITU_T_IMPLICIT_TAG(value<bitstring_type > (true, Encoding_type_arbitrary), 2)) return;
+                               if (ITU_T_IMPLICIT_TAG(value<bit_string > (true, Encoding_type_arbitrary), 2)) return;
                                else free();
                                break;
                            }
@@ -953,29 +953,29 @@ namespace boost {
 
 
         //////////////////////////////////////////////////////////
-        //embeded_type
+        //embeded_pdv
 
-        template<> void embeded_type::Identification_type::Syntaxes_type::serialize(boost::asn1::x691::output_coder& arch) {
+        template<> void embeded_pdv::Identification_type::Syntaxes_type::serialize(boost::asn1::x691::output_coder& arch) {
             //ITU_T_IMPLICIT_TAG(*abstract_, 0);
             // ITU_T_IMPLICIT_TAG(*transfer_, 1);
         }
 
-        template<> void embeded_type::Identification_type::Syntaxes_type::serialize(boost::asn1::x691::input_coder& arch) {
+        template<> void embeded_pdv::Identification_type::Syntaxes_type::serialize(boost::asn1::x691::input_coder& arch) {
             // ITU_T_IMPLICIT_TAG(*abstract_, 0);
             // ITU_T_IMPLICIT_TAG(*transfer_, 1);
         }
 
-        template<> void embeded_type::Identification_type::Context_negotiation_type::serialize(boost::asn1::x691::output_coder& arch) {
+        template<> void embeded_pdv::Identification_type::Context_negotiation_type::serialize(boost::asn1::x691::output_coder& arch) {
             //ITU_T_IMPLICIT_TAG(*presentation_context_id_, 0);
             //ITU_T_IMPLICIT_TAG(*transfer_syntax_, 1);
         }
 
-        template<> void embeded_type::Identification_type::Context_negotiation_type::serialize(boost::asn1::x691::input_coder& arch) {
+        template<> void embeded_pdv::Identification_type::Context_negotiation_type::serialize(boost::asn1::x691::input_coder& arch) {
             //ITU_T_IMPLICIT_TAG(*presentation_context_id_, 0);
             //ITU_T_IMPLICIT_TAG(*transfer_syntax_, 1);
         }
 
-        template<> void embeded_type::Identification_type::serialize(boost::asn1::x691::output_coder& arch) {
+        template<> void embeded_pdv::Identification_type::serialize(boost::asn1::x691::output_coder& arch) {
             switch (type()) {
                 case Identification_type_syntaxes:
                 {
@@ -1013,7 +1013,7 @@ namespace boost {
             }
         }
 
-        template<> void embeded_type::Identification_type::serialize(boost::asn1::x691::input_coder& arch) {
+        template<> void embeded_pdv::Identification_type::serialize(boost::asn1::x691::input_coder& arch) {
             //int __tag_id__ = arch.test_id();
             /* switch (arch.test_class()) {
                  case 0x0:
@@ -1090,12 +1090,12 @@ namespace boost {
              }*/
         }
 
-        template<> void embeded_type::serialize(boost::asn1::x691::output_coder& arch) {
+        template<> void embeded_pdv::serialize(boost::asn1::x691::output_coder& arch) {
             /* ITU_T_CHOICE_TAG(*identification_, 0);
              ITU_T_IMPLICIT_TAG(*data_value_, 1);*/
         }
 
-        template<> void embeded_type::serialize(boost::asn1::x691::input_coder& arch) {
+        template<> void embeded_pdv::serialize(boost::asn1::x691::input_coder& arch) {
             /*   ITU_T_CHOICE_TAG(*identification_, 0);
                ITU_T_IMPLICIT_TAG(*data_value_, 1);*/
         }
@@ -1104,27 +1104,27 @@ namespace boost {
 
         //////////////////////////////////////////////////////////////
 
-        template<> void characterstring_type::Identification_type::Syntaxes_type::serialize(boost::asn1::x691::output_coder& arch) {
+        template<> void character_string::Identification_type::Syntaxes_type::serialize(boost::asn1::x691::output_coder& arch) {
             /*     ITU_T_IMPLICIT_TAG(*abstract_, 0);
                  ITU_T_IMPLICIT_TAG(*transfer_, 1);*/
         }
 
-        template<> void characterstring_type::Identification_type::Syntaxes_type::serialize(boost::asn1::x691::input_coder& arch) {
+        template<> void character_string::Identification_type::Syntaxes_type::serialize(boost::asn1::x691::input_coder& arch) {
             /* ITU_T_IMPLICIT_TAG(*abstract_, 0);
              ITU_T_IMPLICIT_TAG(*transfer_, 1);*/
         }
 
-        template<> void characterstring_type::Identification_type::Context_negotiation_type::serialize(boost::asn1::x691::output_coder& arch) {
+        template<> void character_string::Identification_type::Context_negotiation_type::serialize(boost::asn1::x691::output_coder& arch) {
             /*  ITU_T_IMPLICIT_TAG(*presentation_context_id_, 0);
               ITU_T_IMPLICIT_TAG(*transfer_syntax_, 1);*/
         }
 
-        template<> void characterstring_type::Identification_type::Context_negotiation_type::serialize(boost::asn1::x691::input_coder& arch) {
+        template<> void character_string::Identification_type::Context_negotiation_type::serialize(boost::asn1::x691::input_coder& arch) {
             /*   ITU_T_IMPLICIT_TAG(*presentation_context_id_, 0);
                ITU_T_IMPLICIT_TAG(*transfer_syntax_, 1);*/
         }
 
-        template<> void characterstring_type::Identification_type::serialize(boost::asn1::x691::output_coder& arch) {
+        template<> void character_string::Identification_type::serialize(boost::asn1::x691::output_coder& arch) {
             /*   switch (type()) {
                    case Identification_type_syntaxes:
                    {
@@ -1162,7 +1162,7 @@ namespace boost {
                }*/
         }
 
-        template<> void characterstring_type::Identification_type::serialize(boost::asn1::x691::input_coder& arch) {
+        template<> void character_string::Identification_type::serialize(boost::asn1::x691::input_coder& arch) {
             //int __tag_id__ = arch.test_id();
             /*    switch (arch.test_class()) {
                     case 0x0:
@@ -1239,12 +1239,12 @@ namespace boost {
                 }*/
         }
 
-        template<> void characterstring_type::serialize(boost::asn1::x691::output_coder& arch) {
+        template<> void character_string::serialize(boost::asn1::x691::output_coder& arch) {
             //ITU_T_CHOICE_TAG(*identification_, 0);
             // ITU_T_IMPLICIT_TAG(*string_value_, 1);
         }
 
-        template<> void characterstring_type::serialize(boost::asn1::x691::input_coder& arch) {
+        template<> void character_string::serialize(boost::asn1::x691::input_coder& arch) {
             // ITU_T_CHOICE_TAG(*identification_, 0);
             // ITU_T_IMPLICIT_TAG(*string_value_, 1);
         }

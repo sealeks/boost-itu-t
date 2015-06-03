@@ -146,9 +146,9 @@ namespace boost {
         std::size_t to_x690_cast(const null_type& val, octet_sequnce& src);
 
         ///////////////////////////////////////////////////////////////////////////////////
-        // enumerated_type to X.690
+        // enumerated to X.690
 
-        std::size_t to_x690_cast(const enumerated_type& val, octet_sequnce& src);
+        std::size_t to_x690_cast(const enumerated& val, octet_sequnce& src);
 
 
         ///////////////////////////////////////////////////////////////////////////////////
@@ -167,13 +167,13 @@ namespace boost {
         // utctime to X.690
 
 
-        std::size_t to_x690_cast(const utctime_type& val, octet_sequnce& src);
+        std::size_t to_x690_cast(const utctime& val, octet_sequnce& src);
 
         ///////////////////////////////////////////////////////////////////////////////////
         // gentime to X.690
 
 
-        std::size_t to_x690_cast(const gentime_type& val, octet_sequnce& src);
+        std::size_t to_x690_cast(const gentime& val, octet_sequnce& src);
 
         ///////////////////////////////////////////////////////////////////////////////////
         // any_type to X.690
@@ -254,10 +254,10 @@ namespace boost {
         bool from_x690_cast(null_type& val, const octet_sequnce& src);
 
         ///////////////////////////////////////////////////////////////////////////////////
-        // enumerated_type from X.690
+        // enumerated from X.690
 
         template<>
-        bool from_x690_cast(enumerated_type& val, const octet_sequnce& src);
+        bool from_x690_cast(enumerated& val, const octet_sequnce& src);
 
 
         ///////////////////////////////////////////////////////////////////////////////////
@@ -273,16 +273,16 @@ namespace boost {
         bool from_x690_cast(reloid_type& val, const octet_sequnce& src);
 
         ///////////////////////////////////////////////////////////////////////////////////
-        // utctime_type from to X.690
+        // utctime from to X.690
 
         template<>
-        bool from_x690_cast(utctime_type& val, const octet_sequnce& src);
+        bool from_x690_cast(utctime& val, const octet_sequnce& src);
 
         ///////////////////////////////////////////////////////////////////////////////////
-        // gentime_type from to X.690
+        // gentime from to X.690
 
         template<>
-        bool from_x690_cast(gentime_type& val, const octet_sequnce& src);
+        bool from_x690_cast(gentime& val, const octet_sequnce& src);
 
         ///////////////////////////////////////////////////////////////////////////////////
         // any_type from to X.690

@@ -267,13 +267,13 @@ namespace Reliable_Transfer_APDU {
             case CallingSSuserReference_octetString:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 1);
-                ITU_T_BIND_PER(*value<octetstring_type > (false, CallingSSuserReference_octetString));
+                ITU_T_BIND_PER(*value<octet_string > (false, CallingSSuserReference_octetString));
                 break;
             }
             case CallingSSuserReference_t61String:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 1);
-                ITU_T_BIND_PER(*value<t61string_type > (false, CallingSSuserReference_t61String));
+                ITU_T_BIND_PER(*value<t61_string > (false, CallingSSuserReference_t61String));
                 break;
             }
             default:
@@ -289,12 +289,12 @@ namespace Reliable_Transfer_APDU {
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_PER(*value<octetstring_type > (true, CallingSSuserReference_octetString));
+                ITU_T_BIND_PER(*value<octet_string > (true, CallingSSuserReference_octetString));
                 break;
             }
             case 1:
             {
-                ITU_T_BIND_PER(*value<t61string_type > (true, CallingSSuserReference_t61String));
+                ITU_T_BIND_PER(*value<t61_string > (true, CallingSSuserReference_t61String));
                 break;
             }
             default:

@@ -694,6 +694,42 @@ namespace boost {
             using Base::substr;
             using Base::swap;
 
+            friend bool operator==(const smpl_string& x, const smpl_string& y) {
+                return static_cast<const Base&> (x) == static_cast<const Base&> (y);
+            }
+
+            friend bool operator!=(const smpl_string& x, const smpl_string& y) {
+                return static_cast<const Base&> (x) != static_cast<const Base&> (y);
+            }
+
+            friend bool operator<(const smpl_string& x, const smpl_string& y) {
+                return static_cast<const Base&> (x) < static_cast<const Base&> (y);
+            }
+
+            friend bool operator>(const smpl_string& x, const smpl_string& y) {
+                return static_cast<const Base&> (x) > static_cast<const Base&> (y);
+            }
+
+            friend bool operator<=(const smpl_string& x, const smpl_string& y) {
+                return static_cast<const Base&> (x) <= static_cast<const Base&> (y);
+            }
+
+            friend bool operator>=(const smpl_string& x, const smpl_string& y) {
+                return static_cast<const Base&> (x) >= static_cast<const Base&> (y);
+            }
+
+            friend smpl_string operator+(const smpl_string& x, const smpl_string& y) {
+                return static_cast<const Base&> (x) + static_cast<const Base&> (y);
+            }
+
+            friend smpl_string operator+(const smpl_string& x, const std::string& y) {
+                return static_cast<const Base&> (x) + y;
+            }
+
+            friend smpl_string operator+(const std::string& x, const smpl_string& y) {
+                return x + static_cast<const Base&> (y);
+            }
+
         };
 
     }

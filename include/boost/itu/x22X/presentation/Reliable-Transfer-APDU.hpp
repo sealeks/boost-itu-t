@@ -28,10 +28,10 @@ namespace Reliable_Transfer_APDU {
 
 
     typedef integer_type RTTPapdu;
-    typedef octetstring_type RTTRapdu;
+    typedef octet_string RTTRapdu;
     typedef integer_type RefuseReason;
-    typedef utctime_type CommonReference;
-    typedef t61string_type AdditionalReferenceInformation;
+    typedef utctime CommonReference;
+    typedef t61_string AdditionalReferenceInformation;
     typedef integer_type AbortReason;
 
     ITU_T_OID(rTSE_abstract_syntax, ITU_T_VARRAY(2, 3, 2));
@@ -148,11 +148,11 @@ namespace Reliable_Transfer_APDU {
         RTABapdu();
 
         RTABapdu(shared_ptr< AbortReason> arg__abortReason,
-                shared_ptr< bitstring_type> arg__reflectedParameter,
+                shared_ptr< bit_string> arg__reflectedParameter,
                 shared_ptr< any_type> arg__userdataAB);
 
         ITU_T_OPTIONAL_DECL(abortReason, AbortReason);
-        ITU_T_OPTIONAL_DECL(reflectedParameter, bitstring_type);
+        ITU_T_OPTIONAL_DECL(reflectedParameter, bit_string);
         ITU_T_OPTIONAL_DECL(userdataAB, any_type);
 
         ITU_T_ARCHIVE_FUNC;
@@ -217,8 +217,8 @@ namespace Reliable_Transfer_APDU {
 
         ITU_T_CHOICE_CTORS(CallingSSuserReference);
 
-        ITU_T_CHOICES_DECL(t61String, t61string_type, CallingSSuserReference_t61String); // primitive
-        ITU_T_CHOICES_DECL(octetString, octetstring_type, CallingSSuserReference_octetString); // primitive
+        ITU_T_CHOICES_DECL(t61String, t61_string, CallingSSuserReference_t61String); // primitive
+        ITU_T_CHOICES_DECL(octetString, octet_string, CallingSSuserReference_octetString); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };

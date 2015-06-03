@@ -254,7 +254,7 @@ namespace ISO8823_PRESENTATION {
     };
 
     ARU_PPDU::X400_mode_parameters_type::X400_mode_parameters_type(shared_ptr< Reliable_Transfer_APDU::AbortReason> arg__abortReason,
-            shared_ptr< bitstring_type> arg__reflectedParameter,
+            shared_ptr< bit_string> arg__reflectedParameter,
             shared_ptr< any_type> arg__userdataAB) :
     abortReason_(arg__abortReason),
     reflectedParameter_(arg__reflectedParameter),
@@ -263,7 +263,7 @@ namespace ISO8823_PRESENTATION {
 
 
     ITU_T_OPTIONAL_DEFN(ARU_PPDU::X400_mode_parameters_type::abortReason, abortReason, Reliable_Transfer_APDU::AbortReason);
-    ITU_T_OPTIONAL_DEFN(ARU_PPDU::X400_mode_parameters_type::reflectedParameter, reflectedParameter, bitstring_type);
+    ITU_T_OPTIONAL_DEFN(ARU_PPDU::X400_mode_parameters_type::reflectedParameter, reflectedParameter, bit_string);
     ITU_T_OPTIONAL_DEFN(ARU_PPDU::X400_mode_parameters_type::userdataAB, userdataAB, any_type);
 
     ARU_PPDU::Normal_mode_parameters_type::Normal_mode_parameters_type() {
@@ -481,8 +481,8 @@ namespace ISO8823_PRESENTATION {
 
 
     ITU_T_CHOICES_DEFN(PDV_list::Presentation_data_values_type::single_ASN1_type, single_ASN1_type, any_type, Presentation_data_values_type_single_ASN1_type);
-    ITU_T_CHOICES_DEFN(PDV_list::Presentation_data_values_type::octet_aligned, octet_aligned, octetstring_type, Presentation_data_values_type_octet_aligned);
-    ITU_T_CHOICES_DEFN(PDV_list::Presentation_data_values_type::arbitrary, arbitrary, bitstring_type, Presentation_data_values_type_arbitrary);
+    ITU_T_CHOICES_DEFN(PDV_list::Presentation_data_values_type::octet_aligned, octet_aligned, octet_string, Presentation_data_values_type_octet_aligned);
+    ITU_T_CHOICES_DEFN(PDV_list::Presentation_data_values_type::arbitrary, arbitrary, bit_string, Presentation_data_values_type_arbitrary);
 
 
     ITU_T_OPTIONAL_DEFN(PDV_list::transfer_syntax_name, transfer_syntax_name, Transfer_syntax_name);
