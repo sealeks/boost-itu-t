@@ -57,7 +57,8 @@ namespace boost {
             return std::vector<oidindx_type > ();
         }
 
-        oid_type::oid_type(const std::string& vl) {
+        oid_type::oid_type(const std::string& vl) : 
+        boost::itu::vector<oidindx_type>() {
             std::vector<oidindx_type> tmp = oid_from_string(vl);
             if (!tmp.empty()) {
                 insert(begin(), tmp.begin(), tmp.end());
