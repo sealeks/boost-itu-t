@@ -10,6 +10,8 @@
           <itemPath>../../../include/boost/itu/asn1/utf8.hpp</itemPath>
         </logicalFolder>
         <logicalFolder name="coder" displayName="coder" projectFiles="true">
+          <itemPath>../../../include/boost/itu/coder/asn1_straem.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/coder/asn1_stream.hpp</itemPath>
           <itemPath>../../../include/boost/itu/coder/base_coder.cpp</itemPath>
           <itemPath>../../../include/boost/itu/coder/base_coder.hpp</itemPath>
         </logicalFolder>
@@ -147,6 +149,16 @@
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/asn1/utf8.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/coder/asn1_straem.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/coder/asn1_stream.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -401,6 +413,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/coder/asn1_straem.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/coder/asn1_stream.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/coder/base_coder.cpp"
             ex="false"
             tool="1"
@@ -650,6 +672,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/coder/asn1_straem.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/coder/asn1_stream.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/coder/base_coder.cpp"
             ex="false"
             tool="1"
@@ -893,6 +925,16 @@
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/asn1/utf8.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/coder/asn1_straem.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/coder/asn1_stream.hpp"
             ex="false"
             tool="3"
             flavor2="0">
