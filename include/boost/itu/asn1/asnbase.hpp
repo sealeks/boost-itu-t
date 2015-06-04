@@ -1768,9 +1768,13 @@ namespace boost {
             internal_(vl ? vl : shared_ptr<T>(new T())) {
             }
 
-            T& operator*() const {
+            const T& operator*() const {
                 return *internal_;
             }
+            
+            T& operator*() {
+                return *internal_;
+            }            
 
             T& operator=(const T & vl) {
                 internal_ = shared_ptr<T > (new T(vl));

@@ -2003,7 +2003,7 @@ namespace boost {
         inline bool bind_per(Archive & arch, value_holder<T>& vl) {
             return bind_per(arch, *vl);
         }
-
+        
         template<typename T>
         inline bool bind_per(boost::asn1::x691::output_coder & arch, boost::shared_ptr<T>& vl) {
             if (static_cast<bool> (vl))
@@ -2122,7 +2122,7 @@ namespace boost {
         inline bool bind_constraints(Archive & arch, value_holder<T>& vl, const T& MIN, const T& MAX, bool ext) {
             return bind_constraints(arch, *vl, MIN, MAX, ext);
         }
-
+        
         template<typename T>
         inline bool bind_constraints(boost::asn1::x691::output_coder & arch, boost::shared_ptr<T>& vl, const T& MIN, const T& MAX, bool ext) {
             if (static_cast<bool> (vl))
@@ -2175,10 +2175,10 @@ namespace boost {
         }
 
         template<typename Archive, typename T>
-        inline bool bind_sizeconstraints(Archive & arch, value_holder<T>& vl, const T& MIN, const T& MAX, bool ext) {
+        inline bool bind_sizeconstraints(Archive & arch, value_holder<T>& vl, const std::size_t& MIN, const std::size_t& MAX, bool ext) {
             return bind_sizeconstraints(arch, *vl, MIN, MAX, ext);
         }
-
+      
         template<typename T>
         inline bool bind_sizeconstraints(boost::asn1::x691::output_coder & arch, boost::shared_ptr<T>& vl, const std::size_t& MIN, const std::size_t& MAX, bool ext) {
             if (static_cast<bool> (vl))
@@ -2234,12 +2234,12 @@ namespace boost {
         }
 
         template<typename T, typename E>
-        inline bool bind_sizeconstraints_ext(boost::asn1::x691::output_coder & arch, value_holder<T>& vl, const T& MIN, const T& MAX, bool ext) {
+        inline bool bind_sizeconstraints_ext(boost::asn1::x691::output_coder & arch, value_holder<T>& vl, const std::size_t& MIN, const std::size_t& MAX, bool ext) {
             return bind_sizeconstraints_ext<T, E>(arch, *vl, MIN, MAX, ext);
         }
 
         template<typename T, typename E>
-        inline bool bind_sizeconstraints_ext(boost::asn1::x691::input_coder & arch, value_holder<T>& vl, const T& MIN, const T& MAX, bool ext) {
+        inline bool bind_sizeconstraints_ext(boost::asn1::x691::input_coder & arch, value_holder<T>& vl, const std::size_t& MIN, const std::size_t& MAX, bool ext) {
             return bind_sizeconstraints_ext<T, E>(arch, *vl, MIN, MAX, ext);
         }
 
