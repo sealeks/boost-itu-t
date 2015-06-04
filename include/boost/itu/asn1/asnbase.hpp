@@ -2091,6 +2091,7 @@ namespace boost {
 
 
 
+        
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////        
@@ -2108,18 +2109,15 @@ namespace boost {
             template<typename Archive>
             static bool op(Archive& arch, const T& vl) {
                 std::size_t tst = arch.size();
-                arch & vl;
+                arch & const_cast<T&>(vl);
                 return (arch.size() != tst);
             }
-
-            template<typename Archive>
-            static bool op(Archive& arch, value_holder<T>& vl) {
-                return op(arch, (*vl));
-            }
-
+           
         };
 
-
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        
 
 #ifdef _MSC_VER
 #pragma warning(push)

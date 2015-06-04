@@ -49,7 +49,7 @@ namespace boost {\
             }\
             template<typename Archive>\
                     static bool op(Archive& arch, const regtype & vl) {\
-                return boost::asn1::bind_choice(arch, vl);\
+                return boost::asn1::bind_choice(arch, const_cast<regtype&>(vl));\
             }\
         };\
                 }\
@@ -1356,6 +1356,13 @@ namespace boost {
             vl.serialize(arch);
             return (arch.size() != tst);
         }
+        
+        template<typename Archive, typename T>
+        inline bool bind_choice(Archive & arch, const T& vl) {
+            std::size_t tst = arch.size();
+            vl.serialize(arch);
+            return (arch.size() != tst);
+        }        
 
         template<typename Archive, typename T>
         inline bool bind_choice(Archive & arch, value_holder<T>& vl) {
@@ -1394,9 +1401,9 @@ namespace boost {
             return bind_choice(arch, vl.get_shared());
         }
         
-        
-        
-        
+
+
+
         template<> void external_type::serialize(boost::asn1::x690::output_coder& arch);
         template<> void external_type::serialize(boost::asn1::x690::input_coder& arch);
         template<> void external_type::Encoding_type::serialize(boost::asn1::x690::output_coder& arch);
