@@ -343,7 +343,7 @@ namespace prot9506 {
         try {
             if ((vlt.size() == 6) || (vlt.size() == 4)) {
 #ifdef BIG_ENDIAN_ARCHITECTURE
-                const boost::asn1::octetstring_type& vl = vlt;
+                const boost::asn1::octet_string& vl = vlt;
 #else
                 MMS::TimeOfDay vl;
                 std::reverse_copy(vlt.begin(), vlt.end(), std::back_inserter<MMS::TimeOfDay>(vl));
@@ -372,7 +372,7 @@ namespace prot9506 {
             tmpT.insert(tmpT.end(), (const char*) (&dval), (const char*) (&dval) + 2);
 #ifndef BIG_ENDIAN_ARCHITECTURE
             MMS::TimeOfDay tmpR;
-            std::reverse_copy(tmpT.begin(), tmpT.end(), std::back_inserter<boost::asn1::octetstring_type>(tmpR));
+            std::reverse_copy(tmpT.begin(), tmpT.end(), std::back_inserter<boost::asn1::octet_string>(tmpR));
             return tmpR;
 #else
             return tmpT;
@@ -381,14 +381,14 @@ namespace prot9506 {
         return MMS::TimeOfDay();
     }
 
-    boost::posix_time::ptime from_mms_utctime(const boost::asn1::octetstring_type& vlt) {
+    boost::posix_time::ptime from_mms_utctime(const boost::asn1::octet_string& vlt) {
         try {
             if (vlt.size() == 8) {
 #ifdef BIG_ENDIAN_ARCHITECTURE
-                const boost::asn1::octetstring_type& vl = vlt;
+                const boost::asn1::octet_string& vl = vlt;
 #else
-                boost::asn1::octetstring_type vl;
-                std::reverse_copy(vlt.begin(), vlt.end(), std::back_inserter<boost::asn1::octetstring_type>(vl));
+                boost::asn1::octet_string vl;
+                std::reverse_copy(vlt.begin(), vlt.end(), std::back_inserter<boost::asn1::octet_string>(vl));
 #endif       
                 boost::uint32_t fval = *reinterpret_cast<boost::uint32_t*> (&vl[0]);
                 boost::uint64_t mcsec = (500000UL * static_cast<boost::uint64_t> (fval)) / 0x7FFFFFFFUL;
@@ -402,25 +402,25 @@ namespace prot9506 {
         return boost::posix_time::ptime();
     }
 
-    boost::asn1::octetstring_type to_mms_utctime(const boost::posix_time::ptime & vl) {
+    boost::asn1::octet_string to_mms_utctime(const boost::posix_time::ptime & vl) {
         if (!vl.is_special()) {
             boost::posix_time::time_period td(mmsepoch_time, vl);
             boost::uint32_t tval = td.length().seconds();
             boost::uint64_t mcsec = (static_cast<boost::uint64_t> (vl.time_of_day().fractional_seconds())
                     * 0x7FFFFFFFUL) / 500000UL;
             boost::uint32_t fval = static_cast<boost::uint32_t> (mcsec);
-            boost::asn1::octetstring_type tmpT;
+            boost::asn1::octet_string tmpT;
             tmpT.insert(tmpT.end(), (const char*) (&fval), (const char*) (&fval) + 4);
             tmpT.insert(tmpT.end(), (const char*) (&tval), (const char*) (&tval) + 4);
 #ifndef BIG_ENDIAN_ARCHITECTURE
-            boost::asn1::octetstring_type tmpR;
-            std::reverse_copy(tmpT.begin(), tmpT.end(), std::back_inserter<boost::asn1::octetstring_type>(tmpR));
+            boost::asn1::octet_string tmpR;
+            std::reverse_copy(tmpT.begin(), tmpT.end(), std::back_inserter<boost::asn1::octet_string>(tmpR));
             return tmpR;
 #else
             return tmpT;
 #endif   
         }
-        return boost::asn1::octetstring_type();
+        return boost::asn1::octet_string();
     }
 
 }

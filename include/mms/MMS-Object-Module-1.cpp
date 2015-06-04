@@ -47,7 +47,7 @@ namespace MMS_Object_Module_1 {
 
     ITU_T_CHOICES_DEFN(Address::numericAddress, numericAddress, ISO_9506_MMS_1::Unsigned32, Address_numericAddress);
     ITU_T_CHOICES_DEFN(Address::symbolicAddress, symbolicAddress, ISO_9506_MMS_1::MMSString, Address_symbolicAddress);
-    ITU_T_CHOICES_DEFN(Address::unconstrainedAddress, unconstrainedAddress, octetstring_type, Address_unconstrainedAddress);
+    ITU_T_CHOICES_DEFN(Address::unconstrainedAddress, unconstrainedAddress, octet_string, Address_unconstrainedAddress);
 
     // choice TypeDescription
 
@@ -128,12 +128,12 @@ namespace MMS_Object_Module_1 {
     ITU_T_CHOICEC_DEFN(TypeDescription::array, array, TypeDescription::Array_type, TypeDescription_array);
     ITU_T_CHOICEC_DEFN(TypeDescription::structure, structure, TypeDescription::Structure_type, TypeDescription_structure);
     ITU_T_CHOICES_DEFN(TypeDescription::boolean, boolean, null_type, TypeDescription_boolean);
-    ITU_T_CHOICES_DEFN(TypeDescription::bit_string, bit_string, ISO_9506_MMS_1::Integer32, TypeDescription_bit_string);
+    ITU_T_CHOICES_DEFN(TypeDescription::bit_stringV, bit_stringV, ISO_9506_MMS_1::Integer32, TypeDescription_bit_stringV);
     ITU_T_CHOICES_DEFN(TypeDescription::integer, integer, ISO_9506_MMS_1::Unsigned8, TypeDescription_integer);
     ITU_T_CHOICES_DEFN(TypeDescription::unsignedV, unsignedV, ISO_9506_MMS_1::Unsigned8, TypeDescription_unsignedV);
     ITU_T_CHOICEC_DEFN(TypeDescription::floating_point, floating_point, TypeDescription::Floating_point_type, TypeDescription_floating_point);
-    ITU_T_CHOICES_DEFN(TypeDescription::octet_string, octet_string, ISO_9506_MMS_1::Integer32, TypeDescription_octet_string);
-    ITU_T_CHOICES_DEFN(TypeDescription::visible_string, visible_string, ISO_9506_MMS_1::Integer32, TypeDescription_visible_string);
+    ITU_T_CHOICES_DEFN(TypeDescription::octet_stringV, octet_stringV, ISO_9506_MMS_1::Integer32, TypeDescription_octet_stringV);
+    ITU_T_CHOICES_DEFN(TypeDescription::visible_stringV, visible_stringV, ISO_9506_MMS_1::Integer32, TypeDescription_visible_stringV);
     ITU_T_CHOICES_DEFN(TypeDescription::generalized_time, generalized_time, null_type, TypeDescription_generalized_time);
     ITU_T_CHOICES_DEFN(TypeDescription::binary_time, binary_time, bool, TypeDescription_binary_time);
     ITU_T_CHOICES_DEFN(TypeDescription::bcd, bcd, ISO_9506_MMS_1::Unsigned8, TypeDescription_bcd);

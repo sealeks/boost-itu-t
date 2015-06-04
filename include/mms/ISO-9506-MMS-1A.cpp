@@ -68,11 +68,11 @@ namespace ISO_9506_MMS_1A {
     FileRead_Response::FileRead_Response() : fileData_() {
     };
 
-    FileRead_Response::FileRead_Response(const octetstring_type& arg__fileData) :
+    FileRead_Response::FileRead_Response(const octet_string& arg__fileData) :
     fileData_(arg__fileData) {
     };
 
-    FileRead_Response::FileRead_Response(shared_ptr< octetstring_type> arg__fileData,
+    FileRead_Response::FileRead_Response(shared_ptr< octet_string> arg__fileData,
             shared_ptr< bool> arg__moreFollows) :
     fileData_(arg__fileData),
     moreFollows_(arg__moreFollows) {
@@ -81,7 +81,7 @@ namespace ISO_9506_MMS_1A {
     const bool FileRead_Response::moreFollows__default = true;
 
 
-    ITU_T_HOLDERH_DEFN(FileRead_Response::fileData, fileData, octetstring_type);
+    ITU_T_HOLDERH_DEFN(FileRead_Response::fileData, fileData, octet_string);
     ITU_T_DEFAULTH_DEFN(FileRead_Response::moreFollows, moreFollows, bool);
 
     // sequence FileRename-Request
@@ -160,14 +160,14 @@ namespace ISO_9506_MMS_1A {
     };
 
     FileAttributes::FileAttributes(shared_ptr< ISO_9506_MMS_1::Unsigned32> arg__sizeOfFile,
-            shared_ptr< gentime_type> arg__lastModified) :
+            shared_ptr< gentime> arg__lastModified) :
     sizeOfFile_(arg__sizeOfFile),
     lastModified_(arg__lastModified) {
     };
 
 
     ITU_T_HOLDERH_DEFN(FileAttributes::sizeOfFile, sizeOfFile, ISO_9506_MMS_1::Unsigned32);
-    ITU_T_OPTIONAL_DEFN(FileAttributes::lastModified, lastModified, gentime_type);
+    ITU_T_OPTIONAL_DEFN(FileAttributes::lastModified, lastModified, gentime);
 
     ScatteredAccessDescription_sequence_of::ScatteredAccessDescription_sequence_of() : variableSpecification_() {
     };

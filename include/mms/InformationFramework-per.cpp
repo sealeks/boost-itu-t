@@ -17,10 +17,10 @@ namespace InformationFramework {
 
     // choice Name
 
-        template<> void Name::serialize(boost::asn1::x691::output_coder& arch){ITU_T_BIND_PER(*value<RDNSequence > (false , Name_rdnSequence))
+        template<> void Name::serialize(boost::asn1::x691::output_coder& arch){ITU_T_BIND_PER(value<RDNSequence > (false , Name_rdnSequence));
         }
 
-        template<> void Name::serialize(boost::asn1::x691::input_coder& arch){ITU_T_BIND_PER(*value<RDNSequence > (true , Name_rdnSequence))
+        template<> void Name::serialize(boost::asn1::x691::input_coder& arch){ITU_T_BIND_PER(value<RDNSequence > (true , Name_rdnSequence));
         }
 
     // sequence AttributeTypeAndDistinguishedValue
@@ -32,20 +32,20 @@ namespace InformationFramework {
 
             ITU_T_OPTIONAL_WRITE;
 
-            ITU_T_BIND_PER(*type_);
-            ITU_T_BIND_PER(*value_);
+            ITU_T_BIND_PER(type_);
+            ITU_T_BIND_PER(value_);
             ITU_T_BIND_PER(primaryDistinguished_);
-            ITU_T_BIND_SIZE_SEMICONSTRS( valuesWithContext_, 1);
+            ITU_T_BIND_SIZE_SEMICONSTRAINT( valuesWithContext_, 1);
         }
 
         template<> void AttributeTypeAndDistinguishedValue::serialize(boost::asn1::x691::input_coder& arch){
 
             ITU_T_OPTIONAL_READ(2 );
 
-            ITU_T_BIND_PER(*type_);
-            ITU_T_BIND_PER(*value_);
+            ITU_T_BIND_PER(type_);
+            ITU_T_BIND_PER(value_);
             ITU_T_OPTIONAL_CHECK(0)  ITU_T_BIND_PER(primaryDistinguished_);
-            ITU_T_OPTIONAL_CHECK(1)  ITU_T_BIND_SIZE_SEMICONSTRS( valuesWithContext_, 1);
+            ITU_T_OPTIONAL_CHECK(1)  ITU_T_BIND_SIZE_SEMICONSTRAINT( valuesWithContext_, 1);
         }
 
     // sequence 
@@ -57,7 +57,7 @@ namespace InformationFramework {
             ITU_T_OPTIONAL_WRITE;
 
             ITU_T_BIND_PER(distingAttrValue_);
-            ITU_T_BIND_SIZE_SEMICONSTRS( *contextList_, 1);
+            ITU_T_BIND_SIZE_SEMICONSTRAINT( contextList_, 1);
         }
 
         template<> void AttributeTypeAndDistinguishedValue::ValuesWithContext_type_set_of::serialize(boost::asn1::x691::input_coder& arch){
@@ -65,7 +65,7 @@ namespace InformationFramework {
             ITU_T_OPTIONAL_READ(1 );
 
             ITU_T_OPTIONAL_CHECK(0)  ITU_T_BIND_PER(distingAttrValue_);
-            ITU_T_BIND_SIZE_SEMICONSTRS( *contextList_, 1);
+            ITU_T_BIND_SIZE_SEMICONSTRAINT( contextList_, 1);
         }
 
     // sequence Context
@@ -76,8 +76,8 @@ namespace InformationFramework {
 
             ITU_T_OPTIONAL_WRITE;
 
-            ITU_T_BIND_PER(*contextType_);
-            ITU_T_BIND_SIZE_SEMICONSTRS( *contextValues_, 1);
+            ITU_T_BIND_PER(contextType_);
+            ITU_T_BIND_SIZE_SEMICONSTRAINT( contextValues_, 1);
             ITU_T_BIND_PER(fallback_);
         }
 
@@ -85,8 +85,8 @@ namespace InformationFramework {
 
             ITU_T_OPTIONAL_READ(1 );
 
-            ITU_T_BIND_PER(*contextType_);
-            ITU_T_BIND_SIZE_SEMICONSTRS( *contextValues_, 1);
+            ITU_T_BIND_PER(contextType_);
+            ITU_T_BIND_SIZE_SEMICONSTRAINT( contextValues_, 1);
             ITU_T_OPTIONAL_CHECK(0)  ITU_T_BIND_PER(fallback_);
         }
 

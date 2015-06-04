@@ -22,10 +22,10 @@ namespace InformationFramework {
         struct Context;
 
 
-        typedef enumerated_type AttributeUsage;
+        typedef enumerated AttributeUsage;
 
-        typedef std::deque< AttributeTypeAndDistinguishedValue > RelativeDistinguishedName;  //    Sc (  [ 1  ...    ]   
-        typedef std::vector< RelativeDistinguishedName > RDNSequence;  //  struct of ->    //    Sc (  [ 1  ...    ]   
+        typedef set_of< AttributeTypeAndDistinguishedValue > RelativeDistinguishedName;  //    Sc (  [ 1  ...    ]   
+        typedef sequence_of< RelativeDistinguishedName > RDNSequence;  //  struct of ->    //    Sc (  [ 1  ...    ]   
         typedef RDNSequence DistinguishedName;  //  struct of ->    //    Sc (  [ 1  ...    ]   
 
         ITU_T_OID( id_mr_distinguishedNameMatch , ITU_T_VARRAY(  2, 5, 13, 1));
@@ -70,7 +70,7 @@ namespace InformationFramework {
 
 
 
-                    typedef std::deque< Context > ContextList_type;  //    Sc (  [ 1  ...    ]   
+                    typedef set_of< Context > ContextList_type;  //    Sc (  [ 1  ...    ]   
 
 
                 ValuesWithContext_type_set_of(); 
@@ -88,7 +88,7 @@ namespace InformationFramework {
  
 
 
-                typedef std::deque< ValuesWithContext_type_set_of > ValuesWithContext_type;  //    Sc (  [ 1  ...    ]   
+                typedef set_of< ValuesWithContext_type_set_of > ValuesWithContext_type;  //    Sc (  [ 1  ...    ]   
 
             static const bool primaryDistinguished__default;
 
@@ -115,7 +115,7 @@ namespace InformationFramework {
 
 
 
-                typedef std::deque< any_type > ContextValues_type;  //    Sc (  [ 1  ...    ]   
+                typedef set_of< any_type > ContextValues_type;  //    Sc (  [ 1  ...    ]   
 
             static const bool fallback__default;
 

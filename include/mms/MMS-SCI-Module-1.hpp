@@ -144,24 +144,24 @@ namespace MMS_SCI_Module_1 {
 
 
 
-        typedef std::vector< Access_Control_List_instance > AccessControlLists_type;
-        typedef std::vector< Domain_instance > Domains_type;
-        typedef std::vector< Program_Invocation_instance > ProgramInvocations_type;
-        typedef std::vector< Unit_Control_instance > UnitControls_type;
-        typedef std::vector< Unnamed_Variable_instance > UnnamedVariables_type;
-        typedef std::vector< Named_Variable_instance > NamedVariables_type;
-        typedef std::vector< Named_Variable_List_instance > NamedVariableLists_type;
-        typedef std::vector< Named_Type_instance > NamedTypes_type;
-        typedef std::vector< Data_Exchange_instance > DataExchanges_type;
-        typedef std::vector< Semaphore_instance > Semaphores_type;
-        typedef std::vector< Operator_Station_instance > OperatorStations_type;
-        typedef std::vector< Event_Condition_instance > EventConditions_type;
-        typedef std::vector< Event_Action_instance > EventActions_type;
-        typedef std::vector< Event_Enrollment_instance > EventEnrollments_type;
-        typedef std::vector< Event_Condition_List_instance > EventConditionLists_type;
-        typedef std::vector< Journal_instance > Journals_type;
+        typedef sequence_of< Access_Control_List_instance > AccessControlLists_type;
+        typedef sequence_of< Domain_instance > Domains_type;
+        typedef sequence_of< Program_Invocation_instance > ProgramInvocations_type;
+        typedef sequence_of< Unit_Control_instance > UnitControls_type;
+        typedef sequence_of< Unnamed_Variable_instance > UnnamedVariables_type;
+        typedef sequence_of< Named_Variable_instance > NamedVariables_type;
+        typedef sequence_of< Named_Variable_List_instance > NamedVariableLists_type;
+        typedef sequence_of< Named_Type_instance > NamedTypes_type;
+        typedef sequence_of< Data_Exchange_instance > DataExchanges_type;
+        typedef sequence_of< Semaphore_instance > Semaphores_type;
+        typedef sequence_of< Operator_Station_instance > OperatorStations_type;
+        typedef sequence_of< Event_Condition_instance > EventConditions_type;
+        typedef sequence_of< Event_Action_instance > EventActions_type;
+        typedef sequence_of< Event_Enrollment_instance > EventEnrollments_type;
+        typedef sequence_of< Event_Condition_List_instance > EventConditionLists_type;
+        typedef sequence_of< Journal_instance > Journals_type;
 
-        typedef std::vector< ISO_9506_MMS_1::MMSString > Capabilities_type;
+        typedef sequence_of< ISO_9506_MMS_1::MMSString > Capabilities_type;
 
         VMD_File();
 
@@ -174,7 +174,7 @@ namespace MMS_SCI_Module_1 {
                 const MMS_Object_Module_1::LogicalStatus& arg__logicalStatus,
                 const Capabilities_type& arg__capabilities,
                 const MMS_Object_Module_1::PhysicalStatus& arg__physicalStatus,
-                const bitstring_type& arg__local_detail,
+                const bit_string& arg__local_detail,
                 const AccessControlLists_type& arg__accessControlLists,
                 const Domains_type& arg__domains,
                 const ProgramInvocations_type& arg__programInvocations,
@@ -201,7 +201,7 @@ namespace MMS_SCI_Module_1 {
                 shared_ptr< MMS_Object_Module_1::LogicalStatus> arg__logicalStatus,
                 shared_ptr< Capabilities_type> arg__capabilities,
                 shared_ptr< MMS_Object_Module_1::PhysicalStatus> arg__physicalStatus,
-                shared_ptr< bitstring_type> arg__local_detail,
+                shared_ptr< bit_string> arg__local_detail,
                 shared_ptr< AccessControlLists_type> arg__accessControlLists,
                 shared_ptr< Domains_type> arg__domains,
                 shared_ptr< ProgramInvocations_type> arg__programInvocations,
@@ -218,7 +218,7 @@ namespace MMS_SCI_Module_1 {
                 shared_ptr< EventEnrollments_type> arg__eventEnrollments,
                 shared_ptr< EventConditionLists_type> arg__eventConditionLists,
                 shared_ptr< Journals_type> arg__journals,
-                shared_ptr< Selected_Program_Invocation_type> arg__selected_Program_Invocation = boost::shared_ptr< Selected_Program_Invocation_type>());
+                shared_ptr< Selected_Program_Invocation_type> arg__selected_Program_Invocation = shared_ptr< Selected_Program_Invocation_type>());
 
         ITU_T_HOLDERH_DECL(executiveFunction, MMS_Environment_1::ApplicationReference);
         ITU_T_HOLDERH_DECL(vendorName, ISO_9506_MMS_1::MMSString);
@@ -229,7 +229,7 @@ namespace MMS_SCI_Module_1 {
         ITU_T_HOLDERH_DECL(logicalStatus, MMS_Object_Module_1::LogicalStatus); //   Ic(  [ 0  ...   3 ]   
         ITU_T_HOLDERH_DECL(capabilities, Capabilities_type);
         ITU_T_HOLDERH_DECL(physicalStatus, MMS_Object_Module_1::PhysicalStatus); //   Ic(  [ 0  ...   3 ]   
-        ITU_T_HOLDERH_DECL(local_detail, bitstring_type);
+        ITU_T_HOLDERH_DECL(local_detail, bit_string);
         ITU_T_HOLDERH_DECL(accessControlLists, AccessControlLists_type);
         ITU_T_HOLDERH_DECL(domains, Domains_type);
         ITU_T_HOLDERH_DECL(programInvocations, ProgramInvocations_type);
@@ -271,22 +271,22 @@ namespace MMS_SCI_Module_1 {
 
             struct Details_type {
 
-                typedef std::vector< Access_Control_List_instance > AccessControlLists_type;
-                typedef std::vector< Domain_instance > Domains_type;
-                typedef std::vector< Program_Invocation_instance > ProgramInvocations_type;
-                typedef std::vector< Unit_Control_instance > UnitControls_type;
-                typedef std::vector< Unnamed_Variable_instance > UnnamedVariables_type;
-                typedef std::vector< Named_Variable_instance > NamedVariables_type;
-                typedef std::vector< Named_Variable_List_instance > NamedVariableLists_type;
-                typedef std::vector< Named_Type_instance > NamedTypes_type;
-                typedef std::vector< Data_Exchange_instance > DataExchanges_type;
-                typedef std::vector< Semaphore_instance > Semaphores_type;
-                typedef std::vector< Operator_Station_instance > OperatorStations_type;
-                typedef std::vector< Event_Condition_instance > EventConditions_type;
-                typedef std::vector< Event_Action_instance > EventActions_type;
-                typedef std::vector< Event_Enrollment_instance > EventEnrollments_type;
-                typedef std::vector< Journal_instance > Journals_type;
-                typedef std::vector< Event_Condition_List_instance > EventConditionLists_type;
+                typedef sequence_of< Access_Control_List_instance > AccessControlLists_type;
+                typedef sequence_of< Domain_instance > Domains_type;
+                typedef sequence_of< Program_Invocation_instance > ProgramInvocations_type;
+                typedef sequence_of< Unit_Control_instance > UnitControls_type;
+                typedef sequence_of< Unnamed_Variable_instance > UnnamedVariables_type;
+                typedef sequence_of< Named_Variable_instance > NamedVariables_type;
+                typedef sequence_of< Named_Variable_List_instance > NamedVariableLists_type;
+                typedef sequence_of< Named_Type_instance > NamedTypes_type;
+                typedef sequence_of< Data_Exchange_instance > DataExchanges_type;
+                typedef sequence_of< Semaphore_instance > Semaphores_type;
+                typedef sequence_of< Operator_Station_instance > OperatorStations_type;
+                typedef sequence_of< Event_Condition_instance > EventConditions_type;
+                typedef sequence_of< Event_Action_instance > EventActions_type;
+                typedef sequence_of< Event_Enrollment_instance > EventEnrollments_type;
+                typedef sequence_of< Journal_instance > Journals_type;
+                typedef sequence_of< Event_Condition_List_instance > EventConditionLists_type;
 
 
                 Details_type();
@@ -331,7 +331,7 @@ namespace MMS_SCI_Module_1 {
                         shared_ptr< EventActions_type> arg__eventActions,
                         shared_ptr< EventEnrollments_type> arg__eventEnrollments,
                         shared_ptr< Journals_type> arg__journals,
-                        shared_ptr< EventConditionLists_type> arg__eventConditionLists = boost::shared_ptr< EventConditionLists_type>());
+                        shared_ptr< EventConditionLists_type> arg__eventConditionLists = shared_ptr< EventConditionLists_type>());
 
                 ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
                 ITU_T_OPTIONAL_DECL(readAccessCondition, MMS_Object_Module_1::AccessCondition);
@@ -402,16 +402,16 @@ namespace MMS_SCI_Module_1 {
 
             struct Details_type {
 
-                typedef std::vector< Program_Invocation_instance > ProgramInvocations_type;
-                typedef std::vector< Named_Variable_instance > NamedVariables_type;
-                typedef std::vector< Named_Variable_List_instance > NamedVariableLists_type;
-                typedef std::vector< Named_Type_instance > NamedTypes_type;
-                typedef std::vector< Event_Condition_instance > EventConditions_type;
-                typedef std::vector< Event_Action_instance > EventActions_type;
-                typedef std::vector< Event_Enrollment_instance > EventEnrollments_type;
-                typedef std::vector< Event_Condition_List_instance > EventConditionLists_type;
+                typedef sequence_of< Program_Invocation_instance > ProgramInvocations_type;
+                typedef sequence_of< Named_Variable_instance > NamedVariables_type;
+                typedef sequence_of< Named_Variable_List_instance > NamedVariableLists_type;
+                typedef sequence_of< Named_Type_instance > NamedTypes_type;
+                typedef sequence_of< Event_Condition_instance > EventConditions_type;
+                typedef sequence_of< Event_Action_instance > EventActions_type;
+                typedef sequence_of< Event_Enrollment_instance > EventEnrollments_type;
+                typedef sequence_of< Event_Condition_List_instance > EventConditionLists_type;
 
-                typedef std::vector< ISO_9506_MMS_1::MMSString > Capabilities_type;
+                typedef sequence_of< ISO_9506_MMS_1::MMSString > Capabilities_type;
 
                 Details_type();
 
@@ -485,12 +485,12 @@ namespace MMS_SCI_Module_1 {
 
             struct Details_type {
 
-                typedef std::vector< Domain_instance > Domains_type;
-                typedef std::vector< Access_Control_List_instance > AccessControl_type;
-                typedef std::vector< Event_Condition_instance > EventCondition_type;
-                typedef std::vector< Event_Action_instance > EventAction_type;
-                typedef std::vector< Event_Enrollment_instance > EventEnrollment_type;
-                typedef std::vector< Program_Invocation_instance > Controlled_Program_Invocations_type;
+                typedef sequence_of< Domain_instance > Domains_type;
+                typedef sequence_of< Access_Control_List_instance > AccessControl_type;
+                typedef sequence_of< Event_Condition_instance > EventCondition_type;
+                typedef sequence_of< Event_Action_instance > EventAction_type;
+                typedef sequence_of< Event_Enrollment_instance > EventEnrollment_type;
+                typedef sequence_of< Program_Invocation_instance > Controlled_Program_Invocations_type;
 
 
                 Details_type();
@@ -511,9 +511,9 @@ namespace MMS_SCI_Module_1 {
                         shared_ptr< EventAction_type> arg__eventAction,
                         shared_ptr< EventEnrollment_type> arg__eventEnrollment,
                         shared_ptr< ISO_9506_MMS_1::MMSString> arg__executionArgument,
-                        shared_ptr< MMS_Object_Module_1::Control_State> arg__control = boost::shared_ptr< MMS_Object_Module_1::Control_State>(),
-                        shared_ptr< Program_Invocation_instance> arg__controlling_Program_Invocation = boost::shared_ptr< Program_Invocation_instance>(),
-                        shared_ptr< Controlled_Program_Invocations_type> arg__controlled_Program_Invocations = boost::shared_ptr< Controlled_Program_Invocations_type>());
+                        shared_ptr< MMS_Object_Module_1::Control_State> arg__control = shared_ptr< MMS_Object_Module_1::Control_State>(),
+                        shared_ptr< Program_Invocation_instance> arg__controlling_Program_Invocation = shared_ptr< Program_Invocation_instance>(),
+                        shared_ptr< Controlled_Program_Invocations_type> arg__controlled_Program_Invocations = shared_ptr< Controlled_Program_Invocations_type>());
 
                 ITU_T_HOLDERH_DECL(programInvocationState, MMS_Object_Module_1::ProgramInvocationState); //   Ic(  [ 0  ...   8 ]   
                 ITU_T_HOLDERH_DECL(domains, Domains_type);
@@ -572,8 +572,8 @@ namespace MMS_SCI_Module_1 {
 
             struct Details_type {
 
-                typedef std::vector< Domain_instance > Domains_type;
-                typedef std::vector< Program_Invocation_instance > ProgramInvocations_type;
+                typedef sequence_of< Domain_instance > Domains_type;
+                typedef sequence_of< Program_Invocation_instance > ProgramInvocations_type;
 
 
                 Details_type();
@@ -655,12 +655,12 @@ namespace MMS_SCI_Module_1 {
                 Details_type(shared_ptr< Access_Control_List_instance> arg__accessControl,
                         shared_ptr< MMS_Object_Module_1::TypeDescription> arg__typeDescription,
                         shared_ptr< MMS_Object_Module_1::Address> arg__address,
-                        shared_ptr< visiblestring_type> arg__meaning);
+                        shared_ptr< visible_string> arg__meaning);
 
                 ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
                 ITU_T_HOLDERH_DECL(typeDescription, MMS_Object_Module_1::TypeDescription);
                 ITU_T_OPTIONAL_DECL(address, MMS_Object_Module_1::Address);
-                ITU_T_OPTIONAL_DECL(meaning, visiblestring_type);
+                ITU_T_OPTIONAL_DECL(meaning, visible_string);
 
                 ITU_T_ARCHIVE_FUNC;
             };
@@ -706,7 +706,7 @@ namespace MMS_SCI_Module_1 {
 
             struct Details_type {
 
-                typedef std::vector< Variable_List_Item_instance > ListOfVariables_type;
+                typedef sequence_of< Variable_List_Item_instance > ListOfVariables_type;
 
 
                 Details_type();
@@ -785,11 +785,11 @@ namespace MMS_SCI_Module_1 {
 
                 Details_type(shared_ptr< Access_Control_List_instance> arg__accessControl,
                         shared_ptr< MMS_Object_Module_1::TypeDescription> arg__typeDescription,
-                        shared_ptr< visiblestring_type> arg__meaning);
+                        shared_ptr< visible_string> arg__meaning);
 
                 ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
                 ITU_T_HOLDERH_DECL(typeDescription, MMS_Object_Module_1::TypeDescription);
-                ITU_T_OPTIONAL_DECL(meaning, visiblestring_type);
+                ITU_T_OPTIONAL_DECL(meaning, visible_string);
 
                 ITU_T_ARCHIVE_FUNC;
             };
@@ -835,8 +835,8 @@ namespace MMS_SCI_Module_1 {
 
             struct Details_type {
 
-                typedef std::vector< MMS_Object_Module_1::TypeDescription > Request_type;
-                typedef std::vector< MMS_Object_Module_1::TypeDescription > Response_type;
+                typedef sequence_of< MMS_Object_Module_1::TypeDescription > Request_type;
+                typedef sequence_of< MMS_Object_Module_1::TypeDescription > Response_type;
 
                 Details_type();
 
@@ -901,26 +901,26 @@ namespace MMS_SCI_Module_1 {
 
             struct Details_type {
 
-                typedef std::vector< visiblestring_type > NamedTokens_type; //  struct of ->  
+                typedef sequence_of< visible_string > NamedTokens_type; //  struct of ->  
 
-                static const enumerated_type classV_token;
-                static const enumerated_type classV_pool;
+                static const enumerated classV_token;
+                static const enumerated classV_pool;
 
 
                 Details_type();
 
                 Details_type(const Access_Control_List_instance& arg__accessControl,
-                        const enumerated_type& arg__classV,
+                        const enumerated& arg__classV,
                         const Event_Condition_instance& arg__eventCondition);
 
                 Details_type(shared_ptr< Access_Control_List_instance> arg__accessControl,
-                        shared_ptr< enumerated_type> arg__classV,
+                        shared_ptr< enumerated> arg__classV,
                         shared_ptr< integer_type> arg__numberOfTokens,
                         shared_ptr< NamedTokens_type> arg__namedTokens,
                         shared_ptr< Event_Condition_instance> arg__eventCondition);
 
                 ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
-                ITU_T_HOLDERH_DECL(classV, enumerated_type);
+                ITU_T_HOLDERH_DECL(classV, enumerated);
                 ITU_T_OPTIONAL_DECL(numberOfTokens, integer_type);
                 ITU_T_OPTIONAL_DECL(namedTokens, NamedTokens_type); //  struct of ->  
                 ITU_T_HOLDERH_DECL(eventCondition, Event_Condition_instance);
@@ -969,18 +969,18 @@ namespace MMS_SCI_Module_1 {
 
             struct Details_type {
 
-                static const enumerated_type stationType_entry;
-                static const enumerated_type stationType_display;
-                static const enumerated_type stationType_entry_display;
+                static const enumerated stationType_entry;
+                static const enumerated stationType_display;
+                static const enumerated stationType_entry_display;
 
 
                 Details_type();
 
                 Details_type(const Access_Control_List_instance& arg__accessControl,
-                        const enumerated_type& arg__stationType);
+                        const enumerated& arg__stationType);
 
                 ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
-                ITU_T_HOLDERH_DECL(stationType, enumerated_type);
+                ITU_T_HOLDERH_DECL(stationType, enumerated);
 
                 ITU_T_ARCHIVE_FUNC;
             };
@@ -1090,8 +1090,8 @@ namespace MMS_SCI_Module_1 {
 
 
 
-                typedef std::vector< Event_Enrollment_instance > EventEnrollments_type;
-                typedef std::vector< Event_Condition_List_instance > ReferencingEventConditionLists_type;
+                typedef sequence_of< Event_Enrollment_instance > EventEnrollments_type;
+                typedef sequence_of< Event_Condition_List_instance > ReferencingEventConditionLists_type;
 
 
                 Details_type();
@@ -1113,9 +1113,9 @@ namespace MMS_SCI_Module_1 {
                         shared_ptr< bool> arg__alarmSummaryReports,
                         shared_ptr< MonitoredVariable_type> arg__monitoredVariable,
                         shared_ptr< integer_type> arg__evaluationInterval,
-                        shared_ptr< DisplayEnhancement_type> arg__displayEnhancement = boost::shared_ptr< DisplayEnhancement_type>(),
-                        shared_ptr< Group_Priority_Override_type> arg__group_Priority_Override = boost::shared_ptr< Group_Priority_Override_type>(),
-                        shared_ptr< ReferencingEventConditionLists_type> arg__referencingEventConditionLists = boost::shared_ptr< ReferencingEventConditionLists_type>());
+                        shared_ptr< DisplayEnhancement_type> arg__displayEnhancement = shared_ptr< DisplayEnhancement_type>(),
+                        shared_ptr< Group_Priority_Override_type> arg__group_Priority_Override = shared_ptr< Group_Priority_Override_type>(),
+                        shared_ptr< ReferencingEventConditionLists_type> arg__referencingEventConditionLists = shared_ptr< ReferencingEventConditionLists_type>());
 
                 ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
                 ITU_T_HOLDERH_DECL(ecClass, MMS_Object_Module_1::EC_Class); //   Ic(  [ 0  ...   1 ]   
@@ -1175,9 +1175,9 @@ namespace MMS_SCI_Module_1 {
 
             struct Details_type {
 
-                typedef std::vector< Event_Enrollment_instance > EventEnrollments_type;
+                typedef sequence_of< Event_Enrollment_instance > EventEnrollments_type;
 
-                typedef std::vector< MMS_Object_Module_1::Modifier > Modifiers_type;
+                typedef sequence_of< MMS_Object_Module_1::Modifier > Modifiers_type;
 
                 Details_type();
 
@@ -1293,7 +1293,7 @@ namespace MMS_SCI_Module_1 {
                         shared_ptr< MMS_Object_Module_1::EE_Duration> arg__duration,
                         shared_ptr< MMS_Environment_1::ApplicationReference> arg__clientApplication,
                         shared_ptr< MMS_Object_Module_1::AlarmAckRule> arg__aaRule,
-                        shared_ptr< DisplayEnhancement_type> arg__displayEnhancement = boost::shared_ptr< DisplayEnhancement_type>());
+                        shared_ptr< DisplayEnhancement_type> arg__displayEnhancement = shared_ptr< DisplayEnhancement_type>());
 
                 ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
                 ITU_T_HOLDERH_DECL(eeClass, MMS_Object_Module_1::EE_Class); //   Ic(  [ 0  ...   1 ]   
@@ -1350,9 +1350,9 @@ namespace MMS_SCI_Module_1 {
 
             struct Details_type {
 
-                typedef std::vector< Event_Condition_instance > EventConditions_type;
-                typedef std::vector< Event_Condition_List_instance > EventConditionLists_type;
-                typedef std::vector< Event_Condition_List_instance > ReferencingEventConditionLists_type;
+                typedef sequence_of< Event_Condition_instance > EventConditions_type;
+                typedef sequence_of< Event_Condition_List_instance > EventConditionLists_type;
+                typedef sequence_of< Event_Condition_List_instance > ReferencingEventConditionLists_type;
 
 
                 Details_type();
@@ -1411,7 +1411,7 @@ namespace MMS_SCI_Module_1 {
 
             struct Details_type {
 
-                typedef std::vector< Journal_Entry_instance > Entries_type;
+                typedef sequence_of< Journal_Entry_instance > Entries_type;
 
 
                 Details_type();
@@ -1481,38 +1481,38 @@ namespace MMS_SCI_Module_1 {
 
 
 
-        typedef std::vector< JournalVariables_type_sequence_of > JournalVariables_type;
+        typedef sequence_of< JournalVariables_type_sequence_of > JournalVariables_type;
 
-        static const enumerated_type informationType_annotation;
-        static const enumerated_type informationType_event_data;
-        static const enumerated_type informationType_data;
+        static const enumerated informationType_annotation;
+        static const enumerated informationType_event_data;
+        static const enumerated informationType_data;
 
 
         Journal_Entry_instance();
 
         Journal_Entry_instance(const Journal_instance& arg__journal,
-                const octetstring_type& arg__entry,
+                const octet_string& arg__entry,
                 const MMS_Environment_1::ApplicationReference& arg__clientApplication,
                 const ISO_9506_MMS_1::TimeOfDay& arg__timeStamp,
                 const integer_type& arg__orderOfReceipt,
-                const enumerated_type& arg__informationType);
+                const enumerated& arg__informationType);
 
         Journal_Entry_instance(shared_ptr< Journal_instance> arg__journal,
-                shared_ptr< octetstring_type> arg__entry,
+                shared_ptr< octet_string> arg__entry,
                 shared_ptr< MMS_Environment_1::ApplicationReference> arg__clientApplication,
                 shared_ptr< ISO_9506_MMS_1::TimeOfDay> arg__timeStamp,
                 shared_ptr< integer_type> arg__orderOfReceipt,
-                shared_ptr< enumerated_type> arg__informationType,
+                shared_ptr< enumerated> arg__informationType,
                 shared_ptr< ISO_9506_MMS_1::MMS255String> arg__textComment,
                 shared_ptr< EventTransitionRecord_type> arg__eventTransitionRecord,
                 shared_ptr< JournalVariables_type> arg__journalVariables);
 
         ITU_T_HOLDERH_DECL(journal, Journal_instance);
-        ITU_T_HOLDERH_DECL(entry, octetstring_type);
+        ITU_T_HOLDERH_DECL(entry, octet_string);
         ITU_T_HOLDERH_DECL(clientApplication, MMS_Environment_1::ApplicationReference);
         ITU_T_HOLDERH_DECL(timeStamp, ISO_9506_MMS_1::TimeOfDay); //    Sc (  [ 4  ...   6 ]   
         ITU_T_HOLDERH_DECL(orderOfReceipt, integer_type);
-        ITU_T_HOLDERH_DECL(informationType, enumerated_type);
+        ITU_T_HOLDERH_DECL(informationType, enumerated);
         ITU_T_OPTIONAL_DECL(textComment, ISO_9506_MMS_1::MMS255String);
         ITU_T_OPTIONAL_DECL(eventTransitionRecord, EventTransitionRecord_type);
         ITU_T_OPTIONAL_DECL(journalVariables, JournalVariables_type);
@@ -1617,7 +1617,7 @@ namespace MMS_SCI_Module_1 {
 
     struct DomainManagementParameters {
 
-        typedef std::vector< oid_type > LoadDataSyntax_type;
+        typedef sequence_of< oid_type > LoadDataSyntax_type;
 
 
         DomainManagementParameters();
@@ -1637,7 +1637,7 @@ namespace MMS_SCI_Module_1 {
 
     struct ProgramInvocationManagementParameters {
 
-        typedef std::vector< oid_type > ExecutionArgSyntaxes_type;
+        typedef sequence_of< oid_type > ExecutionArgSyntaxes_type;
 
 
         ProgramInvocationManagementParameters();
@@ -1696,22 +1696,22 @@ namespace MMS_SCI_Module_1 {
 
         DataParameters();
 
-        DataParameters(shared_ptr< integer_type> arg__bit_string,
+        DataParameters(shared_ptr< integer_type> arg__bit_stringV,
                 shared_ptr< integer_type> arg__integer,
                 shared_ptr< integer_type> arg__unsignedV,
                 shared_ptr< Floating_point_type> arg__floating_point,
-                shared_ptr< integer_type> arg__octet_string,
-                shared_ptr< integer_type> arg__visible_string,
+                shared_ptr< integer_type> arg__octet_stringV,
+                shared_ptr< integer_type> arg__visible_stringV,
                 shared_ptr< bool> arg__binary_time,
                 shared_ptr< integer_type> arg__bcd,
                 shared_ptr< integer_type> arg__mmsString);
 
-        ITU_T_OPTIONAL_DECL(bit_string, integer_type);
+        ITU_T_OPTIONAL_DECL(bit_stringV, integer_type);
         ITU_T_OPTIONAL_DECL(integer, integer_type);
         ITU_T_OPTIONAL_DECL(unsignedV, integer_type);
         ITU_T_OPTIONAL_DECL(floating_point, Floating_point_type);
-        ITU_T_OPTIONAL_DECL(octet_string, integer_type);
-        ITU_T_OPTIONAL_DECL(visible_string, integer_type);
+        ITU_T_OPTIONAL_DECL(octet_stringV, integer_type);
+        ITU_T_OPTIONAL_DECL(visible_stringV, integer_type);
         ITU_T_OPTIONAL_DECL(binary_time, bool);
         ITU_T_OPTIONAL_DECL(bcd, integer_type);
         ITU_T_OPTIONAL_DECL(mmsString, integer_type);

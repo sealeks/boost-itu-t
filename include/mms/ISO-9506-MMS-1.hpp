@@ -313,11 +313,17 @@ namespace ISO_9506_MMS_1 {
     typedef ObjectName ReportJournalStatus_Request;
     typedef sequence_of< AlternateAccess_sequence_of > AlternateAccess;
     typedef sequence_of< Write_Response_sequence_of > Write_Response;
+    ITU_T_EXPLICIT_TYPEDEF(CS_EventNotification__expl_helper, CS_EventNotification, 0, CONTEXT_CLASS);
     ITU_T_PREFIXED_DECLARE(CS_EventNotification, ITU_T_ARRAY(prefixed_type(0, CONTEXT_CLASS)), true); //  initial =explicit
+    ITU_T_EXPLICIT_TYPEDEF(CS_DefineEventEnrollment_Request__expl_helper, CS_DefineEventEnrollment_Request, 0, CONTEXT_CLASS);
     ITU_T_PREFIXED_DECLARE(CS_DefineEventEnrollment_Request, ITU_T_ARRAY(prefixed_type(0, CONTEXT_CLASS)), true); //  initial =explicit
+    ITU_T_EXPLICIT_TYPEDEF(EN_Additional_Detail__expl_helper, EN_Additional_Detail, 0, CONTEXT_CLASS);
     ITU_T_PREFIXED_DECLARE(EN_Additional_Detail, ITU_T_ARRAY(prefixed_type(0, CONTEXT_CLASS)), true); //  initial =explicit
+    ITU_T_EXPLICIT_TYPEDEF(CS_DefineEventCondition_Request__expl_helper, CS_DefineEventCondition_Request, 0, CONTEXT_CLASS);
     ITU_T_PREFIXED_DECLARE(CS_DefineEventCondition_Request, ITU_T_ARRAY(prefixed_type(0, CONTEXT_CLASS)), true); //  initial =explicit
+    ITU_T_EXPLICIT_TYPEDEF(CS_Start_Request__expl_helper, CS_Start_Request, 0, CONTEXT_CLASS);
     ITU_T_PREFIXED_DECLARE(CS_Start_Request, ITU_T_ARRAY(prefixed_type(0, CONTEXT_CLASS)), true); //  initial =explicit
+    ITU_T_EXPLICIT_TYPEDEF(CS_Resume_Request__expl_helper, CS_Resume_Request, 0, CONTEXT_CLASS);
     ITU_T_PREFIXED_DECLARE(CS_Resume_Request, ITU_T_ARRAY(prefixed_type(0, CONTEXT_CLASS)), true); //  initial =explicit
 
     const integer_type maxIdentifier = 32;
@@ -3524,12 +3530,12 @@ namespace ISO_9506_MMS_1 {
         Data_array,
         Data_structure,
         Data_boolean,
-        Data_bit_string,
+        Data_bit_stringV,
         Data_integer,
         Data_unsignedV,
         Data_floating_point,
-        Data_octet_string,
-        Data_visible_string,
+        Data_octet_stringV,
+        Data_visible_stringV,
         Data_generalized_time,
         Data_binary_time,
         Data_bcd,
@@ -3551,12 +3557,12 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICEC_DECL(array, Array_type, Data_array);
         ITU_T_CHOICEC_DECL(structure, Structure_type, Data_structure);
         ITU_T_CHOICES_DECL(boolean, bool, Data_boolean); // primitive
-        ITU_T_CHOICES_DECL(bit_string, bit_string, Data_bit_string); // primitive
+        ITU_T_CHOICES_DECL(bit_stringV, bit_string, Data_bit_stringV); // primitive
         ITU_T_CHOICES_DECL(integer, integer_type, Data_integer); // primitive
         ITU_T_CHOICES_DECL(unsignedV, integer_type, Data_unsignedV); // primitive
         ITU_T_CHOICES_DECL(floating_point, FloatingPoint, Data_floating_point); // primitive
-        ITU_T_CHOICES_DECL(octet_string, octet_string, Data_octet_string); // primitive
-        ITU_T_CHOICES_DECL(visible_string, visible_string, Data_visible_string); // primitive
+        ITU_T_CHOICES_DECL(octet_stringV, octet_string, Data_octet_stringV); // primitive
+        ITU_T_CHOICES_DECL(visible_stringV, visible_string, Data_visible_stringV); // primitive
         ITU_T_CHOICES_DECL(generalized_time, gentime, Data_generalized_time); // primitive
         ITU_T_CHOICES_DECL(binary_time, TimeOfDay, Data_binary_time); // primitive  //    Sc (  [ 4  ...   6 ]   
         ITU_T_CHOICES_DECL(bcd, integer_type, Data_bcd); // primitive

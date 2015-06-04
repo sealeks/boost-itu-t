@@ -49,7 +49,7 @@ namespace prot9506 {
     typedef MMS::ParameterSupportOptions parameter_option_type;
     typedef MMS::AdditionalSupportOptions exservice_option_type;
     typedef MMS::AdditionalCBBOptions exparameter_option_type;
-    typedef boost::asn1::visiblestring_type privilege_type;
+    typedef boost::asn1::visible_string privilege_type;
 
 
     //presentation_option init_synaxes();
@@ -1063,8 +1063,8 @@ namespace prot9506 {
     boost::posix_time::ptime from_mms_datetime(const MMS::TimeOfDay& vl);
     MMS::TimeOfDay to_mms_datetime(const boost::posix_time::ptime& vl);
 
-    boost::posix_time::ptime from_mms_utctime(const boost::asn1::octetstring_type& vl);
-    boost::asn1::octetstring_type to_mms_utctime(const boost::posix_time::ptime& vl);
+    boost::posix_time::ptime from_mms_utctime(const boost::asn1::octet_string& vl);
+    boost::asn1::octet_string to_mms_utctime(const boost::posix_time::ptime& vl);
 
 }
 

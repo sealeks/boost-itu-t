@@ -27,10 +27,10 @@ namespace MMS_Object_Module_1 {
 
 
     typedef uint8_t VMDState; //   Ic(  [ 0  ...   5 ]   
-    typedef bitstring_type ServiceSupportOptions; //    Sc (  [ 93 ]   
-    typedef bitstring_type ParameterSupportOptions; //    Sc (  [ 18 ]   
-    typedef bitstring_type AdditionalSupportOptions; //    Sc (  [ 23 ]   
-    typedef bitstring_type AdditionalCBBOptions; //    Sc (  [ 3 ]   
+    typedef bit_string ServiceSupportOptions; //    Sc (  [ 93 ]   
+    typedef bit_string ParameterSupportOptions; //    Sc (  [ 18 ]   
+    typedef bit_string AdditionalSupportOptions; //    Sc (  [ 23 ]   
+    typedef bit_string AdditionalCBBOptions; //    Sc (  [ 3 ]   
     typedef uint8_t DomainState; //   Ic(  [ 0  ...   15 ]   
     typedef uint8_t ULState; //   Ic(  [ 0  ...   6 ]   
     typedef uint8_t ProgramInvocationState; //   Ic(  [ 0  ...   8 ]   
@@ -41,11 +41,13 @@ namespace MMS_Object_Module_1 {
     typedef uint8_t EC_State; //   Ic(  [ 0  ...   2 ]   
     typedef uint8_t Severity; //   Ic(  [ 0  ...   127 ]   
     typedef uint8_t EE_Class; //   Ic(  [ 0  ...   1 ]   
-    typedef bitstring_type Transitions; //    Sc (  [ 7 ]   
+    typedef bit_string Transitions; //    Sc (  [ 7 ]   
     typedef uint8_t EE_Duration; //   Ic(  [ 0  ...   1 ]   
     typedef uint8_t AlarmAckRule; //   Ic(  [ 0  ...   3 ]   
-    ITU_T_IMPLICIT_TYPEDEF(LogicalStatus, uint8_t, 0, CONTEXT_CLASS); //   Ic(  [ 0  ...   3 ]   
-    ITU_T_IMPLICIT_TYPEDEF(PhysicalStatus, uint8_t, 1, CONTEXT_CLASS); //   Ic(  [ 0  ...   3 ]   
+    typedef uint8_t LogicalStatus;
+    ITU_T_PREFIXED_DECLARE(LogicalStatus, ITU_T_ARRAY(prefixed_type(0, CONTEXT_CLASS)), false); //  initial =implicit  //   Ic(  [ 0  ...   3 ]   
+    typedef uint8_t PhysicalStatus;
+    ITU_T_PREFIXED_DECLARE(PhysicalStatus, ITU_T_ARRAY(prefixed_type(1, CONTEXT_CLASS)), false); //  initial =implicit  //   Ic(  [ 0  ...   3 ]   
 
     const Priority normalPriority = 64;
 
@@ -143,144 +145,144 @@ namespace MMS_Object_Module_1 {
         ITU_T_ARCHIVE_FUNC;
     };
 
-    const ServiceSupportOptions serviceSupportOptions_status = bitstring_type(true, 0);
-    const ServiceSupportOptions serviceSupportOptions_getNameList = bitstring_type(true, 1);
-    const ServiceSupportOptions serviceSupportOptions_identify = bitstring_type(true, 2);
-    const ServiceSupportOptions serviceSupportOptions_rename = bitstring_type(true, 3);
-    const ServiceSupportOptions serviceSupportOptions_read = bitstring_type(true, 4);
-    const ServiceSupportOptions serviceSupportOptions_write = bitstring_type(true, 5);
-    const ServiceSupportOptions serviceSupportOptions_getVariableAccessAttributes = bitstring_type(true, 6);
-    const ServiceSupportOptions serviceSupportOptions_defineNamedVariable = bitstring_type(true, 7);
-    const ServiceSupportOptions serviceSupportOptions_defineScatteredAccess = bitstring_type(true, 8);
-    const ServiceSupportOptions serviceSupportOptions_getScatteredAccessAttributes = bitstring_type(true, 9);
-    const ServiceSupportOptions serviceSupportOptions_deleteVariableAccess = bitstring_type(true, 10);
-    const ServiceSupportOptions serviceSupportOptions_defineNamedVariableList = bitstring_type(true, 11);
-    const ServiceSupportOptions serviceSupportOptions_getNamedVariableListAttributes = bitstring_type(true, 12);
-    const ServiceSupportOptions serviceSupportOptions_deleteNamedVariableList = bitstring_type(true, 13);
-    const ServiceSupportOptions serviceSupportOptions_defineNamedType = bitstring_type(true, 14);
-    const ServiceSupportOptions serviceSupportOptions_getNamedTypeAttributes = bitstring_type(true, 15);
-    const ServiceSupportOptions serviceSupportOptions_deleteNamedType = bitstring_type(true, 16);
-    const ServiceSupportOptions serviceSupportOptions_input = bitstring_type(true, 17);
-    const ServiceSupportOptions serviceSupportOptions_output = bitstring_type(true, 18);
-    const ServiceSupportOptions serviceSupportOptions_takeControl = bitstring_type(true, 19);
-    const ServiceSupportOptions serviceSupportOptions_relinquishControl = bitstring_type(true, 20);
-    const ServiceSupportOptions serviceSupportOptions_defineSemaphore = bitstring_type(true, 21);
-    const ServiceSupportOptions serviceSupportOptions_deleteSemaphore = bitstring_type(true, 22);
-    const ServiceSupportOptions serviceSupportOptions_reportSemaphoreStatus = bitstring_type(true, 23);
-    const ServiceSupportOptions serviceSupportOptions_reportPoolSemaphoreStatus = bitstring_type(true, 24);
-    const ServiceSupportOptions serviceSupportOptions_reportSemaphoreEntryStatus = bitstring_type(true, 25);
-    const ServiceSupportOptions serviceSupportOptions_initiateDownloadSequence = bitstring_type(true, 26);
-    const ServiceSupportOptions serviceSupportOptions_downloadSegment = bitstring_type(true, 27);
-    const ServiceSupportOptions serviceSupportOptions_terminateDownloadSequence = bitstring_type(true, 28);
-    const ServiceSupportOptions serviceSupportOptions_initiateUploadSequence = bitstring_type(true, 29);
-    const ServiceSupportOptions serviceSupportOptions_uploadSegment = bitstring_type(true, 30);
-    const ServiceSupportOptions serviceSupportOptions_terminateUploadSequence = bitstring_type(true, 31);
-    const ServiceSupportOptions serviceSupportOptions_requestDomainDownload = bitstring_type(true, 32);
-    const ServiceSupportOptions serviceSupportOptions_requestDomainUpload = bitstring_type(true, 33);
-    const ServiceSupportOptions serviceSupportOptions_loadDomainContent = bitstring_type(true, 34);
-    const ServiceSupportOptions serviceSupportOptions_storeDomainContent = bitstring_type(true, 35);
-    const ServiceSupportOptions serviceSupportOptions_deleteDomain = bitstring_type(true, 36);
-    const ServiceSupportOptions serviceSupportOptions_getDomainAttributes = bitstring_type(true, 37);
-    const ServiceSupportOptions serviceSupportOptions_createProgramInvocation = bitstring_type(true, 38);
-    const ServiceSupportOptions serviceSupportOptions_deleteProgramInvocation = bitstring_type(true, 39);
-    const ServiceSupportOptions serviceSupportOptions_start = bitstring_type(true, 40);
-    const ServiceSupportOptions serviceSupportOptions_stop = bitstring_type(true, 41);
-    const ServiceSupportOptions serviceSupportOptions_resume = bitstring_type(true, 42);
-    const ServiceSupportOptions serviceSupportOptions_reset = bitstring_type(true, 43);
-    const ServiceSupportOptions serviceSupportOptions_kill = bitstring_type(true, 44);
-    const ServiceSupportOptions serviceSupportOptions_getProgramInvocationAttributes = bitstring_type(true, 45);
-    const ServiceSupportOptions serviceSupportOptions_obtainFile = bitstring_type(true, 46);
-    const ServiceSupportOptions serviceSupportOptions_defineEventCondition = bitstring_type(true, 47);
-    const ServiceSupportOptions serviceSupportOptions_deleteEventCondition = bitstring_type(true, 48);
-    const ServiceSupportOptions serviceSupportOptions_getEventConditionAttributes = bitstring_type(true, 49);
-    const ServiceSupportOptions serviceSupportOptions_reportEventConditionStatus = bitstring_type(true, 50);
-    const ServiceSupportOptions serviceSupportOptions_alterEventConditionMonitoring = bitstring_type(true, 51);
-    const ServiceSupportOptions serviceSupportOptions_triggerEvent = bitstring_type(true, 52);
-    const ServiceSupportOptions serviceSupportOptions_defineEventAction = bitstring_type(true, 53);
-    const ServiceSupportOptions serviceSupportOptions_deleteEventAction = bitstring_type(true, 54);
-    const ServiceSupportOptions serviceSupportOptions_getEventActionAttributes = bitstring_type(true, 55);
-    const ServiceSupportOptions serviceSupportOptions_reportEventActionStatus = bitstring_type(true, 56);
-    const ServiceSupportOptions serviceSupportOptions_defineEventEnrollment = bitstring_type(true, 57);
-    const ServiceSupportOptions serviceSupportOptions_deleteEventEnrollment = bitstring_type(true, 58);
-    const ServiceSupportOptions serviceSupportOptions_alterEventEnrollment = bitstring_type(true, 59);
-    const ServiceSupportOptions serviceSupportOptions_reportEventEnrollmentStatus = bitstring_type(true, 60);
-    const ServiceSupportOptions serviceSupportOptions_getEventEnrollmentAttributes = bitstring_type(true, 61);
-    const ServiceSupportOptions serviceSupportOptions_acknowledgeEventNotification = bitstring_type(true, 62);
-    const ServiceSupportOptions serviceSupportOptions_getAlarmSummary = bitstring_type(true, 63);
-    const ServiceSupportOptions serviceSupportOptions_getAlarmEnrollmentSummary = bitstring_type(true, 64);
-    const ServiceSupportOptions serviceSupportOptions_readJournal = bitstring_type(true, 65);
-    const ServiceSupportOptions serviceSupportOptions_writeJournal = bitstring_type(true, 66);
-    const ServiceSupportOptions serviceSupportOptions_initializeJournal = bitstring_type(true, 67);
-    const ServiceSupportOptions serviceSupportOptions_reportJournalStatus = bitstring_type(true, 68);
-    const ServiceSupportOptions serviceSupportOptions_createJournal = bitstring_type(true, 69);
-    const ServiceSupportOptions serviceSupportOptions_deleteJournal = bitstring_type(true, 70);
-    const ServiceSupportOptions serviceSupportOptions_getCapabilityList = bitstring_type(true, 71);
-    const ServiceSupportOptions serviceSupportOptions_fileOpen = bitstring_type(true, 72);
-    const ServiceSupportOptions serviceSupportOptions_fileRead = bitstring_type(true, 73);
-    const ServiceSupportOptions serviceSupportOptions_fileClose = bitstring_type(true, 74);
-    const ServiceSupportOptions serviceSupportOptions_fileRename = bitstring_type(true, 75);
-    const ServiceSupportOptions serviceSupportOptions_fileDelete = bitstring_type(true, 76);
-    const ServiceSupportOptions serviceSupportOptions_fileDirectory = bitstring_type(true, 77);
-    const ServiceSupportOptions serviceSupportOptions_unsolicitedStatus = bitstring_type(true, 78);
-    const ServiceSupportOptions serviceSupportOptions_informationReport = bitstring_type(true, 79);
-    const ServiceSupportOptions serviceSupportOptions_eventNotification = bitstring_type(true, 80);
-    const ServiceSupportOptions serviceSupportOptions_attachToEventCondition = bitstring_type(true, 81);
-    const ServiceSupportOptions serviceSupportOptions_attachToSemaphore = bitstring_type(true, 82);
-    const ServiceSupportOptions serviceSupportOptions_conclude = bitstring_type(true, 83);
-    const ServiceSupportOptions serviceSupportOptions_cancel = bitstring_type(true, 84);
-    const ServiceSupportOptions serviceSupportOptions_getDataExchangeAttributes = bitstring_type(true, 85);
-    const ServiceSupportOptions serviceSupportOptions_exchangeData = bitstring_type(true, 86);
-    const ServiceSupportOptions serviceSupportOptions_defineAccessControlList = bitstring_type(true, 87);
-    const ServiceSupportOptions serviceSupportOptions_getAccessControlListAttributes = bitstring_type(true, 88);
-    const ServiceSupportOptions serviceSupportOptions_reportAccessControlledObjects = bitstring_type(true, 89);
-    const ServiceSupportOptions serviceSupportOptions_deleteAccessControlList = bitstring_type(true, 90);
-    const ServiceSupportOptions serviceSupportOptions_alterAccessControl = bitstring_type(true, 91);
-    const ServiceSupportOptions serviceSupportOptions_reconfigureProgramInvocation = bitstring_type(true, 92);
+    const ServiceSupportOptions serviceSupportOptions_status = bit_string(true, 0);
+    const ServiceSupportOptions serviceSupportOptions_getNameList = bit_string(true, 1);
+    const ServiceSupportOptions serviceSupportOptions_identify = bit_string(true, 2);
+    const ServiceSupportOptions serviceSupportOptions_rename = bit_string(true, 3);
+    const ServiceSupportOptions serviceSupportOptions_read = bit_string(true, 4);
+    const ServiceSupportOptions serviceSupportOptions_write = bit_string(true, 5);
+    const ServiceSupportOptions serviceSupportOptions_getVariableAccessAttributes = bit_string(true, 6);
+    const ServiceSupportOptions serviceSupportOptions_defineNamedVariable = bit_string(true, 7);
+    const ServiceSupportOptions serviceSupportOptions_defineScatteredAccess = bit_string(true, 8);
+    const ServiceSupportOptions serviceSupportOptions_getScatteredAccessAttributes = bit_string(true, 9);
+    const ServiceSupportOptions serviceSupportOptions_deleteVariableAccess = bit_string(true, 10);
+    const ServiceSupportOptions serviceSupportOptions_defineNamedVariableList = bit_string(true, 11);
+    const ServiceSupportOptions serviceSupportOptions_getNamedVariableListAttributes = bit_string(true, 12);
+    const ServiceSupportOptions serviceSupportOptions_deleteNamedVariableList = bit_string(true, 13);
+    const ServiceSupportOptions serviceSupportOptions_defineNamedType = bit_string(true, 14);
+    const ServiceSupportOptions serviceSupportOptions_getNamedTypeAttributes = bit_string(true, 15);
+    const ServiceSupportOptions serviceSupportOptions_deleteNamedType = bit_string(true, 16);
+    const ServiceSupportOptions serviceSupportOptions_input = bit_string(true, 17);
+    const ServiceSupportOptions serviceSupportOptions_output = bit_string(true, 18);
+    const ServiceSupportOptions serviceSupportOptions_takeControl = bit_string(true, 19);
+    const ServiceSupportOptions serviceSupportOptions_relinquishControl = bit_string(true, 20);
+    const ServiceSupportOptions serviceSupportOptions_defineSemaphore = bit_string(true, 21);
+    const ServiceSupportOptions serviceSupportOptions_deleteSemaphore = bit_string(true, 22);
+    const ServiceSupportOptions serviceSupportOptions_reportSemaphoreStatus = bit_string(true, 23);
+    const ServiceSupportOptions serviceSupportOptions_reportPoolSemaphoreStatus = bit_string(true, 24);
+    const ServiceSupportOptions serviceSupportOptions_reportSemaphoreEntryStatus = bit_string(true, 25);
+    const ServiceSupportOptions serviceSupportOptions_initiateDownloadSequence = bit_string(true, 26);
+    const ServiceSupportOptions serviceSupportOptions_downloadSegment = bit_string(true, 27);
+    const ServiceSupportOptions serviceSupportOptions_terminateDownloadSequence = bit_string(true, 28);
+    const ServiceSupportOptions serviceSupportOptions_initiateUploadSequence = bit_string(true, 29);
+    const ServiceSupportOptions serviceSupportOptions_uploadSegment = bit_string(true, 30);
+    const ServiceSupportOptions serviceSupportOptions_terminateUploadSequence = bit_string(true, 31);
+    const ServiceSupportOptions serviceSupportOptions_requestDomainDownload = bit_string(true, 32);
+    const ServiceSupportOptions serviceSupportOptions_requestDomainUpload = bit_string(true, 33);
+    const ServiceSupportOptions serviceSupportOptions_loadDomainContent = bit_string(true, 34);
+    const ServiceSupportOptions serviceSupportOptions_storeDomainContent = bit_string(true, 35);
+    const ServiceSupportOptions serviceSupportOptions_deleteDomain = bit_string(true, 36);
+    const ServiceSupportOptions serviceSupportOptions_getDomainAttributes = bit_string(true, 37);
+    const ServiceSupportOptions serviceSupportOptions_createProgramInvocation = bit_string(true, 38);
+    const ServiceSupportOptions serviceSupportOptions_deleteProgramInvocation = bit_string(true, 39);
+    const ServiceSupportOptions serviceSupportOptions_start = bit_string(true, 40);
+    const ServiceSupportOptions serviceSupportOptions_stop = bit_string(true, 41);
+    const ServiceSupportOptions serviceSupportOptions_resume = bit_string(true, 42);
+    const ServiceSupportOptions serviceSupportOptions_reset = bit_string(true, 43);
+    const ServiceSupportOptions serviceSupportOptions_kill = bit_string(true, 44);
+    const ServiceSupportOptions serviceSupportOptions_getProgramInvocationAttributes = bit_string(true, 45);
+    const ServiceSupportOptions serviceSupportOptions_obtainFile = bit_string(true, 46);
+    const ServiceSupportOptions serviceSupportOptions_defineEventCondition = bit_string(true, 47);
+    const ServiceSupportOptions serviceSupportOptions_deleteEventCondition = bit_string(true, 48);
+    const ServiceSupportOptions serviceSupportOptions_getEventConditionAttributes = bit_string(true, 49);
+    const ServiceSupportOptions serviceSupportOptions_reportEventConditionStatus = bit_string(true, 50);
+    const ServiceSupportOptions serviceSupportOptions_alterEventConditionMonitoring = bit_string(true, 51);
+    const ServiceSupportOptions serviceSupportOptions_triggerEvent = bit_string(true, 52);
+    const ServiceSupportOptions serviceSupportOptions_defineEventAction = bit_string(true, 53);
+    const ServiceSupportOptions serviceSupportOptions_deleteEventAction = bit_string(true, 54);
+    const ServiceSupportOptions serviceSupportOptions_getEventActionAttributes = bit_string(true, 55);
+    const ServiceSupportOptions serviceSupportOptions_reportEventActionStatus = bit_string(true, 56);
+    const ServiceSupportOptions serviceSupportOptions_defineEventEnrollment = bit_string(true, 57);
+    const ServiceSupportOptions serviceSupportOptions_deleteEventEnrollment = bit_string(true, 58);
+    const ServiceSupportOptions serviceSupportOptions_alterEventEnrollment = bit_string(true, 59);
+    const ServiceSupportOptions serviceSupportOptions_reportEventEnrollmentStatus = bit_string(true, 60);
+    const ServiceSupportOptions serviceSupportOptions_getEventEnrollmentAttributes = bit_string(true, 61);
+    const ServiceSupportOptions serviceSupportOptions_acknowledgeEventNotification = bit_string(true, 62);
+    const ServiceSupportOptions serviceSupportOptions_getAlarmSummary = bit_string(true, 63);
+    const ServiceSupportOptions serviceSupportOptions_getAlarmEnrollmentSummary = bit_string(true, 64);
+    const ServiceSupportOptions serviceSupportOptions_readJournal = bit_string(true, 65);
+    const ServiceSupportOptions serviceSupportOptions_writeJournal = bit_string(true, 66);
+    const ServiceSupportOptions serviceSupportOptions_initializeJournal = bit_string(true, 67);
+    const ServiceSupportOptions serviceSupportOptions_reportJournalStatus = bit_string(true, 68);
+    const ServiceSupportOptions serviceSupportOptions_createJournal = bit_string(true, 69);
+    const ServiceSupportOptions serviceSupportOptions_deleteJournal = bit_string(true, 70);
+    const ServiceSupportOptions serviceSupportOptions_getCapabilityList = bit_string(true, 71);
+    const ServiceSupportOptions serviceSupportOptions_fileOpen = bit_string(true, 72);
+    const ServiceSupportOptions serviceSupportOptions_fileRead = bit_string(true, 73);
+    const ServiceSupportOptions serviceSupportOptions_fileClose = bit_string(true, 74);
+    const ServiceSupportOptions serviceSupportOptions_fileRename = bit_string(true, 75);
+    const ServiceSupportOptions serviceSupportOptions_fileDelete = bit_string(true, 76);
+    const ServiceSupportOptions serviceSupportOptions_fileDirectory = bit_string(true, 77);
+    const ServiceSupportOptions serviceSupportOptions_unsolicitedStatus = bit_string(true, 78);
+    const ServiceSupportOptions serviceSupportOptions_informationReport = bit_string(true, 79);
+    const ServiceSupportOptions serviceSupportOptions_eventNotification = bit_string(true, 80);
+    const ServiceSupportOptions serviceSupportOptions_attachToEventCondition = bit_string(true, 81);
+    const ServiceSupportOptions serviceSupportOptions_attachToSemaphore = bit_string(true, 82);
+    const ServiceSupportOptions serviceSupportOptions_conclude = bit_string(true, 83);
+    const ServiceSupportOptions serviceSupportOptions_cancel = bit_string(true, 84);
+    const ServiceSupportOptions serviceSupportOptions_getDataExchangeAttributes = bit_string(true, 85);
+    const ServiceSupportOptions serviceSupportOptions_exchangeData = bit_string(true, 86);
+    const ServiceSupportOptions serviceSupportOptions_defineAccessControlList = bit_string(true, 87);
+    const ServiceSupportOptions serviceSupportOptions_getAccessControlListAttributes = bit_string(true, 88);
+    const ServiceSupportOptions serviceSupportOptions_reportAccessControlledObjects = bit_string(true, 89);
+    const ServiceSupportOptions serviceSupportOptions_deleteAccessControlList = bit_string(true, 90);
+    const ServiceSupportOptions serviceSupportOptions_alterAccessControl = bit_string(true, 91);
+    const ServiceSupportOptions serviceSupportOptions_reconfigureProgramInvocation = bit_string(true, 92);
 
-    const ParameterSupportOptions parameterSupportOptions_str1 = bitstring_type(true, 0);
-    const ParameterSupportOptions parameterSupportOptions_str2 = bitstring_type(true, 1);
-    const ParameterSupportOptions parameterSupportOptions_vnam = bitstring_type(true, 2);
-    const ParameterSupportOptions parameterSupportOptions_valt = bitstring_type(true, 3);
-    const ParameterSupportOptions parameterSupportOptions_vadr = bitstring_type(true, 4);
-    const ParameterSupportOptions parameterSupportOptions_vsca = bitstring_type(true, 5);
-    const ParameterSupportOptions parameterSupportOptions_tpy = bitstring_type(true, 6);
-    const ParameterSupportOptions parameterSupportOptions_vlis = bitstring_type(true, 7);
-    const ParameterSupportOptions parameterSupportOptions_cei = bitstring_type(true, 10);
-    const ParameterSupportOptions parameterSupportOptions_aco = bitstring_type(true, 11);
-    const ParameterSupportOptions parameterSupportOptions_sem = bitstring_type(true, 12);
-    const ParameterSupportOptions parameterSupportOptions_csr = bitstring_type(true, 13);
-    const ParameterSupportOptions parameterSupportOptions_csnc = bitstring_type(true, 14);
-    const ParameterSupportOptions parameterSupportOptions_csplc = bitstring_type(true, 15);
-    const ParameterSupportOptions parameterSupportOptions_cspi = bitstring_type(true, 16);
-    const ParameterSupportOptions parameterSupportOptions_char = bitstring_type(true, 17);
+    const ParameterSupportOptions parameterSupportOptions_str1 = bit_string(true, 0);
+    const ParameterSupportOptions parameterSupportOptions_str2 = bit_string(true, 1);
+    const ParameterSupportOptions parameterSupportOptions_vnam = bit_string(true, 2);
+    const ParameterSupportOptions parameterSupportOptions_valt = bit_string(true, 3);
+    const ParameterSupportOptions parameterSupportOptions_vadr = bit_string(true, 4);
+    const ParameterSupportOptions parameterSupportOptions_vsca = bit_string(true, 5);
+    const ParameterSupportOptions parameterSupportOptions_tpy = bit_string(true, 6);
+    const ParameterSupportOptions parameterSupportOptions_vlis = bit_string(true, 7);
+    const ParameterSupportOptions parameterSupportOptions_cei = bit_string(true, 10);
+    const ParameterSupportOptions parameterSupportOptions_aco = bit_string(true, 11);
+    const ParameterSupportOptions parameterSupportOptions_sem = bit_string(true, 12);
+    const ParameterSupportOptions parameterSupportOptions_csr = bit_string(true, 13);
+    const ParameterSupportOptions parameterSupportOptions_csnc = bit_string(true, 14);
+    const ParameterSupportOptions parameterSupportOptions_csplc = bit_string(true, 15);
+    const ParameterSupportOptions parameterSupportOptions_cspi = bit_string(true, 16);
+    const ParameterSupportOptions parameterSupportOptions_char = bit_string(true, 17);
 
-    const AdditionalSupportOptions additionalSupportOptions_vMDStop = bitstring_type(true, 0);
-    const AdditionalSupportOptions additionalSupportOptions_vMDReset = bitstring_type(true, 1);
-    const AdditionalSupportOptions additionalSupportOptions_select = bitstring_type(true, 2);
-    const AdditionalSupportOptions additionalSupportOptions_alterProgramInvocationAttributes = bitstring_type(true, 3);
-    const AdditionalSupportOptions additionalSupportOptions_initiateUnitControlLoad = bitstring_type(true, 4);
-    const AdditionalSupportOptions additionalSupportOptions_unitControlLoadSegment = bitstring_type(true, 5);
-    const AdditionalSupportOptions additionalSupportOptions_unitControlUpload = bitstring_type(true, 6);
-    const AdditionalSupportOptions additionalSupportOptions_startUnitControl = bitstring_type(true, 7);
-    const AdditionalSupportOptions additionalSupportOptions_stopUnitControl = bitstring_type(true, 8);
-    const AdditionalSupportOptions additionalSupportOptions_createUnitControl = bitstring_type(true, 9);
-    const AdditionalSupportOptions additionalSupportOptions_addToUnitControl = bitstring_type(true, 10);
-    const AdditionalSupportOptions additionalSupportOptions_removeFromUnitControl = bitstring_type(true, 11);
-    const AdditionalSupportOptions additionalSupportOptions_getUnitControlAttributes = bitstring_type(true, 12);
-    const AdditionalSupportOptions additionalSupportOptions_loadUnitControlFromFile = bitstring_type(true, 13);
-    const AdditionalSupportOptions additionalSupportOptions_storeUnitControlToFile = bitstring_type(true, 14);
-    const AdditionalSupportOptions additionalSupportOptions_deleteUnitControl = bitstring_type(true, 15);
-    const AdditionalSupportOptions additionalSupportOptions_defineEventConditionList = bitstring_type(true, 16);
-    const AdditionalSupportOptions additionalSupportOptions_deleteEventConditionList = bitstring_type(true, 17);
-    const AdditionalSupportOptions additionalSupportOptions_addEventConditionListReference = bitstring_type(true, 18);
-    const AdditionalSupportOptions additionalSupportOptions_removeEventConditionListReference = bitstring_type(true, 19);
-    const AdditionalSupportOptions additionalSupportOptions_getEventConditionListAttributes = bitstring_type(true, 20);
-    const AdditionalSupportOptions additionalSupportOptions_reportEventConditionListStatus = bitstring_type(true, 21);
-    const AdditionalSupportOptions additionalSupportOptions_alterEventConditionListMonitoring = bitstring_type(true, 22);
+    const AdditionalSupportOptions additionalSupportOptions_vMDStop = bit_string(true, 0);
+    const AdditionalSupportOptions additionalSupportOptions_vMDReset = bit_string(true, 1);
+    const AdditionalSupportOptions additionalSupportOptions_select = bit_string(true, 2);
+    const AdditionalSupportOptions additionalSupportOptions_alterProgramInvocationAttributes = bit_string(true, 3);
+    const AdditionalSupportOptions additionalSupportOptions_initiateUnitControlLoad = bit_string(true, 4);
+    const AdditionalSupportOptions additionalSupportOptions_unitControlLoadSegment = bit_string(true, 5);
+    const AdditionalSupportOptions additionalSupportOptions_unitControlUpload = bit_string(true, 6);
+    const AdditionalSupportOptions additionalSupportOptions_startUnitControl = bit_string(true, 7);
+    const AdditionalSupportOptions additionalSupportOptions_stopUnitControl = bit_string(true, 8);
+    const AdditionalSupportOptions additionalSupportOptions_createUnitControl = bit_string(true, 9);
+    const AdditionalSupportOptions additionalSupportOptions_addToUnitControl = bit_string(true, 10);
+    const AdditionalSupportOptions additionalSupportOptions_removeFromUnitControl = bit_string(true, 11);
+    const AdditionalSupportOptions additionalSupportOptions_getUnitControlAttributes = bit_string(true, 12);
+    const AdditionalSupportOptions additionalSupportOptions_loadUnitControlFromFile = bit_string(true, 13);
+    const AdditionalSupportOptions additionalSupportOptions_storeUnitControlToFile = bit_string(true, 14);
+    const AdditionalSupportOptions additionalSupportOptions_deleteUnitControl = bit_string(true, 15);
+    const AdditionalSupportOptions additionalSupportOptions_defineEventConditionList = bit_string(true, 16);
+    const AdditionalSupportOptions additionalSupportOptions_deleteEventConditionList = bit_string(true, 17);
+    const AdditionalSupportOptions additionalSupportOptions_addEventConditionListReference = bit_string(true, 18);
+    const AdditionalSupportOptions additionalSupportOptions_removeEventConditionListReference = bit_string(true, 19);
+    const AdditionalSupportOptions additionalSupportOptions_getEventConditionListAttributes = bit_string(true, 20);
+    const AdditionalSupportOptions additionalSupportOptions_reportEventConditionListStatus = bit_string(true, 21);
+    const AdditionalSupportOptions additionalSupportOptions_alterEventConditionListMonitoring = bit_string(true, 22);
 
-    const AdditionalCBBOptions additionalCBBOptions_des = bitstring_type(true, 0);
-    const AdditionalCBBOptions additionalCBBOptions_dei = bitstring_type(true, 1);
-    const AdditionalCBBOptions additionalCBBOptions_recl = bitstring_type(true, 2);
+    const AdditionalCBBOptions additionalCBBOptions_des = bit_string(true, 0);
+    const AdditionalCBBOptions additionalCBBOptions_dei = bit_string(true, 1);
+    const AdditionalCBBOptions additionalCBBOptions_recl = bit_string(true, 2);
 
     // choice AccessCondition
 
@@ -320,8 +322,8 @@ namespace MMS_Object_Module_1 {
 
 
 
-        typedef std::vector< AccessCondition > Joint_type;
-        typedef std::vector< AccessCondition > Alternate_type;
+        typedef sequence_of< AccessCondition > Joint_type;
+        typedef sequence_of< AccessCondition > Alternate_type;
 
 
         ITU_T_CHOICE_CTORS(AccessCondition);
@@ -395,7 +397,7 @@ namespace MMS_Object_Module_1 {
 
         ITU_T_CHOICES_DECL(numericAddress, ISO_9506_MMS_1::Unsigned32, Address_numericAddress); // primitive  //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_CHOICES_DECL(symbolicAddress, ISO_9506_MMS_1::MMSString, Address_symbolicAddress); // primitive
-        ITU_T_CHOICES_DECL(unconstrainedAddress, octetstring_type, Address_unconstrainedAddress); // primitive
+        ITU_T_CHOICES_DECL(unconstrainedAddress, octet_string, Address_unconstrainedAddress); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -408,12 +410,12 @@ namespace MMS_Object_Module_1 {
         TypeDescription_array,
         TypeDescription_structure,
         TypeDescription_boolean,
-        TypeDescription_bit_string,
+        TypeDescription_bit_stringV,
         TypeDescription_integer,
         TypeDescription_unsignedV,
         TypeDescription_floating_point,
-        TypeDescription_octet_string,
-        TypeDescription_visible_string,
+        TypeDescription_octet_stringV,
+        TypeDescription_visible_stringV,
         TypeDescription_generalized_time,
         TypeDescription_binary_time,
         TypeDescription_bcd,
@@ -469,7 +471,7 @@ namespace MMS_Object_Module_1 {
 
 
 
-            typedef std::vector< Components_type_sequence_of > Components_type;
+            typedef sequence_of< Components_type_sequence_of > Components_type;
 
             static const bool packed__default;
 
@@ -505,12 +507,12 @@ namespace MMS_Object_Module_1 {
         ITU_T_CHOICEC_DECL(array, Array_type, TypeDescription_array);
         ITU_T_CHOICEC_DECL(structure, Structure_type, TypeDescription_structure);
         ITU_T_CHOICES_DECL(boolean, null_type, TypeDescription_boolean); // primitive
-        ITU_T_CHOICES_DECL(bit_string, ISO_9506_MMS_1::Integer32, TypeDescription_bit_string); // primitive  //   Ic(  [ -2147483648  ...   2147483647 ]   
+        ITU_T_CHOICES_DECL(bit_stringV, ISO_9506_MMS_1::Integer32, TypeDescription_bit_stringV); // primitive  //   Ic(  [ -2147483648  ...   2147483647 ]   
         ITU_T_CHOICES_DECL(integer, ISO_9506_MMS_1::Unsigned8, TypeDescription_integer); // primitive  //   Ic(  [ 0  ...   127 ]   
         ITU_T_CHOICES_DECL(unsignedV, ISO_9506_MMS_1::Unsigned8, TypeDescription_unsignedV); // primitive  //   Ic(  [ 0  ...   127 ]   
         ITU_T_CHOICEC_DECL(floating_point, Floating_point_type, TypeDescription_floating_point);
-        ITU_T_CHOICES_DECL(octet_string, ISO_9506_MMS_1::Integer32, TypeDescription_octet_string); // primitive  //   Ic(  [ -2147483648  ...   2147483647 ]   
-        ITU_T_CHOICES_DECL(visible_string, ISO_9506_MMS_1::Integer32, TypeDescription_visible_string); // primitive  //   Ic(  [ -2147483648  ...   2147483647 ]   
+        ITU_T_CHOICES_DECL(octet_stringV, ISO_9506_MMS_1::Integer32, TypeDescription_octet_stringV); // primitive  //   Ic(  [ -2147483648  ...   2147483647 ]   
+        ITU_T_CHOICES_DECL(visible_stringV, ISO_9506_MMS_1::Integer32, TypeDescription_visible_stringV); // primitive  //   Ic(  [ -2147483648  ...   2147483647 ]   
         ITU_T_CHOICES_DECL(generalized_time, null_type, TypeDescription_generalized_time); // primitive
         ITU_T_CHOICES_DECL(binary_time, bool, TypeDescription_binary_time); // primitive
         ITU_T_CHOICES_DECL(bcd, ISO_9506_MMS_1::Unsigned8, TypeDescription_bcd); // primitive  //   Ic(  [ 0  ...   127 ]   
@@ -552,13 +554,13 @@ namespace MMS_Object_Module_1 {
     const EE_Class eE_Class_modifier = 0;
     const EE_Class eE_Class_notification = 1;
 
-    const Transitions transitions_idle_to_disabled = bitstring_type(true, 0);
-    const Transitions transitions_active_to_disabled = bitstring_type(true, 1);
-    const Transitions transitions_disabled_to_idle = bitstring_type(true, 2);
-    const Transitions transitions_active_to_idle = bitstring_type(true, 3);
-    const Transitions transitions_disabled_to_active = bitstring_type(true, 4);
-    const Transitions transitions_idle_to_active = bitstring_type(true, 5);
-    const Transitions transitions_any_to_deleted = bitstring_type(true, 6);
+    const Transitions transitions_idle_to_disabled = bit_string(true, 0);
+    const Transitions transitions_active_to_disabled = bit_string(true, 1);
+    const Transitions transitions_disabled_to_idle = bit_string(true, 2);
+    const Transitions transitions_active_to_idle = bit_string(true, 3);
+    const Transitions transitions_disabled_to_active = bit_string(true, 4);
+    const Transitions transitions_idle_to_active = bit_string(true, 5);
+    const Transitions transitions_any_to_deleted = bit_string(true, 6);
 
     const EE_Duration eE_Duration_current = 0;
     const EE_Duration eE_Duration_permanent = 1;

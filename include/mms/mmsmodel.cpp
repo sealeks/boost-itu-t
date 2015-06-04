@@ -49,8 +49,8 @@ namespace prot9506 {
     }
 
     objectname::objectname(const std::string& id, const std::string& domain) :
-    obj_(domain.size() ? new mmsobject_type(MMS::ObjectName::Domain_specific_type(mmsidentifier_type(domain),
-    mmsidentifier_type(id)), MMS::ObjectName_domain_specific) : new mmsobject_type(mmsidentifier_type(id), MMS::ObjectName_vmd_specific)) {
+    obj_(domain.size() ? new mmsobject_type(MMS::ObjectName::Domain_specific_type(mmsidentifier_type(domain.c_str()),
+    mmsidentifier_type(id.c_str())), MMS::ObjectName_domain_specific) : new mmsobject_type(mmsidentifier_type(id.c_str()), MMS::ObjectName_vmd_specific)) {
     }
 
     objectname::~objectname() {
@@ -62,7 +62,7 @@ namespace prot9506 {
 
     objectname_ptr objectname::create_aa(const std::string& id) {
         objectname_ptr obj(new objectname());
-        obj->obj_ = mmsobject_ptr(new mmsobject_type(mmsidentifier_type(id), MMS::ObjectName_aa_specific));
+        obj->obj_ = mmsobject_ptr(new mmsobject_type(mmsidentifier_type(id.c_str()), MMS::ObjectName_aa_specific));
         return obj;
     }
 
@@ -102,7 +102,7 @@ namespace prot9506 {
 
     std::string objectname::name() const {
         const mmsidentifier_type& tmp = path();
-        std::string tmps = tmp;
+        std::string tmps = tmp.c_str();
         return end_sub_path(tmps);
     }
 
@@ -237,7 +237,7 @@ namespace prot9506 {
     bool mmsserver_model::insert_in(objectname_ptr vl, const mmsidentifier_type& path) {
         if (path.empty())
             return true;
-        std::string next = path;
+        std::string next = path.c_str();
         std::string first = first_sub_path(next);
         if (!first.empty()) {
             objectname_ptr fit = vl->find_child(first);
@@ -248,7 +248,7 @@ namespace prot9506 {
                 insert_key(fit);
                 fit->parent(vl);
             }
-            return insert_in(fit, mmsidentifier_type(next));
+            return insert_in(fit, mmsidentifier_type(next.c_str()));
         }
         return false;
     }

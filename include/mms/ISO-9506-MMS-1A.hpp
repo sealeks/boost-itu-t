@@ -39,7 +39,7 @@ namespace ISO_9506_MMS_1A {
     typedef null_type FileDelete_Response;
     typedef null_type DefineScatteredAccess_Response;
 
-    typedef std::vector< ScatteredAccessDescription_sequence_of > ScatteredAccessDescription;
+    typedef sequence_of< ScatteredAccessDescription_sequence_of > ScatteredAccessDescription;
 
 
 }
@@ -131,12 +131,12 @@ namespace ISO_9506_MMS_1A {
 
         FileRead_Response();
 
-        FileRead_Response(const octetstring_type& arg__fileData);
+        FileRead_Response(const octet_string& arg__fileData);
 
-        FileRead_Response(shared_ptr< octetstring_type> arg__fileData,
+        FileRead_Response(shared_ptr< octet_string> arg__fileData,
                 shared_ptr< bool> arg__moreFollows);
 
-        ITU_T_HOLDERH_DECL(fileData, octetstring_type);
+        ITU_T_HOLDERH_DECL(fileData, octet_string);
         ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
         ITU_T_ARCHIVE_FUNC;
@@ -179,7 +179,7 @@ namespace ISO_9506_MMS_1A {
 
     struct FileDirectory_Response {
 
-        typedef std::vector< DirectoryEntry > ListOfDirectoryEntry_type;
+        typedef sequence_of< DirectoryEntry > ListOfDirectoryEntry_type;
 
         static const bool moreFollows__default;
 
@@ -220,10 +220,10 @@ namespace ISO_9506_MMS_1A {
         FileAttributes(const ISO_9506_MMS_1::Unsigned32& arg__sizeOfFile);
 
         FileAttributes(shared_ptr< ISO_9506_MMS_1::Unsigned32> arg__sizeOfFile,
-                shared_ptr< gentime_type> arg__lastModified);
+                shared_ptr< gentime> arg__lastModified);
 
         ITU_T_HOLDERH_DECL(sizeOfFile, ISO_9506_MMS_1::Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
-        ITU_T_OPTIONAL_DECL(lastModified, gentime_type);
+        ITU_T_OPTIONAL_DECL(lastModified, gentime);
 
         ITU_T_ARCHIVE_FUNC;
     };

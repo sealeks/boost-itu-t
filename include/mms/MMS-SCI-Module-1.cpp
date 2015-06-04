@@ -38,7 +38,7 @@ namespace MMS_SCI_Module_1 {
             const MMS_Object_Module_1::LogicalStatus& arg__logicalStatus,
             const Capabilities_type& arg__capabilities,
             const MMS_Object_Module_1::PhysicalStatus& arg__physicalStatus,
-            const bitstring_type& arg__local_detail,
+            const bit_string& arg__local_detail,
             const AccessControlLists_type& arg__accessControlLists,
             const Domains_type& arg__domains,
             const ProgramInvocations_type& arg__programInvocations,
@@ -92,7 +92,7 @@ namespace MMS_SCI_Module_1 {
             shared_ptr< MMS_Object_Module_1::LogicalStatus> arg__logicalStatus,
             shared_ptr< Capabilities_type> arg__capabilities,
             shared_ptr< MMS_Object_Module_1::PhysicalStatus> arg__physicalStatus,
-            shared_ptr< bitstring_type> arg__local_detail,
+            shared_ptr< bit_string> arg__local_detail,
             shared_ptr< AccessControlLists_type> arg__accessControlLists,
             shared_ptr< Domains_type> arg__domains,
             shared_ptr< ProgramInvocations_type> arg__programInvocations,
@@ -154,7 +154,7 @@ namespace MMS_SCI_Module_1 {
     ITU_T_HOLDERH_DEFN(VMD_File::logicalStatus, logicalStatus, MMS_Object_Module_1::LogicalStatus);
     ITU_T_HOLDERH_DEFN(VMD_File::capabilities, capabilities, VMD_File::Capabilities_type);
     ITU_T_HOLDERH_DEFN(VMD_File::physicalStatus, physicalStatus, MMS_Object_Module_1::PhysicalStatus);
-    ITU_T_HOLDERH_DEFN(VMD_File::local_detail, local_detail, bitstring_type);
+    ITU_T_HOLDERH_DEFN(VMD_File::local_detail, local_detail, bit_string);
     ITU_T_HOLDERH_DEFN(VMD_File::accessControlLists, accessControlLists, VMD_File::AccessControlLists_type);
     ITU_T_HOLDERH_DEFN(VMD_File::domains, domains, VMD_File::Domains_type);
     ITU_T_HOLDERH_DEFN(VMD_File::programInvocations, programInvocations, VMD_File::ProgramInvocations_type);
@@ -519,7 +519,7 @@ namespace MMS_SCI_Module_1 {
     Named_Variable_instance::Definition_type::Details_type::Details_type(shared_ptr< Access_Control_List_instance> arg__accessControl,
             shared_ptr< MMS_Object_Module_1::TypeDescription> arg__typeDescription,
             shared_ptr< MMS_Object_Module_1::Address> arg__address,
-            shared_ptr< visiblestring_type> arg__meaning) :
+            shared_ptr< visible_string> arg__meaning) :
     accessControl_(arg__accessControl),
     typeDescription_(arg__typeDescription),
     address_(arg__address),
@@ -530,7 +530,7 @@ namespace MMS_SCI_Module_1 {
     ITU_T_HOLDERH_DEFN(Named_Variable_instance::Definition_type::Details_type::accessControl, accessControl, Access_Control_List_instance);
     ITU_T_HOLDERH_DEFN(Named_Variable_instance::Definition_type::Details_type::typeDescription, typeDescription, MMS_Object_Module_1::TypeDescription);
     ITU_T_OPTIONAL_DEFN(Named_Variable_instance::Definition_type::Details_type::address, address, MMS_Object_Module_1::Address);
-    ITU_T_OPTIONAL_DEFN(Named_Variable_instance::Definition_type::Details_type::meaning, meaning, visiblestring_type);
+    ITU_T_OPTIONAL_DEFN(Named_Variable_instance::Definition_type::Details_type::meaning, meaning, visible_string);
 
 
     ITU_T_CHOICES_DEFN(Named_Variable_instance::Definition_type::reference, reference, oid_type, Definition_type_reference);
@@ -612,7 +612,7 @@ namespace MMS_SCI_Module_1 {
 
     Named_Type_instance::Definition_type::Details_type::Details_type(shared_ptr< Access_Control_List_instance> arg__accessControl,
             shared_ptr< MMS_Object_Module_1::TypeDescription> arg__typeDescription,
-            shared_ptr< visiblestring_type> arg__meaning) :
+            shared_ptr< visible_string> arg__meaning) :
     accessControl_(arg__accessControl),
     typeDescription_(arg__typeDescription),
     meaning_(arg__meaning) {
@@ -621,7 +621,7 @@ namespace MMS_SCI_Module_1 {
 
     ITU_T_HOLDERH_DEFN(Named_Type_instance::Definition_type::Details_type::accessControl, accessControl, Access_Control_List_instance);
     ITU_T_HOLDERH_DEFN(Named_Type_instance::Definition_type::Details_type::typeDescription, typeDescription, MMS_Object_Module_1::TypeDescription);
-    ITU_T_OPTIONAL_DEFN(Named_Type_instance::Definition_type::Details_type::meaning, meaning, visiblestring_type);
+    ITU_T_OPTIONAL_DEFN(Named_Type_instance::Definition_type::Details_type::meaning, meaning, visible_string);
 
 
     ITU_T_CHOICES_DEFN(Named_Type_instance::Definition_type::reference, reference, oid_type, Definition_type_reference);
@@ -695,14 +695,14 @@ namespace MMS_SCI_Module_1 {
 
 
 
-    const enumerated_type Semaphore_instance::Definition_type::Details_type::classV_token = 0;
-    const enumerated_type Semaphore_instance::Definition_type::Details_type::classV_pool = 1;
+    const enumerated Semaphore_instance::Definition_type::Details_type::classV_token = 0;
+    const enumerated Semaphore_instance::Definition_type::Details_type::classV_pool = 1;
 
     Semaphore_instance::Definition_type::Details_type::Details_type() : accessControl_(), classV_(), eventCondition_() {
     };
 
     Semaphore_instance::Definition_type::Details_type::Details_type(const Access_Control_List_instance& arg__accessControl,
-            const enumerated_type& arg__classV,
+            const enumerated& arg__classV,
             const Event_Condition_instance& arg__eventCondition) :
     accessControl_(arg__accessControl),
     classV_(arg__classV),
@@ -710,7 +710,7 @@ namespace MMS_SCI_Module_1 {
     };
 
     Semaphore_instance::Definition_type::Details_type::Details_type(shared_ptr< Access_Control_List_instance> arg__accessControl,
-            shared_ptr< enumerated_type> arg__classV,
+            shared_ptr< enumerated> arg__classV,
             shared_ptr< integer_type> arg__numberOfTokens,
             shared_ptr< NamedTokens_type> arg__namedTokens,
             shared_ptr< Event_Condition_instance> arg__eventCondition) :
@@ -723,7 +723,7 @@ namespace MMS_SCI_Module_1 {
 
 
     ITU_T_HOLDERH_DEFN(Semaphore_instance::Definition_type::Details_type::accessControl, accessControl, Access_Control_List_instance);
-    ITU_T_HOLDERH_DEFN(Semaphore_instance::Definition_type::Details_type::classV, classV, enumerated_type);
+    ITU_T_HOLDERH_DEFN(Semaphore_instance::Definition_type::Details_type::classV, classV, enumerated);
     ITU_T_OPTIONAL_DEFN(Semaphore_instance::Definition_type::Details_type::numberOfTokens, numberOfTokens, integer_type);
     ITU_T_OPTIONAL_DEFN(Semaphore_instance::Definition_type::Details_type::namedTokens, namedTokens, Semaphore_instance::Definition_type::Details_type::NamedTokens_type);
     ITU_T_HOLDERH_DEFN(Semaphore_instance::Definition_type::Details_type::eventCondition, eventCondition, Event_Condition_instance);
@@ -749,22 +749,22 @@ namespace MMS_SCI_Module_1 {
 
 
 
-    const enumerated_type Operator_Station_instance::Definition_type::Details_type::stationType_entry = 0;
-    const enumerated_type Operator_Station_instance::Definition_type::Details_type::stationType_display = 1;
-    const enumerated_type Operator_Station_instance::Definition_type::Details_type::stationType_entry_display = 2;
+    const enumerated Operator_Station_instance::Definition_type::Details_type::stationType_entry = 0;
+    const enumerated Operator_Station_instance::Definition_type::Details_type::stationType_display = 1;
+    const enumerated Operator_Station_instance::Definition_type::Details_type::stationType_entry_display = 2;
 
     Operator_Station_instance::Definition_type::Details_type::Details_type() : accessControl_(), stationType_() {
     };
 
     Operator_Station_instance::Definition_type::Details_type::Details_type(const Access_Control_List_instance& arg__accessControl,
-            const enumerated_type& arg__stationType) :
+            const enumerated& arg__stationType) :
     accessControl_(arg__accessControl),
     stationType_(arg__stationType) {
     };
 
 
     ITU_T_HOLDERH_DEFN(Operator_Station_instance::Definition_type::Details_type::accessControl, accessControl, Access_Control_List_instance);
-    ITU_T_HOLDERH_DEFN(Operator_Station_instance::Definition_type::Details_type::stationType, stationType, enumerated_type);
+    ITU_T_HOLDERH_DEFN(Operator_Station_instance::Definition_type::Details_type::stationType, stationType, enumerated);
 
 
     ITU_T_CHOICES_DEFN(Operator_Station_instance::Definition_type::reference, reference, oid_type, Definition_type_reference);
@@ -1056,19 +1056,19 @@ namespace MMS_SCI_Module_1 {
     ITU_T_HOLDERH_DEFN(Journal_instance::definition, definition, Journal_instance::Definition_type);
 
     // sequence Journal-Entry-instance
-    const enumerated_type Journal_Entry_instance::informationType_annotation = 0;
-    const enumerated_type Journal_Entry_instance::informationType_event_data = 1;
-    const enumerated_type Journal_Entry_instance::informationType_data = 2;
+    const enumerated Journal_Entry_instance::informationType_annotation = 0;
+    const enumerated Journal_Entry_instance::informationType_event_data = 1;
+    const enumerated Journal_Entry_instance::informationType_data = 2;
 
     Journal_Entry_instance::Journal_Entry_instance() : journal_(), entry_(), clientApplication_(), timeStamp_(), orderOfReceipt_(), informationType_() {
     };
 
     Journal_Entry_instance::Journal_Entry_instance(const Journal_instance& arg__journal,
-            const octetstring_type& arg__entry,
+            const octet_string& arg__entry,
             const MMS_Environment_1::ApplicationReference& arg__clientApplication,
             const ISO_9506_MMS_1::TimeOfDay& arg__timeStamp,
             const integer_type& arg__orderOfReceipt,
-            const enumerated_type& arg__informationType) :
+            const enumerated& arg__informationType) :
     journal_(arg__journal),
     entry_(arg__entry),
     clientApplication_(arg__clientApplication),
@@ -1078,11 +1078,11 @@ namespace MMS_SCI_Module_1 {
     };
 
     Journal_Entry_instance::Journal_Entry_instance(shared_ptr< Journal_instance> arg__journal,
-            shared_ptr< octetstring_type> arg__entry,
+            shared_ptr< octet_string> arg__entry,
             shared_ptr< MMS_Environment_1::ApplicationReference> arg__clientApplication,
             shared_ptr< ISO_9506_MMS_1::TimeOfDay> arg__timeStamp,
             shared_ptr< integer_type> arg__orderOfReceipt,
-            shared_ptr< enumerated_type> arg__informationType,
+            shared_ptr< enumerated> arg__informationType,
             shared_ptr< ISO_9506_MMS_1::MMS255String> arg__textComment,
             shared_ptr< EventTransitionRecord_type> arg__eventTransitionRecord,
             shared_ptr< JournalVariables_type> arg__journalVariables) :
@@ -1125,11 +1125,11 @@ namespace MMS_SCI_Module_1 {
 
 
     ITU_T_HOLDERH_DEFN(Journal_Entry_instance::journal, journal, Journal_instance);
-    ITU_T_HOLDERH_DEFN(Journal_Entry_instance::entry, entry, octetstring_type);
+    ITU_T_HOLDERH_DEFN(Journal_Entry_instance::entry, entry, octet_string);
     ITU_T_HOLDERH_DEFN(Journal_Entry_instance::clientApplication, clientApplication, MMS_Environment_1::ApplicationReference);
     ITU_T_HOLDERH_DEFN(Journal_Entry_instance::timeStamp, timeStamp, ISO_9506_MMS_1::TimeOfDay);
     ITU_T_HOLDERH_DEFN(Journal_Entry_instance::orderOfReceipt, orderOfReceipt, integer_type);
-    ITU_T_HOLDERH_DEFN(Journal_Entry_instance::informationType, informationType, enumerated_type);
+    ITU_T_HOLDERH_DEFN(Journal_Entry_instance::informationType, informationType, enumerated);
     ITU_T_OPTIONAL_DEFN(Journal_Entry_instance::textComment, textComment, ISO_9506_MMS_1::MMS255String);
     ITU_T_OPTIONAL_DEFN(Journal_Entry_instance::eventTransitionRecord, eventTransitionRecord, Journal_Entry_instance::EventTransitionRecord_type);
     ITU_T_OPTIONAL_DEFN(Journal_Entry_instance::journalVariables, journalVariables, Journal_Entry_instance::JournalVariables_type);
@@ -1305,21 +1305,21 @@ namespace MMS_SCI_Module_1 {
     DataParameters::DataParameters() {
     };
 
-    DataParameters::DataParameters(shared_ptr< integer_type> arg__bit_string,
+    DataParameters::DataParameters(shared_ptr< integer_type> arg__bit_stringV,
             shared_ptr< integer_type> arg__integer,
             shared_ptr< integer_type> arg__unsignedV,
             shared_ptr< Floating_point_type> arg__floating_point,
-            shared_ptr< integer_type> arg__octet_string,
-            shared_ptr< integer_type> arg__visible_string,
+            shared_ptr< integer_type> arg__octet_stringV,
+            shared_ptr< integer_type> arg__visible_stringV,
             shared_ptr< bool> arg__binary_time,
             shared_ptr< integer_type> arg__bcd,
             shared_ptr< integer_type> arg__mmsString) :
-    bit_string_(arg__bit_string),
+    bit_stringV_(arg__bit_stringV),
     integer_(arg__integer),
     unsignedV_(arg__unsignedV),
     floating_point_(arg__floating_point),
-    octet_string_(arg__octet_string),
-    visible_string_(arg__visible_string),
+    octet_stringV_(arg__octet_stringV),
+    visible_stringV_(arg__visible_stringV),
     binary_time_(arg__binary_time),
     bcd_(arg__bcd),
     mmsString_(arg__mmsString) {
@@ -1339,12 +1339,12 @@ namespace MMS_SCI_Module_1 {
     ITU_T_HOLDERH_DEFN(DataParameters::Floating_point_type::exponent, exponent, integer_type);
 
 
-    ITU_T_OPTIONAL_DEFN(DataParameters::bit_string, bit_string, integer_type);
+    ITU_T_OPTIONAL_DEFN(DataParameters::bit_stringV, bit_stringV, integer_type);
     ITU_T_OPTIONAL_DEFN(DataParameters::integer, integer, integer_type);
     ITU_T_OPTIONAL_DEFN(DataParameters::unsignedV, unsignedV, integer_type);
     ITU_T_OPTIONAL_DEFN(DataParameters::floating_point, floating_point, DataParameters::Floating_point_type);
-    ITU_T_OPTIONAL_DEFN(DataParameters::octet_string, octet_string, integer_type);
-    ITU_T_OPTIONAL_DEFN(DataParameters::visible_string, visible_string, integer_type);
+    ITU_T_OPTIONAL_DEFN(DataParameters::octet_stringV, octet_stringV, integer_type);
+    ITU_T_OPTIONAL_DEFN(DataParameters::visible_stringV, visible_stringV, integer_type);
     ITU_T_OPTIONAL_DEFN(DataParameters::binary_time, binary_time, bool);
     ITU_T_OPTIONAL_DEFN(DataParameters::bcd, bcd, integer_type);
     ITU_T_OPTIONAL_DEFN(DataParameters::mmsString, mmsString, integer_type);

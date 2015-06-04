@@ -2230,12 +2230,12 @@ namespace ISO_9506_MMS_1 {
     ITU_T_CHOICEC_DEFN(Data::array, array, Data::Array_type, Data_array);
     ITU_T_CHOICEC_DEFN(Data::structure, structure, Data::Structure_type, Data_structure);
     ITU_T_CHOICES_DEFN(Data::boolean, boolean, bool, Data_boolean);
-    ITU_T_CHOICES_DEFN(Data::bit_string, bit_string, bit_string, Data_bit_string);
+    ITU_T_CHOICES_DEFN(Data::bit_stringV, bit_stringV, bit_string, Data_bit_stringV);
     ITU_T_CHOICES_DEFN(Data::integer, integer, integer_type, Data_integer);
     ITU_T_CHOICES_DEFN(Data::unsignedV, unsignedV, integer_type, Data_unsignedV);
     ITU_T_CHOICES_DEFN(Data::floating_point, floating_point, FloatingPoint, Data_floating_point);
-    ITU_T_CHOICES_DEFN(Data::octet_string, octet_string, octet_string, Data_octet_string);
-    ITU_T_CHOICES_DEFN(Data::visible_string, visible_string, visible_string, Data_visible_string);
+    ITU_T_CHOICES_DEFN(Data::octet_stringV, octet_stringV, octet_string, Data_octet_stringV);
+    ITU_T_CHOICES_DEFN(Data::visible_stringV, visible_stringV, visible_string, Data_visible_stringV);
     ITU_T_CHOICES_DEFN(Data::generalized_time, generalized_time, gentime, Data_generalized_time);
     ITU_T_CHOICES_DEFN(Data::binary_time, binary_time, TimeOfDay, Data_binary_time);
     ITU_T_CHOICES_DEFN(Data::bcd, bcd, integer_type, Data_bcd);
