@@ -76,13 +76,21 @@ namespace ACSE_1 {
     typedef sequence_of< Context_list_sequence_of > Context_list;
     typedef sequence_of< Default_Context_List_sequence_of > Default_Context_List;
     typedef sequence_of< P_context_result_list_sequence_of > P_context_result_list;
+    ITU_T_IMPLICIT_TYPEDEF(AARE_apdu__impl_helper, AARE_apdu, 1, APPLICATION_CLASS);
     ITU_T_PREFIXED_DECLARE(AARE_apdu, ITU_T_ARRAY(prefixed_type(1, APPLICATION_CLASS)), false); //  initial =implicit
+    ITU_T_IMPLICIT_TYPEDEF(RLRQ_apdu__impl_helper, RLRQ_apdu, 2, APPLICATION_CLASS);
     ITU_T_PREFIXED_DECLARE(RLRQ_apdu, ITU_T_ARRAY(prefixed_type(2, APPLICATION_CLASS)), false); //  initial =implicit
+    ITU_T_IMPLICIT_TYPEDEF(RLRE_apdu__impl_helper, RLRE_apdu, 3, APPLICATION_CLASS);
     ITU_T_PREFIXED_DECLARE(RLRE_apdu, ITU_T_ARRAY(prefixed_type(3, APPLICATION_CLASS)), false); //  initial =implicit
+    ITU_T_IMPLICIT_TYPEDEF(ABRT_apdu__impl_helper, ABRT_apdu, 4, APPLICATION_CLASS);
     ITU_T_PREFIXED_DECLARE(ABRT_apdu, ITU_T_ARRAY(prefixed_type(4, APPLICATION_CLASS)), false); //  initial =implicit
+    ITU_T_IMPLICIT_TYPEDEF(A_DT_apdu__impl_helper, A_DT_apdu, 5, APPLICATION_CLASS);
     ITU_T_PREFIXED_DECLARE(A_DT_apdu, ITU_T_ARRAY(prefixed_type(5, APPLICATION_CLASS)), false); //  initial =implicit
+    ITU_T_IMPLICIT_TYPEDEF(ACRQ_apdu__impl_helper, ACRQ_apdu, 6, APPLICATION_CLASS);
     ITU_T_PREFIXED_DECLARE(ACRQ_apdu, ITU_T_ARRAY(prefixed_type(6, APPLICATION_CLASS)), false); //  initial =implicit
+    ITU_T_IMPLICIT_TYPEDEF(ACRP_apdu__impl_helper, ACRP_apdu, 7, APPLICATION_CLASS);
     ITU_T_PREFIXED_DECLARE(ACRP_apdu, ITU_T_ARRAY(prefixed_type(7, APPLICATION_CLASS)), false); //  initial =implicit
+    ITU_T_IMPLICIT_TYPEDEF(AARQ_apdu__impl_helper, AARQ_apdu, 0, APPLICATION_CLASS);
     ITU_T_PREFIXED_DECLARE(AARQ_apdu, ITU_T_ARRAY(prefixed_type(0, APPLICATION_CLASS)), false); //  initial =implicit
 
     ITU_T_OID(acse_as_id, ITU_T_VARRAY(2, 2, 1, 0, 1));

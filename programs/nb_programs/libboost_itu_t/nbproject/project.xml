@@ -11,7 +11,13 @@
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects/>
             <sourceRootList>
-                <sourceRootElem>../../../include/boost</sourceRootElem>
+                <sourceRootElem>../../../include/boost/itu/asn1</sourceRootElem>
+                <sourceRootElem>../../../include/boost/itu/coder</sourceRootElem>
+                <sourceRootElem>../../../include/boost/itu/detail</sourceRootElem>
+                <sourceRootElem>../../../include/boost/itu/rfc1006</sourceRootElem>
+                <sourceRootElem>../../../include/boost/itu/utils</sourceRootElem>
+                <sourceRootElem>../../../include/boost/itu/x22X</sourceRootElem>
+                <sourceRootElem>../../../include/boost/itu/x69X</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

@@ -96,7 +96,13 @@
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
-    <Elem>../../../include/boost</Elem>
+    <Elem>../../../include/boost/itu/asn1</Elem>
+    <Elem>../../../include/boost/itu/coder</Elem>
+    <Elem>../../../include/boost/itu/detail</Elem>
+    <Elem>../../../include/boost/itu/rfc1006</Elem>
+    <Elem>../../../include/boost/itu/utils</Elem>
+    <Elem>../../../include/boost/itu/x22X</Elem>
+    <Elem>../../../include/boost/itu/x69X</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
