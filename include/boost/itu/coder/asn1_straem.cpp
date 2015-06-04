@@ -132,7 +132,7 @@ namespace boost {
                     std::cout << "and output buffer is empty. ";
                 else {
                     fill_in_from_out();
-                    std::cout << ", copy from output.  ";
+                    std::cout << ", copy from output.  "  << std::endl;
                 }
             }
             if (!input_empty()) {
