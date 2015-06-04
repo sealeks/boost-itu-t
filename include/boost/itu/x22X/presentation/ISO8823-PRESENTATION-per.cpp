@@ -24,7 +24,7 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_PER(*mode_selector_);
+        ITU_T_BIND_PER(mode_selector_);
         ITU_T_BIND_PER(x410_mode_parameters_);
         ITU_T_BIND_PER(normal_mode_parameters_);
     }
@@ -33,7 +33,7 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_BIND_PER(*mode_selector_);
+        ITU_T_BIND_PER(mode_selector_);
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(x410_mode_parameters_);
         ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(normal_mode_parameters_);
     }
@@ -52,7 +52,7 @@ namespace ISO8823_PRESENTATION {
         ITU_T_BIND_PER(checkpointSize_);
         ITU_T_BIND_PER(windowSize_);
         ITU_T_BIND_PER(dialogueMode_);
-        ITU_T_BIND_PER(*connectionDataRQ_);
+        ITU_T_BIND_PER(connectionDataRQ_);
         ITU_T_BIND_PER(applicationProtocol_);
     }
 
@@ -63,7 +63,7 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(checkpointSize_);
         ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(windowSize_);
         ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(dialogueMode_);
-        ITU_T_BIND_PER(*connectionDataRQ_);
+        ITU_T_BIND_PER(connectionDataRQ_);
         ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(applicationProtocol_);
     }
 
@@ -145,7 +145,7 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_PER(*mode_selector_);
+        ITU_T_BIND_PER(mode_selector_);
         ITU_T_BIND_PER(x410_mode_parameters_);
         ITU_T_BIND_PER(normal_mode_parameters_);
     }
@@ -154,7 +154,7 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_BIND_PER(*mode_selector_);
+        ITU_T_BIND_PER(mode_selector_);
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(x410_mode_parameters_);
         ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(normal_mode_parameters_);
     }
@@ -170,7 +170,7 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_BIND_PER(checkpointSize_);
         ITU_T_BIND_PER(windowSize_);
-        ITU_T_BIND_PER(*connectionDataAC_);
+        ITU_T_BIND_PER(connectionDataAC_);
     }
 
     template<> void CPA_PPDU::X410_mode_parameters_type::serialize(boost::asn1::x691::input_coder& arch) {
@@ -179,7 +179,7 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(checkpointSize_);
         ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(windowSize_);
-        ITU_T_BIND_PER(*connectionDataAC_);
+        ITU_T_BIND_PER(connectionDataAC_);
     }
 
     // sequence normal-mode-parameters
@@ -228,13 +228,13 @@ namespace ISO8823_PRESENTATION {
             case CPR_PPDU_normal_mode_parameters:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 1);
-                ITU_T_BIND_PER(*value<Normal_mode_parameters_type > (false, CPR_PPDU_normal_mode_parameters));
+                ITU_T_BIND_PER(value<Normal_mode_parameters_type > (false, CPR_PPDU_normal_mode_parameters));
                 break;
             }
             case CPR_PPDU_x400_mode_parameters:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 1);
-                ITU_T_BIND_PER(*value<X400_mode_parameters_type > (false, CPR_PPDU_x400_mode_parameters));
+                ITU_T_BIND_PER(value<X400_mode_parameters_type > (false, CPR_PPDU_x400_mode_parameters));
                 break;
             }
             default:
@@ -250,12 +250,12 @@ namespace ISO8823_PRESENTATION {
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_PER(*value<Normal_mode_parameters_type > (true, CPR_PPDU_normal_mode_parameters));
+                ITU_T_BIND_PER(value<Normal_mode_parameters_type > (true, CPR_PPDU_normal_mode_parameters));
                 break;
             }
             case 1:
             {
-                ITU_T_BIND_PER(*value<X400_mode_parameters_type > (true, CPR_PPDU_x400_mode_parameters));
+                ITU_T_BIND_PER(value<X400_mode_parameters_type > (true, CPR_PPDU_x400_mode_parameters));
                 break;
             }
             default:
@@ -325,13 +325,13 @@ namespace ISO8823_PRESENTATION {
             case Abort_type_aru_ppdu:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 1);
-                ITU_T_BIND_PER(*value<ARU_PPDU > (false, Abort_type_aru_ppdu));
+                ITU_T_BIND_PER(value<ARU_PPDU > (false, Abort_type_aru_ppdu));
                 break;
             }
             case Abort_type_arp_ppdu:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 1);
-                ITU_T_BIND_PER(*value<ARP_PPDU > (false, Abort_type_arp_ppdu));
+                ITU_T_BIND_PER(value<ARP_PPDU > (false, Abort_type_arp_ppdu));
                 break;
             }
             default:
@@ -347,12 +347,12 @@ namespace ISO8823_PRESENTATION {
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_PER(*value<ARU_PPDU > (true, Abort_type_aru_ppdu));
+                ITU_T_BIND_PER(value<ARU_PPDU > (true, Abort_type_aru_ppdu));
                 break;
             }
             case 1:
             {
-                ITU_T_BIND_PER(*value<ARP_PPDU > (true, Abort_type_arp_ppdu));
+                ITU_T_BIND_PER(value<ARP_PPDU > (true, Abort_type_arp_ppdu));
                 break;
             }
             default:
@@ -368,13 +368,13 @@ namespace ISO8823_PRESENTATION {
             case ARU_PPDU_x400_mode_parameters:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 1);
-                ITU_T_BIND_PER(*value<X400_mode_parameters_type > (false, ARU_PPDU_x400_mode_parameters));
+                ITU_T_BIND_PER(value<X400_mode_parameters_type > (false, ARU_PPDU_x400_mode_parameters));
                 break;
             }
             case ARU_PPDU_normal_mode_parameters:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 1);
-                ITU_T_BIND_PER(*value<Normal_mode_parameters_type > (false, ARU_PPDU_normal_mode_parameters));
+                ITU_T_BIND_PER(value<Normal_mode_parameters_type > (false, ARU_PPDU_normal_mode_parameters));
                 break;
             }
             default:
@@ -390,12 +390,12 @@ namespace ISO8823_PRESENTATION {
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_PER(*value<X400_mode_parameters_type > (true, ARU_PPDU_x400_mode_parameters));
+                ITU_T_BIND_PER(value<X400_mode_parameters_type > (true, ARU_PPDU_x400_mode_parameters));
                 break;
             }
             case 1:
             {
-                ITU_T_BIND_PER(*value<Normal_mode_parameters_type > (true, ARU_PPDU_normal_mode_parameters));
+                ITU_T_BIND_PER(value<Normal_mode_parameters_type > (true, ARU_PPDU_normal_mode_parameters));
                 break;
             }
             default:
@@ -477,19 +477,19 @@ namespace ISO8823_PRESENTATION {
             case Typed_data_type_ttdPPDU:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 2);
-                ITU_T_BIND_PER(*value<User_data > (false, Typed_data_type_ttdPPDU));
+                ITU_T_BIND_PER(value<User_data > (false, Typed_data_type_ttdPPDU));
                 break;
             }
             case Typed_data_type_acPPDU:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 2);
-                ITU_T_BIND_PER(*value<AC_PPDU > (false, Typed_data_type_acPPDU));
+                ITU_T_BIND_PER(value<AC_PPDU > (false, Typed_data_type_acPPDU));
                 break;
             }
             case Typed_data_type_acaPPDU:
             {
                 ITU_T_SET_CONSTAINED_INDX(2, 2);
-                ITU_T_BIND_PER(*value<ACA_PPDU > (false, Typed_data_type_acaPPDU));
+                ITU_T_BIND_PER(value<ACA_PPDU > (false, Typed_data_type_acaPPDU));
                 break;
             }
             default:
@@ -505,17 +505,17 @@ namespace ISO8823_PRESENTATION {
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_PER(*value<User_data > (true, Typed_data_type_ttdPPDU));
+                ITU_T_BIND_PER(value<User_data > (true, Typed_data_type_ttdPPDU));
                 break;
             }
             case 1:
             {
-                ITU_T_BIND_PER(*value<AC_PPDU > (true, Typed_data_type_acPPDU));
+                ITU_T_BIND_PER(value<AC_PPDU > (true, Typed_data_type_acPPDU));
                 break;
             }
             case 2:
             {
-                ITU_T_BIND_PER(*value<ACA_PPDU > (true, Typed_data_type_acaPPDU));
+                ITU_T_BIND_PER(value<ACA_PPDU > (true, Typed_data_type_acaPPDU));
                 break;
             }
             default:
@@ -617,49 +617,49 @@ namespace ISO8823_PRESENTATION {
     // sequence 
 
     template<> void Context_list_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRAINT_EXT(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_PER(*abstract_syntax_name_);
-        ITU_T_BIND_PER(*transfer_syntax_name_list_);
+        ITU_T_BIND_NUM_CONSTRAINT_EXT(presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_PER(abstract_syntax_name_);
+        ITU_T_BIND_PER(transfer_syntax_name_list_);
     }
 
     template<> void Context_list_sequence_of::serialize(boost::asn1::x691::input_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRAINT_EXT(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_PER(*abstract_syntax_name_);
-        ITU_T_BIND_PER(*transfer_syntax_name_list_);
+        ITU_T_BIND_NUM_CONSTRAINT_EXT(presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_PER(abstract_syntax_name_);
+        ITU_T_BIND_PER(transfer_syntax_name_list_);
     }
 
     // sequence Default-context-name
 
     template<> void Default_context_name::serialize(boost::asn1::x691::output_coder& arch) {
-        ITU_T_BIND_PER(*abstract_syntax_name_);
-        ITU_T_BIND_PER(*transfer_syntax_name_);
+        ITU_T_BIND_PER(abstract_syntax_name_);
+        ITU_T_BIND_PER(transfer_syntax_name_);
     }
 
     template<> void Default_context_name::serialize(boost::asn1::x691::input_coder& arch) {
-        ITU_T_BIND_PER(*abstract_syntax_name_);
-        ITU_T_BIND_PER(*transfer_syntax_name_);
+        ITU_T_BIND_PER(abstract_syntax_name_);
+        ITU_T_BIND_PER(transfer_syntax_name_);
     }
 
     // set  Mode-selector
 
     template<> void Mode_selector::serialize(boost::asn1::x691::output_coder& arch) {
-        ITU_T_BIND_PER(*mode_value_);
+        ITU_T_BIND_PER(mode_value_);
     }
 
     template<> void Mode_selector::serialize(boost::asn1::x691::input_coder& arch) {
-        ITU_T_BIND_PER(*mode_value_);
+        ITU_T_BIND_PER(mode_value_);
     }
 
     // sequence 
 
     template<> void Presentation_context_identifier_list_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRAINT_EXT(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_PER(*transfer_syntax_name_);
+        ITU_T_BIND_NUM_CONSTRAINT_EXT(presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_PER(transfer_syntax_name_);
     }
 
     template<> void Presentation_context_identifier_list_sequence_of::serialize(boost::asn1::x691::input_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRAINT_EXT(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_PER(*transfer_syntax_name_);
+        ITU_T_BIND_NUM_CONSTRAINT_EXT(presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_PER(transfer_syntax_name_);
     }
 
     // sequence 
@@ -671,7 +671,7 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_PER(*result_);
+        ITU_T_BIND_PER(result_);
         ITU_T_BIND_PER(transfer_syntax_name_);
         ITU_T_BIND_PER(provider_reason_);
     }
@@ -680,7 +680,7 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_BIND_PER(*result_);
+        ITU_T_BIND_PER(result_);
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(transfer_syntax_name_);
         ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(provider_reason_);
     }
@@ -694,13 +694,13 @@ namespace ISO8823_PRESENTATION {
             case User_data_simply_encoded_data:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 1);
-                ITU_T_BIND_PER(*value<Simply_encoded_data > (false, User_data_simply_encoded_data));
+                ITU_T_BIND_PER(value<Simply_encoded_data > (false, User_data_simply_encoded_data));
                 break;
             }
             case User_data_fully_encoded_data:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 1);
-                ITU_T_BIND_SIZE_SNGLCONSTRAINT_EXT(*value<Fully_encoded_data > (false, User_data_fully_encoded_data), 1);
+                ITU_T_BIND_SIZE_SNGLCONSTRAINT_EXT(value<Fully_encoded_data > (false, User_data_fully_encoded_data), 1);
                 break;
             }
             default:
@@ -720,12 +720,12 @@ namespace ISO8823_PRESENTATION {
             switch (__indx__) {
                 case 0:
                 {
-                    ITU_T_BIND_PER(*value<Simply_encoded_data > (true, User_data_simply_encoded_data));
+                    ITU_T_BIND_PER(value<Simply_encoded_data > (true, User_data_simply_encoded_data));
                     break;
                 }
                 case 1:
                 {
-                    ITU_T_BIND_SIZE_SNGLCONSTRAINT_EXT(*value<Fully_encoded_data > (true, User_data_fully_encoded_data), 1);
+                    ITU_T_BIND_SIZE_SNGLCONSTRAINT_EXT(value<Fully_encoded_data > (true, User_data_fully_encoded_data), 1);
                     break;
                 }
                 default:
@@ -755,8 +755,8 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(transfer_syntax_name_);
-        ITU_T_BIND_NUM_CONSTRAINT_EXT(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_PER(*presentation_data_values_);
+        ITU_T_BIND_NUM_CONSTRAINT_EXT(presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_PER(presentation_data_values_);
     }
 
     template<> void PDV_list::serialize(boost::asn1::x691::input_coder& arch) {
@@ -764,8 +764,8 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_READ(1);
 
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(transfer_syntax_name_);
-        ITU_T_BIND_NUM_CONSTRAINT_EXT(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
-        ITU_T_BIND_PER(*presentation_data_values_);
+        ITU_T_BIND_NUM_CONSTRAINT_EXT(presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_PER(presentation_data_values_);
     }
 
     // choice presentation-data-values
@@ -775,19 +775,19 @@ namespace ISO8823_PRESENTATION {
             case Presentation_data_values_type_single_ASN1_type:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 2);
-                ITU_T_BIND_PER(*value<any_type > (false, Presentation_data_values_type_single_ASN1_type));
+                ITU_T_BIND_PER(value<any_type > (false, Presentation_data_values_type_single_ASN1_type));
                 break;
             }
             case Presentation_data_values_type_octet_aligned:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 2);
-                ITU_T_BIND_PER(*value<octet_string > (false, Presentation_data_values_type_octet_aligned));
+                ITU_T_BIND_PER(value<octet_string > (false, Presentation_data_values_type_octet_aligned));
                 break;
             }
             case Presentation_data_values_type_arbitrary:
             {
                 ITU_T_SET_CONSTAINED_INDX(2, 2);
-                ITU_T_BIND_PER(*value<bit_string > (false, Presentation_data_values_type_arbitrary));
+                ITU_T_BIND_PER(value<bit_string > (false, Presentation_data_values_type_arbitrary));
                 break;
             }
             default:
@@ -803,17 +803,17 @@ namespace ISO8823_PRESENTATION {
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_PER(*value<any_type > (true, Presentation_data_values_type_single_ASN1_type));
+                ITU_T_BIND_PER(value<any_type > (true, Presentation_data_values_type_single_ASN1_type));
                 break;
             }
             case 1:
             {
-                ITU_T_BIND_PER(*value<octet_string > (true, Presentation_data_values_type_octet_aligned));
+                ITU_T_BIND_PER(value<octet_string > (true, Presentation_data_values_type_octet_aligned));
                 break;
             }
             case 2:
             {
-                ITU_T_BIND_PER(*value<bit_string > (true, Presentation_data_values_type_arbitrary));
+                ITU_T_BIND_PER(value<bit_string > (true, Presentation_data_values_type_arbitrary));
                 break;
             }
             default:

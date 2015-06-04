@@ -1152,15 +1152,8 @@ namespace boost {
 
         template<typename Archive, typename T>
         inline bool bind_basic(Archive & arch, value_holder<T>& vl) {
-            return bind_basic(*vl);
+            return bind_basic(arch, *vl);
         }
-
-        /*template<typename Archive, typename T>
-        inline bool bind_basic(Archive & arch, boost::shared_ptr<T>& vl) {
-            std::size_t tst = arch.size();
-            arch & optional_implicit_value<T > (vl);
-            return (arch.size() != tst);
-        }*/
 
         template<typename T>
         inline bool bind_basic(boost::asn1::x690::output_coder & arch, boost::shared_ptr<T>& vl) {
@@ -1215,7 +1208,7 @@ namespace boost {
 
         template<typename Archive, typename T>
         inline bool bind_explicit(Archive & arch, value_holder<T>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
-            return bind_explicit(*vl, id, type);
+            return bind_explicit(arch, *vl, id, type);
         }
 
         template<typename T>
@@ -1271,7 +1264,7 @@ namespace boost {
 
         template<typename Archive, typename T>
         inline bool bind_implicit(Archive & arch, value_holder<T>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
-            return bind_implicit(*vl, id, type);
+            return bind_implicit(arch, *vl, id, type);
         }
 
         template<typename T>
@@ -1365,10 +1358,8 @@ namespace boost {
         }
 
         template<typename Archive, typename T>
-        inline bool bind_choice(Archive & arch, const T& vl) {
-            std::size_t tst = arch.size();
-            const_cast<T*> (&(vl))->serialize(arch);
-            return (arch.size() != tst);
+        inline bool bind_choice(Archive & arch, value_holder<T>& vl) {
+            return bind_choice(arch, *vl);
         }
 
         template<typename T>
@@ -1391,7 +1382,21 @@ namespace boost {
             return false;
         }
 
+        template<typename T, const T& DT>
+        inline bool bind_choice(boost::asn1::x690::output_coder & arch, default_holder<T, DT>& vl) {
+            if (!vl.isdefault())
+                return bind_choice(arch, vl.get_shared());
+            return false;
+        }
 
+        template<typename T, const T& DT>
+        inline bool bind_choice(boost::asn1::x690::input_coder & arch, default_holder<T, DT>& vl) {
+            return bind_choice(arch, vl.get_shared());
+        }
+        
+        
+        
+        
         template<> void external_type::serialize(boost::asn1::x690::output_coder& arch);
         template<> void external_type::serialize(boost::asn1::x690::input_coder& arch);
         template<> void external_type::Encoding_type::serialize(boost::asn1::x690::output_coder& arch);

@@ -14,13 +14,13 @@ namespace ISO8823_PRESENTATION {
     // set  CP-type
 
     template<> void CP_type::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_BIND_IMPLICIT(*mode_selector_, 0, CONTEXT_CLASS);
+        ITU_T_BIND_IMPLICIT(mode_selector_, 0, CONTEXT_CLASS);
         ITU_T_BIND_IMPLICIT(x410_mode_parameters_, 1, CONTEXT_CLASS);
         ITU_T_BIND_IMPLICIT(normal_mode_parameters_, 2, CONTEXT_CLASS);
     }
 
     template<> void CP_type::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_BIND_IMPLICIT(*mode_selector_, 0, CONTEXT_CLASS);
+        ITU_T_BIND_IMPLICIT(mode_selector_, 0, CONTEXT_CLASS);
         ITU_T_BIND_IMPLICIT(x410_mode_parameters_, 1, CONTEXT_CLASS);
         ITU_T_BIND_IMPLICIT(normal_mode_parameters_, 2, CONTEXT_CLASS);
     }
@@ -31,7 +31,7 @@ namespace ISO8823_PRESENTATION {
         ITU_T_BIND_IMPLICIT(checkpointSize_, 0, CONTEXT_CLASS);
         ITU_T_BIND_IMPLICIT(windowSize_, 1, CONTEXT_CLASS);
         ITU_T_BIND_IMPLICIT(dialogueMode_, 2, CONTEXT_CLASS);
-        ITU_T_BIND_EXPLICIT(*connectionDataRQ_, 3, CONTEXT_CLASS);
+        ITU_T_BIND_EXPLICIT(connectionDataRQ_, 3, CONTEXT_CLASS);
         ITU_T_BIND_IMPLICIT(applicationProtocol_, 4, CONTEXT_CLASS);
     }
 
@@ -39,7 +39,7 @@ namespace ISO8823_PRESENTATION {
         ITU_T_BIND_IMPLICIT(checkpointSize_, 0, CONTEXT_CLASS);
         ITU_T_BIND_IMPLICIT(windowSize_, 1, CONTEXT_CLASS);
         ITU_T_BIND_IMPLICIT(dialogueMode_, 2, CONTEXT_CLASS);
-        ITU_T_BIND_EXPLICIT(*connectionDataRQ_, 3, CONTEXT_CLASS);
+        ITU_T_BIND_EXPLICIT(connectionDataRQ_, 3, CONTEXT_CLASS);
         ITU_T_BIND_IMPLICIT(applicationProtocol_, 4, CONTEXT_CLASS);
     }
 
@@ -96,13 +96,13 @@ namespace ISO8823_PRESENTATION {
     // set  CPA-PPDU
 
     template<> void CPA_PPDU::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_BIND_IMPLICIT(*mode_selector_, 0, CONTEXT_CLASS);
+        ITU_T_BIND_IMPLICIT(mode_selector_, 0, CONTEXT_CLASS);
         ITU_T_BIND_IMPLICIT(x410_mode_parameters_, 1, CONTEXT_CLASS);
         ITU_T_BIND_IMPLICIT(normal_mode_parameters_, 2, CONTEXT_CLASS);
     }
 
     template<> void CPA_PPDU::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_BIND_IMPLICIT(*mode_selector_, 0, CONTEXT_CLASS);
+        ITU_T_BIND_IMPLICIT(mode_selector_, 0, CONTEXT_CLASS);
         ITU_T_BIND_IMPLICIT(x410_mode_parameters_, 1, CONTEXT_CLASS);
         ITU_T_BIND_IMPLICIT(normal_mode_parameters_, 2, CONTEXT_CLASS);
     }
@@ -112,13 +112,13 @@ namespace ISO8823_PRESENTATION {
     template<> void CPA_PPDU::X410_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_IMPLICIT(checkpointSize_, 0, CONTEXT_CLASS);
         ITU_T_BIND_IMPLICIT(windowSize_, 1, CONTEXT_CLASS);
-        ITU_T_BIND_EXPLICIT(*connectionDataAC_, 2, CONTEXT_CLASS);
+        ITU_T_BIND_EXPLICIT(connectionDataAC_, 2, CONTEXT_CLASS);
     }
 
     template<> void CPA_PPDU::X410_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_BIND_IMPLICIT(checkpointSize_, 0, CONTEXT_CLASS);
         ITU_T_BIND_IMPLICIT(windowSize_, 1, CONTEXT_CLASS);
-        ITU_T_BIND_EXPLICIT(*connectionDataAC_, 2, CONTEXT_CLASS);
+        ITU_T_BIND_EXPLICIT(connectionDataAC_, 2, CONTEXT_CLASS);
     }
 
     // sequence normal-mode-parameters
@@ -151,12 +151,12 @@ namespace ISO8823_PRESENTATION {
         switch (type()) {
             case CPR_PPDU_x400_mode_parameters:
             {
-                ITU_T_BIND_TAG(*value<X400_mode_parameters_type > (false, CPR_PPDU_x400_mode_parameters));
+                ITU_T_BIND_TAG(value<X400_mode_parameters_type > (false, CPR_PPDU_x400_mode_parameters));
                 break;
             }
             case CPR_PPDU_normal_mode_parameters:
             {
-                ITU_T_BIND_TAG(*value<Normal_mode_parameters_type > (false, CPR_PPDU_normal_mode_parameters));
+                ITU_T_BIND_TAG(value<Normal_mode_parameters_type > (false, CPR_PPDU_normal_mode_parameters));
                 break;
             }
             default:
@@ -173,13 +173,13 @@ namespace ISO8823_PRESENTATION {
                 switch (__tag_id__) {
                     case 17:
                     {
-                        if (ITU_T_BIND_TAG(*value<X400_mode_parameters_type > (true, CPR_PPDU_x400_mode_parameters))) return;
+                        if (ITU_T_BIND_TAG(value<X400_mode_parameters_type > (true, CPR_PPDU_x400_mode_parameters))) return;
                         else free();
                         break;
                     }
                     case 16:
                     {
-                        if (ITU_T_BIND_TAG(*value<Normal_mode_parameters_type > (true, CPR_PPDU_normal_mode_parameters))) return;
+                        if (ITU_T_BIND_TAG(value<Normal_mode_parameters_type > (true, CPR_PPDU_normal_mode_parameters))) return;
                         else free();
                         break;
                     }
@@ -232,12 +232,12 @@ namespace ISO8823_PRESENTATION {
         switch (type()) {
             case Abort_type_aru_ppdu:
             {
-                ITU_T_BIND_CHOICE(*value<ARU_PPDU > (false, Abort_type_aru_ppdu));
+                ITU_T_BIND_CHOICE(value<ARU_PPDU > (false, Abort_type_aru_ppdu));
                 break;
             }
             case Abort_type_arp_ppdu:
             {
-                ITU_T_BIND_TAG(*value<ARP_PPDU > (false, Abort_type_arp_ppdu));
+                ITU_T_BIND_TAG(value<ARP_PPDU > (false, Abort_type_arp_ppdu));
                 break;
             }
             default:
@@ -254,13 +254,13 @@ namespace ISO8823_PRESENTATION {
                 switch (__tag_id__) {
                     case 17:
                     {
-                        if (ITU_T_BIND_CHOICE(*value<ARU_PPDU > (true, Abort_type_aru_ppdu))) return;
+                        if (ITU_T_BIND_CHOICE(value<ARU_PPDU > (true, Abort_type_aru_ppdu))) return;
                         else free();
                         break;
                     }
                     case 16:
                     {
-                        if (ITU_T_BIND_TAG(*value<ARP_PPDU > (true, Abort_type_arp_ppdu))) return;
+                        if (ITU_T_BIND_TAG(value<ARP_PPDU > (true, Abort_type_arp_ppdu))) return;
                         else free();
                         break;
                     }
@@ -274,7 +274,7 @@ namespace ISO8823_PRESENTATION {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_BIND_CHOICE(*value<ARU_PPDU > (true, Abort_type_aru_ppdu))) return;
+                        if (ITU_T_BIND_CHOICE(value<ARU_PPDU > (true, Abort_type_aru_ppdu))) return;
                         else free();
                         break;
                     }
@@ -295,12 +295,12 @@ namespace ISO8823_PRESENTATION {
         switch (type()) {
             case ARU_PPDU_x400_mode_parameters:
             {
-                ITU_T_BIND_TAG(*value<X400_mode_parameters_type > (false, ARU_PPDU_x400_mode_parameters));
+                ITU_T_BIND_TAG(value<X400_mode_parameters_type > (false, ARU_PPDU_x400_mode_parameters));
                 break;
             }
             case ARU_PPDU_normal_mode_parameters:
             {
-                ITU_T_BIND_IMPLICIT(*value<Normal_mode_parameters_type > (false, ARU_PPDU_normal_mode_parameters), 0, CONTEXT_CLASS);
+                ITU_T_BIND_IMPLICIT(value<Normal_mode_parameters_type > (false, ARU_PPDU_normal_mode_parameters), 0, CONTEXT_CLASS);
                 break;
             }
             default:
@@ -317,7 +317,7 @@ namespace ISO8823_PRESENTATION {
                 switch (__tag_id__) {
                     case 17:
                     {
-                        if (ITU_T_BIND_TAG(*value<X400_mode_parameters_type > (true, ARU_PPDU_x400_mode_parameters))) return;
+                        if (ITU_T_BIND_TAG(value<X400_mode_parameters_type > (true, ARU_PPDU_x400_mode_parameters))) return;
                         else free();
                         break;
                     }
@@ -331,7 +331,7 @@ namespace ISO8823_PRESENTATION {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_BIND_IMPLICIT(*value<Normal_mode_parameters_type > (true, ARU_PPDU_normal_mode_parameters), 0, CONTEXT_CLASS)) return;
+                        if (ITU_T_BIND_IMPLICIT(value<Normal_mode_parameters_type > (true, ARU_PPDU_normal_mode_parameters), 0, CONTEXT_CLASS)) return;
                         else free();
                         break;
                     }
@@ -390,17 +390,17 @@ namespace ISO8823_PRESENTATION {
         switch (type()) {
             case Typed_data_type_acPPDU:
             {
-                ITU_T_BIND_IMPLICIT(*value<AC_PPDU > (false, Typed_data_type_acPPDU), 0, CONTEXT_CLASS);
+                ITU_T_BIND_IMPLICIT(value<AC_PPDU > (false, Typed_data_type_acPPDU), 0, CONTEXT_CLASS);
                 break;
             }
             case Typed_data_type_acaPPDU:
             {
-                ITU_T_BIND_IMPLICIT(*value<ACA_PPDU > (false, Typed_data_type_acaPPDU), 1, CONTEXT_CLASS);
+                ITU_T_BIND_IMPLICIT(value<ACA_PPDU > (false, Typed_data_type_acaPPDU), 1, CONTEXT_CLASS);
                 break;
             }
             case Typed_data_type_ttdPPDU:
             {
-                ITU_T_BIND_CHOICE(*value<User_data > (false, Typed_data_type_ttdPPDU));
+                ITU_T_BIND_CHOICE(value<User_data > (false, Typed_data_type_ttdPPDU));
                 break;
             }
             default:
@@ -417,13 +417,13 @@ namespace ISO8823_PRESENTATION {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_BIND_CHOICE(*value<User_data > (true, Typed_data_type_ttdPPDU))) return;
+                        if (ITU_T_BIND_CHOICE(value<User_data > (true, Typed_data_type_ttdPPDU))) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_BIND_CHOICE(*value<User_data > (true, Typed_data_type_ttdPPDU))) return;
+                        if (ITU_T_BIND_CHOICE(value<User_data > (true, Typed_data_type_ttdPPDU))) return;
                         else free();
                         break;
                     }
@@ -437,13 +437,13 @@ namespace ISO8823_PRESENTATION {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_BIND_IMPLICIT(*value<AC_PPDU > (true, Typed_data_type_acPPDU), 0, CONTEXT_CLASS)) return;
+                        if (ITU_T_BIND_IMPLICIT(value<AC_PPDU > (true, Typed_data_type_acPPDU), 0, CONTEXT_CLASS)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_BIND_IMPLICIT(*value<ACA_PPDU > (true, Typed_data_type_acaPPDU), 1, CONTEXT_CLASS)) return;
+                        if (ITU_T_BIND_IMPLICIT(value<ACA_PPDU > (true, Typed_data_type_acaPPDU), 1, CONTEXT_CLASS)) return;
                         else free();
                         break;
                     }
@@ -513,61 +513,61 @@ namespace ISO8823_PRESENTATION {
     // sequence 
 
     template<> void Context_list_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_BIND_TAG(*presentation_context_identifier_);
-        ITU_T_BIND_TAG(*abstract_syntax_name_);
-        ITU_T_BIND_TAG(*transfer_syntax_name_list_);
+        ITU_T_BIND_TAG(presentation_context_identifier_);
+        ITU_T_BIND_TAG(abstract_syntax_name_);
+        ITU_T_BIND_TAG(transfer_syntax_name_list_);
     }
 
     template<> void Context_list_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_BIND_TAG(*presentation_context_identifier_);
-        ITU_T_BIND_TAG(*abstract_syntax_name_);
-        ITU_T_BIND_TAG(*transfer_syntax_name_list_);
+        ITU_T_BIND_TAG(presentation_context_identifier_);
+        ITU_T_BIND_TAG(abstract_syntax_name_);
+        ITU_T_BIND_TAG(transfer_syntax_name_list_);
     }
 
     // sequence Default-context-name
 
     template<> void Default_context_name::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_BIND_IMPLICIT(*abstract_syntax_name_, 0, CONTEXT_CLASS);
-        ITU_T_BIND_IMPLICIT(*transfer_syntax_name_, 1, CONTEXT_CLASS);
+        ITU_T_BIND_IMPLICIT(abstract_syntax_name_, 0, CONTEXT_CLASS);
+        ITU_T_BIND_IMPLICIT(transfer_syntax_name_, 1, CONTEXT_CLASS);
     }
 
     template<> void Default_context_name::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_BIND_IMPLICIT(*abstract_syntax_name_, 0, CONTEXT_CLASS);
-        ITU_T_BIND_IMPLICIT(*transfer_syntax_name_, 1, CONTEXT_CLASS);
+        ITU_T_BIND_IMPLICIT(abstract_syntax_name_, 0, CONTEXT_CLASS);
+        ITU_T_BIND_IMPLICIT(transfer_syntax_name_, 1, CONTEXT_CLASS);
     }
 
     // set  Mode-selector
 
     template<> void Mode_selector::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_BIND_IMPLICIT(*mode_value_, 0, CONTEXT_CLASS);
+        ITU_T_BIND_IMPLICIT(mode_value_, 0, CONTEXT_CLASS);
     }
 
     template<> void Mode_selector::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_BIND_IMPLICIT(*mode_value_, 0, CONTEXT_CLASS);
+        ITU_T_BIND_IMPLICIT(mode_value_, 0, CONTEXT_CLASS);
     }
 
     // sequence 
 
     template<> void Presentation_context_identifier_list_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_BIND_TAG(*presentation_context_identifier_);
-        ITU_T_BIND_TAG(*transfer_syntax_name_);
+        ITU_T_BIND_TAG(presentation_context_identifier_);
+        ITU_T_BIND_TAG(transfer_syntax_name_);
     }
 
     template<> void Presentation_context_identifier_list_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_BIND_TAG(*presentation_context_identifier_);
-        ITU_T_BIND_TAG(*transfer_syntax_name_);
+        ITU_T_BIND_TAG(presentation_context_identifier_);
+        ITU_T_BIND_TAG(transfer_syntax_name_);
     }
 
     // sequence 
 
     template<> void Result_list_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_BIND_IMPLICIT(*result_, 0, CONTEXT_CLASS);
+        ITU_T_BIND_IMPLICIT(result_, 0, CONTEXT_CLASS);
         ITU_T_BIND_IMPLICIT(transfer_syntax_name_, 1, CONTEXT_CLASS);
         ITU_T_BIND_IMPLICIT(provider_reason_, 2, CONTEXT_CLASS);
     }
 
     template<> void Result_list_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_BIND_IMPLICIT(*result_, 0, CONTEXT_CLASS);
+        ITU_T_BIND_IMPLICIT(result_, 0, CONTEXT_CLASS);
         ITU_T_BIND_IMPLICIT(transfer_syntax_name_, 1, CONTEXT_CLASS);
         ITU_T_BIND_IMPLICIT(provider_reason_, 2, CONTEXT_CLASS);
     }
@@ -578,12 +578,12 @@ namespace ISO8823_PRESENTATION {
         switch (type()) {
             case User_data_simply_encoded_data:
             {
-                ITU_T_BIND_IMPLICIT(*value<Simply_encoded_data > (false, User_data_simply_encoded_data), 0, APPLICATION_CLASS);
+                ITU_T_BIND_IMPLICIT(value<Simply_encoded_data > (false, User_data_simply_encoded_data), 0, APPLICATION_CLASS);
                 break;
             }
             case User_data_fully_encoded_data:
             {
-                ITU_T_BIND_IMPLICIT(*value<Fully_encoded_data > (false, User_data_fully_encoded_data), 1, APPLICATION_CLASS);
+                ITU_T_BIND_IMPLICIT(value<Fully_encoded_data > (false, User_data_fully_encoded_data), 1, APPLICATION_CLASS);
                 break;
             }
             default:
@@ -600,13 +600,13 @@ namespace ISO8823_PRESENTATION {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_BIND_IMPLICIT(*value<Simply_encoded_data > (true, User_data_simply_encoded_data), 0, APPLICATION_CLASS)) return;
+                        if (ITU_T_BIND_IMPLICIT(value<Simply_encoded_data > (true, User_data_simply_encoded_data), 0, APPLICATION_CLASS)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_BIND_IMPLICIT(*value<Fully_encoded_data > (true, User_data_fully_encoded_data), 1, APPLICATION_CLASS)) return;
+                        if (ITU_T_BIND_IMPLICIT(value<Fully_encoded_data > (true, User_data_fully_encoded_data), 1, APPLICATION_CLASS)) return;
                         else free();
                         break;
                     }
@@ -625,14 +625,14 @@ namespace ISO8823_PRESENTATION {
 
     template<> void PDV_list::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_TAG(transfer_syntax_name_);
-        ITU_T_BIND_TAG(*presentation_context_identifier_);
-        ITU_T_BIND_CHOICE(*presentation_data_values_);
+        ITU_T_BIND_TAG(presentation_context_identifier_);
+        ITU_T_BIND_CHOICE(presentation_data_values_);
     }
 
     template<> void PDV_list::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_BIND_TAG(transfer_syntax_name_);
-        ITU_T_BIND_TAG(*presentation_context_identifier_);
-        ITU_T_BIND_CHOICE(*presentation_data_values_);
+        ITU_T_BIND_TAG(presentation_context_identifier_);
+        ITU_T_BIND_CHOICE(presentation_data_values_);
     }
 
     // choice presentation-data-values
@@ -641,17 +641,17 @@ namespace ISO8823_PRESENTATION {
         switch (type()) {
             case Presentation_data_values_type_single_ASN1_type:
             {
-                ITU_T_BIND_EXPLICIT(*value<any_type > (false, Presentation_data_values_type_single_ASN1_type), 0, CONTEXT_CLASS);
+                ITU_T_BIND_EXPLICIT(value<any_type > (false, Presentation_data_values_type_single_ASN1_type), 0, CONTEXT_CLASS);
                 break;
             }
             case Presentation_data_values_type_octet_aligned:
             {
-                ITU_T_BIND_IMPLICIT(*value<octet_string > (false, Presentation_data_values_type_octet_aligned), 1, CONTEXT_CLASS);
+                ITU_T_BIND_IMPLICIT(value<octet_string > (false, Presentation_data_values_type_octet_aligned), 1, CONTEXT_CLASS);
                 break;
             }
             case Presentation_data_values_type_arbitrary:
             {
-                ITU_T_BIND_IMPLICIT(*value<bit_string > (false, Presentation_data_values_type_arbitrary), 2, CONTEXT_CLASS);
+                ITU_T_BIND_IMPLICIT(value<bit_string > (false, Presentation_data_values_type_arbitrary), 2, CONTEXT_CLASS);
                 break;
             }
             default:
@@ -668,19 +668,19 @@ namespace ISO8823_PRESENTATION {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_BIND_EXPLICIT(*value<any_type > (true, Presentation_data_values_type_single_ASN1_type), 0, CONTEXT_CLASS)) return;
+                        if (ITU_T_BIND_EXPLICIT(value<any_type > (true, Presentation_data_values_type_single_ASN1_type), 0, CONTEXT_CLASS)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_BIND_IMPLICIT(*value<octet_string > (true, Presentation_data_values_type_octet_aligned), 1, CONTEXT_CLASS)) return;
+                        if (ITU_T_BIND_IMPLICIT(value<octet_string > (true, Presentation_data_values_type_octet_aligned), 1, CONTEXT_CLASS)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_BIND_IMPLICIT(*value<bit_string > (true, Presentation_data_values_type_arbitrary), 2, CONTEXT_CLASS)) return;
+                        if (ITU_T_BIND_IMPLICIT(value<bit_string > (true, Presentation_data_values_type_arbitrary), 2, CONTEXT_CLASS)) return;
                         else free();
                         break;
                     }
