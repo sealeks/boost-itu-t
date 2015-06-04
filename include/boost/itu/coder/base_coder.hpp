@@ -802,7 +802,7 @@ namespace boost {
         };
 
 
-
+        typedef basic_coder asn_coder_type;
         typedef shared_ptr<basic_coder> asn_coder_ptr;
 
         template<typename INPUT_TYPE = base_input_coder, typename OUTPUT_TYPE = base_output_coder>
