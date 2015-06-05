@@ -484,11 +484,17 @@ namespace boost {
             explicit utf8_string(const octet_sequnce& vl) : std::string(vl.begin(), vl.end()) {
             }
 
-            explicit utf8_string(const std::string& vl) : std::string(vl) {
+            utf8_string(const std::string& vl) : std::string(vl) {
             }
+            
+            utf8_string(const std::string::value_type* vl) : std::string(vl) {
+            }            
 
             utf8_string(const std::wstring& vl) : std::string(wstr_to_utf8(vl)) {
             }
+            
+            utf8_string(const std::wstring::value_type* vl) : std::string(wstr_to_utf8(std::wstring(vl))) {
+            }            
 
             operator std::wstring() const {
                 return (valid()) ? utf8_to_wstr(*this) : std::wstring();

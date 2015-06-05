@@ -13,6 +13,8 @@
 #include <vector>
 #include <string>
 
+#include <boost/itu/asn1/utf8.hpp>
+
 namespace boost {
     namespace itu {
 
@@ -515,6 +517,8 @@ namespace boost {
         };
 
 
+        
+        
         ///////////////////////////////////////////////////////////////////////
         //  smpl_string
         ///////////////////////////////////////////////////////////////////////        
@@ -727,6 +731,247 @@ namespace boost {
             }
 
             friend smpl_string operator+(const std::string& x, const smpl_string& y) {
+                return x + static_cast<const Base&> (y);
+            }
+
+        };
+        
+        
+        ///////////////////////////////////////////////////////////////////////
+        //  utf8_string
+        ///////////////////////////////////////////////////////////////////////        
+
+
+        class utf8_string : protected std::string {
+
+        public:typedef std::string Base;
+            typedef std::wstring WBase;
+
+
+            typedef typename Base::traits_type traits_type;
+            typedef typename Base::value_type value_type;
+            typedef typename Base::allocator_type allocator_type;
+            typedef typename Base::size_type size_type;
+            typedef typename Base::difference_type difference_type;
+            typedef typename Base::reference reference;
+            typedef typename Base::const_reference const_reference;
+            typedef typename Base::pointer pointer;
+            typedef typename Base::const_pointer const_pointer;
+            typedef typename Base::iterator iterator;
+            typedef typename Base::const_iterator const_iterator;
+            typedef typename Base::const_reverse_iterator const_reverse_iterator;
+            typedef typename Base::reverse_iterator reverse_iterator;
+            
+            typedef typename WBase::value_type wvalue_type;            
+            typedef typename WBase::iterator witerator;
+            typedef typename WBase::const_iterator wconst_iterator;
+            typedef typename WBase::const_reverse_iterator wconst_reverse_iterator;
+            typedef typename WBase::reverse_iterator wreverse_iterator;            
+            
+        private:
+
+            static Base to_base(const WBase& vl){
+                return wstr_to_utf8(vl);
+            }
+            
+            static Base to_base(const wvalue_type* vl){
+                return wstr_to_utf8(vl);
+            }           
+
+        public:            
+
+            utf8_string() : Base() {
+            }
+
+            explicit
+            utf8_string(const allocator_type& a) : Base(a) {
+            }
+
+            utf8_string(const Base& str) : Base(str) {
+            }           
+
+            utf8_string(const Base& str, size_type pos,
+                    size_type n = npos) : Base(str, pos, n) {
+            }         
+
+            utf8_string(const Base& str, size_type pos,
+                    size_type n, const allocator_type& a) : Base(str, pos, n, a) {
+            }
+            
+            utf8_string(const WBase& str, size_type pos,
+                    size_type n = npos) : Base(to_base(WBase(str, pos, n))) {
+            }               
+            
+            utf8_string(const WBase& str, size_type pos,
+                    size_type n, const allocator_type& a) : Base(to_base(WBase(str, pos, n, a))) {
+            }            
+            
+            utf8_string(const WBase& str) : Base(to_base(str)) {
+            }             
+
+            utf8_string(const utf8_string& str) : Base(static_cast<const Base&> (str)) {
+            }
+
+            utf8_string(const utf8_string& str, size_type pos,
+                    size_type n = npos) : Base(static_cast<const Base&> (str), pos, n) {
+            }
+
+            utf8_string(const utf8_string& str, size_type pos,
+                    size_type n, const allocator_type& a) : Base(static_cast<const Base&> (str), pos, n, a) {
+            }
+
+            utf8_string(const value_type* s, size_type n,
+                    const allocator_type& a = allocator_type()) : Base(s, n, a) {
+            }
+
+            utf8_string(const value_type* s,
+                    const allocator_type& a = allocator_type()) : Base(s, a) {
+            }
+
+            utf8_string(size_type n, value_type c,
+                    const allocator_type& a = allocator_type()) : Base(n, c, a) {
+            }
+
+            template<class InputIterator>
+            utf8_string(InputIterator beg, InputIterator end,
+                    const allocator_type& a = allocator_type()) : Base(beg, end, a) {
+            }
+
+#if __cplusplus >= 201103L            
+
+            utf8_string(utf8_string&& str)
+            : Base(static_cast<Base&&> (str)) {
+            }
+
+            utf8_string(Base&& str)
+            : Base(str) {
+            }
+
+            utf8_string(std::initializer_list<value_type> l, const allocator_type& a = allocator_type())
+            : Base(l, a) {
+            }
+
+#endif           
+
+            ~utf8_string() {
+            }
+
+            utf8_string& operator=(const utf8_string& str) {
+                Base::operator=(static_cast<const Base&> (str));
+                return *this;
+            }
+
+            utf8_string& operator=(const Base& str) {
+                Base::operator=(str);
+                return *this;
+            }
+
+            utf8_string& operator=(const value_type* s) {
+                Base::operator=(s);
+                return *this;
+            }
+
+            utf8_string& operator=(value_type c) {
+                Base::operator=(c);
+                return *this;
+            }
+
+#if __cplusplus >= 201103L
+
+            utf8_string& operator=(utf8_string&& str) {
+                Base::operator=(static_cast<Base&&> (str));
+                return *this;
+            }
+
+            utf8_string& operator=(Base&& str) {
+                Base::operator=(str);
+                return *this;
+            }
+
+            basic_string& operator=(std::initializer_list<value_type> l) {
+                Base::operator=(l);
+                return *this;
+            }
+
+#endif        
+
+            Base& as_base() {
+                return static_cast<Base&> (*this);
+            }
+
+            const Base& as_base() const {
+                return static_cast<const Base&> (*this);
+            }
+
+            using Base::npos;
+
+            using Base::append;
+            using Base::assign;
+            using Base::at;
+            using Base::begin;
+            using Base::c_str;
+            using Base::capacity;
+            using Base::clear;
+            using Base::compare;
+            using Base::copy;
+            using Base::data;
+            using Base::end;
+            using Base::erase;
+            using Base::empty;
+            using Base::find;
+            using Base::find_first_not_of;
+            using Base::find_first_of;
+            using Base::find_last_not_of;
+            using Base::find_last_of;
+            using Base::get_allocator;
+            using Base::insert;
+            using Base::length;
+            using Base::max_size;
+            using Base::operator[];
+            using Base::push_back;
+            using Base::rbegin;
+            using Base::rend;
+            using Base::replace;
+            using Base::reserve;
+            using Base::resize;
+            using Base::rfind;
+            using Base::size;
+            using Base::substr;
+            using Base::swap;
+
+            friend bool operator==(const utf8_string& x, const utf8_string& y) {
+                return static_cast<const Base&> (x) == static_cast<const Base&> (y);
+            }
+
+            friend bool operator!=(const utf8_string& x, const utf8_string& y) {
+                return static_cast<const Base&> (x) != static_cast<const Base&> (y);
+            }
+
+            friend bool operator<(const utf8_string& x, const utf8_string& y) {
+                return static_cast<const Base&> (x) < static_cast<const Base&> (y);
+            }
+
+            friend bool operator>(const utf8_string& x, const utf8_string& y) {
+                return static_cast<const Base&> (x) > static_cast<const Base&> (y);
+            }
+
+            friend bool operator<=(const utf8_string& x, const utf8_string& y) {
+                return static_cast<const Base&> (x) <= static_cast<const Base&> (y);
+            }
+
+            friend bool operator>=(const utf8_string& x, const utf8_string& y) {
+                return static_cast<const Base&> (x) >= static_cast<const Base&> (y);
+            }
+
+            friend utf8_string operator+(const utf8_string& x, const utf8_string& y) {
+                return static_cast<const Base&> (x) + static_cast<const Base&> (y);
+            }
+
+            friend utf8_string operator+(const utf8_string& x, const std::string& y) {
+                return static_cast<const Base&> (x) + y;
+            }
+
+            friend utf8_string operator+(const std::string& x, const smpl_string& y) {
                 return x + static_cast<const Base&> (y);
             }
 
