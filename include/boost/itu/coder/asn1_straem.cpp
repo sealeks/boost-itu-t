@@ -40,8 +40,8 @@ namespace boost {
         /*BASIC STREAM                                                                                                                                                      */
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////                   
 
-        asn1_stream::asn1_stream(encoding_rule rl)
-        : coder(build_coder(rl)) {
+        asn1_stream::asn1_stream(encoding_rule rl, std::size_t frmt)
+        : coder(build_coder(rl)), frmt_(frmt) {
         }
 
         asn1_stream::coder_type asn1_stream::type() {
@@ -101,18 +101,14 @@ namespace boost {
             }
             return false;
         }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
-        /*COUT STREAM                                                                                                                                                          */
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////             
-
-        void ioasn1_stream::print_out() {
+        
+        void asn1_stream::print_out() {
             
             const boost::itu::const_sequences& seq = coder->out()->buffers();
             std::string strout;
             for (boost::itu::const_sequences::const_iterator it = seq.begin(); it != seq.end(); ++it)
                 strout += std::string(boost::asio::buffer_cast<const char*>(*it), boost::asio::buffer_size(*it));
-            std::cout << "out operation result: "  << boost::itu::binary_to_hexsequence_debug(strout, 4);
+            std::cout << "out operation result: "  << boost::itu::binary_to_hexsequence_debug(strout, frmt_  ?  frmt_ : 1);
             
             if ((coder->out()->unusebits()) && (!seq.empty())) {
                 std::string tmp1(boost::asio::buffer_cast<const char*>(seq.back()), boost::asio::buffer_size(seq.back()));
@@ -125,7 +121,7 @@ namespace boost {
             std::cout  << std::endl;
         }
 
-        void ioasn1_stream::start_in() {
+        void asn1_stream::start_in() {
             if (input_empty()) {
                 std::cout << "input buffer is empty ";
                 if (output_empty())
@@ -143,12 +139,71 @@ namespace boost {
             }
         }
 
-        void ioasn1_stream::print_in() {
+        void asn1_stream::print_in() {
             std::cout << " aftrer opreration input size :  " << coder->in()->size();
             if (coder->in()->unusebits())
                 std::cout << " { unuse :  " << coder->in()->unusebits() << " }";
             std::cout << std::endl;            
+        }        
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        /*COUT STREAM                                                                                                                                                          */
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////             
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        /*FILE STREAM                                                                                                                                                           */
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////      
+        
+        void fasn1_stream::print_out() {
+
+            if (fstrm) {
+                
+                asn1_stream::print_out();
+
+                const boost::itu::const_sequences& seq = coder->out()->buffers();
+                std::string strout;
+                for (boost::itu::const_sequences::const_iterator it = seq.begin(); it != seq.end(); ++it)
+                    strout += std::string(boost::asio::buffer_cast<const char*>(*it), boost::asio::buffer_size(*it));
+                
+                fstrm  << strout;
+                
+            } else
+                std::cout << "Filestream error" << std::endl;
+            
         }
 
+        void fasn1_stream::start_in() {
+
+            if (fstrm) {
+                
+                std::string seq;
+                
+                fstrm >> seq;      
+                
+                octet_sequnce oseq(seq.begin(),seq.end());
+                
+                coder->in()->clear();
+                coder->in()->add(oseq);
+
+                std::cout << " before opreration input size :  " << coder->in()->size();
+                if (coder->in()->unusebits())
+                    std::cout << " { unuse :  " << coder->in()->unusebits() << " }";
+                std::cout <<  std::endl;
+                
+            } else
+                std::cout << "Filestream error" << std::endl;
+        }
+
+        void fasn1_stream::print_in() {
+
+            if (fstrm) {
+                std::cout << " aftrer opreration input size :  " << coder->in()->size();
+                if (coder->in()->unusebits())
+                    std::cout << " { unuse :  " << coder->in()->unusebits() << " }";
+                std::cout << std::endl;
+            }
+            
+        }         
     }
 }

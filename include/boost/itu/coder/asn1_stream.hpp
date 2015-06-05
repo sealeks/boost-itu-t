@@ -19,7 +19,7 @@
 
 #include <boost/itu/x69X/x690.hpp>
 #include <boost/itu/x69X/x691.hpp>
-
+#include <fstream>
 
 namespace boost {
     namespace asn1 {
@@ -65,7 +65,7 @@ namespace boost {
             typedef asn_coder_type::output_coder_ptr output_coder_ptr;
             typedef asn_coder_type::input_coder_ptr input_coder_ptr;
 
-            asn1_stream(encoding_rule rl);
+            asn1_stream(encoding_rule rl, std::size_t frmt =0);
 
             virtual ~asn1_stream() {
             }
@@ -86,21 +86,27 @@ namespace boost {
             
             bool fill_in_from_out();
 
-            asn_coder_ptr coder;
+            virtual void print_out();
+            virtual void start_in();
+            virtual void print_in();
+            
+            asn_coder_ptr coder;            
+            std::size_t frmt_;            
         };
 
 
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
-        /*COUT STREAM                                                                                                                                                          */
+        /*COUT STREAM                                                                                                                                                           */
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////             
 
         class ioasn1_stream : public asn1_stream {
 
         public:
 
-            ioasn1_stream(encoding_rule rl) : asn1_stream(rl) {
+            ioasn1_stream(encoding_rule rl, std::size_t frmt =0) :
+            asn1_stream(rl, frmt) {
             }
 
             template<typename T>
@@ -135,11 +141,63 @@ namespace boost {
                 return strm;
             }
 
-        private:
+        };
+        
+        
+        
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        /*FILE STREAM                                                                                                                                                           */
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////          
 
-            void print_out();
-            void start_in();
-            void print_in();
+        class fasn1_stream : public asn1_stream {
+
+        public:
+
+           fasn1_stream(encoding_rule rl, const std::string& file, 
+                    std::ios_base::openmode flg = std::ios_base::out) :
+            asn1_stream(rl), fstrm(file.c_str(), flg | std::ios_base::binary) {
+            }
+
+            template<typename T>
+            friend fasn1_stream& operator<<(fasn1_stream& strm, const T& vl) {
+                strm.clear_output();
+                switch (strm.type()) {
+                    case x_690: strm.x690coder()->output() & vl;
+                        break;
+                    case x_691: strm.x691coder()->output() & vl;
+                        break;
+                    default:
+                    {
+                    }
+                }
+                strm.print_out();
+                return strm;
+            }
+
+            template<typename T>
+            friend fasn1_stream& operator>>(fasn1_stream& strm, T& vl) {
+                strm.start_in();
+                switch (strm.type()) {
+                    case x_690: strm.x690coder()->input() & vl;
+                        break;
+                    case x_691: strm.x691coder()->input() & vl;
+                        break;
+                    default:
+                    {
+                    }
+                }
+                strm.print_in();
+                return strm;
+            }
+            
+            virtual void print_out();
+            virtual void start_in();
+            virtual void print_in();         
+            
+        private:
+            
+            std::fstream fstrm;
 
         };
 
