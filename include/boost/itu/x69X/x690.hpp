@@ -420,7 +420,10 @@ namespace boost {
             
             template<>
             void x690_string_to_stream_cast(const octet_string& val, output_coder& stream, octet_type lentype);            
-
+           
+            template<>
+            void x690_string_to_stream_cast(const utf8_string& val, output_coder& stream, octet_type lentype);
+            
             template<>
             void x690_string_to_stream_cast(const bmp_string& val, output_coder& stream, octet_type lentype);
 

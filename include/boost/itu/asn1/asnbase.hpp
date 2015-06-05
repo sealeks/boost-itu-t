@@ -474,56 +474,7 @@ namespace boost {
         // utf8_string
         ////////////////////////////////////////////////////////////////////////////////////////////////////           
 
-        class utf8_string : public std::string {
-
-        public:
-
-            utf8_string() : std::string() {
-            }
-
-            explicit utf8_string(const octet_sequnce& vl) : std::string(vl.begin(), vl.end()) {
-            }
-
-            utf8_string(const std::string& vl) : std::string(vl) {
-            }
-            
-            utf8_string(const std::string::value_type* vl) : std::string(vl) {
-            }            
-
-            utf8_string(const std::wstring& vl) : std::string(wstr_to_utf8(vl)) {
-            }
-            
-            utf8_string(const std::wstring::value_type* vl) : std::string(wstr_to_utf8(std::wstring(vl))) {
-            }            
-
-            operator std::wstring() const {
-                return (valid()) ? utf8_to_wstr(*this) : std::wstring();
-            }
-
-            operator octet_sequnce() const {
-                return (valid()) ? octet_sequnce(begin(), end()) : octet_sequnce();
-            }
-
-            octet_sequnce as_octet_sequnce() const {
-                return (valid()) ? octet_sequnce(begin(), end()) : octet_sequnce();
-            }
-
-            std::wstring to_wstring() const {
-                return (valid()) ? utf8_to_wstr(*this) : std::wstring();
-            }
-
-            bool valid() const {
-                return check_utf8(*this);
-            }
-
-        };
-
-
         std::ostream& operator<<(std::ostream& stream, const utf8_string& vl);
-
-
-
-
 
 
 

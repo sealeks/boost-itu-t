@@ -358,7 +358,7 @@ namespace boost {
             }
 
             output_coder& operator<<(output_coder& stream, const utf8_string& vl) {
-                return octet_writer_undefsz(stream, vl.as_octet_sequnce());
+                return octet_writer_undefsz(stream, octet_sequnce(vl.begin(), vl.end()));
             }
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<utf8_string>& vl) {

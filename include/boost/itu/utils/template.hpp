@@ -517,8 +517,8 @@ namespace boost {
         };
 
 
-        
-        
+
+
         ///////////////////////////////////////////////////////////////////////
         //  smpl_string
         ///////////////////////////////////////////////////////////////////////        
@@ -735,16 +735,17 @@ namespace boost {
             }
 
         };
-        
-        
+
+
         ///////////////////////////////////////////////////////////////////////
         //  utf8_string
         ///////////////////////////////////////////////////////////////////////        
 
-
         class utf8_string : protected std::string {
 
-        public:typedef std::string Base;
+        public:
+
+            typedef std::string Base;
             typedef std::wstring WBase;
 
 
@@ -761,24 +762,28 @@ namespace boost {
             typedef typename Base::const_iterator const_iterator;
             typedef typename Base::const_reverse_iterator const_reverse_iterator;
             typedef typename Base::reverse_iterator reverse_iterator;
-            
-            typedef typename WBase::value_type wvalue_type;            
+
+            typedef typename WBase::value_type wvalue_type;
             typedef typename WBase::iterator witerator;
             typedef typename WBase::const_iterator wconst_iterator;
             typedef typename WBase::const_reverse_iterator wconst_reverse_iterator;
-            typedef typename WBase::reverse_iterator wreverse_iterator;            
-            
+            typedef typename WBase::reverse_iterator wreverse_iterator;
+
         private:
 
-            static Base to_base(const WBase& vl){
+            static Base to_base(const WBase& vl) {
                 return wstr_to_utf8(vl);
             }
-            
-            static Base to_base(const wvalue_type* vl){
-                return wstr_to_utf8(vl);
-            }           
 
-        public:            
+            static Base to_base(const wvalue_type* vl) {
+                return wstr_to_utf8(vl);
+            }
+
+            static WBase to_Wbase(const Base& vl) {
+                return utf8_to_wstr(vl);
+            }
+
+        public:
 
             utf8_string() : Base() {
             }
@@ -788,26 +793,26 @@ namespace boost {
             }
 
             utf8_string(const Base& str) : Base(str) {
-            }           
+            }
 
             utf8_string(const Base& str, size_type pos,
                     size_type n = npos) : Base(str, pos, n) {
-            }         
+            }
 
             utf8_string(const Base& str, size_type pos,
                     size_type n, const allocator_type& a) : Base(str, pos, n, a) {
             }
-            
+
             utf8_string(const WBase& str, size_type pos,
                     size_type n = npos) : Base(to_base(WBase(str, pos, n))) {
-            }               
-            
+            }
+
             utf8_string(const WBase& str, size_type pos,
                     size_type n, const allocator_type& a) : Base(to_base(WBase(str, pos, n, a))) {
-            }            
-            
+            }
+
             utf8_string(const WBase& str) : Base(to_base(str)) {
-            }             
+            }
 
             utf8_string(const utf8_string& str) : Base(static_cast<const Base&> (str)) {
             }
@@ -832,9 +837,25 @@ namespace boost {
                     const allocator_type& a = allocator_type()) : Base(n, c, a) {
             }
 
+            utf8_string(const wvalue_type* s, size_type n,
+                    const allocator_type& a = allocator_type()) : Base(to_base(WBase(s, n, a))) {
+            }
+
+            utf8_string(const wvalue_type* s,
+                    const allocator_type& a = allocator_type()) : Base(to_base(WBase(s, a))) {
+            }
+
+            utf8_string(size_type n, wvalue_type c,
+                    const allocator_type& a = allocator_type()) : Base(to_base(WBase(n, c, a))) {
+            }
+
             template<class InputIterator>
             utf8_string(InputIterator beg, InputIterator end,
                     const allocator_type& a = allocator_type()) : Base(beg, end, a) {
+            }
+
+            utf8_string(wconst_iterator beg, wconst_iterator end,
+                    const allocator_type& a = allocator_type()) : Base(to_base(WBase(beg, end, a))) {
             }
 
 #if __cplusplus >= 201103L            
@@ -847,8 +868,16 @@ namespace boost {
             : Base(str) {
             }
 
+            /*utf8_string(WBase&& wstr)
+            : Base(to_base(WBase(wstr))) {
+            }*/
+
             utf8_string(std::initializer_list<value_type> l, const allocator_type& a = allocator_type())
             : Base(l, a) {
+            }
+
+            utf8_string(std::initializer_list<wvalue_type> l, const allocator_type& a = allocator_type())
+            : Base(to_base(WBase(l, a))) {
             }
 
 #endif           
@@ -902,6 +931,23 @@ namespace boost {
             const Base& as_base() const {
                 return static_cast<const Base&> (*this);
             }
+
+            Base as_string() const {
+                return static_cast<const Base&> (*this);
+            }
+
+            WBase as_wstring() const {
+                return well_formed() ? utf8_to_wstr(*this) : std::wstring();
+            }
+
+            bool well_formed() const {
+                return check_utf8(*this);
+            }
+
+            operator std::wstring() const {
+                return as_wstring();
+            }
+
 
             using Base::npos;
 
@@ -971,7 +1017,7 @@ namespace boost {
                 return static_cast<const Base&> (x) + y;
             }
 
-            friend utf8_string operator+(const std::string& x, const smpl_string& y) {
+            friend utf8_string operator+(const std::string& x, const utf8_string& y) {
                 return x + static_cast<const Base&> (y);
             }
 
