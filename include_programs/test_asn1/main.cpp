@@ -26,7 +26,7 @@ using namespace Test1;
 
 int main(int argc, char* argv[]) {
     
-    boost::asn1::std_stream tsstr(boost::itu::PER_UNALIGNED_ENCODING);
+    boost::asn1::ioasn1_stream tsstr(boost::itu::PER_UNALIGNED_ENCODING);
 
     PersonnelRecord PRt(Name("John", "P", "Smith"),
             "Director",
