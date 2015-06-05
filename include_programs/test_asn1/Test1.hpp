@@ -25,14 +25,17 @@ namespace Test1 {
     struct Ax;
 
 
-    typedef visible_string NameString; //    Sc (  [ 1  ...   64 ]   ...ext...)   //    c8C (  [ - ]   [ A  ...   Z ]   [ a  ...   z ]   
+    typedef utf8_string NameString;
     typedef integer_type EmployeeNumber;
     ITU_T_PREFIXED_DECLARE(EmployeeNumber, ITU_T_ARRAY(prefixed_type(2, APPLICATION_CLASS)), false); //  initial =implicit  //   Ic(  [ 0  ...   9999 ]   ...ext...) 
     typedef visible_string Date;
     ITU_T_PREFIXED_DECLARE(Date, ITU_T_ARRAY(prefixed_type(3, APPLICATION_CLASS)), false); //  initial =implicit  //    Sc (  [ 8 ]   ...ext...)   //    c8C (  [ 0  ...   9 ]   
 
+    ITU_T_IMPLICIT_TYPEDEF(PersonnelRecord__impl_helper, PersonnelRecord, 0, APPLICATION_CLASS);
     ITU_T_PREFIXED_DECLARE(PersonnelRecord, ITU_T_ARRAY(prefixed_type(0, APPLICATION_CLASS)), false); //  initial =implicit
+    ITU_T_IMPLICIT_TYPEDEF(PersonnelRecord_s__impl_helper, PersonnelRecord_s, 0, APPLICATION_CLASS);
     ITU_T_PREFIXED_DECLARE(PersonnelRecord_s, ITU_T_ARRAY(prefixed_type(0, APPLICATION_CLASS)), false); //  initial =implicit
+    ITU_T_IMPLICIT_TYPEDEF(Name__impl_helper, Name, 1, APPLICATION_CLASS);
     ITU_T_PREFIXED_DECLARE(Name, ITU_T_ARRAY(prefixed_type(1, APPLICATION_CLASS)), false); //  initial =implicit
 
 
@@ -156,9 +159,9 @@ namespace Test1 {
                 const NameString& arg__initial,
                 const NameString& arg__familyName);
 
-        ITU_T_HOLDERH_DECL(givenName, NameString); //    Sc (  [ 1  ...   64 ]   ...ext...)   //    c8C (  [ - ]   [ A  ...   Z ]   [ a  ...   z ]   
-        ITU_T_HOLDERH_DECL(initial, NameString); //    Sc (  [ 1 ]     //    c8C (  [ - ]   [ A  ...   Z ]   [ a  ...   z ]   
-        ITU_T_HOLDERH_DECL(familyName, NameString); //    Sc (  [ 1  ...   64 ]   ...ext...)   //    c8C (  [ - ]   [ A  ...   Z ]   [ a  ...   z ]   
+        ITU_T_HOLDERH_DECL(givenName, NameString);
+        ITU_T_HOLDERH_DECL(initial, NameString);
+        ITU_T_HOLDERH_DECL(familyName, NameString);
 
         ITU_T_ARCHIVE_FUNC;
     };

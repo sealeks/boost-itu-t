@@ -32,48 +32,12 @@ namespace Test1 {
                 tmp[0] >>= 4;
                 tmp[0] &= '\xF';
                 return (tmp[0] + '\x30');
-            }
+        }
             return 0;
         }
 
         static std::size_t bits_count(bool aligned) {
             return 4;
-        }
-
-    };
-
-
-    //  helper name:   NameString           type:  alphabet helper     //    Sc (  [ 1  ...   64 ]   ...ext...)   //    c8C (  [ - ]   [ A  ...   Z ]   [ a  ...   z ]   
-
-    struct NameString__shelper {
-
-        static void out(boost::asn1::x691::output_coder& stream, visible_string::value_type vl) {
-            stream.add_bitmap(bit_string(boost::asn1::octet_sequnce(1, stream.aligned() ?
-                    boost::asn1::octet_sequnce::value_type(vl) :
-                    boost::asn1::octet_sequnce::value_type(((vl < '\x60') ? (vl - '\x3F') : (vl - '\x61' + '\x1C')) << 2)),
-                    stream.aligned() ? 0 : 2));
-        }
-
-        static visible_string::value_type in(boost::asn1::x691::input_coder& stream) {
-            bit_string vl = stream.get_pop_bmp(stream.aligned() ? 8 : 6);
-            boost::asn1::octet_sequnce tmp = vl.as_octet_sequnce();
-            if (!tmp.empty()) {
-                if (!stream.aligned()) {
-                    tmp[0] >>= 2;
-                    tmp[0] &= '\x3F';
-                    if (tmp[0] > 27)
-                        return (tmp[0] - 28) + 97;
-                    else if (tmp[0] > 1)
-                        return (tmp[0] - 2) + 65;
-                    return tmp[0] + 45;
-                }
-                return tmp[0];
-            }
-            return 0;
-        }
-
-        static std::size_t bits_count(bool aligned) {
-            return aligned ? 8 : 6;
         }
 
     };
@@ -89,11 +53,11 @@ namespace Test1 {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_PER(*name_);
-        ITU_T_BIND_NUM_CONSTRAINT_EXT(*number_, static_cast<integer_type> (0), static_cast<integer_type> (9999));
-        ITU_T_BIND_PER(*title_);
-        ITU_T_BIND_EXSIZE_SNGLCONSTRAINT_EXT(visible_string, Date__shelper, *dateOfHire_, 8);
-        ITU_T_BIND_PER(*nameOfSpouse_);
+        ITU_T_BIND_PER(name_);
+        ITU_T_BIND_NUM_CONSTRAINT_EXT(number_, static_cast<integer_type> (0), static_cast<integer_type> (9999));
+        ITU_T_BIND_PER(title_);
+        ITU_T_BIND_EXSIZE_SNGLCONSTRAINT_EXT(visible_string, Date__shelper, dateOfHire_, 8);
+        ITU_T_BIND_PER(nameOfSpouse_);
         ITU_T_BIND_SIZE_SNGLCONSTRAINT_EXT(children_, 2);
     }
 
@@ -103,11 +67,11 @@ namespace Test1 {
 
         ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_BIND_PER(*name_);
-        ITU_T_BIND_NUM_CONSTRAINT_EXT(*number_, static_cast<integer_type> (0), static_cast<integer_type> (9999));
-        ITU_T_BIND_PER(*title_);
-        ITU_T_BIND_EXSIZE_SNGLCONSTRAINT_EXT(visible_string, Date__shelper, *dateOfHire_, 8);
-        ITU_T_BIND_PER(*nameOfSpouse_);
+        ITU_T_BIND_PER(name_);
+        ITU_T_BIND_NUM_CONSTRAINT_EXT(number_, static_cast<integer_type> (0), static_cast<integer_type> (9999));
+        ITU_T_BIND_PER(title_);
+        ITU_T_BIND_EXSIZE_SNGLCONSTRAINT_EXT(visible_string, Date__shelper, dateOfHire_, 8);
+        ITU_T_BIND_PER(nameOfSpouse_);
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_SNGLCONSTRAINT_EXT(children_, 2);
 
         if (ITU_T_EXTENTION) {
@@ -130,11 +94,11 @@ namespace Test1 {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_PER(*name_);
-        ITU_T_BIND_NUM_CONSTRAINT_EXT(*number_, static_cast<integer_type> (0), static_cast<integer_type> (9999));
-        ITU_T_BIND_PER(*title_);
-        ITU_T_BIND_EXSIZE_SNGLCONSTRAINT_EXT(visible_string, Date__shelper, *dateOfHire_, 8);
-        ITU_T_BIND_PER(*nameOfSpouse_);
+        ITU_T_BIND_PER(name_);
+        ITU_T_BIND_NUM_CONSTRAINT_EXT(number_, static_cast<integer_type> (0), static_cast<integer_type> (9999));
+        ITU_T_BIND_PER(title_);
+        ITU_T_BIND_EXSIZE_SNGLCONSTRAINT_EXT(visible_string, Date__shelper, dateOfHire_, 8);
+        ITU_T_BIND_PER(nameOfSpouse_);
         ITU_T_BIND_SIZE_SNGLCONSTRAINT_EXT(children_, 2);
     }
 
@@ -144,11 +108,11 @@ namespace Test1 {
 
         ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_BIND_PER(*name_);
-        ITU_T_BIND_NUM_CONSTRAINT_EXT(*number_, static_cast<integer_type> (0), static_cast<integer_type> (9999));
-        ITU_T_BIND_PER(*title_);
-        ITU_T_BIND_EXSIZE_SNGLCONSTRAINT_EXT(visible_string, Date__shelper, *dateOfHire_, 8);
-        ITU_T_BIND_PER(*nameOfSpouse_);
+        ITU_T_BIND_PER(name_);
+        ITU_T_BIND_NUM_CONSTRAINT_EXT(number_, static_cast<integer_type> (0), static_cast<integer_type> (9999));
+        ITU_T_BIND_PER(title_);
+        ITU_T_BIND_EXSIZE_SNGLCONSTRAINT_EXT(visible_string, Date__shelper, dateOfHire_, 8);
+        ITU_T_BIND_PER(nameOfSpouse_);
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_SNGLCONSTRAINT_EXT(children_, 2);
 
         if (ITU_T_EXTENTION) {
@@ -170,8 +134,8 @@ namespace Test1 {
 
         ITU_T_EXTENTION_WRITE;
 
-        ITU_T_BIND_PER(*name_);
-        ITU_T_BIND_EXSIZE_SNGLCONSTRAINT_EXT(visible_string, Date__shelper, *dateOfBirth_, 8);
+        ITU_T_BIND_PER(name_);
+        ITU_T_BIND_EXSIZE_SNGLCONSTRAINT_EXT(visible_string, Date__shelper, dateOfBirth_, 8);
 
         if (ITU_T_EXTENTION) {
 
@@ -190,8 +154,8 @@ namespace Test1 {
     template<> void ChildInformation::serialize(boost::asn1::x691::input_coder& arch) {
 
         ITU_T_EXTENTION_READ;
-        ITU_T_BIND_PER(*name_);
-        ITU_T_BIND_EXSIZE_SNGLCONSTRAINT_EXT(visible_string, Date__shelper, *dateOfBirth_, 8);
+        ITU_T_BIND_PER(name_);
+        ITU_T_BIND_EXSIZE_SNGLCONSTRAINT_EXT(visible_string, Date__shelper, dateOfBirth_, 8);
 
         if (ITU_T_EXTENTION) {
 
@@ -214,15 +178,15 @@ namespace Test1 {
 
         ITU_T_EXTENTION_WRITE_NULL;
 
-        ITU_T_BIND_PER(*name_);
-        ITU_T_BIND_EXSIZE_SNGLCONSTRAINT_EXT(visible_string, Date__shelper, *dateOfBirth_, 8);
+        ITU_T_BIND_PER(name_);
+        ITU_T_BIND_EXSIZE_SNGLCONSTRAINT_EXT(visible_string, Date__shelper, dateOfBirth_, 8);
     }
 
     template<> void ChildInformation_s::serialize(boost::asn1::x691::input_coder& arch) {
 
         ITU_T_EXTENTION_READ;
-        ITU_T_BIND_PER(*name_);
-        ITU_T_BIND_EXSIZE_SNGLCONSTRAINT_EXT(visible_string, Date__shelper, *dateOfBirth_, 8);
+        ITU_T_BIND_PER(name_);
+        ITU_T_BIND_EXSIZE_SNGLCONSTRAINT_EXT(visible_string, Date__shelper, dateOfBirth_, 8);
 
         if (ITU_T_EXTENTION) {
 
@@ -239,17 +203,17 @@ namespace Test1 {
 
         ITU_T_EXTENTION_WRITE_NULL;
 
-        ITU_T_BIND_EXSIZE_CONSTRAINT_EXT(visible_string, NameString__shelper, *givenName_, 1, 64);
-        ITU_T_BIND_EXSIZE_SNGLCONSTRAINT(visible_string, NameString__shelper, *initial_, 1);
-        ITU_T_BIND_EXSIZE_CONSTRAINT_EXT(visible_string, NameString__shelper, *familyName_, 1, 64);
+        ITU_T_BIND_PER(givenName_);
+        ITU_T_BIND_PER(initial_);
+        ITU_T_BIND_PER(familyName_);
     }
 
     template<> void Name::serialize(boost::asn1::x691::input_coder& arch) {
 
         ITU_T_EXTENTION_READ;
-        ITU_T_BIND_EXSIZE_CONSTRAINT_EXT(visible_string, NameString__shelper, *givenName_, 1, 64);
-        ITU_T_BIND_EXSIZE_SNGLCONSTRAINT(visible_string, NameString__shelper, *initial_, 1);
-        ITU_T_BIND_EXSIZE_CONSTRAINT_EXT(visible_string, NameString__shelper, *familyName_, 1, 64);
+        ITU_T_BIND_PER(givenName_);
+        ITU_T_BIND_PER(initial_);
+        ITU_T_BIND_PER(familyName_);
 
         if (ITU_T_EXTENTION) {
 
@@ -277,9 +241,9 @@ namespace Test1 {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_NUM_CONSTRAINT(*a_, static_cast<uint8_t> (250), static_cast<uint8_t> (253));
-        ITU_T_BIND_PER(*b_);
-        ITU_T_BIND_PER(*c_);
+        ITU_T_BIND_NUM_CONSTRAINT(a_, static_cast<uint8_t> (250), static_cast<uint8_t> (253));
+        ITU_T_BIND_PER(b_);
+        ITU_T_BIND_PER(c_);
 
         if (ITU_T_EXTENTION) {
 
@@ -306,9 +270,9 @@ namespace Test1 {
 
         ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_BIND_NUM_CONSTRAINT(*a_, static_cast<uint8_t> (250), static_cast<uint8_t> (253));
-        ITU_T_BIND_PER(*b_);
-        ITU_T_BIND_PER(*c_);
+        ITU_T_BIND_NUM_CONSTRAINT(a_, static_cast<uint8_t> (250), static_cast<uint8_t> (253));
+        ITU_T_BIND_PER(b_);
+        ITU_T_BIND_PER(c_);
 
         if (ITU_T_EXTENTION) {
 
@@ -337,8 +301,9 @@ namespace Test1 {
         ITU_T_EXTENTION_WRITE_CHOICE(C_type_e, C_type_f);
 
         if (!ITU_T_EXTENTION) {
-            ITU_T_BIND_PER(*value<integer_type > (false, C_type_d));
-        } else {
+            ITU_T_BIND_PER(value<integer_type > (false, C_type_d));
+        }
+        else {
             switch (type()) {
                 case C_type_e:
                 {
@@ -368,8 +333,9 @@ namespace Test1 {
         ITU_T_EXTENTION_READ;
 
         if (!ITU_T_EXTENTION) {
-            ITU_T_BIND_PER(*value<integer_type > (true, C_type_d));
-        } else {
+            ITU_T_BIND_PER(value<integer_type > (true, C_type_d));
+        }
+        else {
 
             ITU_T_GET_NSN_SMALL_INDX;
 

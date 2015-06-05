@@ -20,11 +20,11 @@ namespace Test1 {
     // set  PersonnelRecord
 
     template<> void PersonnelRecord::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_BIND_IMPLICIT(*name_, 1, APPLICATION_CLASS);
-        ITU_T_BIND_IMPLICIT(*number_, 2, APPLICATION_CLASS);
-        ITU_T_BIND_EXPLICIT(*title_, 0, CONTEXT_CLASS);
-        ITU_T_BIND_PREFIXED(*dateOfHire_, PersonnelRecord__DateOfHire);
-        ITU_T_BIND_PREFIXED(*nameOfSpouse_, PersonnelRecord__NameOfSpouse);
+        ITU_T_BIND_IMPLICIT(name_, 1, APPLICATION_CLASS);
+        ITU_T_BIND_IMPLICIT(number_, 2, APPLICATION_CLASS);
+        ITU_T_BIND_EXPLICIT(title_, 0, CONTEXT_CLASS);
+        ITU_T_BIND_PREFIXED(dateOfHire_, PersonnelRecord__DateOfHire);
+        ITU_T_BIND_PREFIXED(nameOfSpouse_, PersonnelRecord__NameOfSpouse);
         ITU_T_BIND_IMPLICIT(children_, 3, CONTEXT_CLASS);
 
         ITU_T_RESET_EXTENTION;
@@ -35,11 +35,11 @@ namespace Test1 {
     }
 
     template<> void PersonnelRecord::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_BIND_IMPLICIT(*name_, 1, APPLICATION_CLASS);
-        ITU_T_BIND_IMPLICIT(*number_, 2, APPLICATION_CLASS);
-        ITU_T_BIND_EXPLICIT(*title_, 0, CONTEXT_CLASS);
-        ITU_T_BIND_PREFIXED(*dateOfHire_, PersonnelRecord__DateOfHire);
-        ITU_T_BIND_PREFIXED(*nameOfSpouse_, PersonnelRecord__NameOfSpouse);
+        ITU_T_BIND_IMPLICIT(name_, 1, APPLICATION_CLASS);
+        ITU_T_BIND_IMPLICIT(number_, 2, APPLICATION_CLASS);
+        ITU_T_BIND_EXPLICIT(title_, 0, CONTEXT_CLASS);
+        ITU_T_BIND_PREFIXED(dateOfHire_, PersonnelRecord__DateOfHire);
+        ITU_T_BIND_PREFIXED(nameOfSpouse_, PersonnelRecord__NameOfSpouse);
         ITU_T_BIND_IMPLICIT(children_, 3, CONTEXT_CLASS);
 
         ITU_T_RESET_EXTENTION;
@@ -52,11 +52,11 @@ namespace Test1 {
     // set  PersonnelRecord-s
 
     template<> void PersonnelRecord_s::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_BIND_IMPLICIT(*name_, 1, APPLICATION_CLASS);
-        ITU_T_BIND_IMPLICIT(*number_, 2, APPLICATION_CLASS);
-        ITU_T_BIND_EXPLICIT(*title_, 0, CONTEXT_CLASS);
-        ITU_T_BIND_PREFIXED(*dateOfHire_, PersonnelRecord_s__DateOfHire);
-        ITU_T_BIND_PREFIXED(*nameOfSpouse_, PersonnelRecord_s__NameOfSpouse);
+        ITU_T_BIND_IMPLICIT(name_, 1, APPLICATION_CLASS);
+        ITU_T_BIND_IMPLICIT(number_, 2, APPLICATION_CLASS);
+        ITU_T_BIND_EXPLICIT(title_, 0, CONTEXT_CLASS);
+        ITU_T_BIND_PREFIXED(dateOfHire_, PersonnelRecord_s__DateOfHire);
+        ITU_T_BIND_PREFIXED(nameOfSpouse_, PersonnelRecord_s__NameOfSpouse);
         ITU_T_BIND_IMPLICIT(children_, 3, CONTEXT_CLASS);
 
         ITU_T_RESET_EXTENTION;
@@ -67,11 +67,11 @@ namespace Test1 {
     }
 
     template<> void PersonnelRecord_s::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_BIND_IMPLICIT(*name_, 1, APPLICATION_CLASS);
-        ITU_T_BIND_IMPLICIT(*number_, 2, APPLICATION_CLASS);
-        ITU_T_BIND_EXPLICIT(*title_, 0, CONTEXT_CLASS);
-        ITU_T_BIND_PREFIXED(*dateOfHire_, PersonnelRecord_s__DateOfHire);
-        ITU_T_BIND_PREFIXED(*nameOfSpouse_, PersonnelRecord_s__NameOfSpouse);
+        ITU_T_BIND_IMPLICIT(name_, 1, APPLICATION_CLASS);
+        ITU_T_BIND_IMPLICIT(number_, 2, APPLICATION_CLASS);
+        ITU_T_BIND_EXPLICIT(title_, 0, CONTEXT_CLASS);
+        ITU_T_BIND_PREFIXED(dateOfHire_, PersonnelRecord_s__DateOfHire);
+        ITU_T_BIND_PREFIXED(nameOfSpouse_, PersonnelRecord_s__NameOfSpouse);
         ITU_T_BIND_IMPLICIT(children_, 3, CONTEXT_CLASS);
 
         ITU_T_RESET_EXTENTION;
@@ -84,8 +84,8 @@ namespace Test1 {
     // set  ChildInformation
 
     template<> void ChildInformation::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_BIND_IMPLICIT(*name_, 1, APPLICATION_CLASS);
-        ITU_T_BIND_PREFIXED(*dateOfBirth_, ChildInformation__DateOfBirth);
+        ITU_T_BIND_IMPLICIT(name_, 1, APPLICATION_CLASS);
+        ITU_T_BIND_PREFIXED(dateOfBirth_, ChildInformation__DateOfBirth);
 
         ITU_T_RESET_EXTENTION;
 
@@ -96,8 +96,8 @@ namespace Test1 {
     }
 
     template<> void ChildInformation::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_BIND_IMPLICIT(*name_, 1, APPLICATION_CLASS);
-        ITU_T_BIND_PREFIXED(*dateOfBirth_, ChildInformation__DateOfBirth);
+        ITU_T_BIND_IMPLICIT(name_, 1, APPLICATION_CLASS);
+        ITU_T_BIND_PREFIXED(dateOfBirth_, ChildInformation__DateOfBirth);
 
         ITU_T_RESET_EXTENTION;
 
@@ -110,8 +110,8 @@ namespace Test1 {
     // set  ChildInformation-s
 
     template<> void ChildInformation_s::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_BIND_IMPLICIT(*name_, 1, APPLICATION_CLASS);
-        ITU_T_BIND_PREFIXED(*dateOfBirth_, ChildInformation_s__DateOfBirth);
+        ITU_T_BIND_IMPLICIT(name_, 1, APPLICATION_CLASS);
+        ITU_T_BIND_PREFIXED(dateOfBirth_, ChildInformation_s__DateOfBirth);
 
         ITU_T_RESET_EXTENTION;
 
@@ -121,8 +121,8 @@ namespace Test1 {
     }
 
     template<> void ChildInformation_s::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_BIND_IMPLICIT(*name_, 1, APPLICATION_CLASS);
-        ITU_T_BIND_PREFIXED(*dateOfBirth_, ChildInformation_s__DateOfBirth);
+        ITU_T_BIND_IMPLICIT(name_, 1, APPLICATION_CLASS);
+        ITU_T_BIND_PREFIXED(dateOfBirth_, ChildInformation_s__DateOfBirth);
 
         ITU_T_RESET_EXTENTION;
 
@@ -134,9 +134,9 @@ namespace Test1 {
     // sequence Name
 
     template<> void Name::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_BIND_TAG(*givenName_);
-        ITU_T_BIND_TAG(*initial_);
-        ITU_T_BIND_TAG(*familyName_);
+        ITU_T_BIND_TAG(givenName_);
+        ITU_T_BIND_TAG(initial_);
+        ITU_T_BIND_TAG(familyName_);
 
         ITU_T_RESET_EXTENTION;
 
@@ -146,9 +146,9 @@ namespace Test1 {
     }
 
     template<> void Name::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_BIND_TAG(*givenName_);
-        ITU_T_BIND_TAG(*initial_);
-        ITU_T_BIND_TAG(*familyName_);
+        ITU_T_BIND_TAG(givenName_);
+        ITU_T_BIND_TAG(initial_);
+        ITU_T_BIND_TAG(familyName_);
 
         ITU_T_RESET_EXTENTION;
 
@@ -160,13 +160,13 @@ namespace Test1 {
     // sequence Ax
 
     template<> void Ax::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_BIND_TAG(*a_);
-        ITU_T_BIND_TAG(*b_);
-        ITU_T_BIND_CHOICE(*c_);
+        ITU_T_BIND_TAG(a_);
+        ITU_T_BIND_TAG(b_);
+        ITU_T_BIND_CHOICE(c_);
 
         ITU_T_RESET_EXTENTION;
 
-        ITU_T_BIND_TAG(*g_);
+        ITU_T_BIND_TAG(g_);
         ITU_T_BIND_TAG(h_);
 
         ITU_T_RESET_EXTENTION;
@@ -176,13 +176,13 @@ namespace Test1 {
     }
 
     template<> void Ax::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_BIND_TAG(*a_);
-        ITU_T_BIND_TAG(*b_);
-        ITU_T_BIND_CHOICE(*c_);
+        ITU_T_BIND_TAG(a_);
+        ITU_T_BIND_TAG(b_);
+        ITU_T_BIND_CHOICE(c_);
 
         ITU_T_RESET_EXTENTION;
 
-        ITU_T_BIND_TAG(*g_);
+        ITU_T_BIND_TAG(g_);
         ITU_T_BIND_TAG(h_);
 
         ITU_T_RESET_EXTENTION;
@@ -197,17 +197,17 @@ namespace Test1 {
         switch (type()) {
             case C_type_d:
             {
-                ITU_T_BIND_TAG(*value<integer_type > (false, C_type_d));
+                ITU_T_BIND_TAG(value<integer_type > (false, C_type_d));
                 break;
             }
             case C_type_e:
             {
-                ITU_T_BIND_TAG(*value<bool > (false, C_type_e));
+                ITU_T_BIND_TAG(value<bool > (false, C_type_e));
                 break;
             }
             case C_type_f:
             {
-                ITU_T_BIND_TAG(*value<ia5_string > (false, C_type_f));
+                ITU_T_BIND_TAG(value<ia5_string > (false, C_type_f));
                 break;
             }
             default:
@@ -224,19 +224,19 @@ namespace Test1 {
                 switch (__tag_id__) {
                     case 2:
                     {
-                        if (ITU_T_BIND_TAG(*value<integer_type > (true, C_type_d))) return;
+                        if (ITU_T_BIND_TAG(value<integer_type > (true, C_type_d))) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_BIND_TAG(*value<bool > (true, C_type_e))) return;
+                        if (ITU_T_BIND_TAG(value<bool > (true, C_type_e))) return;
                         else free();
                         break;
                     }
                     case 22:
                     {
-                        if (ITU_T_BIND_TAG(*value<ia5_string > (true, C_type_f))) return;
+                        if (ITU_T_BIND_TAG(value<ia5_string > (true, C_type_f))) return;
                         else free();
                         break;
                     }

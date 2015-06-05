@@ -22,11 +22,18 @@
 #include "Test1.hpp"
 
 
+const std::string work_dir="F:\\test_asn\\";
+
 using namespace Test1;
+using namespace boost::asn1;
 
 int main(int argc, char* argv[]) {
     
-    boost::asn1::ioasn1_stream tsstr(boost::itu::BER_ENCODING);
+
+    
+    //boost::asn1::ioasn1_stream tsstr(boost::itu::BER_ENCODING);
+    
+    boost::asn1::fasn1_stream tsstr(boost::itu::BER_ENCODING, work_dir + "test.ber");
 
     PersonnelRecord PRt(Name("John", "P", "Smith"),
             "Director",
@@ -46,9 +53,12 @@ int main(int argc, char* argv[]) {
     TstA.h(true);
     Ax iTstA;
 
+    
 
     tsstr << PRt;
-    tsstr >> iPRt;
+    //tsstr >> iPRt;
+    
+    //std::wcout << L"������"  << std::endl;
 }
 
 
