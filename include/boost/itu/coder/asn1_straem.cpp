@@ -106,7 +106,7 @@ namespace boost {
         /*COUT STREAM                                                                                                                                                          */
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////             
 
-        void std_stream::print_out() {
+        void ioasn1_stream::print_out() {
             
             const boost::itu::const_sequences& seq = coder->out()->buffers();
             std::string strout;
@@ -125,7 +125,7 @@ namespace boost {
             std::cout  << std::endl;
         }
 
-        void std_stream::start_in() {
+        void ioasn1_stream::start_in() {
             if (input_empty()) {
                 std::cout << "input buffer is empty ";
                 if (output_empty())
@@ -143,7 +143,7 @@ namespace boost {
             }
         }
 
-        void std_stream::print_in() {
+        void ioasn1_stream::print_in() {
             std::cout << " aftrer opreration input size :  " << coder->in()->size();
             if (coder->in()->unusebits())
                 std::cout << " { unuse :  " << coder->in()->unusebits() << " }";

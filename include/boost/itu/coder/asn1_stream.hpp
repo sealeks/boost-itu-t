@@ -96,15 +96,15 @@ namespace boost {
         /*COUT STREAM                                                                                                                                                          */
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////             
 
-        class std_stream : public asn1_stream {
+        class ioasn1_stream : public asn1_stream {
 
         public:
 
-            std_stream(encoding_rule rl) : asn1_stream(rl) {
+            ioasn1_stream(encoding_rule rl) : asn1_stream(rl) {
             }
 
             template<typename T>
-            friend std_stream& operator<<(std_stream& strm, const T& vl) {
+            friend ioasn1_stream& operator<<(ioasn1_stream& strm, const T& vl) {
                 strm.clear_output();
                 switch (strm.type()) {
                     case x_690: strm.x690coder()->output() & vl;
@@ -120,7 +120,7 @@ namespace boost {
             }
 
             template<typename T>
-            friend std_stream& operator>>(std_stream& strm, T& vl) {
+            friend ioasn1_stream& operator>>(ioasn1_stream& strm, T& vl) {
                 strm.start_in();
                 switch (strm.type()) {
                     case x_690: strm.x690coder()->input() & vl;
