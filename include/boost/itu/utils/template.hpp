@@ -1220,7 +1220,7 @@ namespace boost {
                 return *this;
             }
 
-            basic_string& operator=(std::initializer_list<value_type> l) {
+            basic_string& operator=(std::initializer_list<lvalue_type> l) {
                 Base::operator=(to_base(LBase(l)));
                 return *this;
             }
