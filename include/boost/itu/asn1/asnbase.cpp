@@ -85,18 +85,114 @@ namespace boost {
         }
 
 
+
+        // universal_string  // bmp_string
+
+        octet_sequnce as_octet_sequnce(const universal_string& vl) {
+            octet_sequnce rslt;
+            rslt.reserve(4 * vl.size());
+            for (universal_string::const_iterator it = vl.begin(); it != vl.end(); ++it) {
+#ifdef __ITU_IS_LE_STRING__
+                const universal_string::value_type& el = *it;
+                octet_sequnce tmp(reinterpret_cast<octet_sequnce::const_pointer> (&el),
+                        reinterpret_cast<octet_sequnce::const_pointer> (&el) + sizeof (universal_string::value_type));
+#ifdef __ITU__WCHAR16__ 
+                rslt.insert(rslt.end(), 2, 0);
+#endif                  
+                rslt.insert(rslt.end(), tmp.rbegin(), tmp.rend());               
+#else
+                const universal_string::value_type& el = *it;
+#ifdef __ITU__WCHAR16__ 
+                rslt.insert(rslt.end(), 2, 0);
+#endif                   
+                rslt.insert(rslt.end(), reinterpret_cast<octet_sequnce::const_pointer> (&el),
+                        reinterpret_cast<octet_sequnce::const_pointer> (&el) + sizeof (universal_string::value_type));        
+#endif            
+            }
+            return rslt;
+        }
+
+        octet_sequnce as_octet_sequnce(const bmp_string& vl) {
+            octet_sequnce rslt;
+            rslt.reserve(2 * vl.size());
+            for (bmp_string::const_iterator it = vl.begin(); it != vl.end(); ++it) {
+#ifdef __ITU_IS_LE_STRING__
+                const bmp_string::value_type& el = *it;
+                octet_sequnce tmp(reinterpret_cast<octet_sequnce::const_pointer> (&el),
+                        reinterpret_cast<octet_sequnce::const_pointer> (&el) + 2);
+                rslt.insert(rslt.end(), tmp.rbegin(), tmp.rend());
+#else
+                const bmp_string::value_type& el = *it;
+                rslt.insert(rslt.end(), reinterpret_cast<octet_sequnce::const_pointer> (&el),
+                        reinterpret_cast<octet_sequnce::const_pointer> (&el) + 2);
+#endif            
+            }
+            return rslt;
+        }
+
+        bool from_octet_sequnce(universal_string& vl, const octet_sequnce& val) {
+            for (octet_sequnce::size_type it = 0; it < val.size(); it += 4) {
+                if ((it + 4) > val.size())
+                    return false;
+#ifdef __ITU__WCHAR16__ 
+                boost::uint16_t el = *(reinterpret_cast<const boost::uint16_t*> (&val[it + 2]));
+
+#ifdef __ITU_IS_LE_STRING__
+                vl.push_back((wchar_t) ((0xFF00 & (el << 8)) | (0xFF & (el >> 8))));
+#else
+                vl.push_back((wchar_t) el);
+#endif                   
+
+#else                 
+                boost::uint32_t el = *(reinterpret_cast<const boost::uint32_t*> (&val[it]));
+
+#ifdef __ITU_IS_LE_STRING__
+                vl.push_back((wchar_t) ((0xFF000000 & (el << 24)) | (0xFF0000 & (el << 16)) | (0xFF00 & (el >> 16)) | (0xFF & (el >> 24)));
+#else
+                vl.push_back((wchar_t) el);
+#endif   
+
+#endif                 
+            }
+            return true;
+        }
+
+        bool from_octet_sequnce(bmp_string& vl, const octet_sequnce& val) {
+            for (octet_sequnce::size_type it = 0; it < val.size(); it += 2) {
+                if ((it + 2) > val.size())
+                    return false;
+#ifdef __ITU__WCHAR16__ 
+                boost::uint16_t el = *(reinterpret_cast<const boost::uint16_t*> (&val[it]));
+
+#ifdef __ITU_IS_LE_STRING__
+                vl.push_back((wchar_t) ((0xFF00 & (el << 8)) | (0xFF & (el >> 8))));
+#else
+                vl.push_back((wchar_t) el);
+#endif 
+
+#else                 
+                boost::uint32_t el = *(reinterpret_cast<const boost::uint16_t*> (&val[it]));
+#ifdef __ITU_IS_LE_STRING__
+                vl.push_back((wchar_t) ((0xFF000000 & (el << 24)) | (0xFF0000 & (el << 16)) | (0xFF00 & (el >> 16)) | (0xFF & (el >> 24)));
+#else
+                vl.push_back((wchar_t) el);
+#endif   
+#endif                 
+            }
+            return true;
+        }
+
         // universal_string
 
         std::ostream& operator<<(std::ostream& stream, const universal_string& vl) {
-            return stream << vl.operator std::string();
+            return stream << vl.as_utf8().as_base();
         }
-
 
 
         // bmp_string       
 
         std::ostream& operator<<(std::ostream& stream, const bmp_string& vl) {
-            return stream << vl.operator std::string();
+            return stream << vl.as_utf8().as_base();
         }
 
 
@@ -282,7 +378,7 @@ namespace boost {
             return stream << "TAG: " << vl.id() << " mask:" << vl.mask() << '\n';
         }
 
-       // prefixed
+        // prefixed
 
         std::ostream& operator<<(std::ostream& stream, const prefixed_type& vl) {
             stream << "[ " << vl.first << "]";
@@ -318,14 +414,14 @@ namespace boost {
                 stream << "{" << (*it) << "}";
             }
             return stream << " }";
-        }  
-        
+        }
+
         std::ostream& operator<<(std::ostream& stream, const prefixed_helper& vl) {
             stream << "prefix:  initial ";
-            if (vl.init_explicit) 
+            if (vl.init_explicit)
                 stream << " explicit  -> " << vl.vect;
             else
-                stream << " implicit  -> " << vl.vect;            
+                stream << " implicit  -> " << vl.vect;
             return stream << " ";
         }
 

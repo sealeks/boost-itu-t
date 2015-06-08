@@ -32,13 +32,15 @@
 #include <limits>
 
 #if ((__WCHAR_MAX__) && (__WCHAR_MAX__ > 0x10000))
+#define __ITU__WCHAR32__  
 typedef wchar_t universalchar_t; // 32 bit
 typedef boost::uint16_t bmpchar_t; // 16 bit
 typedef std::wstring base_universal_string;
 typedef std::basic_string<universalchar_t> base_bmp_string;
 BOOST_STATIC_ASSERT(sizeof (wchar_t) == 4);
 #else   
-#define __ITU_ISBPM_WCHAR__         
+#define __ITU_ISBPM_WCHAR__      
+#define __ITU__WCHAR16__  
 typedef wchar_t bmpchar_t; // 16 bit
 typedef boost::uint32_t universalchar_t;
 typedef std::wstring base_bmp_string;
@@ -46,8 +48,9 @@ typedef std::basic_string<universalchar_t> base_universal_string;
 BOOST_STATIC_ASSERT(sizeof (wchar_t) == 2);
 #endif
 
-
-
+#if ((_MSC_VER) || (__MINGW32__))
+#define __ITU_IS_LE_STRING__
+#endif
 
 #define ITU_T_ARRAY(...) __VA_ARGS__
 
@@ -561,10 +564,19 @@ namespace boost {
         }
 
 
+        
+        
+       typedef smpl_wstring<TYPE_UNIVERSALSTRING > universal_string;
+       typedef smpl_wstring<TYPE_BMPSTRING > bmp_string;
+       
 
-
-
-
+        octet_sequnce as_octet_sequnce(const universal_string& vl);
+        
+        octet_sequnce as_octet_sequnce(const bmp_string& vl); 
+        
+        bool from_octet_sequnce(universal_string& vl, const octet_sequnce& val);
+        
+        bool from_octet_sequnce(bmp_string& vl, const octet_sequnce& val);       
 
         //UNICOD UNI STRING  
         //  32bit
@@ -573,7 +585,7 @@ namespace boost {
         // universal_string
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        class universal_string : public base_universal_string {
+        /*class universal_string : public base_universal_string {
 
             // known-multi 4 oct
 
@@ -640,7 +652,7 @@ namespace boost {
                 return ((!vl.size()) || ((vl.size() / 4) && !(vl.size() % 4)));
             }
 
-        };
+        };*/
 
         std::ostream& operator<<(std::ostream& stream, const universal_string& vl);
 
@@ -657,7 +669,7 @@ namespace boost {
         // bmp_string
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        class bmp_string : public /*std::string*/ base_bmp_string {
+        /*class bmp_string : public base_bmp_string {
 
             // known-multi 2 oct
 
@@ -724,7 +736,7 @@ namespace boost {
                 return ((!vl.size()) || ((vl.size() / 2) && !(vl.size() % 2)));
             }
 
-        };
+        };*/
 
         std::ostream& operator<<(std::ostream& stream, const bmp_string& vl);
 

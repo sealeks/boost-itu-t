@@ -749,25 +749,25 @@ namespace boost {
             typedef std::wstring WBase;
 
 
-            typedef typename Base::traits_type traits_type;
-            typedef typename Base::value_type value_type;
-            typedef typename Base::allocator_type allocator_type;
-            typedef typename Base::size_type size_type;
-            typedef typename Base::difference_type difference_type;
-            typedef typename Base::reference reference;
-            typedef typename Base::const_reference const_reference;
-            typedef typename Base::pointer pointer;
-            typedef typename Base::const_pointer const_pointer;
-            typedef typename Base::iterator iterator;
-            typedef typename Base::const_iterator const_iterator;
-            typedef typename Base::const_reverse_iterator const_reverse_iterator;
-            typedef typename Base::reverse_iterator reverse_iterator;
+            typedef Base::traits_type traits_type;
+            typedef Base::value_type value_type;
+            typedef Base::allocator_type allocator_type;
+            typedef Base::size_type size_type;
+            typedef Base::difference_type difference_type;
+            typedef Base::reference reference;
+            typedef Base::const_reference const_reference;
+            typedef Base::pointer pointer;
+            typedef Base::const_pointer const_pointer;
+            typedef Base::iterator iterator;
+            typedef Base::const_iterator const_iterator;
+            typedef Base::const_reverse_iterator const_reverse_iterator;
+            typedef Base::reverse_iterator reverse_iterator;
 
-            typedef typename WBase::value_type wvalue_type;
-            typedef typename WBase::iterator witerator;
-            typedef typename WBase::const_iterator wconst_iterator;
-            typedef typename WBase::const_reverse_iterator wconst_reverse_iterator;
-            typedef typename WBase::reverse_iterator wreverse_iterator;
+            typedef WBase::value_type wvalue_type;
+            typedef WBase::iterator witerator;
+            typedef WBase::const_iterator wconst_iterator;
+            typedef WBase::const_reverse_iterator wconst_reverse_iterator;
+            typedef WBase::reverse_iterator wreverse_iterator;
 
         private:
 
@@ -1022,6 +1022,300 @@ namespace boost {
             }
 
         };
+
+
+
+
+
+
+        ///////////////////////////////////////////////////////////////////////
+        //  smpl_wstring
+        ///////////////////////////////////////////////////////////////////////        
+
+        template<std::size_t ID = 0 >
+        class smpl_wstring : public std::wstring {
+
+        private:
+
+            static std::size_t get__id() {
+                return ID;
+            }
+
+        public:
+
+            typedef std::wstring Base;
+            typedef std::string LBase;
+
+            typedef typename Base::traits_type traits_type;
+            typedef typename Base::value_type value_type;
+            typedef typename Base::allocator_type allocator_type;
+            typedef typename Base::size_type size_type;
+            typedef typename Base::difference_type difference_type;
+            typedef typename Base::reference reference;
+            typedef typename Base::const_reference const_reference;
+            typedef typename Base::pointer pointer;
+            typedef typename Base::const_pointer const_pointer;
+            typedef typename Base::iterator iterator;
+            typedef typename Base::const_iterator const_iterator;
+            typedef typename Base::const_reverse_iterator const_reverse_iterator;
+            typedef typename Base::reverse_iterator reverse_iterator;
+
+            typedef LBase::value_type lvalue_type;
+            typedef LBase::iterator literator;
+            typedef LBase::const_iterator lconst_iterator;
+            typedef LBase::const_reverse_iterator lconst_reverse_iterator;
+            typedef LBase::reverse_iterator lreverse_iterator;
+
+            static Base to_base(const LBase& vl) {
+                return utf8_to_wstr(vl);
+            }
+
+            static Base to_base(const lvalue_type* vl) {
+                return utf8_to_wstr(vl);
+            }
+
+            static LBase to_Lbase(const Base& vl) {
+                return wstr_to_utf8(vl);
+            }
+
+            smpl_wstring() : Base() {
+            }
+
+            explicit
+            smpl_wstring(const allocator_type& a) : Base(a) {
+            }
+
+            smpl_wstring(const Base& str) : Base(str) {
+            }
+
+            //  from utf-8
+
+            smpl_wstring(const LBase& str) : Base(to_base(str)) {
+            }
+
+            smpl_wstring(const Base& str, size_type pos,
+                    size_type n = npos) : Base(str, pos, n) {
+            }
+
+            smpl_wstring(const Base& str, size_type pos,
+                    size_type n, const allocator_type& a) : Base(str, pos, n, a) {
+            }
+
+            smpl_wstring(const smpl_wstring& str) : Base(static_cast<const Base&> (str)) {
+            }
+
+            smpl_wstring(const smpl_wstring& str, size_type pos,
+                    size_type n = npos) : Base(static_cast<const Base&> (str), pos, n) {
+            }
+
+            smpl_wstring(const smpl_wstring& str, size_type pos,
+                    size_type n, const allocator_type& a) : Base(static_cast<const Base&> (str), pos, n, a) {
+            }
+
+            smpl_wstring(const value_type* s, size_type n,
+                    const allocator_type& a = allocator_type()) : Base(s, n, a) {
+            }
+
+            smpl_wstring(const lvalue_type* s, size_type n,
+                    const allocator_type& a = allocator_type()) : Base(to_base(LBase(s, n, a))) {
+            }
+
+            smpl_wstring(const value_type* s,
+                    const allocator_type& a = allocator_type()) : Base(s, a) {
+            }
+
+            smpl_wstring(const lvalue_type* s,
+                    const allocator_type& a = allocator_type()) : Base(to_base(LBase(s, a))) {
+            }
+
+            smpl_wstring(size_type n, value_type c,
+                    const allocator_type& a = allocator_type()) : Base(n, c, a) {
+            }
+
+            template<class InputIterator>
+            smpl_wstring(InputIterator beg, InputIterator end,
+                    const allocator_type& a = allocator_type()) : Base(beg, end, a) {
+            }
+
+            smpl_wstring(lconst_iterator beg, lconst_iterator end,
+                    const allocator_type& a = allocator_type()) : Base(to_base(LBase(beg, end, a))) {
+            }
+
+#if __cplusplus >= 201103L            
+
+            smpl_wstring(smpl_wstring&& str)
+            : Base(static_cast<Base&&> (str)) {
+            }
+
+            smpl_wstring(Base&& str)
+            : Base(str) {
+            }
+
+            smpl_wstring(LBase&& str)
+            : Base(to_base(str)) {
+            }
+
+            smpl_wstring(std::initializer_list<value_type> l, const allocator_type& a = allocator_type())
+            : Base(l, a) {
+            }
+
+            smpl_wstring(std::initializer_list<lvalue_type> l, const allocator_type& a = allocator_type())
+            : Base(to_base(LBase(l, a))) {
+            }
+
+#endif           
+
+            ~smpl_wstring() {
+            }
+
+            smpl_wstring& operator=(const smpl_wstring& str) {
+                Base::operator=(static_cast<const Base&> (str));
+                return *this;
+            }
+
+            smpl_wstring& operator=(const Base& str) {
+                Base::operator=(str);
+                return *this;
+            }
+
+            smpl_wstring& operator=(const LBase& str) {
+                Base::operator=(to_base(str));
+                return *this;
+            }
+
+            smpl_wstring& operator=(const value_type* s) {
+                Base::operator=(s);
+                return *this;
+            }
+
+            smpl_wstring& operator=(const lvalue_type* s) {
+                Base::operator=(to_base(LBase(s)));
+                return *this;
+            }
+
+            smpl_wstring& operator=(value_type c) {
+                Base::operator=(c);
+                return *this;
+            }
+
+#if __cplusplus >= 201103L
+
+            smpl_wstring& operator=(smpl_wstring&& str) {
+                Base::operator=(static_cast<Base&&> (str));
+                return *this;
+            }
+
+            smpl_wstring& operator=(Base&& str) {
+                Base::operator=(str);
+                return *this;
+            }
+
+            smpl_wstring& operator=(LBase&& str) {
+                Base::operator=(to_base(str));
+                return *this;
+            }
+
+            basic_string& operator=(std::initializer_list<value_type> l) {
+                Base::operator=(l);
+                return *this;
+            }
+
+            basic_string& operator=(std::initializer_list<value_type> l) {
+                Base::operator=(to_base(LBase(l)));
+                return *this;
+            }
+
+
+#endif        
+
+            Base& as_base() {
+                return static_cast<Base&> (*this);
+            }
+
+            const Base& as_base() const {
+                return static_cast<const Base&> (*this);
+            }
+
+            utf8_string as_utf8() const {
+                return to_Lbase(*this);
+            }
+
+
+
+            using Base::npos;
+
+            using Base::append;
+            using Base::assign;
+            using Base::at;
+            using Base::begin;
+            using Base::c_str;
+            using Base::capacity;
+            using Base::clear;
+            using Base::compare;
+            using Base::copy;
+            using Base::data;
+            using Base::end;
+            using Base::erase;
+            using Base::empty;
+            using Base::find;
+            using Base::find_first_not_of;
+            using Base::find_first_of;
+            using Base::find_last_not_of;
+            using Base::find_last_of;
+            using Base::get_allocator;
+            using Base::insert;
+            using Base::length;
+            using Base::max_size;
+            using Base::operator[];
+            using Base::push_back;
+            using Base::rbegin;
+            using Base::rend;
+            using Base::replace;
+            using Base::reserve;
+            using Base::resize;
+            using Base::rfind;
+            using Base::size;
+            using Base::substr;
+            using Base::swap;
+
+            friend bool operator==(const smpl_wstring& x, const smpl_wstring& y) {
+                return static_cast<const Base&> (x) == static_cast<const Base&> (y);
+            }
+
+            friend bool operator!=(const smpl_wstring& x, const smpl_wstring& y) {
+                return static_cast<const Base&> (x) != static_cast<const Base&> (y);
+            }
+
+            friend bool operator<(const smpl_wstring& x, const smpl_wstring& y) {
+                return static_cast<const Base&> (x) < static_cast<const Base&> (y);
+            }
+
+            friend bool operator>(const smpl_wstring& x, const smpl_wstring& y) {
+                return static_cast<const Base&> (x) > static_cast<const Base&> (y);
+            }
+
+            friend bool operator<=(const smpl_wstring& x, const smpl_wstring& y) {
+                return static_cast<const Base&> (x) <= static_cast<const Base&> (y);
+            }
+
+            friend bool operator>=(const smpl_wstring& x, const smpl_wstring& y) {
+                return static_cast<const Base&> (x) >= static_cast<const Base&> (y);
+            }
+
+            friend smpl_wstring operator+(const smpl_wstring& x, const smpl_wstring& y) {
+                return static_cast<const Base&> (x) + static_cast<const Base&> (y);
+            }
+
+            friend smpl_wstring operator+(const smpl_wstring& x, const std::wstring& y) {
+                return static_cast<const Base&> (x) + y;
+            }
+
+            friend smpl_wstring operator+(const std::wstring& x, const smpl_wstring& y) {
+                return x + static_cast<const Base&> (y);
+            }
+
+        };
+
 
     }
 } // namespace boost

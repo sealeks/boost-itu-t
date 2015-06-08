@@ -101,12 +101,12 @@ namespace boost {
             
             template<>
             void x690_string_to_stream_cast(const bmp_string& val, output_coder& stream, octet_type lentype) {
-                x690_string_to_stream_cast(val.as_octets(), stream, lentype);
+                x690_string_to_stream_cast(as_octet_sequnce(val), stream, lentype);
             }
 
             template<>
             void x690_string_to_stream_cast(const universal_string& val, output_coder& stream, octet_type lentype) {
-                x690_string_to_stream_cast(val.as_octets(), stream, lentype);
+                x690_string_to_stream_cast(as_octet_sequnce(val), stream, lentype);
             }
 
             template<>
@@ -446,12 +446,16 @@ namespace boost {
 
             template<>
             void stringtype_inserter(universal_string& vl, octet_sequnce::iterator beg, octet_sequnce::iterator end) {
-                vl.append_octets(octet_sequnce(beg, end));
+                universal_string tmp;
+                from_octet_sequnce(tmp, octet_sequnce(beg, end));
+                vl.append(tmp);
             }
 
             template<>
             void stringtype_inserter(bmp_string& vl, octet_sequnce::iterator beg, octet_sequnce::iterator end) {
-                vl.append_octets(octet_sequnce(beg, end));
+                bmp_string tmp;
+                from_octet_sequnce(tmp, octet_sequnce(beg, end));
+                vl.append(tmp);
             }
 
             ////////////////////////////////////////////
