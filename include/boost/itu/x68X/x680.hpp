@@ -1196,9 +1196,9 @@ namespace x680 {
         >> qi::omit[ qi::char_("'")
         >> qi::char_("H")]];
 
-       static  str_rule cstring_str = distinct(qi::alnum | ('-' >> qi::alnum))[ qi::char_("\"")
+       static  str_rule cstring_str = /*distinct(qi::alnum | ('-' >> qi::alnum))[*/ qi::char_("\"")
         >> *((qi::print)[ sprt::_val += sprt::_1] - qi::char_("\""))
-        >> qi::char_("\"")];
+        >> qi::char_("\"")/*]*/;
 
        static  str_rule IRIValue = cstring_str;
 

@@ -30,9 +30,9 @@ namespace x680 {
     }
 
     bool valueset_atom::isrefferrence() const {
-        return (((builtin_ == vs_defined)
-                || (builtin_ == vs_ValueSetFromObjects)
-                || (builtin_ == vs_ValueSetFromObject)) && (reff()));
+        return ((builtin_ == vs_defined
+                || builtin_ == vs_ValueSetFromObjects
+                || builtin_ == vs_ValueSetFromObject) && reff());
     }
 
     fromobjects_valueset_atom_ptr valueset_atom::as_fromobjectset() {
@@ -61,8 +61,7 @@ namespace x680 {
         if (object())
             object()->resolve();
         if (object()->reff()) {
-            assignment_entity_ptr tmpasmt = object()->reff()->as_assigment();
-            if (tmpasmt) {
+            if (assignment_entity_ptr  tmpasmt = object()->reff()->as_assigment()) {
                 if (tmpasmt->find_component(field_->expectedname())) {
                     reff(tmpasmt->find_component(field_->expectedname()));
                 }
@@ -82,8 +81,7 @@ namespace x680 {
         if (objectset())
             objectset()->resolve();
         if (objectset()->reff()) {
-            assignment_entity_ptr tmpasmt = objectset()->reff()->as_assigment();
-            if (tmpasmt) {
+            if (assignment_entity_ptr tmpasmt = objectset()->reff()->as_assigment()) {
                 if (tmpasmt->find_component(field_->expectedname())) {
                     reff(tmpasmt->find_component(field_->expectedname()));
                 }
@@ -100,11 +98,11 @@ namespace x680 {
         for (constraint_atom_vct::iterator it = vl.begin(); it != vl.end(); ++it) {
             if ((*it)->as_tvoso()) {
                 (*it)->as_tvoso()->resolve();
-                if (((*it)->as_tvoso()->tp() == argm_Type) && ((*it)->as_tvoso()->type())) {
+                if ((*it)->as_tvoso()->tp() == argm_Type && (*it)->as_tvoso()->type()) {
                     (*it) = typeconstraint_atom_ptr(new typeconstraint_atom((*it)->as_tvoso()->scope(), cns_ContainedSubtype, (*it)->as_tvoso()->type(), false));
-                } else if (((*it)->as_tvoso()->tp() == argm_ObjectSet) && ((*it)->as_tvoso()->objectset())) {
+                } else if ((*it)->as_tvoso()->tp() == argm_ObjectSet && (*it)->as_tvoso()->objectset()) {
                     (*it) = tableconstraint_atom_ptr(new tableconstraint_atom((*it)->as_tvoso()->scope(), (*it)->as_tvoso()->objectset()));
-                } else if (((*it)->as_tvoso()->tp() == argm_ValueSet) && ((*it)->as_tvoso()->valueset())) {
+                } else if ((*it)->as_tvoso()->tp() == argm_ValueSet && (*it)->as_tvoso()->valueset()) {
                     (*it) = valuesetconstraint_atom_ptr(new valuesetconstraint_atom((*it)->as_tvoso()->scope(), (*it)->as_tvoso()->valueset()));
                 }
             }
@@ -117,10 +115,9 @@ namespace x680 {
     }
 
     void constraints_atom::resolve(basic_atom_ptr holder) {
-        for (constraint_atom_vct::iterator it = constraintline_.begin(); it != constraintline_.end(); ++it) {
+        for (constraint_atom_vct::iterator it = constraintline_.begin(); it != constraintline_.end(); ++it) 
             if (*it)
                 (*it)->resolve();
-        }
         for (constraint_atom_vct::iterator it = extendline_.begin(); it != extendline_.end(); ++it)
             if (*it)
                 (*it)->resolve();
@@ -566,12 +563,12 @@ namespace x680 {
 
     basic_entity_ptr valuesetassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
         if (sch & local_search) {
-            if (((type()->predefined()))) {
+            if (type()->predefined()) {
                 for (basic_entity_vector::iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it)
                     if ((*it)->name() == nm)
                         return *it;
             }
-            if ((type()->reff() && (type()->reff()->name() != nm))) {
+            if (type()->reff() && type()->reff()->name() != nm) {
                 type()->resolve_reff(basic_atom_ptr(), sch);
                 if (basic_entity_ptr fnd = type()->reff()->find_by_name(nm, sch))
                     return fnd;

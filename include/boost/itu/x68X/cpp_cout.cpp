@@ -169,7 +169,7 @@ namespace x680 {
 
         bool dir_exists(const std::string& path) {
             fsnsp::path p(path.c_str());
-            return ((fsnsp::exists(p)) && (fsnsp::is_directory(p)));
+            return (fsnsp::exists(p) && fsnsp::is_directory(p));
         }
 
         bool dir_create(const std::string& path, const std::string& outdir) {
@@ -350,7 +350,6 @@ namespace x680 {
                         return tmp;
                 }
             }
-            typeassignment_entity_ptr ppas = self->as_typeassigment();
             if (self->extract_type())
                 return type_str(self->as_typeassigment());
             return "";
@@ -363,11 +362,11 @@ namespace x680 {
 
         std::string fromtype_str(typeassignment_entity_ptr self) {
             if (self->isrefferrence()) {
-                typeassignment_entity_ptr frtp = ((self->type()->reff()) && (self->type()->reff()->as_typeassigment())) ?
+                typeassignment_entity_ptr frtp = (self->type()->reff() && self->type()->reff()->as_typeassigment()) ?
                         self->type()->reff()->as_typeassigment() : typeassignment_entity_ptr();
-                if ((self->shadow_for())
-                        && (self->shadow_for()->moduleref() != self->moduleref())
-                        && (self->shadow_for()->as_typeassigment()))
+                if (self->shadow_for()
+                        && self->shadow_for()->moduleref() != self->moduleref()
+                        && self->shadow_for()->as_typeassigment())
                     frtp = self->shadow_for()->as_typeassigment();
                 module_entity_ptr extmod = (frtp && (frtp->moduleref() != self->moduleref())) ? frtp->moduleref() : module_entity_ptr();
                 std::string pref = extmod ? (nameconvert(extmod->name()) + "::") : "";
@@ -599,7 +598,7 @@ namespace x680 {
         }
 
         bool value_oid_str(value_atom_ptr self, std::vector<std::string>& rslt) {
-            if (self && (self->get_value<unum_vector>())) {
+            if (self && self->get_value<unum_vector>()) {
                 boost::shared_ptr<unum_vector> lst = self->get_value<unum_vector>();
                 if (!lst->empty()) {
                     for (unum_vector::const_iterator it = lst->begin(); it != lst->end(); ++it)
@@ -622,8 +621,7 @@ namespace x680 {
                     bool first = true;
                     if (values) {
                         for (basic_entity_vector::iterator it = tpassmt->childs().begin(); it != tpassmt->childs().end(); ++it) {
-                            typeassignment_entity_ptr subtpassmt = (*it)->as_typeassigment();
-                            if (subtpassmt) {
+                            if (typeassignment_entity_ptr subtpassmt = (*it)->as_typeassigment()) {
                                 if (first)
                                     first = false;
                                 else
@@ -1887,15 +1885,10 @@ namespace x680 {
 
             bool alldefault = true;
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                if ((*it)->as_typeassigment() && (*it)->as_typeassigment()->as_named()) {
-                    namedtypeassignment_entity_ptr named = (*it)->as_typeassigment()->as_named();
-                    if (named->type()) {
-                        tagmarker_type mkr = named->marker();
-                        if (mkr == mk_none || mkr == mk_default || mkr == mk_optional) {
-                            if (named->cncl_tag() && !named->cncl_tags().empty()) {
-                                alldefault = false;
-                            }
-                        }
+                if (namedtypeassignment_entity_ptr named = (*it)->as_named_typeassigment()) {
+                    if (is_named(named->marker())) {
+                        if (named->cncl_tag() && !named->cncl_tags().empty())
+                            alldefault = false;
                     }
                 }
             }
@@ -1931,7 +1924,7 @@ namespace x680 {
                 if ((*it)->type() && is_named((*it)->marker()))
                     execute_archive_member((*it), false);
 
-            if ((self->type()) && (self->type()->has_extention())) {
+            if (self->type() && self->type()->has_extention()) {
 
                 stream << "\n\n" << tabformat(scp, 3) << "ITU_T_RESET_EXTENTION" << ";\n";
 
@@ -2196,13 +2189,11 @@ namespace x680 {
             bool is_local_scope = ((self->scope()) && (self->scope()->as_typeassigment()));
             if (is_local_scope) {
                 stream << "\n";
-                for (basic_entity_vector::const_iterator it = prdf->values().begin(); it != prdf->values().end(); ++it) {
-                    valueassignment_entity_ptr vlass = (*it)->as_valueassigment();
-                    if (vlass) {
+                for (basic_entity_vector::const_iterator it = prdf->values().begin(); it != prdf->values().end(); ++it) {                   
+                    if (valueassignment_entity_ptr vlass = (*it)->as_valueassigment()) {
                         stream << tabformat() << "const ";
                         stream << type_str(self) << " ";
-
-                        if ((self->islocaldefined()) && ansec)
+                        if (self->islocaldefined() && ansec)
                             stream << fulltype_str(ansec, false) << "::";
                         stream << ((namelower(nameconvert(self->name()) + "_"))) << nameconvert(vlass->name()) << " = ";
                         stream << nested_init_str(self->type(), value_int_str(vlass->value())) << ";\n";
@@ -2216,12 +2207,10 @@ namespace x680 {
             if (is_local_scope) {
                 stream << "\n";
                 for (basic_entity_vector::const_iterator it = prdf->values().begin(); it != prdf->values().end(); ++it) {
-                    valueassignment_entity_ptr vlass = (*it)->as_valueassigment();
-                    if (vlass) {
+                    if (valueassignment_entity_ptr vlass = (*it)->as_valueassigment()) {
                         stream << tabformat() << "const ";
                         stream << type_str(self) << " ";
-
-                        if ((self->islocaldefined()) && ansec)
+                        if (self->islocaldefined() && ansec)
                             stream << fulltype_str(ansec, false) << "::";
                         stream << ((namelower(nameconvert(self->name()) + "_"))) << nameconvert(vlass->name()) << " = ";
                         stream << nested_init_str(self->type(), "bit_string(true, " + value_int_str(vlass->value()) + ")") << ";\n";
@@ -2262,7 +2251,7 @@ namespace x680 {
             if (self->builtin() == t_CHOICE) {
                 stream << "\n";
                 for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
-                    if ((it->typ)) {
+                    if (it->typ) {
                         tagmarker_type mkr = (it->afterextention && (it->marker == mk_none)) ? mk_optional : it->marker;
                         if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
                             stream << "\n" << tabformat(scp, 2);
@@ -2309,12 +2298,9 @@ namespace x680 {
         }
 
         void maincpp_out::execute_declare_cpp(typeassignment_entity_ptr self) {
-            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
-
-                if ((tpas) && (tpas->type()))
+            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it)
+                if (typeassignment_entity_ptr tpas = (*it)->as_typeassigment())
                     execute_declare_struct_cpp(tpas);
-            }
         }
 
         void maincpp_out::execute_declare_struct_cpp(typeassignment_entity_ptr self) {
@@ -2374,12 +2360,10 @@ namespace x680 {
         void maincpp_out::execute_structof_cpp(typeassignment_entity_ptr self) {
             if (self && (self->type())) {
                 if ((self->isstruct_of()) && (!self->childs().empty())) {
-                    typeassignment_entity_ptr cpas = self->childs().front()->as_typeassigment();
-                    if (cpas) {
+                    if (typeassignment_entity_ptr cpas = self->childs().front()->as_typeassigment()) {
                         if (cpas->isstruct_of()) {
                             execute_structof_cpp(cpas);
                         } else if (cpas->isstruct()) {
-
                             execute_declare_struct_cpp(cpas);
                         }
                     }
@@ -2526,20 +2510,16 @@ namespace x680 {
         }
 
         void ber_cpp_out::execute_typeassignment(typeassignment_entity_ptr self) {
-            if ((self->is_cpp_expressed()) && (self->isstructure())) {
+            if (self->is_cpp_expressed() && self->isstructure()) {
                 if (self->isstruct()) {
                     print_name_type(self, self->moduleref());
                     execute_archive_meth_cpp(self, "x690");
                 }
-                for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                    if ((*it)->as_typeassigment()) {
+                for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it)
+                    if ((*it)->as_typeassigment())
                         execute_typeassignment((*it)->as_typeassigment());
-                    }
-                }
             }
-
         }
-
 
 
 

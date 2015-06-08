@@ -23,16 +23,16 @@ namespace x680 {
     }
 
     bool value_atom::isrefferrence() const {
-        return (((valtype() == v_defined)
-                || (valtype() == v_defined_assign)
-                || (valtype() == v_ValueFromObject)) && (reff()));
+        return ((valtype() == v_defined
+                || valtype() == v_defined_assign
+                || valtype() == v_ValueFromObject) && reff());
     }
 
     value_atom_ptr value_atom::skip_defined(bool except_abstract) {
         if (as_defined()) {
-            if ((as_defined()->reff()) && (as_defined()->reff()->as_valueassigment())) {
+            if (as_defined()->reff() && as_defined()->reff()->as_valueassigment()) {
                 if (as_defined()->reff()->as_valueassigment()->value()) {
-                    if ((except_abstract) && (as_defined()->reff()->as_valueassigment()->value()->isdummy()))
+                    if (except_abstract && as_defined()->reff()->as_valueassigment()->value()->isdummy())
                         return value_atom_ptr();
                     return as_defined()->reff()->as_valueassigment()->value()->skip_defined(except_abstract);
                 }
@@ -147,7 +147,7 @@ namespace x680 {
                 for (value_vct::iterator rit = vl.begin(); rit != vl.end(); ++rit) {
                     if ((*rit)->as_named()) {
                         assignment_entity_ptr fndtp = structtp->find_component((*rit)->as_named()->name());
-                        if (fndtp && (fndtp->as_typeassigment())) {
+                        if (fndtp && fndtp->as_typeassigment()) {
                             (*rit)->as_named()->scope(fndtp);
                             if ((*rit)->as_named()->value()) {
                                 (*rit)->as_named()->value()->scope(fndtp);
@@ -161,36 +161,32 @@ namespace x680 {
         for (value_vct::iterator it = vl.begin(); it != vl.end(); ++it)
             (*it)->resolve((*it)->reff_resolver() ? (*it)->reff_resolver() : holder);
     }
-    
-    
-  
-    template<>    
-    boost::shared_ptr<namedvalue_initer> value_atom::get_value(bool except_abstract){
-        if (as_named()){
-            return boost::shared_ptr<namedvalue_initer>( new namedvalue_initer(as_named()->name(),as_named()->value()));
-        }
+
+    template<>
+    boost::shared_ptr<namedvalue_initer> value_atom::get_value(bool except_abstract) {
+        if (as_named())
+            return boost::shared_ptr<namedvalue_initer>(new namedvalue_initer(as_named()->name(), as_named()->value()));
         return boost::shared_ptr<namedvalue_initer>();
     }
-    
-    template<>    
-     boost::shared_ptr<namedvalue_initer_set> value_atom::get_value(bool except_abstract){
-         if ((as_struct())) {
-                 namedvalue_initer_set rslt;
-                 for (value_vct::iterator it = as_struct()->values().begin(); it != as_struct()->values().end(); ++it) {
-                     if ((*it)->as_named()){
-                             rslt.insert(namedvalue_initer((*it)->as_named()->name(),(*it)->as_named()->value()));               
-                     }
-                     else break;
-                 }
-                 return boost::shared_ptr<namedvalue_initer_set>( new namedvalue_initer_set(rslt));
-         }
-         return boost::shared_ptr<namedvalue_initer_set>();
-     }    
-     
+
     template<>
-    boost::shared_ptr<value_vct> value_atom::get_value(bool except_abstract){
+    boost::shared_ptr<namedvalue_initer_set> value_atom::get_value(bool except_abstract) {
+        if ((as_struct())) {
+            namedvalue_initer_set rslt;
+            for (value_vct::iterator it = as_struct()->values().begin(); it != as_struct()->values().end(); ++it) {
+                if ((*it)->as_named())
+                    rslt.insert(namedvalue_initer((*it)->as_named()->name(), (*it)->as_named()->value()));
+                else break;
+            }
+            return boost::shared_ptr<namedvalue_initer_set>(new namedvalue_initer_set(rslt));
+        }
+        return boost::shared_ptr<namedvalue_initer_set>();
+    }
+
+    template<>
+    boost::shared_ptr<value_vct> value_atom::get_value(bool except_abstract) {
         return boost::shared_ptr<value_vct>();
-    } 
+    }
 
     template<>
     boost::shared_ptr<null_initer> value_atom::get_value(bool except_abstract) {
@@ -290,14 +286,14 @@ namespace x680 {
             boost::shared_ptr<num_vector> fnd = get_value<num_vector>();
             if (fnd) {
                 if (fnd->size() == 4) {
-                    if (((fnd->operator [](0) >= 0) && (fnd->operator [](0) <= 127)) &&
-                            ((fnd->operator [](1) >= 0) && (fnd->operator [](1) <= 255)) &&
-                            ((fnd->operator [](2) >= 0) && (fnd->operator [](2) <= 255)) &&
-                            ((fnd->operator [](3) >= 0) && (fnd->operator [](3) <= 255)))
-                        return boost::shared_ptr<quadruple>(new quadruple(static_cast<uint8_t> (fnd->operator [](0)),
-                            static_cast<uint8_t> (fnd->operator [](1)),
-                            static_cast<uint8_t> (fnd->operator [](2)),
-                            static_cast<uint8_t> (fnd->operator [](3))));
+                    if (((fnd->operator[](0) >= 0) && (fnd->operator[](0) <= 127)) &&
+                            ((fnd->operator[](1) >= 0) && (fnd->operator[](1) <= 255)) &&
+                            ((fnd->operator[](2) >= 0) && (fnd->operator[](2) <= 255)) &&
+                            ((fnd->operator[](3) >= 0) && (fnd->operator[](3) <= 255)))
+                        return boost::shared_ptr<quadruple>(new quadruple(static_cast<uint8_t> (fnd->operator[](0)),
+                            static_cast<uint8_t> (fnd->operator[](1)),
+                            static_cast<uint8_t> (fnd->operator[](2)),
+                            static_cast<uint8_t> (fnd->operator[](3))));
                 }
             }
         }
@@ -317,10 +313,10 @@ namespace x680 {
             boost::shared_ptr<num_vector> fnd = get_value<num_vector>();
             if (fnd) {
                 if (fnd->size() == 2) {
-                    if (((fnd->operator [](0) >= 0) && (fnd->operator [](0) <= 7)) &&
-                            ((fnd->operator [](1) >= 0) && (fnd->operator [](1) <= 15)))
-                        return boost::shared_ptr<tuple>(new tuple(static_cast<uint8_t> (fnd->operator [](0)),
-                            static_cast<uint8_t> (fnd->operator [](1))));
+                    if (((fnd->operator[](0) >= 0) && (fnd->operator[](0) <= 7)) &&
+                            ((fnd->operator[](1) >= 0) && (fnd->operator[](1) <= 15)))
+                        return boost::shared_ptr<tuple>(new tuple(static_cast<uint8_t> (fnd->operator[](0)),
+                            static_cast<uint8_t> (fnd->operator[](1))));
                 }
             }
         } else if (get_value<std::string::value_type>(except_abstract)) {
@@ -492,7 +488,7 @@ namespace x680 {
         }
         return boost::shared_ptr<quadruple_vector>();
     }
-    
+
 
 
 
@@ -608,12 +604,12 @@ namespace x680 {
 
     basic_entity_ptr valueassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
         if (sch & local_search) {
-            if (((type()->predefined()))) {
+            if (type()->predefined()) {
                 for (basic_entity_vector::iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it)
                     if ((*it)->name() == nm)
                         return *it;
             }
-            if ((type()->reff() && (type()->reff()->name() != nm))) {
+            if (type()->reff() && (type()->reff()->name() != nm)) {
                 type()->resolve_reff(basic_atom_ptr(), sch);
                 if (basic_entity_ptr fnd = type()->reff()->find_by_name(nm, sch))
                     return fnd;
@@ -642,8 +638,7 @@ namespace x680 {
         assignment_entity::resolve(holder);
         resolve_child();
         type()->resolve();
-        value_atom_ptr tmpvalue = value();
-        if (tmpvalue) {
+        if (value_atom_ptr tmpvalue = value()) {
             tmpvalue->reff_resolver(type());
             tmpvalue->resolve(type());
         }

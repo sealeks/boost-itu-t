@@ -127,7 +127,7 @@ namespace x680 {
                     (NameAndNumberForm1 | NameAndNumberForm3) % qi::omit[qi::lit(",")] >>
                     qi::omit[qi::lexeme[qi::lit("}")]];
 
-            EnumerationItem = NameAndNumberForm2 | DefinedValue;
+            EnumerationItem = NameAndNumberForm1 | DefinedValue;
 
             RootEnumerations = EnumerationItem % qi::omit[qi::lit(",")];
 

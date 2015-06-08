@@ -1632,9 +1632,9 @@ namespace x680 {
     struct find_builtin_ta_criteria {
 
         static typeassignment_entity_ptr calculate(typeassignment_entity_ptr vl) {
-            if (vl && (vl->extract_type()) &&
-                    (vl->extract_type()->isrefferrence()) &&
-                    (vl->extract_type()->reff())) {
+            if (vl && vl->extract_type() &&
+                    vl->extract_type()->isrefferrence() &&
+                    vl->extract_type()->reff()) {
                 if (vl->extract_type()->reff()->as_typeassigment())
                     return calculate(vl->extract_type()->reff()->as_typeassigment());
             }
@@ -1649,17 +1649,17 @@ namespace x680 {
     struct find_prefixed_ta_criteria {
 
         static typeassignment_entity_ptr calculate(typeassignment_entity_ptr vl) {
-            if (vl && (vl->as_named()) && (vl->extract_type())) {
-                if ((vl->extract_type()->isrefferrence()) && (vl->extract_type()->reff()) &&
-                        (vl->extract_type()->reff()->as_typeassigment()))
+            if (vl && vl->as_named() && vl->extract_type()) {
+                if (vl->extract_type()->isrefferrence() && vl->extract_type()->reff() &&
+                        vl->extract_type()->reff()->as_typeassigment())
                     return calculate(vl->extract_type()->reff()->as_typeassigment());
                 return typeassignment_entity_ptr();
             }
-            if (vl && (!vl->as_named()) && (vl->extract_type())) {
+            if (vl && !vl->as_named() && vl->extract_type()) {
                 if (vl->tag())
                     return vl;
-                if ((vl->extract_type()->isrefferrence()) && (vl->extract_type()->reff()) &&
-                        (vl->extract_type()->reff()->as_typeassigment()))
+                if (vl->extract_type()->isrefferrence() && vl->extract_type()->reff() &&
+                        vl->extract_type()->reff()->as_typeassigment())
                     return calculate(vl->extract_type()->reff()->as_typeassigment());
             }
             return typeassignment_entity_ptr();
@@ -1676,8 +1676,9 @@ namespace x680 {
     basic_entity_ptr typeassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
         type_atom_ptr tmptype = type();
         if (sch & local_search) {
-            if (((tmptype->predefined()))) {
-                for (basic_entity_vector::iterator it = tmptype->predefined()->values().begin(); it != tmptype->predefined()->values().end(); ++it)
+            if (tmptype->predefined()) {
+                for (basic_entity_vector::iterator it = tmptype->predefined()->values().begin();
+                        it != tmptype->predefined()->values().end(); ++it)
                     if ((*it)->name() == nm)
                         return *it;
             }
@@ -1863,8 +1864,8 @@ namespace x680 {
 
     basic_entity_vector::iterator typeassignment_entity::first_extention() {
         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
-            if (((*it)->as_typeassigment()) &&
-                    ((*it)->as_typeassigment()->as_named()) &&
+            if ((*it)->as_typeassigment() &&
+                    (*it)->as_typeassigment()->as_named() &&
                     ((*it)->as_typeassigment()->as_named()->marker() == mk_extention))
                 return (++it);
         return childs().end();
@@ -1874,8 +1875,8 @@ namespace x680 {
         basic_entity_vector::iterator fit = first_extention();
         if (fit != childs().end()) {
             for (basic_entity_vector::iterator it = fit; it != childs().end(); ++it)
-                if (((*it)->as_typeassigment()) &&
-                        ((*it)->as_typeassigment()->as_named()) &&
+                if ((*it)->as_typeassigment() &&
+                        (*it)->as_typeassigment()->as_named() &&
                         ((*it)->as_typeassigment()->as_named()->marker() == mk_extention))
                     return (++it);
         }
