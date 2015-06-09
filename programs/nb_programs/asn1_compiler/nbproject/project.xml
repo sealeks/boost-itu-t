@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://www.netbeans.org/ns/project/1">
+    <type>org.netbeans.modules.cnd.makeproject</type>
+    <configuration>
+        <data xmlns="http://www.netbeans.org/ns/make-project/1">
+            <name>asn1_compiler</name>
+            <c-extensions/>
+            <cpp-extensions>cpp</cpp-extensions>
+            <header-extensions/>
+            <sourceEncoding>UTF-8</sourceEncoding>
+            <make-dep-projects/>
+            <sourceRootList>
+                <sourceRootElem>../../../include_programs/test_compiler</sourceRootElem>
+            </sourceRootList>
+            <confList>
+                <confElem>
+                    <name>nb_gcc_db_WIN32</name>
+                    <type>1</type>
+                </confElem>
+                <confElem>
+                    <name>nb_gcc_rl_WIN32</name>
+                    <type>1</type>
+                </confElem>
+                <confElem>
+                    <name>nb_gcc_rl_LIN64</name>
+                    <type>1</type>
+                </confElem>
+                <confElem>
+                    <name>nb_gcc_db_LIN64</name>
+                    <type>1</type>
+                </confElem>
+            </confList>
+            <formatting>
+                <project-formatting-style>false</project-formatting-style>
+            </formatting>
+        </data>
+    </configuration>
+</project>
