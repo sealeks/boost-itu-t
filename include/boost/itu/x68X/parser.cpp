@@ -6,10 +6,33 @@
 #include <boost/itu/x68X/parser.hpp>
 
 namespace x680 {
-    namespace syntactic {
 
-
-
-
+    bool base_options::option_no_holder() const {
+        return opt_.count("noholder");
     }
+
+    bool base_options::option_reverse_decl() const {
+        return opt_.count("reverse");
+    }
+
+    bool base_options::option_ber_main() const {
+        return opt_.count("bermain");
+    }
+
+    bool base_options::option_cout_metod() const {
+        return opt_.count("cout_meth");
+    }
+
+    std::string base_options::option_path() const {
+        return opt_.count("path") ?
+                opt_["path"].as<std::string>() : "";
+    }
+
+    std::string base_options::option_outdir() const {
+        return opt_.count("outdir") ?
+                opt_["outdir"].as<std::string>() : "out";
+    }     
+    
+    
+
 }

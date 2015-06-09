@@ -8,6 +8,7 @@
 
 
 #include <boost/itu/x68X/semantics.hpp>
+#include <boost/itu/x68X/parser.hpp>
 #include <fstream>
 
 
@@ -76,53 +77,26 @@ namespace x680 {
         member_vect parse_default_membervct(const member_vect& vct);
 
 
-
-        //////////////////////////////////////////////////////
-
-        struct compile_option {
-
-            compile_option(const std::string& pth, const std::string& outdr = "out", bool rev = false, bool nohld = false, bool bermn = false) :
-            path(pth), outdir(outdr), revrs(rev), nohldr(nohld), ber_in_main(bermn) {
-            }
-            std::string path;
-            std::string outdir;
-            bool revrs;
-            bool nohldr;
-            bool ber_in_main;
-        };
-
-
-
-
+        
+        
+        
+        
         //////////////////////////////////////////////////////
         //  base_moduleout
-        //////////////////////////////////////////////////////
-
-        class base_moduleout {
+        //////////////////////////////////////////////////////        
+        
+        class base_moduleout : public base_options {
 
         public:
 
             base_moduleout(const char* path, module_entity_ptr mod, const compile_option& opt);
             virtual ~base_moduleout();
 
-            virtual void execute() = 0;
-
-            bool option_no_holder() const {
-                return opt_.nohldr;
-            }
-
-            bool option_reverse_decl() const {
-                return opt_.revrs;
-            }
-
-            bool option_ber_main() const {
-                return opt_.ber_in_main;
-            }
+            virtual void execute() = 0;         
 
         protected:
 
             module_entity_ptr module_;
-            compile_option opt_;
             std::ofstream stream;
         };
 
@@ -138,14 +112,12 @@ namespace x680 {
         //  base_moduleout
         //////////////////////////////////////////////////////
 
-        class cppout {
+        class cppout : public base_options {
 
         public:
 
-            cppout(global_entity_ptr glb, const std::string& path, const std::string& outdir = "out",
-                    bool revrs = false, bool nohldr = false, bool bermn = false);
-
-            cppout(global_entity_ptr glb, const compile_option& opt) : global_(glb), opt_(opt) {
+            cppout(global_entity_ptr glb, const compile_option& opt) : 
+            base_options(opt), global_(glb) {
             };
             virtual ~cppout();
 
@@ -155,14 +127,12 @@ namespace x680 {
 
             template< typename T>
             moduleout_ptr generate(module_entity_ptr modl, const std::string add, const std::string ext = ".cpp") {
-                std::string fullpath = opt_.path + "\\" + modl->name() + add + "." + ext;
+                std::string fullpath = option_path()  + "\\" + modl->name() + add + "." + ext;
                 boost::filesystem::path p(fullpath.c_str());
                 return moduleout_ptr(new T(p.generic_string().c_str(), modl, opt_));
             }
 
             global_entity_ptr global_;
-            compile_option opt_;
-
         };
 
 
@@ -229,10 +199,8 @@ namespace x680 {
                     typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
                     if (tpas && (tpas->type()) && (tpas->is_cpp_expressed()))
                         execute_typeassignment(tpas);
-                    valueassignment_entity_ptr vpas = (*it)->as_valueassigment();
-                    if (vpas) {
+                    if (valueassignment_entity_ptr vpas = (*it)->as_valueassigment()) 
                         execute_valueassignment(vpas);
-                    }
                 }
             }
 
@@ -248,11 +216,9 @@ namespace x680 {
             template<typename Iter>
             void execute_valueassignments(Iter beg, Iter end) {
                 stream << "\n";
-                for (Iter it = beg; it != end; ++it) {
-                    valueassignment_entity_ptr vpas = (*it)->as_valueassigment();
-                    if (vpas)
+                for (Iter it = beg; it != end; ++it) 
+                    if (valueassignment_entity_ptr vpas = (*it)->as_valueassigment())
                         execute_valueassignment(vpas);
-                }
                 stream << "\n";
             }
 

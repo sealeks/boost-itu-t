@@ -896,7 +896,7 @@ namespace x680 {
         ////////////////////////////////////////////////////////////////////////////////////////////////////       
 
         base_moduleout::base_moduleout(const char* path, module_entity_ptr mod, const compile_option& opt)
-        : module_(mod), opt_(opt), stream(path, std::ofstream::out | std::ofstream::trunc) {
+        : base_options(opt), module_(mod), stream(path, std::ofstream::out | std::ofstream::trunc) {
             if (!stream)
                 throw fsnsp::filesystem_error("File dosnt create: " + std::string(path),
                     boost::system::error_code(boost::system::errc::io_error, boost::system::system_category()));
@@ -912,22 +912,19 @@ namespace x680 {
         //  CppOUT
         ////////////////////////////////////////////////////////////////////////////////////////////////////       
 
-        cppout::cppout(global_entity_ptr glb, const std::string& path, const std::string& outdir,
-                bool revrs, bool nohldr, bool bermn)
-        : global_(glb), opt_(path, outdir, revrs, nohldr, bermn) {
-        }
+
 
         cppout::~cppout() {
         }
 
         void cppout::execute() {
-            if (!dir_exists(opt_.path))
+            if (!dir_exists(option_path()))
                 throw fsnsp::filesystem_error("File or directory error",
                     boost::system::error_code(boost::system::errc::io_error, boost::system::system_category()));
-            if (!dir_create(opt_.path, opt_.outdir))
+            if (!dir_create(option_path(), option_outdir()))
                 throw fsnsp::filesystem_error("File or directory error",
                     boost::system::error_code(boost::system::errc::io_error, boost::system::system_category()));
-            opt_.path = opt_.path + "\\" + opt_.outdir + "\\";
+            //opt_.path = option_path() + "\\" + option_outdir() + "\\";
 
             for (basic_entity_vector::iterator it = global_->childs().begin(); it != global_->childs().end(); ++it) {
                 if ((*it)->as_module()) {
@@ -935,7 +932,7 @@ namespace x680 {
                     hpp->execute();
                     moduleout_ptr cpp = generate<maincpp_out>((*it)->as_module(), "", "cpp");
                     cpp->execute();
-                    if (!opt_.ber_in_main) {
+                    if (!option_ber_main()) {
                         moduleout_ptr ber = generate<ber_cpp_out>((*it)->as_module(), "-ber", "cpp");
                         ber->execute();
                     }
