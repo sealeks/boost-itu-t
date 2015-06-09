@@ -27,7 +27,7 @@ namespace x680 {
 
             base_options(const compile_option& opt) : opt_(opt) {};
             
-            virtual ~base_options();
+            virtual ~base_options(){};
 
             bool option_no_holder() const;
 

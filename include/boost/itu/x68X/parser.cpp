@@ -29,10 +29,11 @@ namespace x680 {
     }
 
     std::string base_options::option_outdir() const {
-        return opt_.count("outdir") ?
-                opt_["outdir"].as<std::string>() : "out";
+        std::string rslt = opt_.count("outdir") ? 
+            opt_["outdir"].as<std::string>() :  "";
+        return !rslt.empty() ? rslt : "out";
     }     
     
-    
 
+    
 }
