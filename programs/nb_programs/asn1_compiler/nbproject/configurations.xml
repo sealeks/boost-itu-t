@@ -19,7 +19,7 @@
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
-    <Elem>../../../include_programs/test_compiler</Elem>
+    <Elem>../../../include_programs/asn1_compiler</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
