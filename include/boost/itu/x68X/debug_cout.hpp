@@ -130,7 +130,10 @@ namespace x680 {
     //little
     std::ostream& operator<<(std::ostream& stream, voassignment_entity_ptr self);
 
-
+    inline std::ostream& print(std::ostream& stream, global_entity_ptr self){
+        return  stream << self;
+    }
+    
 }
 
 
