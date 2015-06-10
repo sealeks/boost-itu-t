@@ -458,7 +458,7 @@ namespace boost {
         enumerated_indx_map create_enumerated_indx(const enum_base_type* ev, std::size_t sz);
 
 
-
+        std::ostream& operator<<(std::ostream& stream, const enumerated& vl);
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////

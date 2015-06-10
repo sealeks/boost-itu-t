@@ -65,7 +65,9 @@ namespace boost {
             return rslt;
         }
 
-
+        std::ostream& operator<<(std::ostream& stream, const enumerated& vl){
+            return stream << "(enum)"  << vl.as_base();
+        }
 
         // null_type
 
