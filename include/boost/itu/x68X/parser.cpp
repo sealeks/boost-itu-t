@@ -8,19 +8,19 @@
 namespace x680 {
 
     bool base_options::option_no_holder() const {
-        return opt_.count("noholder");
+        return static_cast<bool>(opt_.count("noholder"));
     }
 
     bool base_options::option_reverse_decl() const {
-        return opt_.count("reverse");
+        return static_cast<bool>(opt_.count("reverse"));
     }
 
     bool base_options::option_ber_main() const {
-        return opt_.count("bermain");
+        return static_cast<bool>(opt_.count("bermain"));
     }
 
     bool base_options::option_cout_metod() const {
-        return opt_.count("cout_meth");
+        return static_cast<bool>(opt_.count("cout_meth"));
     }
 
     std::string base_options::option_path() const {
