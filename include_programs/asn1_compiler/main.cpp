@@ -20,8 +20,8 @@ int main(int ac, char* av[]) {
                 ("help,h", "produce a help screen")
                 ("path,p", po::value<std::string>(), "compile path")
                 ("outdir,o", po::value<std::string>(), "out directory")
-                ("reverse,r", "reverserse type declaretion in module")
-                ("bermain,b", "ber serialization method saves in main cpp module")
+                ("reverse,r", "it's reversed type declaration in module")
+                ("bermain,b", "ber serialization method prints in a main cpp module/ or ")
                 ("cout_noprint,x", "no print cout")        
                 ("cout_meth,c", "geterate cout methods for structured type")
                 ("noholder,n", "compile strucrured type without asn1::holder<> ");
