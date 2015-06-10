@@ -2557,7 +2557,7 @@ namespace x680 {
                         } else if (tpas->isstruct_of()) {
                             stream << "\n" << tabformat(basic_entity_ptr(), 3) << "for (" << fulltype_str(tpas, false);
                             stream << "::const_iterator it=vl.begin(); it!=vl.end();++it){";
-                            stream << "\n" << tabformat(basic_entity_ptr(), 4) << "stream << \" {\" << *it <<  \"}\"}; ";
+                            stream << "\n" << tabformat(basic_entity_ptr(), 4) << "stream << \" {\" << *it <<  \"}\";}; ";
                         }
                         stream << "\n" << tabformat(basic_entity_ptr(), 3) << "return stream;";
                         stream << "\n" << tabformat(basic_entity_ptr(), 2) << "};\n";
