@@ -126,8 +126,8 @@ namespace x680 {
         protected:
 
             template< typename T>
-            moduleout_ptr generate(module_entity_ptr modl, const std::string add, const std::string ext = ".cpp") {
-                std::string fullpath = option_path()  + "\\" + option_outdir() +  "\\"+ modl->name() + add + "." + ext;
+            moduleout_ptr generate(const std::string& path, module_entity_ptr modl, const std::string add, const std::string ext = ".cpp") {
+                std::string fullpath = std::string(path) +  "\\"+ modl->name() + add + "." + ext;
                 boost::filesystem::path p(fullpath.c_str());
                 return moduleout_ptr(new T(p.generic_string().c_str(), modl, opt_));
             }
@@ -278,6 +278,7 @@ namespace x680 {
             std::size_t registrate_struct_choice(basic_entity_ptr self);
             std::size_t registrate_struct_set(basic_entity_ptr self);
             std::size_t execute_struct_meth_hpp(basic_entity_ptr self, const std::string& ctp);
+            std::size_t execute_struct_cout_meth(basic_entity_ptr self);
 
 
         };
