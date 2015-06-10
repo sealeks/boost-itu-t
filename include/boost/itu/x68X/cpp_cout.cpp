@@ -324,14 +324,14 @@ namespace x680 {
                 } else if (self->as_typeassigment()) {
                     typeassignment_entity_ptr ppas = self->as_typeassigment();
                     std::string tmp = fulltype_str(self->scope(), withns);
-                    if ((ppas->type()) && (!ppas->isstruct_of()))
+                    if ((ppas->type())/* && (!ppas->isstruct_of())*/)
                         return tmp.empty() ? type_str(ppas) : (tmp + "::" + type_str(ppas));
                     else
                         return tmp;
                 }
             }
             typeassignment_entity_ptr ppas = self->as_typeassigment();
-            if ((ppas->type()) && (!ppas->isstruct_of()))
+            if ((ppas->type())/* && (!ppas->isstruct_of())*/)
                 return type_str(self->as_typeassigment());
             return "";
         }
@@ -355,7 +355,7 @@ namespace x680 {
         }
 
         std::string fullpathtype_str(typeassignment_entity_ptr self, typeassignment_entity_ptr root, std::string tp) {
-            return (self->islocaldeclare()) ?
+            return self->islocaldeclare() ?
                     (fulltype_str(root, false) + "::" + tp) : fromtype_str(self);
         }
 
@@ -1100,8 +1100,8 @@ namespace x680 {
         }
 
         void moduleout::load_member(member_vect& vct, typeassignment_entity_ptr self) {
-            namedtypeassignment_entity_vct root1 = self->child_root_1();
-            namedtypeassignment_entity_vct root2 = self->child_root_2();
+            namedtypeassignment_entity_vct root1 = self->child_root_1(false);
+            namedtypeassignment_entity_vct root2 = self->child_root_2(false);
             namedtypeassignment_entity_vct extentions = self->extentions();
 
             load_member_static(self, vct, root1);
@@ -1305,7 +1305,7 @@ namespace x680 {
                 execute_typeassignments<basic_entity_vector::const_iterator>(module_->childs().begin(), module_->childs().end());
 
             if (option_cout_metod()) {
-                stream << "\n" << tabformat(scp, 2) << "\\\\ std::cout methods" << "\n";
+                stream << "\n" << tabformat(scp, 2) << "// std::cout methods" << "\n";
                 if (execute_struct_cout_meth(module_))
                     stream << "\n";
             }
@@ -1835,57 +1835,8 @@ namespace x680 {
                             chek_tpas.reset();
                     }
                     if (tpas->isstruct() || chek_tpas) {
-                        stream << "\n" << tabformat(basic_entity_ptr(), 2) << "inline std::ostream& operator<<(std::ostream& stream, const ";
-                        stream << fulltype_str(tpas, false) << "& vl) {";
-                        if (tpas->isstruct()) {
-                            switch (tpas->builtin()) {
-                                case t_CHOICE:
-                                {
-                                    stream << "\n" << tabformat(basic_entity_ptr(), 3) << "stream << \"{ \";";
-                                    stream << "\n" << tabformat(basic_entity_ptr(), 3) << "switch (vl.type()) {";
-                                    for (basic_entity_vector::iterator tit = tpas->childs().begin(); tit != tpas->childs().end(); ++tit) {
-                                        if ((*tit)->as_named_typeassigment()) {
-                                            if (is_named((*tit)->as_named_typeassigment()->marker())) {
-                                                stream << "\n" << tabformat(basic_entity_ptr(), 4) << "case " << choice_enum_str(tpas, (*tit)) << ": ";
-                                                stream << "stream  << \"" << nameconvert((*tit)->as_named_typeassigment()->name()) << " :  \" << vl.";
-                                                stream << nameconvert((*tit)->as_named_typeassigment()->name()) << "(); break; ";
-                                            }
-                                        }
-                                    }
-                                    stream << "\n" << tabformat(basic_entity_ptr(), 4) << "default: { stream  <<  \" null \"; }\n";
-                                    stream << tabformat(basic_entity_ptr(), 3) << "};";
-                                    stream << "\n" << tabformat(basic_entity_ptr(), 3) << "stream << \" }\";";
-                                    break;
-                                }
-                                case t_SEQUENCE:
-                                case t_SET:
-                                {
-                                    member_vect mmbr;
-                                    load_member(mmbr, tpas);
-                                    stream << "\n" << tabformat(basic_entity_ptr(), 3) << "stream << \"{ \";";
-                                    for (member_vect::const_iterator mit = mmbr.begin(); mit != mmbr.end(); ++mit) {
-                                        if (mit->marker == mk_optional)
-                                            stream << "\n" << tabformat(basic_entity_ptr(), 3) << "if (vl." << mit->name << "()) stream << \"" <<
-                                                std::string((mit != mmbr.begin()) ? ", " : "") << mit->name << " :  \"   << *(vl." << mit->name << "());";
-                                        else
-                                            stream << "\n" << tabformat(basic_entity_ptr(), 3) << "stream << \"" <<
-                                            std::string((mit != mmbr.begin()) ? ", " : "") << mit->name <<
-                                                " :  \" << vl." << mit->name << "();";
-                                    }
-                                    stream << "\n" << tabformat(basic_entity_ptr(), 3) << "stream << \" }\";";
-                                    break;
-                                }
-                                default:
-                                {
-                                }
-                            }
-                        } else {
-                            stream << "\n" << tabformat(basic_entity_ptr(), 3) << "for (" << fulltype_str(tpas, false);
-                            stream << "::const_iterator it=vl.begin(); it!=vl.end();++it){";
-                            stream << "\n" << tabformat(basic_entity_ptr(), 4) << "stream << \" {\" << *it <<  \"}\"}; ";
-                        }
-                        stream << "\n" << tabformat(basic_entity_ptr(), 3) << "return stream;";
-                        stream << "\n" << tabformat(basic_entity_ptr(), 2) << "};\n";
+                        stream << "\n" << tabformat(basic_entity_ptr(), 2) << "std::ostream& operator<<(std::ostream& stream, const ";
+                        stream << fulltype_str(tpas, false) << "& vl);";
                         cnt++;
                     }
                     cnt += execute_struct_cout_meth(tpas);
@@ -2173,6 +2124,8 @@ namespace x680 {
         //////////////////////////////////////////////////////
 
         void maincpp_out::execute() {
+
+            basic_entity_ptr scp;
             execute_include(module_->name());
 
             stream << CHHEADER << "\n";
@@ -2183,6 +2136,11 @@ namespace x680 {
             else
                 execute_typeassignments<basic_entity_vector::const_iterator>(module_->childs().begin(), module_->childs().end());
 
+            if (option_cout_metod()) {
+                stream << "\n" << tabformat(scp, 2) << "// std::cout methods" << "\n";
+                if (execute_struct_cout_meth(module_))
+                    stream << "\n";
+            }
 
             execute_stop_ns();
             stream << CHBOTTOM << "\n";
@@ -2420,6 +2378,7 @@ namespace x680 {
 
             execute_access_member_cpp(self);
 
+
             stream << "\n ";
         }
 
@@ -2528,8 +2487,87 @@ namespace x680 {
             }
         }
 
-
-
+        std::size_t maincpp_out::execute_struct_cout_meth(basic_entity_ptr self) {
+            std::size_t cnt = 0;
+            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
+                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
+                if (tpas && tpas->isstructure() && tpas->is_cpp_expressed()) {
+                    typeassignment_entity_ptr chek_tpas;
+                    if (tpas->isstruct_of() && !tpas->childs().empty() &&
+                            tpas->childs().front() && tpas->childs().front()->as_typeassigment() &&
+                            tpas->childs().front()->as_typeassigment()) {
+                        chek_tpas = tpas->childs().front()->as_typeassigment();
+                        if (!(chek_tpas->root_builtin() == t_CHOICE ||
+                                chek_tpas->root_builtin() == t_SEQUENCE ||
+                                chek_tpas->root_builtin() == t_SEQUENCE_OF ||
+                                chek_tpas->root_builtin() == t_SET ||
+                                chek_tpas->root_builtin() == t_SET_OF))
+                            chek_tpas.reset();
+                    }
+                    if (tpas->isstruct() || chek_tpas) {
+                        //fullpathtype_str(it->typ, self, );
+                        stream << "\n" << tabformat(basic_entity_ptr(), 2) << "std::ostream& operator<<(std::ostream& stream, const ";
+                        stream << fulltype_str(tpas, false) << "& vl) {";
+                        if (tpas->isstruct()) {
+                            switch (tpas->builtin()) {
+                                case t_CHOICE:
+                                {
+                                    stream << "\n" << tabformat(basic_entity_ptr(), 3) << "stream << \"{ \";";
+                                    stream << "\n" << tabformat(basic_entity_ptr(), 3) << "switch (vl.type()) {";
+                                    for (basic_entity_vector::iterator tit = tpas->childs().begin(); tit != tpas->childs().end(); ++tit) {
+                                        if ((*tit)->as_named_typeassigment()) {
+                                            if (is_named((*tit)->as_named_typeassigment()->marker())) {
+                                                std::string fullpath = (self->as_typeassigment()) ? 
+                                                    fulltype_str(self->as_typeassigment(), false) : "";
+                                                if (!fullpath.empty())
+                                                    fullpath += "::";
+                                                stream << "\n" << tabformat(basic_entity_ptr(), 4) << "case " << fullpath << choice_enum_str(tpas, (*tit)) << ": ";
+                                                stream << "stream  << \"" << nameconvert((*tit)->as_named_typeassigment()->name()) << " :  \" << vl.";
+                                                stream << nameconvert((*tit)->as_named_typeassigment()->name()) << "(); break; ";
+                                            }
+                                        }
+                                    }
+                                    stream << "\n" << tabformat(basic_entity_ptr(), 4) << "default: { stream  <<  \" null \"; }\n";
+                                    stream << tabformat(basic_entity_ptr(), 3) << "};";
+                                    stream << "\n" << tabformat(basic_entity_ptr(), 3) << "stream << \" }\";";
+                                    break;
+                                }
+                                case t_SEQUENCE:
+                                case t_SET:
+                                {
+                                    member_vect mmbr;
+                                    load_member(mmbr, tpas);
+                                    stream << "\n" << tabformat(basic_entity_ptr(), 3) << "stream << \"{ \";";
+                                    for (member_vect::const_iterator mit = mmbr.begin(); mit != mmbr.end(); ++mit) {
+                                        if (mit->marker == mk_optional)
+                                            stream << "\n" << tabformat(basic_entity_ptr(), 3) << "if (vl." << mit->name << "()) stream << \"" <<
+                                                std::string((mit != mmbr.begin()) ? ", " : "") << mit->name << " :  \"   << *(vl." << mit->name << "());";
+                                        else
+                                            stream << "\n" << tabformat(basic_entity_ptr(), 3) << "stream << \"" <<
+                                            std::string((mit != mmbr.begin()) ? ", " : "") << mit->name <<
+                                                " :  \" << vl." << mit->name << "();";
+                                    }
+                                    stream << "\n" << tabformat(basic_entity_ptr(), 3) << "stream << \" }\";";
+                                    break;
+                                }
+                                default:
+                                {
+                                }
+                            }
+                        } else if (tpas->isstruct_of()) {
+                            stream << "\n" << tabformat(basic_entity_ptr(), 3) << "for (" << fulltype_str(tpas, false);
+                            stream << "::const_iterator it=vl.begin(); it!=vl.end();++it){";
+                            stream << "\n" << tabformat(basic_entity_ptr(), 4) << "stream << \" {\" << *it <<  \"}\"}; ";
+                        }
+                        stream << "\n" << tabformat(basic_entity_ptr(), 3) << "return stream;";
+                        stream << "\n" << tabformat(basic_entity_ptr(), 2) << "};\n";
+                        cnt++;
+                    }
+                    cnt += execute_struct_cout_meth(tpas);
+                }
+            }
+            return cnt;
+        }
 
 
 

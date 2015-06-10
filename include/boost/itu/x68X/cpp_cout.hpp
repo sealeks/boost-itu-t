@@ -385,6 +385,7 @@ namespace x680 {
             void execute_struct_cpp(typeassignment_entity_ptr self);
             void execute_ctor_cpp(typeassignment_entity_ptr self);
             void execute_default_cpp(typeassignment_entity_ptr self);
+            std::size_t execute_struct_cout_meth(basic_entity_ptr self);            
 
         };
 

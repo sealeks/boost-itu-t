@@ -785,9 +785,9 @@ namespace x680 {
 
         bool single_child_root();
 
-        namedtypeassignment_entity_vct child_root_1();
+        namedtypeassignment_entity_vct child_root_1(bool order=true);
 
-        namedtypeassignment_entity_vct child_root_2();
+        namedtypeassignment_entity_vct child_root_2(bool order=true);
 
         namedtypeassignment_entity_vct extention_group(std::size_t num);
 

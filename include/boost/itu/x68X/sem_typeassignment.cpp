@@ -1786,7 +1786,7 @@ namespace x680 {
         return (fit == childs().end() || (fit != childs().end() && sit == childs().end()));
     }
 
-    namedtypeassignment_entity_vct typeassignment_entity::child_root_1() {
+    namedtypeassignment_entity_vct typeassignment_entity::child_root_1(bool order) {
         namedtypeassignment_entity_vct rslt;
         for (basic_entity_vector::iterator it = childs().begin(); it != first_extention(); ++it) {
             if (namedtypeassignment_entity_ptr rsltel = (*it)->as_named_typeassigment()) {
@@ -1794,12 +1794,12 @@ namespace x680 {
                     rslt.push_back(rsltel);
             }
         }
-        if (builtin() == t_SET)
+        if (order && builtin() == t_SET)
             canonical_sort(rslt);
         return rslt;
     }
 
-    namedtypeassignment_entity_vct typeassignment_entity::child_root_2() {
+    namedtypeassignment_entity_vct typeassignment_entity::child_root_2(bool order) {
         namedtypeassignment_entity_vct rslt;
         for (basic_entity_vector::iterator it = second_extention(); it != childs().end(); ++it) {
             if (namedtypeassignment_entity_ptr rsltel = (*it)->as_named_typeassigment()) {
@@ -1807,7 +1807,7 @@ namespace x680 {
                     rslt.push_back(rsltel);
             }
         }
-        if (builtin() == t_SET)
+        if (order && builtin() == t_SET)
             canonical_sort(rslt);
         return rslt;
     }
