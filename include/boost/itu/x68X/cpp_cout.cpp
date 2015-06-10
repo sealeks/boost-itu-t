@@ -2487,6 +2487,10 @@ namespace x680 {
             }
         }
 
+        static std::string quatation_val_static(basic_entity_ptr self) {
+            return (self && self->as_typeassigment() && self->as_typeassigment()->isstring()) ? "<< \"\\\"\"" : "";
+        }
+
         std::size_t maincpp_out::execute_struct_cout_meth(basic_entity_ptr self) {
             std::size_t cnt = 0;
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
@@ -2517,13 +2521,15 @@ namespace x680 {
                                     for (basic_entity_vector::iterator tit = tpas->childs().begin(); tit != tpas->childs().end(); ++tit) {
                                         if ((*tit)->as_named_typeassigment()) {
                                             if (is_named((*tit)->as_named_typeassigment()->marker())) {
-                                                std::string fullpath = (self->as_typeassigment()) ? 
-                                                    fulltype_str(self->as_typeassigment(), false) : "";
+                                                std::string fullpath = (self->as_typeassigment()) ?
+                                                        fulltype_str(self->as_typeassigment(), false) : "";
                                                 if (!fullpath.empty())
                                                     fullpath += "::";
                                                 stream << "\n" << tabformat(basic_entity_ptr(), 4) << "case " << fullpath << choice_enum_str(tpas, (*tit)) << ": ";
-                                                stream << "stream  << \"" << nameconvert((*tit)->as_named_typeassigment()->name()) << " :  \" << vl.";
-                                                stream << nameconvert((*tit)->as_named_typeassigment()->name()) << "(); break; ";
+                                                stream << "stream  << \"" << nameconvert((*tit)->as_named_typeassigment()->name()) <<
+                                                        " :  \" " << quatation_val_static(*tit) << " << vl." <<
+                                                        nameconvert((*tit)->as_named_typeassigment()->name()) << "() " <<
+                                                        quatation_val_static(*tit) << "; break; ";
                                             }
                                         }
                                     }
@@ -2541,11 +2547,12 @@ namespace x680 {
                                     for (member_vect::const_iterator mit = mmbr.begin(); mit != mmbr.end(); ++mit) {
                                         if (mit->marker == mk_optional)
                                             stream << "\n" << tabformat(basic_entity_ptr(), 3) << "if (vl." << mit->name << "()) stream << \"" <<
-                                                std::string((mit != mmbr.begin()) ? ", " : "") << mit->name << " :  \"   << *(vl." << mit->name << "());";
+                                                std::string((mit != mmbr.begin()) ? ", " : "") << mit->name << " :  \"   " <<
+                                                quatation_val_static(mit->typ) << " << *(vl." << mit->name << "()) " << quatation_val_static(mit->typ) << ";";
                                         else
                                             stream << "\n" << tabformat(basic_entity_ptr(), 3) << "stream << \"" <<
                                             std::string((mit != mmbr.begin()) ? ", " : "") << mit->name <<
-                                                " :  \" << vl." << mit->name << "();";
+                                                " :  \" " << quatation_val_static(mit->typ) << " << vl." << mit->name << "()" << quatation_val_static(mit->typ) << ";";
                                     }
                                     stream << "\n" << tabformat(basic_entity_ptr(), 3) << "stream << \" }\";";
                                     break;
@@ -2554,10 +2561,11 @@ namespace x680 {
                                 {
                                 }
                             }
-                        } else if (tpas->isstruct_of()) {
+                        } else if (tpas->isstruct_of() && chek_tpas) {
                             stream << "\n" << tabformat(basic_entity_ptr(), 3) << "for (" << fulltype_str(tpas, false);
                             stream << "::const_iterator it=vl.begin(); it!=vl.end();++it){";
-                            stream << "\n" << tabformat(basic_entity_ptr(), 4) << "stream << \" {\" << *it <<  \"}\";}; ";
+                            stream << "\n" << tabformat(basic_entity_ptr(), 4) << "stream << \" {\" " << quatation_val_static(chek_tpas) <<
+                                    " << *it <<  " << quatation_val_static(chek_tpas) << "\"}\";}; ";
                         }
                         stream << "\n" << tabformat(basic_entity_ptr(), 3) << "return stream;";
                         stream << "\n" << tabformat(basic_entity_ptr(), 2) << "};\n";

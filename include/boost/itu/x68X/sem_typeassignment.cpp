@@ -1107,6 +1107,27 @@ namespace x680 {
     bool type_atom::isenum() const {
         return ((isrefferrence()) && (!tag_) && (constraints_.empty()));
     }
+    
+    bool type_atom::isstring()  {
+        switch (root_builtin()) {
+            case t_UTF8String:            
+            case t_NumericString:
+            case t_PrintableString:
+            case t_T61String:
+            case t_VideotexString:
+            case t_GraphicString:
+            case t_GeneralString:
+            case t_CHARACTER_STRING:                 
+            case t_IA5String:
+            case t_VisibleString:
+            case t_UniversalString:
+            case t_BMPString: return true;   
+            default:
+            {
+            }
+        }
+        return false;
+    }    
 
     bool type_atom::can_per_constraints() {
         return (can_char_constraints()) || 

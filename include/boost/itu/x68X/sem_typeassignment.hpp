@@ -339,6 +339,8 @@ namespace x680 {
 
         bool isenum() const;
 
+        bool isstring();       
+
         bool can_per_constraints();
 
         bool can_alphabet_constraints();
@@ -723,7 +725,12 @@ namespace x680 {
             type_atom_ptr tmptype = type();
             return (tmptype && (tmptype->isenum()));
         }
-
+        
+        bool isstring() const {
+            type_atom_ptr tmptype = type();
+            return (tmptype && (tmptype->isstring()));
+        }
+        
         bool can_per_constraints() {
             type_atom_ptr tmptype = type();
             return (tmptype && (tmptype->can_per_constraints()));
