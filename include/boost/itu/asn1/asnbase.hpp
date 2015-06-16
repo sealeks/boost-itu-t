@@ -464,7 +464,7 @@ namespace boost {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // reloid_type
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
         typedef boost::itu::vector<oidindx_type, TYPE_RELATIVE_OID> reloid_type;
 
         std::ostream& operator<<(std::ostream& stream, const reloid_type& vl);
@@ -507,18 +507,18 @@ namespace boost {
         typedef std::basic_string<main_char_type, graphicstring_traits > graphic_string;
         typedef std::basic_string<main_char_type, objectdescriptor_traits > object_descriptor;
         typedef std::basic_string<main_char_type, visiblestring_traits > visible_string; // known-multi 1 oct
-        typedef std::basic_string<main_char_type, generalstring_traits > general_string;*/      
-        
+        typedef std::basic_string<main_char_type, generalstring_traits > general_string;*/
+
         typedef smpl_string<TYPE_NUMERICSTRING > numeric_string; // known-multi 1 oct
         typedef smpl_string<TYPE_PRINTABLESTRING > printable_string; // known-multi 1 oct
         typedef smpl_string<TYPE_T61STRING > t61_string;
-        typedef smpl_string<TYPE_VIDEOTEXSTRING  > videotex_string;
+        typedef smpl_string<TYPE_VIDEOTEXSTRING > videotex_string;
         //typedef smpl_string<TYPE_IA5STRINGs > ia5_string; // known-multi 1 oct
         typedef std::string ia5_string; // known-multi 1 oct
         typedef smpl_string<TYPE_GRAPHICSTRING > graphic_string;
         typedef smpl_string<TYPE_OBJECT_DESCRIPTOR> object_descriptor;
         typedef smpl_string<TYPE_VISIBLESTRING > visible_string; // known-multi 1 oct
-        typedef smpl_string<TYPE_CHARACTERSTRING > general_string;        
+        typedef smpl_string<TYPE_CHARACTERSTRING > general_string;
 
         template<typename T>
         octet_sequnce as_octet_sequnce(const T& vl) {
@@ -564,19 +564,19 @@ namespace boost {
         }
 
 
-        
-        
-       typedef smpl_wstring<TYPE_UNIVERSALSTRING > universal_string;
-       typedef smpl_wstring<TYPE_BMPSTRING > bmp_string;
-       
+
+
+        typedef smpl_wstring<TYPE_UNIVERSALSTRING > universal_string;
+        typedef smpl_wstring<TYPE_BMPSTRING > bmp_string;
+
 
         octet_sequnce as_octet_sequnce(const universal_string& vl);
-        
-        octet_sequnce as_octet_sequnce(const bmp_string& vl); 
-        
+
+        octet_sequnce as_octet_sequnce(const bmp_string& vl);
+
         bool from_octet_sequnce(universal_string& vl, const octet_sequnce& val);
-        
-        bool from_octet_sequnce(bmp_string& vl, const octet_sequnce& val);       
+
+        bool from_octet_sequnce(bmp_string& vl, const octet_sequnce& val);
 
         //UNICOD UNI STRING  
         //  32bit
@@ -585,80 +585,9 @@ namespace boost {
         // universal_string
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        /*class universal_string : public base_universal_string {
 
-            // known-multi 4 oct
-
-        public:
-
-            universal_string() : base_universal_string() {
-            }
-
-            // from utf-8
-
-            explicit universal_string(const std::string& vl) :
-            base_universal_string(utf8_to_32str<base_universal_string>(vl)) {
-            }
-
-
-#ifdef __ITU_ISBPM_WCHAR__
-
-            universal_string(const std::wstring& vl) :
-            base_universal_string(utf_to_utf<base_universal_string, std::wstring>(vl)) {
-            }
-
-            operator std::wstring() const {
-                return utf_to_utf< std::wstring, base_universal_string>(*this);
-            }
-
-            std::wstring to_wstring() const {
-                return utf_to_utf< std::wstring, base_universal_string>(*this);
-            }
-
-
-#else            
-
-            universal_string(const std::wstring& vl) :
-            base_universal_string(vl) {
-            }
-
-            operator std::wstring() const {
-                return *this;
-            }
-
-            std::wstring to_wstring() const {
-                return *this;
-            }
-
-
-#endif
-
-            std::string to_utf8() const {
-                return utf32_to_8str(*this);
-            }
-
-            operator std::string() const {
-                return to_utf8();
-            }
-
-            octet_sequnce as_octets() const {
-                return empty() ? octet_sequnce() : octet_sequnce(reinterpret_cast<const octet_sequnce::value_type*> (data()),
-                        reinterpret_cast<const octet_sequnce::value_type*> (data()) + size()*4);
-            }
-
-            bool append_octets(const octet_sequnce& vl) {
-                if (vl.size() / 4)
-                    append(reinterpret_cast<const value_type*> (vl.data()), vl.size() / 4);
-                return ((!vl.size()) || ((vl.size() / 4) && !(vl.size() % 4)));
-            }
-
-        };*/
 
         std::ostream& operator<<(std::ostream& stream, const universal_string& vl);
-
-
-
-
 
 
 
@@ -669,82 +598,26 @@ namespace boost {
         // bmp_string
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        /*class bmp_string : public base_bmp_string {
-
-            // known-multi 2 oct
-
-        public:
-
-            bmp_string() : base_bmp_string() {
-            }
-
-            // frrom utf-8
-
-            explicit bmp_string(const std::string& vl) :
-            base_bmp_string(utf8_to_16str<base_bmp_string>(vl)) {
-            }
-
-#ifdef __ITU_ISBPM_WCHAR__     
-
-            bmp_string(const std::wstring& vl) : base_bmp_string(vl) {
-            }
-
-            operator std::wstring() const {
-                return *this;
-            }
-
-            std::wstring to_wstring() const {
-                return *this;
-            }
-
-
-
-#else          
-
-            bmp_string(const std::wstring& vl) :
-            base_bmp_string(utf_to_utf<base_bmp_string, std::wstring>(vl)) {
-            }
-
-            operator std::wstring() const {
-                return utf_to_utf<std::wstring, base_bmp_string>(*this);
-            }
-
-            std::wstring to_wstring() const {
-                return utf_to_utf<std::wstring, base_bmp_string>(*this);
-            }
-
-
-
-#endif  
-
-            std::string to_utf8() const {
-                return utf16_to_8str(*this);
-            }
-
-            operator std::string() const {
-                return to_utf8();
-            }
-
-            octet_sequnce as_octets() const {
-                return empty() ? octet_sequnce() : octet_sequnce(reinterpret_cast<const octet_sequnce::value_type*> (data()),
-                        reinterpret_cast<const octet_sequnce::value_type*> (data()) + size()*2);
-            }
-
-            bool append_octets(const octet_sequnce& vl) {
-                if (vl.size() / 2)
-                    append(reinterpret_cast<const value_type*> (vl.data()), vl.size() / 2);
-                return ((!vl.size()) || ((vl.size() / 2) && !(vl.size() % 2)));
-            }
-
-        };*/
 
         std::ostream& operator<<(std::ostream& stream, const bmp_string& vl);
 
+        template<typename T>
+        std::map<T, T> build_string_drect_map(const T* vl, std::size_t cnt) {
+            typedef std::map<T, T> return_type;
+            return_type rslt;
+            for (T i = 0; i < cnt; ++i)
+                rslt.insert(std::pair<T, T>(i, vl[i]));
+            return rslt;
+        }
 
-
-
-
-
+        template<typename T>
+        std::map<T, T> build_string_reverse_map(const T* vl, std::size_t cnt) {
+            typedef std::map<T, T> return_type;
+            return_type rslt;
+            for (T i = 0; i < cnt; ++i)
+                rslt.insert(std::pair<T, T>(vl[i], i));
+            return rslt;
+        }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // utctime
@@ -1740,10 +1613,10 @@ namespace boost {
             const T& operator*() const {
                 return *internal_;
             }
-            
+
             T& operator*() {
                 return *internal_;
-            }            
+            }
 
             T& operator=(const T & vl) {
                 internal_ = shared_ptr<T > (new T(vl));
@@ -2064,7 +1937,7 @@ namespace boost {
 
 
 
-        
+
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////        
@@ -2082,15 +1955,15 @@ namespace boost {
             template<typename Archive>
             static bool op(Archive& arch, const T& vl) {
                 std::size_t tst = arch.size();
-                arch & const_cast<T&>(vl);
+                arch & const_cast<T&> (vl);
                 return (arch.size() != tst);
             }
-           
+
         };
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        
-        
+
+
 
 #ifdef _MSC_VER
 #pragma warning(push)

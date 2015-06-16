@@ -128,7 +128,42 @@
       boost::asn1::enumerated_indx_map nm## __coder::enumerated_index = boost::asn1::create_enumerated_indx(nm##  __ARR, sizeof(nm##  __ARR)/ sizeof(boost::asn1::enum_base_type));\
       boost::asn1::enumerated_indx_map  nm ## __coder::enumerated_index_ext = boost::asn1::create_enumerated_indx(nm##  __EARR, sizeof(nm##  __EARR)/ sizeof(boost::asn1::enum_base_type));
 
-
+#define  ITU_T_PER_STRINGCODER1(nm, tp, asz, nsz) struct nm {\
+    static void out(boost::asn1::x691::output_coder& stream, tp vl) {\
+        stream.add_bitmap(boost::asn1::bit_string(boost::asn1::octet_sequnce(1, stream.aligned() ?\
+                boost::asn1::octet_sequnce::value_type(vl << (8 - asz)) : boost::asn1::octet_sequnce::value_type(vl << (8 - nsz))), stream.aligned() ? (8 - asz) : (8 - nsz)));}\
+    static tp in(boost::asn1::x691::input_coder& stream) {\
+        boost::asn1::bit_string vl = stream.get_pop_bmp(stream.aligned() ? asz : nsz);\
+        const boost::asn1::octet_sequnce tmp = vl.as_octet_sequnce();\
+        if (!tmp.empty())\
+            return stream.aligned() ? (tmp[0] >> (8 - asz)) : ((tmp[0] >> (8 - nsz)));\
+        return 0;}\
+    static std::size_t bits_count(bool aligned) {\
+        return aligned ? asz : nsz;}};\
+        
+#define  ITU_T_PER_STRINGCODER2(nm, tp, asz, nsz, arr, fl) struct nm {\
+    static void out(boost::asn1::x691::output_coder& stream, tp vl) {\
+        if (fl || !stream.aligned())\
+            vl = dval(vl);\
+        stream.add_bitmap(boost::asn1::bit_string(boost::asn1::octet_sequnce(1, stream.aligned() ?\
+                boost::asn1::octet_sequnce::value_type(vl << (8 - asz)) : boost::asn1::octet_sequnce::value_type(vl << (8 - nsz))), stream.aligned() ? (8 - asz) : (8 - nsz)));}\
+    static tp in(boost::asn1::x691::input_coder& stream) {\
+        boost::asn1::bit_string vl = stream.get_pop_bmp(stream.aligned() ? asz : nsz);\
+        const boost::asn1::octet_sequnce tmp = vl.as_octet_sequnce();\
+        if (!tmp.empty())\
+            return stream.aligned() ? ((fl ? rval(tmp[0]) : tmp[0]) >> (8 - asz)) : ((rval(tmp[0]) >> (8 - nsz)));\
+        return 0;}\
+    static std::size_t bits_count(bool aligned) {\
+        return aligned ? asz : nsz;}\
+    static tp dval(tp vl){\
+        return direct.find(vl)!=direct.end() ? direct[vl] : 0;}\
+    static tp rval(tp vl){\
+        return reverse.find(vl)!=reverse.end() ? reverse[vl] : 0;}\
+   static std::map<tp, tp> direct;\
+   static std::map<tp, tp> reverse;};\
+   const tp nm ## _____ARR[] = { arr };\
+   std::map<tp, tp> nm ::direct=boost::asn1::build_string_drect_map(nm ## _____ARR,sizeof(nm ## _____ARR)/sizeof(tp));\
+   std::map<tp, tp> nm ::reverse=boost::asn1::build_string_reverse_map(nm ## _____ARR,sizeof(nm ## _____ARR)/sizeof(tp));
 
 /* Need helper case :
  *    1) Siimple case:
@@ -693,7 +728,7 @@ namespace boost {
                 void operator&(const explicit_value<T >& vl) {
                     *this & vl.value();
                 }
-                
+
                 template<typename T>
                 void operator&(const implicit_value<T >& vl) {
                     *this & vl.value();
@@ -703,7 +738,6 @@ namespace boost {
                 void operator&(const prefixed_value<T >& vl) {
                     *this & vl.value();
                 }
-                
 
                 template<typename T>
                 void operator&(const per_enumerated_holder<T >& vl) {
@@ -1349,7 +1383,7 @@ namespace boost {
                 void operator&(explicit_value<T >& vl) {
                     *this & vl.value();
                 }
-                
+
                 template<typename T>
                 void operator&(implicit_value<T >& vl) {
                     *this & vl.value();
@@ -1359,7 +1393,7 @@ namespace boost {
                 void operator&(prefixed_value<T >& vl) {
                     *this & vl.value();
                 }
-                                
+
                 template<typename T, class Tag, id_type ID, class_type TYPE >
                 void operator&(explicit_typedef <T, Tag, ID, TYPE>& vl) {
                     *this & vl.value();
@@ -2003,7 +2037,7 @@ namespace boost {
         inline bool bind_per(Archive & arch, value_holder<T>& vl) {
             return bind_per(arch, *vl);
         }
-        
+
         template<typename T>
         inline bool bind_per(boost::asn1::x691::output_coder & arch, boost::shared_ptr<T>& vl) {
             if (static_cast<bool> (vl))
@@ -2122,7 +2156,7 @@ namespace boost {
         inline bool bind_constraints(Archive & arch, value_holder<T>& vl, const T& MIN, const T& MAX, bool ext) {
             return bind_constraints(arch, *vl, MIN, MAX, ext);
         }
-        
+
         template<typename T>
         inline bool bind_constraints(boost::asn1::x691::output_coder & arch, boost::shared_ptr<T>& vl, const T& MIN, const T& MAX, bool ext) {
             if (static_cast<bool> (vl))
@@ -2178,7 +2212,7 @@ namespace boost {
         inline bool bind_sizeconstraints(Archive & arch, value_holder<T>& vl, const std::size_t& MIN, const std::size_t& MAX, bool ext) {
             return bind_sizeconstraints(arch, *vl, MIN, MAX, ext);
         }
-      
+
         template<typename T>
         inline bool bind_sizeconstraints(boost::asn1::x691::output_coder & arch, boost::shared_ptr<T>& vl, const std::size_t& MIN, const std::size_t& MAX, bool ext) {
             if (static_cast<bool> (vl))
@@ -2230,7 +2264,7 @@ namespace boost {
         inline bool bind_sizeconstraints_ext(boost::asn1::x691::input_coder & arch, T& vl, const std::size_t& MIN, const std::size_t& MAX, bool ext) {
             size_constrainter<T, E> tmpvl(vl, MIN, MAX, ext);
             arch & tmpvl;
-            return true;            
+            return true;
         }
 
         template<typename T, typename E>
