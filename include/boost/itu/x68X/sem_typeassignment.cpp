@@ -56,6 +56,34 @@ namespace x680 {
     }
 
     template<typename T>
+    static bool build_ranges(valueconstraint_atom_ptr vl, std::vector<range_constraints<T> >& rslt) {
+        rslt.clear();
+        range_constraints<T> tmp;
+        if (build_range(vl, tmp)) {
+            rslt.push_back(tmp);
+            return true;
+        }
+        return false;
+    }
+
+    static bool build_ranges(valueconstraint_atom_ptr vl, std::vector<range_constraints<std::string::value_type> >& rslt) {
+        rslt.clear();
+        if (vl && vl->value() && (vl->value()->get_value<std::string>() || vl->value()->get_value<std::string::value_type>())) {
+            if (vl->value()->get_value<std::string::value_type>())
+                rslt.push_back(range_constraints<std::string::value_type>(range_constraints<std::string::value_type>::range_type::create_single(*(vl->value()->get_value<std::string::value_type>()))));
+            else if (vl->value()->get_value<std::string>()) {
+                std::string tmpstr = *(vl->value()->get_value<std::string>());
+                if (!tmpstr.empty()) {
+                    for (std::string::size_type it = 0; it < tmpstr.size(); ++it)
+                        rslt.push_back(range_constraints<std::string::value_type>(range_constraints<std::string::value_type>::range_type::create_single(tmpstr[it])));
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    template<typename T>
     bool build_range(rangeconstraint_atom_ptr vl, range_constraints<T>& rslt) {
         if (vl) {
             value_atom_ptr fv = vl->from();
@@ -501,6 +529,7 @@ namespace x680 {
         boost::shared_ptr<constraints_type > rslt;
         constraints_stack stki;
         constraints_type rng;
+        std::vector<constraints_type> rngs;
         for (constraint_atom_vct::const_iterator iti = vl->constraintline().begin(); iti != vl->constraintline().end(); ++iti) {
             if ((*iti)->as_range()) {
                 if (!build_range((*iti)->as_range(), rng)) {
@@ -509,11 +538,24 @@ namespace x680 {
                 }
                 stki.push(rng);
             } else if ((*iti)->as_valueconstraint()) {
-                if (!build_range((*iti)->as_valueconstraint(), rng)) {
+                if (!build_ranges((*iti)->as_valueconstraint(), rngs)) {
                     stki = constraints_stack();
                     break;
                 }
-                stki.push(rng);
+                if (!rngs.empty()) {
+                    for (std::size_t rti = 0; rti < rngs.size(); ++rti) {
+                        stki.push(rngs[rti]);
+                        if (rti) {
+                            if (stki.size() < 2) {
+                                stki = constraints_stack();
+                                break;
+                            }
+                            rng = stki.top();
+                            stki.pop();
+                            stki.top() |= rng;
+                        }
+                    }
+                }
             } else if ((*iti)->as_subtypeconstraint()) {
                 if (!build_range((*iti)->as_subtypeconstraint(), rng)) {
                     stki = constraints_stack();
@@ -1107,30 +1149,30 @@ namespace x680 {
     bool type_atom::isenum() const {
         return ((isrefferrence()) && (!tag_) && (constraints_.empty()));
     }
-    
-    bool type_atom::isstring()  {
+
+    bool type_atom::isstring() {
         switch (root_builtin()) {
-            case t_UTF8String:            
+            case t_UTF8String:
             case t_NumericString:
             case t_PrintableString:
             case t_T61String:
             case t_VideotexString:
             case t_GraphicString:
             case t_GeneralString:
-            case t_CHARACTER_STRING:                 
+            case t_CHARACTER_STRING:
             case t_IA5String:
             case t_VisibleString:
             case t_UniversalString:
-            case t_BMPString: return true;   
+            case t_BMPString: return true;
             default:
             {
             }
         }
         return false;
-    }    
+    }
 
     bool type_atom::can_per_constraints() {
-        return (can_char_constraints()) || 
+        return (can_char_constraints()) ||
                 (can_size_constraints() ||
                 (can_integer_constraints()));
     }

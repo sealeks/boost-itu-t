@@ -127,9 +127,11 @@ namespace x680 {
 
             template< typename T>
             moduleout_ptr generate(const std::string& path, module_entity_ptr modl, const std::string add, const std::string ext = ".cpp") {
-                std::string fullpath = std::string(path) +  "\\"+ modl->name() + add + "." + ext;
-                boost::filesystem::path p(fullpath.c_str());
-                return moduleout_ptr(new T(p.generic_string().c_str(), modl, opt_));
+                std::string filepath = modl->name() + add + "." + ext;
+                boost::filesystem::path p(path.c_str());
+                boost::filesystem::path f(filepath.c_str());
+                boost::filesystem::path r=p/f;                
+                return moduleout_ptr(new T(r.generic_string().c_str(), modl, opt_));
             }
 
             global_entity_ptr global_;

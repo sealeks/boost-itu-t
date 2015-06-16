@@ -172,7 +172,11 @@ namespace x680 {
         }
 
         bool dir_create(const std::string& path, const std::string& outdir) {
-            std::string newpath = path + "\\" + outdir;
+            //std::string newpath = path  + outdir;
+            boost::filesystem::path p(path.c_str());
+            boost::filesystem::path f(outdir.c_str());
+            boost::filesystem::path r=p/f;             
+            std::string newpath=r.c_str();
             if (!dir_exists(newpath))
                 return fsnsp::create_directory(fsnsp::path(newpath.c_str()));
             return true;
