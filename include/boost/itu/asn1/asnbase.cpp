@@ -142,18 +142,18 @@ namespace boost {
                 boost::uint16_t el = *(reinterpret_cast<const boost::uint16_t*> (&val[it + 2]));
 
 #ifdef __ITU_IS_LE_STRING__
-                vl.push_back((wchar_t) ((0xFF00 & (el << 8)) | (0xFF & (el >> 8))));
+                vl.push_back((universal_string::value_type) ((0xFF00 & (el << 8)) | (0xFF & (el >> 8))));
 #else
-                vl.push_back((wchar_t) el);
+                vl.push_back((universal_string::value_type) el);
 #endif                   
 
 #else                 
                 boost::uint32_t el = *(reinterpret_cast<const boost::uint32_t*> (&val[it]));
 
 #ifdef __ITU_IS_LE_STRING__
-                vl.push_back((wchar_t) ((0xFF000000 & (el << 24)) | (0xFF0000 & (el << 16)) | (0xFF00 & (el >> 16)) | (0xFF & (el >> 24)));
+                vl.push_back((universal_string::value_type) ((0xFF000000 & (el << 24)) | (0xFF0000 & (el << 16)) | (0xFF00 & (el >> 16)) | (0xFF & (el >> 24))));
 #else
-                vl.push_back((wchar_t) el);
+                vl.push_back((universal_string::value_type) el);
 #endif   
 
 #endif                 
@@ -169,17 +169,17 @@ namespace boost {
                 boost::uint16_t el = *(reinterpret_cast<const boost::uint16_t*> (&val[it]));
 
 #ifdef __ITU_IS_LE_STRING__
-                vl.push_back((wchar_t) ((0xFF00 & (el << 8)) | (0xFF & (el >> 8))));
+                vl.push_back((bmp_string::value_type) ((0xFF00 & (el << 8)) | (0xFF & (el >> 8))));
 #else
-                vl.push_back((wchar_t) el);
+                vl.push_back((bmp_string::value_type) el);
 #endif 
 
 #else                 
                 boost::uint32_t el = *(reinterpret_cast<const boost::uint16_t*> (&val[it]));
 #ifdef __ITU_IS_LE_STRING__
-                vl.push_back((wchar_t) ((0xFF000000 & (el << 24)) | (0xFF0000 & (el << 16)) | (0xFF00 & (el >> 16)) | (0xFF & (el >> 24)));
+                vl.push_back((bmp_string::value_type) ((0xFF000000 & (el << 24)) | (0xFF0000 & (el << 16)) | (0xFF00 & (el >> 16)) | (0xFF & (el >> 24))));
 #else
-                vl.push_back((wchar_t) el);
+                vl.push_back((bmp_string::value_type) el);
 #endif   
 #endif                 
             }
