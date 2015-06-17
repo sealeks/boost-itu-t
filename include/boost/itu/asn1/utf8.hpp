@@ -907,6 +907,39 @@ namespace boost {
         bool bmpstr_to_wstr(const std::string& val, std::wstring& rslt);
         bool quadrople_to_str(const boost::asn1::utf8::uint32_t& val, std::string& rslt);
 
+        template<typename T>
+        T utf8_to_sstr(const std::string& val) {
+            T rslt;
+            return rslt;
+        }
+        
+        template<typename T>
+        std::string sstr_to_utf8(const T& val) {
+            return "";
+        }        
+
+        template<>
+        std::wstring utf8_to_sstr(const std::string& val);
+        
+        template<>
+        std::string sstr_to_utf8(const std::wstring& val);       
+
+#if __cplusplus >= 201103L
+
+        template<>
+        std::u16string utf8_to_sstr(const std::string& val);
+
+        template<>
+        std::u32string utf8_to_sstr(const std::string& val);
+        
+        template<>
+        std::string sstr_to_utf8(const std::u16string& val);   
+
+        template<>
+        std::string sstr_to_utf8(const std::u32string& val);          
+
+#endif        
+
         inline std::string wstr_to_universalstr(const std::wstring& val) {
             std::string tmp;
             return wstr_to_universalstr(val, tmp) ? tmp : "";

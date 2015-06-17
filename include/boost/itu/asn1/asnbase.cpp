@@ -187,14 +187,14 @@ namespace boost {
         // universal_string
 
         std::ostream& operator<<(std::ostream& stream, const universal_string& vl) {
-            return stream << vl.as_utf8().as_base();
+            return stream << "UNIVERSALSTRING";//vl.as_utf8().as_base();
         }
 
 
         // bmp_string       
 
         std::ostream& operator<<(std::ostream& stream, const bmp_string& vl) {
-            return stream << vl.as_utf8().as_base();
+            return stream << "BMPSTRING";//vl.as_utf8().as_base();
         }
 
 

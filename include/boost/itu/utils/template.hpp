@@ -1032,8 +1032,8 @@ namespace boost {
         //  smpl_wstring
         ///////////////////////////////////////////////////////////////////////        
 
-        template<std::size_t ID = 0 >
-        class smpl_wstring : public std::wstring {
+        template<typename BASE = std::wstring, std::size_t ID = 0 >
+        class smpl_wstring : public BASE {
 
         private:
 
@@ -1043,7 +1043,7 @@ namespace boost {
 
         public:
 
-            typedef std::wstring Base;
+            typedef BASE Base;
             typedef std::string LBase;
 
             typedef typename Base::traits_type traits_type;
@@ -1067,15 +1067,15 @@ namespace boost {
             typedef LBase::reverse_iterator lreverse_iterator;
 
             static Base to_base(const LBase& vl) {
-                return utf8_to_wstr(vl);
+                return utf8_to_sstr<Base>(vl);
             }
 
             static Base to_base(const lvalue_type* vl) {
-                return utf8_to_wstr(vl);
+                return utf8_to_sstr<Base>(vl);
             }
 
             static LBase to_Lbase(const Base& vl) {
-                return wstr_to_utf8(vl);
+                return sstr_to_utf8<Base>(vl);
             }
 
             smpl_wstring() : Base() {
@@ -1215,12 +1215,12 @@ namespace boost {
                 return *this;
             }
 
-            basic_string& operator=(std::initializer_list<value_type> l) {
+            smpl_wstring& operator=(std::initializer_list<value_type> l) {
                 Base::operator=(l);
                 return *this;
             }
 
-            basic_string& operator=(std::initializer_list<lvalue_type> l) {
+            smpl_wstring& operator=(std::initializer_list<lvalue_type> l) {
                 Base::operator=(to_base(LBase(l)));
                 return *this;
             }

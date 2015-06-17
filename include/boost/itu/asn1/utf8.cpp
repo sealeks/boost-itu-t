@@ -62,7 +62,7 @@ namespace boost {
         bool check_utf8(const std::string& val) {
             try {
                 return boost::asn1::utf8::is_valid(val.begin(), val.end());
-            }            catch (...) {
+            } catch (...) {
             }
             return false;
         }
@@ -87,10 +87,59 @@ namespace boost {
                 return L"?";
 #endif        
                 return std::wstring(unicodeline.begin(), unicodeline.end());
-            }            catch (...) {
+            } catch (...) {
             }
             return L"";
         }
+
+        template<>
+        std::wstring utf8_to_sstr(const std::string& val) {
+            return utf8_to_wstr(val);
+        }
+
+#if __cplusplus >= 201103L
+
+        template<>
+        std::u16string utf8_to_sstr(const std::string& val) {
+            try {
+                string::const_iterator end_it = boost::asn1::utf8::find_invalid(val.begin(), val.end());
+                if (end_it != val.end()) {
+                    return u"";
+                }
+                std::size_t length = boost::asn1::utf8::distance(val.begin(), end_it);
+                std::vector<std::u16string::value_type> unicodeline;
+                if (length)
+                    unicodeline.reserve(length);
+                else
+                    return u"";
+                boost::asn1::utf8::utf8to16(val.begin(), end_it, std::back_inserter(unicodeline));
+                return std::u16string(unicodeline.begin(), unicodeline.end());
+            } catch (...) {
+            }
+            return u"";
+        }
+
+        template<>
+        std::u32string utf8_to_sstr(const std::string& val) {
+            try {
+                string::const_iterator end_it = boost::asn1::utf8::find_invalid(val.begin(), val.end());
+                if (end_it != val.end()) {
+                    return U"";
+                }
+                std::size_t length = boost::asn1::utf8::distance(val.begin(), end_it);
+                std::vector<std::u32string::value_type> unicodeline;
+                if (length)
+                    unicodeline.reserve(length);
+                else
+                    return U"";
+                boost::asn1::utf8::utf8to32(val.begin(), end_it, std::back_inserter(unicodeline));
+                return std::u32string(unicodeline.begin(), unicodeline.end());
+            } catch (...) {
+            }
+            return U"";
+        }
+
+#endif        
 
         bool utf8_to_wstr(const std::string& val, std::wstring& rslt) {
             try {
@@ -113,7 +162,7 @@ namespace boost {
 #endif        
                 rslt = std::wstring(unicodeline.begin(), unicodeline.end());
                 return true;
-            }            catch (...) {
+            } catch (...) {
             }
             return false;
         }
@@ -129,10 +178,41 @@ namespace boost {
                 return L"?";
 #endif        
                 return utf8line;
-            }            catch (...) {
+            } catch (...) {
             }
             return "";
         }
+
+        template<>
+        std::string sstr_to_utf8(const std::wstring& val) {
+            return wstr_to_utf8(val);
+        }
+
+#if __cplusplus >= 201103L
+
+        template<>
+        std::string sstr_to_utf8(const std::u16string& val) {
+            try {
+                std::string utf8line;
+                boost::asn1::utf8::utf16to8(val.begin(), val.end(), std::back_inserter(utf8line));
+                return utf8line;
+            } catch (...) {
+            }
+            return "";
+        }
+
+        template<>
+        std::string sstr_to_utf8(const std::u32string& val) {
+            try {
+                std::string utf8line;
+                boost::asn1::utf8::utf32to8(val.begin(), val.end(), std::back_inserter(utf8line));
+                return utf8line;
+            } catch (...) {
+            }
+            return "";
+        }
+
+#endif       
 
         bool wstr_to_utf8(const std::wstring& val, std::string& rslt) {
             try {
@@ -146,7 +226,7 @@ namespace boost {
 #endif        
                 rslt = utf8line;
                 return true;
-            }            catch (...) {
+            } catch (...) {
             }
             return false;
         }
@@ -176,7 +256,7 @@ namespace boost {
                 return L"?";
 #endif        
                 return true;
-            }            catch (...) {
+            } catch (...) {
             }
             return false;
         }
@@ -207,7 +287,7 @@ namespace boost {
                 return L"?";
 #endif        
                 return true;
-            }            catch (...) {
+            } catch (...) {
             }
             return false;
         }
@@ -252,7 +332,7 @@ namespace boost {
                 return L"?";
 #endif        
                 return true;
-            }            catch (...) {
+            } catch (...) {
             }
             return false;
         }
@@ -299,7 +379,7 @@ namespace boost {
                 return L"?";
 #endif        
                 return true;
-            }            catch (...) {
+            } catch (...) {
             }
             return false;
         }
