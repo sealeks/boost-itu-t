@@ -36,6 +36,22 @@
                     <name>nb_gcc_rl_LIN64</name>
                     <type>3</type>
                 </confElem>
+                <confElem>
+                    <name>nb_gcc11_db_WIN32</name>
+                    <type>3</type>
+                </confElem>
+                <confElem>
+                    <name>nb_gcc11_rl_WIN32</name>
+                    <type>3</type>
+                </confElem>
+                <confElem>
+                    <name>nb_gcc11_db_LIN64</name>
+                    <type>3</type>
+                </confElem>
+                <confElem>
+                    <name>nb_gcc11_rl_LIN64</name>
+                    <type>3</type>
+                </confElem>
             </confList>
             <formatting>
                 <project-formatting-style>false</project-formatting-style>

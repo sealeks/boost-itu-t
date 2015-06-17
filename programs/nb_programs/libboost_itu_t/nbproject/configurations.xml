@@ -1145,5 +1145,1046 @@
             flavor2="0">
       </item>
     </conf>
+    <conf name="nb_gcc11_db_WIN32" type="3">
+      <toolsSet>
+        <compilerSet>MinGW|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <standard>8</standard>
+          <commandlineTool>g++</commandlineTool>
+          <incDir>
+            <pElem>../../../include</pElem>
+            <pElem>${BOOST_DIR}</pElem>
+          </incDir>
+          <commandLine>-mthreads -fno-strict-aliasing</commandLine>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>ITUX200_DEBUG</Elem>
+            <Elem>_WIN32_WINNT=0x0601</Elem>
+          </preprocessorList>
+        </ccTool>
+        <archiverTool>
+          <output>../../../lib/${CND_CONF}/libboost_itu_t.a</output>
+        </archiverTool>
+      </compileType>
+      <item path="../../../include/boost/itu/asn1/asnbase.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/asn1/asnbase.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/asn1/utf8.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/asn1/utf8.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/coder/asn1_straem.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/coder/asn1_stream.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/coder/base_coder.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/coder/base_coder.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/detail/error.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/detail/error.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/rfc1006/rfc1006.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/rfc1006/rfc1006.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/utils/temlate.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/utils/template.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/utils/utils.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/utils/utils.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1.asn"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.asn"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.asn"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/selectors.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/selectors.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x224.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x224.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x225.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x225.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x226.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x226.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x227.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x227.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x690.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x690.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x691.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x691.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x69x.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x69x.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+    </conf>
+    <conf name="nb_gcc11_rl_WIN32" type="3">
+      <toolsSet>
+        <compilerSet>MinGW|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <standard>8</standard>
+          <commandlineTool>g++</commandlineTool>
+          <incDir>
+            <pElem>../../../include</pElem>
+            <pElem>${BOOST_DIR}</pElem>
+          </incDir>
+          <commandLine>-mthreads -fno-strict-aliasing</commandLine>
+          <preprocessorList>
+            <Elem>_WIN32_WINNT=0x0501</Elem>
+          </preprocessorList>
+          <warningLevel>2</warningLevel>
+        </ccTool>
+        <archiverTool>
+          <output>../../../lib/${CND_CONF}/libboost_itu_t.a</output>
+        </archiverTool>
+      </compileType>
+      <item path="../../../include/boost/itu/asn1/asnbase.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/asn1/asnbase.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/asn1/utf8.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/asn1/utf8.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/coder/asn1_straem.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/coder/asn1_stream.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/coder/base_coder.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/coder/base_coder.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/detail/error.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/detail/error.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/rfc1006/rfc1006.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/rfc1006/rfc1006.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/utils/temlate.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/utils/template.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/utils/utils.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/utils/utils.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1.asn"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.asn"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.asn"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/selectors.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/selectors.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x224.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x224.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x225.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x225.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x226.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x226.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x227.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x227.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x690.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x690.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x691.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x691.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x69x.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x69x.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+    </conf>
+    <conf name="nb_gcc11_db_LIN64" type="3">
+      <toolsSet>
+        <compilerSet>GNU|Unknown</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <architecture>2</architecture>
+          <standard>8</standard>
+          <incDir>
+            <pElem>../../../include</pElem>
+            <pElem>${BOOST_DIR}</pElem>
+          </incDir>
+          <commandLine>-fno-strict-aliasing</commandLine>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>ITUX200_DEBUG</Elem>
+          </preprocessorList>
+        </ccTool>
+        <archiverTool>
+          <output>../../../lib/${CND_CONF}/libboost_itu_t.a</output>
+        </archiverTool>
+      </compileType>
+      <item path="../../../include/boost/itu/asn1/asnbase.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/asn1/asnbase.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/asn1/utf8.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/asn1/utf8.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/coder/asn1_straem.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/coder/asn1_stream.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/coder/base_coder.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/coder/base_coder.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/detail/error.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/detail/error.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/rfc1006/rfc1006.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/rfc1006/rfc1006.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/utils/temlate.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/utils/template.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/utils/utils.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/utils/utils.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1.asn"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.asn"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.asn"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/selectors.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/selectors.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x224.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x224.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x225.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x225.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x226.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x226.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x227.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x227.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x690.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x690.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x691.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x691.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x69x.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x69x.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+    </conf>
+    <conf name="nb_gcc11_rl_LIN64" type="3">
+      <toolsSet>
+        <compilerSet>GNU|Unknown</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <architecture>2</architecture>
+          <standard>8</standard>
+          <incDir>
+            <pElem>../../../include</pElem>
+            <pElem>${BOOST_DIR}</pElem>
+          </incDir>
+          <commandLine>-fno-strict-aliasing -Wparentheses</commandLine>
+          <warningLevel>2</warningLevel>
+        </ccTool>
+        <archiverTool>
+          <output>../../../lib/${CND_CONF}/libboost_itu_t.a</output>
+        </archiverTool>
+      </compileType>
+      <item path="../../../include/boost/itu/asn1/asnbase.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/asn1/asnbase.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/asn1/utf8.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/asn1/utf8.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/coder/asn1_straem.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/coder/asn1_stream.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/coder/base_coder.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/coder/base_coder.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/detail/error.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/detail/error.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/rfc1006/rfc1006.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/rfc1006/rfc1006.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/utils/temlate.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/utils/template.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/utils/utils.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/utils/utils.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1.asn"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.asn"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.asn"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/selectors.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/selectors.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x224.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x224.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x225.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x225.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x226.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x226.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x227.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/x227.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x690.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x690.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x691.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x691.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x69x.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x69x.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+    </conf>
   </confs>
 </configurationDescriptor>
