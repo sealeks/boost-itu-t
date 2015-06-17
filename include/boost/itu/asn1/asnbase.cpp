@@ -89,7 +89,9 @@ namespace boost {
 
 
         // universal_string  // bmp_string
-
+        
+        
+       
         octet_sequnce as_octet_sequnce(const universal_string& vl) {
             octet_sequnce rslt;
             rslt.reserve(4 * vl.size());

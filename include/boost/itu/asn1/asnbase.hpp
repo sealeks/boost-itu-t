@@ -32,20 +32,11 @@
 #include <limits>
 
 #if ((__WCHAR_MAX__) && (__WCHAR_MAX__ > 0x10000))
-#define __ITU__WCHAR32__  
-typedef wchar_t universalchar_t; // 32 bit
-typedef boost::uint16_t bmpchar_t; // 16 bit
-typedef std::wstring base_universal_string;
-typedef std::basic_string<universalchar_t> base_bmp_string;
-BOOST_STATIC_ASSERT(sizeof (wchar_t) == 4);
+
 #else   
-#define __ITU_ISBPM_WCHAR__      
+#if __cplusplus < 201103L
 #define __ITU__WCHAR16__  
-typedef wchar_t bmpchar_t; // 16 bit
-typedef boost::uint32_t universalchar_t;
-typedef std::wstring base_bmp_string;
-typedef std::basic_string<universalchar_t> base_universal_string;
-BOOST_STATIC_ASSERT(sizeof (wchar_t) == 2);
+#endif
 #endif
 
 #if ((_MSC_VER) || (__MINGW32__))
