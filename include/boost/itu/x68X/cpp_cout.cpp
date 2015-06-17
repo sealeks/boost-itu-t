@@ -175,8 +175,8 @@ namespace x680 {
             //std::string newpath = path  + outdir;
             boost::filesystem::path p(path.c_str());
             boost::filesystem::path f(outdir.c_str());
-            boost::filesystem::path r=p/f;             
-            std::string newpath=r.c_str();
+            boost::filesystem::path r = p / f;
+            std::string newpath = r.generic_string();
             if (!dir_exists(newpath))
                 return fsnsp::create_directory(fsnsp::path(newpath.c_str()));
             return true;
@@ -924,7 +924,10 @@ namespace x680 {
                 if (!dir_create(option_path(), option_outdir()))
                     throw fsnsp::filesystem_error("File or directory error",
                         boost::system::error_code(boost::system::errc::io_error, boost::system::system_category()));
-                outpath = option_path() + "\\" + option_outdir();
+                boost::filesystem::path p(option_path().c_str());
+                boost::filesystem::path f(option_outdir().c_str());
+                boost::filesystem::path r = p / f;
+                outpath = r.generic_string();
             } else
                 outpath = option_outdir();
 
@@ -3506,32 +3509,103 @@ namespace x680 {
             }
         }
 
+        static std::set<boost::uint8_t> get_alhabet_static(const range_constraints<std::string::value_type>& rng) {
+            std::set<boost::uint8_t> rslt;
+            for (range_constraints<std::string::value_type>::container_type::const_iterator it = rng.set().begin(); it != rng.set().end(); ++it)
+                for (boost::uint8_t i = static_cast<boost::uint8_t>(it->left_ptr() ? (it->left()) : (0)); 
+                        i <= static_cast<boost::uint8_t>((it->right_ptr() ? (it->right()) : (0xFF))); ++i)
+                    rslt.insert(i);
+            return rslt;
+        }
+
+        static std::set<boost::uint8_t> get_alhabet_static(const range_constraints<tuple>& rng) {
+            std::set<boost::uint8_t> rslt;
+            for (range_constraints<tuple>::container_type::const_iterator it = rng.set().begin(); it != rng.set().end(); ++it) {
+                boost::uint8_t lft = it->left_ptr() ? (it->left().tablecolumn * 16 + it->left().tablerow) : 0;
+                boost::uint8_t rght = it->right_ptr() ? (it->right().tablecolumn * 16 + it->right().tablerow) : 255;
+                for (boost::uint8_t i = lft; i <= rght; ++i)
+                    rslt.insert(i);
+            }
+            return rslt;
+        }
+
+        static std::set<boost::uint32_t> get_alhabet_static(const range_constraints<quadruple>& rng) {
+            std::set<boost::uint32_t> rslt;
+            for (range_constraints<quadruple>::container_type::const_iterator it = rng.set().begin(); it != rng.set().end(); ++it) {
+                boost::uint32_t lft = it->left_ptr() ? (it->left().group * 127 + it->left().plane * 256 + it->left().row * 256 + it->left().cell) : 0;
+                boost::uint32_t rght = it->right_ptr() ? (it->right().group * 127 + it->right().plane * 256 + it->right().row * 256 + it->right().cell) : 0x7FFFFFFF;
+                if ((rght - lft) <= 1024) {
+                    for (boost::uint32_t i = lft; i <= rght; ++i)
+                        rslt.insert(i);
+                }
+            }
+            return rslt;
+        }
+
+        template<typename T>
+        static std::string print_alhabet_static(typeassignment_entity_ptr tpas, const std::string& name, const std::set<T>& st) {
+            typedef typename std::set<T>::const_iterator const_iterator ;
+            std::string rslt="ITU_T_PER_STRINGCODER";
+            if (st.empty())
+                return "ITU_T_PER_STRINGCODER( ?" + name + "__shelper)";
+            std::size_t sz = st.size();
+            std::size_t bsz = 1;
+            while (sz >>= 1)
+                bsz++;          
+            std::size_t asz = (bsz > 16) ? 32 : ((bsz > 8) ? 16 : ((bsz > 4) ? 
+                8 : ((bsz > 2) ? 4 : ((bsz > 1) ? 2 : 1))));
+            T maxvl = *st.rbegin();
+            bool areindex = maxvl >= (1 << asz);
+            bool breindex = maxvl >= (1 << bsz);
+            if (!areindex && !breindex)
+                rslt += "1";
+            else
+                rslt += "2";                
+            rslt+=("(" + name + "__shelper , boost::asn1::" + builtin_str(tpas->root_builtin()) +  "::value_type ,");              
+            
+            rslt += (" " + to_string(asz));
+            rslt += (", " + to_string(bsz));
+            if (!areindex && !breindex) {
+                rslt += (");\n");
+                return rslt;
+            }           
+            rslt += " , ITU_T_ARRAY(";
+            for (const_iterator it = st.begin(); it != st.end(); ++it) {
+                if (it != st.begin())
+                    rslt += ", ";
+                rslt += ("\'\\x" + num_to_hex<T>(*it) + "\'");
+            }
+            rslt += " ), ";
+            rslt += (areindex ? "true" : " false");
+            rslt += (");\n");            
+            return rslt;
+        }
+
+
         void per_cpp_out::print_struct_alphabet_helper(helper_ptr hlpr) {
             basic_entity_ptr scp;
-            if (hlpr->ts) {
+            if (hlpr->ts && hlpr->ts->type()) {
                 std::string typenm = builtin_str(hlpr->ts->root_builtin());
+                if (hlpr->ts->type()->char8_constraint() || hlpr->ts->type()->tuple_constraint()) {
+                    std::set<boost::uint8_t> vlset = hlpr->ts->type()->char8_constraint() ?
+                            get_alhabet_static(hlpr->ts->type()->char8_constraint()->to_alphabet_per()) :
+                            get_alhabet_static(hlpr->ts->type()->tuple_constraint()->to_alphabet_per());
+                    if (vlset.size() > 1) {
+                        stream << tabformat(scp, 2);
+                        stream << print_alhabet_static(hlpr->ts, hlpr->name, vlset);
+                        return;
+                    }
+                } else if (hlpr->ts->type()->quadruple_constraint()) {
+                    std::set<boost::uint32_t> vlset = get_alhabet_static(hlpr->ts->type()->quadruple_constraint()->to_alphabet_per());
+                    if ((vlset.size() > 1) && (vlset.size() < 512)) {
+                        stream << tabformat(scp, 2);
+                        stream << print_alhabet_static(hlpr->ts, hlpr->name, vlset);
+                        return;
+                    }
+                    return;
+                }
                 stream << tabformat(scp, 2);
-                stream << "struct " << hlpr->name << "__shelper" << " {\n";
-                stream << tabformat(scp, 3);
-                stream << "static void out(boost::asn1::x691::output_coder& stream, boost::asn1::" << typenm << "::value_type vl){\n";
-                stream << tabformat(scp, 4);
-                stream << "??? Manualy_mplementation_required \n";
-                stream << tabformat(scp, 4);
-                stream << "}\n\n";
-                stream << tabformat(scp, 3);
-                stream << "static " << typenm << "::value_type in(boost::asn1::x691::input_coder& stream){\n";
-                stream << tabformat(scp, 4);
-                stream << "??? Manualy_mplementation_required \n";
-                stream << tabformat(scp, 4);
-                stream << "}\n\n";
-                stream << tabformat(scp, 3);
-                stream << "static std::size_t bits_count(bool aligned){\n";
-                stream << tabformat(scp, 4);
-                stream << "??? Manualy_mplementation_required \n";
-                stream << tabformat(scp, 4);
-                stream << "}\n\n";
-                stream << tabformat(scp, 2);
-                stream << "};\n";
+                stream << "struct " << hlpr->name << "__shelper" << " { ? null or compicated manually case.  };\n";
             }
         }
 
