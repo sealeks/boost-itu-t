@@ -560,8 +560,8 @@ namespace boost {
         typedef smpl_wstring<std::u32string,TYPE_UNIVERSALSTRING > universal_string;
         typedef smpl_wstring<std::u16string, TYPE_BMPSTRING > bmp_string;
 #else
-        typedef smpl_wstring<TYPE_UNIVERSALSTRING > universal_string;
-        typedef smpl_wstring<TYPE_BMPSTRING > bmp_string;        
+        typedef smpl_wstring<std::wstring, TYPE_UNIVERSALSTRING > universal_string;
+        typedef smpl_wstring<std::wstring,  TYPE_BMPSTRING > bmp_string;        
 #endif
         
         octet_sequnce as_octet_sequnce(const universal_string& vl);
