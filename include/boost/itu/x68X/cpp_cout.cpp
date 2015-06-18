@@ -10,6 +10,8 @@
 namespace x680 {
     namespace cpp {
 
+        namespace fsnsp = boost::filesystem;        
+
         template<typename T>
         std::string to_string(T val) {
             try {
@@ -164,23 +166,7 @@ namespace x680 {
 
 
 
-        namespace fsnsp = boost::filesystem;
 
-        bool dir_exists(const std::string& path) {
-            fsnsp::path p(path.c_str());
-            return (fsnsp::exists(p) && fsnsp::is_directory(p));
-        }
-
-        bool dir_create(const std::string& path, const std::string& outdir) {
-            //std::string newpath = path  + outdir;
-            boost::filesystem::path p(path.c_str());
-            boost::filesystem::path f(outdir.c_str());
-            boost::filesystem::path r = p / f;
-            std::string newpath = r.generic_string();
-            if (!dir_exists(newpath))
-                return fsnsp::create_directory(fsnsp::path(newpath.c_str()));
-            return true;
-        }
 
 
         const std::string FHHEADER = "#include <boost/itu/asn1/asnbase.hpp>\n#include <boost/itu/x69X/x690.hpp>\n#include <boost/itu/x69X/x691.hpp>\n\n#ifdef _MSC_VER\n#pragma warning(push)\n#pragma warning(disable: 4065)\n#endif\n\n";

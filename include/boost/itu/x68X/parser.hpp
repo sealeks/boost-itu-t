@@ -11,6 +11,12 @@
 
 namespace x680 {
 
+
+
+    bool dir_exists(const std::string& path);
+    bool dir_create(const std::string& path, const std::string& outdir);
+       
+
     namespace po = boost::program_options;
     
     typedef po::variables_map compile_option;
@@ -37,9 +43,15 @@ namespace x680 {
             
             bool option_cout_metod() const;      
             
+            bool option_define_struct() const;
+            
+            bool option_c11() const;             
+            
             std::string option_path() const;
             
             std::string option_outdir() const;      
+            
+            std::string option_httpoutdir() const;            
             
             const compile_option options() const {
                 return opt_;

@@ -19,6 +19,8 @@
           <itemPath>../../../include/boost/itu/x68X/cpp_cout.hpp</itemPath>
           <itemPath>../../../include/boost/itu/x68X/debug_cout.cpp</itemPath>
           <itemPath>../../../include/boost/itu/x68X/debug_cout.hpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/http_cout.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/http_cout.hpp</itemPath>
           <itemPath>../../../include/boost/itu/x68X/modules.cpp</itemPath>
           <itemPath>../../../include/boost/itu/x68X/modules.hpp</itemPath>
           <itemPath>../../../include/boost/itu/x68X/parser.cpp</itemPath>
@@ -159,6 +161,16 @@
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/x68X/debug_cout.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/http_cout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/http_cout.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -383,6 +395,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x68X/http_cout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/http_cout.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x68X/modules.cpp"
             ex="false"
             tool="1"
@@ -602,6 +624,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x68X/http_cout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/http_cout.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x68X/modules.cpp"
             ex="false"
             tool="1"
@@ -815,6 +847,16 @@
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/x68X/debug_cout.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/http_cout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/http_cout.hpp"
             ex="false"
             tool="3"
             flavor2="0">

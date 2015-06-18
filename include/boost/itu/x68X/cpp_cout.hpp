@@ -21,10 +21,6 @@ namespace x680 {
         typedef std::vector<std::string> structdeclare_vect;
         typedef std::vector<member_atom> member_vect;
 
-
-        bool dir_exists(const std::string& path);
-        bool dir_create(const std::string& path, const std::string& outdir);
-
         std::string correct_name(std::string vl);
         std::string nameupper(std::string name);
         std::string namelower(std::string name);
