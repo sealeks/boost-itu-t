@@ -155,6 +155,10 @@ namespace boost {\
     using boost::asn1::PRIVATE_CLASS;\
     using boost::asn1::prefixed_type;
 
+#define ITU_T_MAKE(tp) boost::make_shared< tp >
+#define ITU_T_SHARED(tp) boost::shared_ptr< tp >
+#define ITU_T_OPTIONAL(tp) boost::shared_ptr< tp >
+
 #define ITU_T_EXTENTION_READ  bool __is_extention__ =  arch.get_pop_bmp(1).bit(0);
 #define ITU_T_EXTENTION_WRITE_NULL  bool __is_extention__ = false;boost::asn1::bit_string __extention_bmp__ =  boost::asn1::bit_string(__is_extention__); arch.add_bitmap(__extention_bmp__);
 #define ITU_T_EXTENTION_WRITE_CHOICE( x0, xn)  bool __is_extention__ = ((static_cast<int>(type())>=static_cast<int>(x0 )) && (static_cast<int>(type())<=static_cast<int>(xn )));boost::asn1::bit_string __extention_bmp__ =  boost::asn1::bit_string(__is_extention__); arch.add_bitmap(__extention_bmp__);
@@ -295,6 +299,12 @@ namespace boost {\
 
 #define ITU_T_ARCHIVE_X691_DECL(nm)     template<> void nm  ::serialize(boost::asn1::x691::output_coder& arch);\
     template<> void nm  ::serialize(boost::asn1::x691::input_coder& arch);
+
+#define ITU_T_ARCHIVE_X693_DECL(nm)     template<> void nm  ::serialize(boost::asn1::x693::output_coder& arch);\
+    template<> void nm  ::serialize(boost::asn1::x693::input_coder& arch);
+
+#define ITU_T_ARCHIVE_X696_DECL(nm)     template<> void nm  ::serialize(boost::asn1::x696::output_coder& arch);\
+    template<> void nm  ::serialize(boost::asn1::x696::input_coder& arch);
 
 namespace boost {
     namespace asn1 {

@@ -31,17 +31,17 @@
 #define ITU_T_RELOID(nm  , arr )  const boost::asn1::oidindx_type nm ## ___ARR[] ={ arr } ; \
         const boost::asn1::reloid_type  nm  = boost::asn1::reloid_type(nm ## ___ARR, nm ## ___ARR+ sizeof( nm ## ___ARR ) / sizeof(boost::asn1::oidindx_type));
 #define ITU_T_OCTETS(nm  , arr )  const boost::asn1::octet_type nm ## ___ARR[] ={ arr } ; \
-        const boost::asn1::octet_string  nm  = boost::asn1::octet_type(nm ## ___ARR, nm ## ___ARR+ sizeof( nm ## ___ARR ) / sizeof(boost::asn1::octet_type));
-#define ITU_T_BITS(nm  , arr )  const boost::asn1::octet_type nm ## ___ARR[] ={ arr } ; \
-        const boost::asn1::bit_string  nm  = boost::asn1::octet_type(nm ## ___ARR, nm ## ___ARR+ sizeof( nm ## ___ARR ) / sizeof(boost::asn1::octet_type));
+        const boost::asn1::octet_string  nm  = boost::asn1::octet_string(nm ## ___ARR, nm ## ___ARR+ sizeof( nm ## ___ARR ) / sizeof(boost::asn1::octet_type));
+#define ITU_T_BITS(nm  , arr , un )  const boost::asn1::octet_type nm ## ___ARR[] ={ arr } ; \
+        const boost::asn1::bit_string  nm  = boost::asn1::bit_string(nm ## ___ARR, nm ## ___ARR+ sizeof( nm ## ___ARR ) / sizeof(boost::asn1::octet_type), un );
 #define ITU_T_TP_OID(tp, nm  , arr )  const boost::asn1::oidindx_type nm ## ___ARR[] ={ arr } ; \
         const tp nm  = boost::asn1::oid_type(nm ## ___ARR, nm ## ___ARR + sizeof( nm ## ___ARR ) / sizeof(boost::asn1::oidindx_type));
 #define ITU_T_TP_RELOID(tp, nm  , arr )  const boost::asn1::oidindx_type nm ## ___ARR[] ={ arr } ; \
         const tp  nm  = boost::asn1::reloid_type(nm ## ___ARR, nm ## ___ARR+ sizeof( nm ## ___ARR ) / sizeof(boost::asn1::oidindx_type));
 #define ITU_T_TP_OCTETS(tp, nm  , arr )  const boost::asn1::octet_type nm ## ___ARR[] ={ arr } ; \
-        const tp  nm  = boost::asn1::octet_type(nm ## ___ARR, nm ## ___ARR+ sizeof( nm ## ___ARR ) / sizeof(boost::asn1::octet_type));
+        const tp  nm  = boost::asn1::octet_string(nm ## ___ARR, nm ## ___ARR+ sizeof( nm ## ___ARR ) / sizeof(boost::asn1::octet_type));
 #define ITU_T_TP_BITS(tp, nm  , arr )  const boost::asn1::octet_type nm ## ___ARR[] ={ arr } ; \
-        const tp  nm  = boost::asn1::octet_type(nm ## ___ARR, nm ## ___ARR+ sizeof( nm ## ___ARR ) / sizeof(boost::asn1::octet_type));
+        const tp  nm  = boost::asn1::bit_string(nm ## ___ARR, nm ## ___ARR+ sizeof( nm ## ___ARR ) / sizeof(boost::asn1::octet_type), un);
 
 namespace boost {
     namespace asn1 {
