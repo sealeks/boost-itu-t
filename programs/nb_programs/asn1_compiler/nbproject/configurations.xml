@@ -79,7 +79,7 @@
             <pElem>../../../include</pElem>
             <pElem>${BOOST_DIR}</pElem>
           </incDir>
-          <commandLine>-mthreads -fno-strict-aliasing</commandLine>
+          <commandLine>-mthreads -fno-strict-aliasing -s</commandLine>
         </ccTool>
         <linkerTool>
           <output>../../../bin/${CND_CONF}/asn1_compiler</output>
