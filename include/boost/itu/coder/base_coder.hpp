@@ -30,19 +30,30 @@
         const boost::asn1::oid_type  nm  = boost::asn1::oid_type(nm ## ___ARR, nm ## ___ARR + sizeof( nm ## ___ARR ) / sizeof(boost::asn1::oidindx_type));
 #define ITU_T_RELOID(nm  , arr )  const boost::asn1::oidindx_type nm ## ___ARR[] ={ arr } ; \
         const boost::asn1::reloid_type  nm  = boost::asn1::reloid_type(nm ## ___ARR, nm ## ___ARR+ sizeof( nm ## ___ARR ) / sizeof(boost::asn1::oidindx_type));
-
+#define ITU_T_OCTETS(nm  , arr )  const boost::asn1::octet_type nm ## ___ARR[] ={ arr } ; \
+        const boost::asn1::octet_string  nm  = boost::asn1::octet_type(nm ## ___ARR, nm ## ___ARR+ sizeof( nm ## ___ARR ) / sizeof(boost::asn1::octet_type));
+#define ITU_T_BITS(nm  , arr )  const boost::asn1::octet_type nm ## ___ARR[] ={ arr } ; \
+        const boost::asn1::bit_string  nm  = boost::asn1::octet_type(nm ## ___ARR, nm ## ___ARR+ sizeof( nm ## ___ARR ) / sizeof(boost::asn1::octet_type));
+#define ITU_T_TP_OID(tp, nm  , arr )  const boost::asn1::oidindx_type nm ## ___ARR[] ={ arr } ; \
+        const tp nm  = boost::asn1::oid_type(nm ## ___ARR, nm ## ___ARR + sizeof( nm ## ___ARR ) / sizeof(boost::asn1::oidindx_type));
+#define ITU_T_TP_RELOID(tp, nm  , arr )  const boost::asn1::oidindx_type nm ## ___ARR[] ={ arr } ; \
+        const tp  nm  = boost::asn1::reloid_type(nm ## ___ARR, nm ## ___ARR+ sizeof( nm ## ___ARR ) / sizeof(boost::asn1::oidindx_type));
+#define ITU_T_TP_OCTETS(tp, nm  , arr )  const boost::asn1::octet_type nm ## ___ARR[] ={ arr } ; \
+        const tp  nm  = boost::asn1::octet_type(nm ## ___ARR, nm ## ___ARR+ sizeof( nm ## ___ARR ) / sizeof(boost::asn1::octet_type));
+#define ITU_T_TP_BITS(tp, nm  , arr )  const boost::asn1::octet_type nm ## ___ARR[] ={ arr } ; \
+        const tp  nm  = boost::asn1::octet_type(nm ## ___ARR, nm ## ___ARR+ sizeof( nm ## ___ARR ) / sizeof(boost::asn1::octet_type));
 
 namespace boost {
     namespace asn1 {
 
-        typedef std::size_t oidindx_type;     
+        typedef std::size_t oidindx_type;
 
         //// OID_TYPE
 
         typedef boost::itu::vector<oidindx_type, 6> oid_type;
-        
-        oid_type oid_from_string(const std::string val);        
-               
+
+        oid_type oid_from_string(const std::string val);
+
         const oid_type NULL_OID = oid_type();
 
         std::ostream& operator<<(std::ostream& stream, const oid_type& vl);
@@ -123,62 +134,134 @@ namespace boost {
 
         using itu::octet_type;
         using itu::octet_sequnce;
-   
-        
+
+
         ///  OCTETSTRING TYPE        
 
         typedef boost::itu::vector<octet_type, 4> octet_string;
-        
-        std::ostream& operator<<(std::ostream& stream, const octet_string& vl);        
-        
 
-         ///  BITSTRING TYPE       
-        
-        class bit_string : public itu::octet_sequnce {
+        std::ostream& operator<<(std::ostream& stream, const octet_string& vl);
+
+
+
+
+
+
+
+
+        ///  BITSTRING TYPE       
+
+        class bit_string : protected std::vector<octet_type> {
 
         public:
 
-            typedef std::vector<bool> bool_vector_type;
-            typedef boost::dynamic_bitset<> dynamic_bitset_type;
+            typedef std::vector<octet_type> Base;
 
-            bit_string();
+            typedef Base::reference reference;
+            typedef Base::const_reference const_reference;
+            typedef Base::iterator iterator;
+            typedef Base::const_iterator const_iterator;
+            typedef Base::size_type size_type;
+            typedef Base::difference_type difference_type;
+            typedef Base::value_type value_type;
+            typedef Base::allocator_type allocator_type;
+            typedef Base::pointer pointer;
+            typedef Base::const_pointer const_pointer;
+            typedef Base::reverse_iterator reverse_iterator;
+            typedef Base::const_reverse_iterator const_reverse_iterator;
 
-            explicit bit_string(uint8_t vl, std::size_t unuse = 0);
+            bit_string() :
+            Base(), unuse_(0) {
+            }
 
-            explicit bit_string(uint16_t vl, std::size_t unuse = 0);
+            explicit
+            bit_string(const allocator_type& a) :
+            Base(a), unuse_(0) {
+            }
 
-            explicit bit_string(uint32_t vl, std::size_t unuse = 0);
+            template<typename InputIterator>
+            bit_string(InputIterator first, InputIterator last, std::size_t unuse = 0,
+                    const allocator_type& a = allocator_type()) :
+            Base(first, last, a), unuse_(unuse % 8) {
+            }
 
-            explicit bit_string(uint64_t vl, std::size_t unuse = 0);
+            bit_string(const bit_string& x) :
+            Base(static_cast<const Base&> (x)), unuse_(x.unuse_) {
+            }
 
-            explicit bit_string(int8_t vl, std::size_t unuse = 0);
+            bit_string(const Base& x) : Base(x), unuse_(0) {
+            }
 
-            explicit bit_string(int16_t vl, std::size_t unuse = 0);
+            explicit
+            bit_string(size_type n, const value_type& value = value_type(),
+                    std::size_t unuse = 0, const allocator_type& a = allocator_type()) :
+            Base(n, value, a), unuse_(unuse % 8) {
+            }
 
-            explicit bit_string(int32_t vl, std::size_t unuse = 0);
+            explicit
+            bit_string(const octet_sequnce& vl, std::size_t unuse = 0) :
+            Base(vl.begin(), vl.end()), unuse_(unuse % 8) {
+            }
 
-            explicit bit_string(int64_t vl, std::size_t unuse = 0);
+            explicit
+            bit_string(bool vl, std::size_t n = 0);
 
-            explicit bit_string(const octet_sequnce& vl, std::size_t unuse = 0);
+#if __cplusplus >= 201103L
 
-            explicit bit_string(const std::vector<bool>& vl);
+            bit_string(bit_string&& x)
+            : Base(static_cast<Base&&> (x)), unuse_(x.unuse_) {
+            }
 
-            explicit bit_string(bool vl, std::size_t n = 0);
+            bit_string(Base&& x)
+            : Base(x), unuse_(0) {
+            }
 
-            explicit bit_string(const std::string& vl, std::size_t unuse = 0);
+            bit_string(bit_string&& rv, const allocator_type& m)
+            : Base(static_cast<Base&&> (rv), m), unuse_(rv.unuse_) {
+            }
 
-            explicit bit_string(bool const * const arr, std::size_t cnt);
+            bit_string(std::initializer_list<value_type> l, std::size_t unuse = 0,
+                    const allocator_type& a = allocator_type())
+            : Base(l, a), unuse_(unuse % 8) {
+            }
 
-            bit_string(const dynamic_bitset_type& vl) : std::vector<octet_type>() {
-                construct(vl);
-            };
+#endif            
 
-            void insert_bitstring(const octet_sequnce& val, std::size_t unuse = 0);
+            bit_string& operator=(const bit_string& x) {
+                Base::operator=(static_cast<const Base&> (x));
+                unuse_ = x.unuse_;
+                return *this;
+            }
 
-            static bit_string create_from_string(const std::string& vl);
+
+#if __cplusplus >= 201103L
+
+            bit_string& operator=(bit_string&& x) {
+                Base::operator=(static_cast<Base&&> (x));
+                unuse_ = x.unuse_;
+                return *this;
+            }
+
+            bit_string& operator=(std::initializer_list<value_type> l) {
+                Base::operator=(l);
+                unuse_ = 0;
+                return *this;
+            }
+#endif            
+
+            ~bit_string() {
+            }
+
+            Base& as_base() {
+                return static_cast<Base&> (*this);
+            }
+
+            const Base& as_base() const {
+                return static_cast<const Base&> (*this);
+            }
 
             std::size_t unusebits() const {
-                return empty() ? 0 : (unuse_);
+                return !empty() ? (unuse_ % 8) : 0;
             }
 
             std::size_t unusebits(std::size_t vl);
@@ -190,28 +273,6 @@ namespace boost {
             bool bit(std::size_t num) const;
 
             void bit(std::size_t num, bool val);
-
-            operator bool_vector_type() const;
-
-            operator dynamic_bitset_type() const;
-
-            dynamic_bitset_type dynamic_bitset() const;
-
-            operator boost::uint8_t() const;
-
-            operator boost::uint16_t() const;
-
-            operator boost::uint32_t() const;
-
-            operator boost::uint64_t() const;
-
-            operator boost::int8_t() const;
-
-            operator boost::int16_t() const;
-
-            operator boost::int32_t() const;
-
-            operator boost::int64_t() const;
 
             operator bool() const;
 
@@ -233,75 +294,65 @@ namespace boost {
 
             void append(const octet_string& vl);
 
+            using Base::assign;
+            using Base::get_allocator;
+            using Base::begin;
+            using Base::end;
+            using Base::rbegin;
+            using Base::rend;
+            using Base::size;
+            using Base::max_size;
+            using Base::resize;
+            using Base::capacity;
+            using Base::empty;
+            using Base::reserve;
+            using Base::operator[];
+            using Base::at;
+            using Base::front;
+            using Base::back;
+            using Base::push_back;
+            using Base::pop_back;
+            using Base::insert;
+            using Base::erase;
+            using Base::swap;
+            using Base::clear;
 
+            friend bool operator==(const bit_string& x, const bit_string& y) {
+                return (static_cast<Base> (x) == static_cast<Base> (y)) && (x.unuse_ == y.unuse_);
+            }
+
+            friend bool operator!=(const bit_string& x, const bit_string& y) {
+                return (static_cast<Base> (x) != static_cast<Base> (y)) || (x.unuse_ != y.unuse_);
+            }
+
+            friend bool operator<(const bit_string& x, const bit_string& y) {
+                return (static_cast<Base> (x) < static_cast<Base> (y)) || (x.unuse_ < y.unuse_);
+            }
+
+            friend bool operator>(const bit_string& x, const bit_string& y) {
+                return (static_cast<Base> (x) > static_cast<Base> (y)) || (x.unuse_ > y.unuse_);
+            }
+
+            friend bool operator<=(const bit_string& x, const bit_string& y) {
+                return (static_cast<Base> (x) <= static_cast<Base> (y)) || (x.unuse_ <= y.unuse_);
+            }
+
+            friend bool operator>=(const bit_string& x, const bit_string& y) {
+                return (static_cast<Base> (x) >= static_cast<Base> (y)) || (x.unuse_ >= y.unuse_);
+            }
 
         private:
 
-            template<typename T>
-            void construct(T val, std::size_t unuse) {
-                if (unuse<sizeof (T)*8) {
-                    reserve(sizeof (T));
-                    insert(end(), (const char*) (&val), (const char*) (&val) +(sizeof (T) - unuse / 8));
-                    for (iterator it = begin(); it != end(); ++it)
-                        boost::itu::reverse_bit(*it);
-#ifdef BIG_ENDIAN_ARCHITECTURE
-                    std::reverse(begin(), end());
-#endif                 
-                }
-                unusebits(unuse % 8);
-            }
-
-            void construct(const std::vector<bool>& vl);
-
-            template<typename T>
-            T return_int() const {
-                if (!empty()) {
-                    std::vector<octet_type> tmp(begin(), end());
-                    tmp.back() &= ('\xFF' << unusebits());
-                    for (std::vector<octet_type>::iterator it = tmp.begin(); it != tmp.end(); ++it)
-                        boost::itu::reverse_bit(*it);
-                    if (tmp.size()<sizeof (T))
-                        tmp.insert(tmp.end(), sizeof (T) - size(), 0);
-#ifdef BIG_ENDIAN_ARCHITECTURE
-                    std::reverse(tmp.begin(), tmp.end());
-#endif                      
-                    return *reinterpret_cast<T*> (&tmp[0]);
-                }
-                return 0;
-            }
-
-            void construct(const dynamic_bitset_type& vl);
-
             std::size_t unuse_;
 
-
         };
+
 
 
         std::ostream& operator<<(std::ostream& stream, const bit_string& vl);
 
 
-        ///  OCTETSTRING TYPE           
 
-        /*class octet_string : public itu::octet_sequnce {
-
-        public:
-
-            octet_string() : std::vector<octet_type>() {
-            }
-
-            explicit octet_string(const octet_sequnce& vl) : std::vector<octet_type>(vl.begin(), vl.end()) {
-            }
-
-            octet_string(const std::string& vl) : std::vector<octet_type>(vl.begin(), vl.end()) {
-            }
-
-            operator octet_sequnce() const;
-
-            octet_sequnce as_octet_sequnce() const;
-        };*/
-
-        
     }
 
 

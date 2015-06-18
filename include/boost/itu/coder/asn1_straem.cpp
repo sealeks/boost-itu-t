@@ -113,7 +113,7 @@ namespace boost {
             if ((coder->out()->unusebits()) && (!seq.empty())) {
                 std::string tmp1(boost::asio::buffer_cast<const char*>(seq.back()), boost::asio::buffer_size(seq.back()));
                 if (!tmp1.empty()) {
-                    std::string tmp(tmp1.rbegin(), tmp1.rbegin() + 1);
+                    std::vector<octet_type> tmp(tmp1.rbegin(), tmp1.rbegin() + 1);
                     std::cout   << " {" << boost::asn1::bit_string(tmp, coder->out()->unusebits()) <<
                             " unus =" << coder->out()->unusebits() << "}";
                 }

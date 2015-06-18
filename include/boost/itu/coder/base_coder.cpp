@@ -18,7 +18,7 @@
 
 namespace boost {
     namespace asn1 {
-        
+
         // oid type
 
         oid_type oid_from_string(const std::string vl) {
@@ -58,7 +58,7 @@ namespace boost {
             return NULL_OID;
         }
 
-        
+
         // oid_type
 
         std::ostream& operator<<(std::ostream& stream, const oid_type& vl) {
@@ -74,7 +74,7 @@ namespace boost {
 
         /// bitstring type
 
-        bit_string::bit_string() : std::vector<octet_type>(), unuse_(0) {
+        /*bit_string::bit_string() : std::vector<octet_type>(), unuse_(0) {
         };
 
         bit_string::bit_string(uint8_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
@@ -119,7 +119,7 @@ namespace boost {
 
         bit_string::bit_string(const std::vector<bool>& vl) : std::vector<octet_type>() {
             construct(vl);
-        };
+        };*/
 
         bit_string::bit_string(bool vl, std::size_t n) : std::vector<octet_type>(), unuse_(7 - n % 8) {
             reserve((n / 8 + 1));
@@ -127,21 +127,6 @@ namespace boost {
             if (vl)
                 back() = (0x1 << (7 - (n % 8)));
         }
-
-        bit_string::bit_string(const std::string& vl, std::size_t unuse) : unuse_(unuse % 8) {
-            std::copy(vl.begin(), vl.end(), std::back_inserter(*this));
-        }
-
-        void bit_string::insert_bitstring(const octet_sequnce& val, std::size_t unuse) {
-            if (!val.empty()) {
-                unuse_ = unuse % 8;
-                std::copy(val.begin(), val.end(), std::back_inserter(*this));
-                if (unuse_ && size())
-                    back() &= ('\xFF' << unuse_);
-            } else
-                if (!size())
-                unuse_ = 0;
-        };
 
         std::size_t bit_string::unusebits(std::size_t vl) {
             if (!empty()) {
@@ -151,16 +136,6 @@ namespace boost {
                 return unuse_;
             }
             return unuse_ = 0;
-        }
-
-        bit_string bit_string::create_from_string(const std::string& vl) {
-            if (!vl.empty()) {
-                std::vector<bool> tmpV;
-                for (std::size_t i = 0; i < vl.size(); ++i)
-                    tmpV.push_back(vl[i] == '0' ? false : true);
-                return bit_string(tmpV);
-            }
-            return bit_string();
         }
 
         bool bit_string::bit(std::size_t num) const {
@@ -182,59 +157,6 @@ namespace boost {
             }
         }
 
-        bit_string::operator bit_string::bool_vector_type() const {
-            bit_string::bool_vector_type tmp;
-            for (std::size_t i = 0; i < sizebits(); ++i)
-                tmp.push_back(bit(i));
-            return tmp;
-        }
-
-        bit_string::operator bit_string::dynamic_bitset_type() const {
-            bit_string::dynamic_bitset_type tmp(sizebits());
-            for (std::size_t i = 0; i < sizebits(); ++i)
-                tmp.operator[](i) = bit(i);
-            return tmp;
-        }
-
-        bit_string::dynamic_bitset_type bit_string::dynamic_bitset() const {
-            bit_string::dynamic_bitset_type tmp(sizebits());
-            for (std::size_t i = 0; i < sizebits(); ++i)
-                tmp.operator[](i) = bit(i);
-            return tmp;
-        }
-
-        bit_string::operator boost::uint8_t() const {
-            return return_int<uint8_t > ();
-        }
-
-        bit_string::operator boost::uint16_t() const {
-            return return_int<uint16_t > ();
-        }
-
-        bit_string::operator boost::uint32_t() const {
-            return return_int<uint32_t > ();
-        }
-
-        bit_string::operator boost::uint64_t() const {
-            return return_int<uint64_t > ();
-        }
-
-        bit_string::operator boost::int8_t() const {
-            return return_int<int8_t > ();
-        }
-
-        bit_string::operator boost::int16_t() const {
-            return return_int<int16_t > ();
-        }
-
-        bit_string::operator boost::int32_t() const {
-            return return_int<int32_t > ();
-        }
-
-        bit_string::operator boost::int64_t() const {
-            return return_int<int64_t > ();
-        }
-
         bit_string::operator bool() const {
             for (const_reverse_iterator it = rbegin(); it != rend(); ++it) {
                 if (*it) {
@@ -247,10 +169,7 @@ namespace boost {
         }
 
         bit_string::operator octet_sequnce() const {
-            octet_sequnce tmp(begin(), end());
-            if ((!tmp.empty()) && (unusebits()))
-                tmp.back() &= ('\xFF' << unusebits());
-            return tmp;
+            return as_octet_sequnce();
         }
 
         octet_sequnce bit_string::as_octet_sequnce() const {
@@ -270,10 +189,6 @@ namespace boost {
             }
             return bit_string();
         }
-
-        //bit_string::operator octet_sequnce() const{
-        //    return  *this;
-        //}    
 
         bit_string operator|(const bit_string& ls, const bit_string& rs) {
             if (ls.size() || rs.size()) {
@@ -343,50 +258,22 @@ namespace boost {
             itu::split_bits_in_octets(*this, unusebits(), vl.as_base(), 0);
         }
 
-        void bit_string::construct(const std::vector<bool>& vl) {
+        /*void bit_string::construct(const std::vector<bool>& vl) {
             assign((vl.size() % 8) ? (vl.size() / 8 + 1) : (vl.size() / 8), 0);
             unuse_ = (8 - vl.size() % 8) % 8;
             std::size_t sz = 0;
             for (std::vector<bool>::const_iterator it = vl.begin(); it != vl.end(); ++it)
                 bit(sz++, *it);
-        };
-
-        void bit_string::construct(const dynamic_bitset_type& vl) {
-            assign((vl.size() % 8) ? (vl.size() / 8 + 1) : (vl.size() / 8), 0);
-            unuse_ = (8 - vl.size() % 8) % 8;
-            std::size_t sz = 0;
-            for (std::size_t it = 0; it < vl.size(); ++it)
-                bit(sz++, vl.operator[](it));
-        };
+        };*/
 
         std::ostream& operator<<(std::ostream& stream, const bit_string& vl) {
-            std::vector<bool> val = vl.operator bit_string::bool_vector_type();
-            std::size_t n = 0;
-            for (std::vector<bool>::const_iterator it = val.begin(); it != val.end(); ++it) {
-                if (n && !(n % 8))
+            for (std::size_t it = 0; it < vl.sizebits(); ++it) {
+                if (it && !(it % 8))
                     stream << " ";
-                n++;
-                stream << (*it ? '1' : '0');
+                stream << (vl.bit(it) ? '1' : '0');
             }
             return stream;
         }
-
-
-
-        // octet_string
-
-        /*octet_string::operator octet_sequnce() const {
-            return octet_sequnce(begin(), end());
-        }
-
-        octet_sequnce octet_string::as_octet_sequnce() const {
-            return octet_sequnce(begin(), end());
-        }
-
-        std::ostream& operator<<(std::ostream& stream, const octet_string& vl) {
-            stream << boost::itu::binary_to_hexsequence_debug(std::string(vl.begin(), vl.end()));
-            return stream;
-        }*/
 
 
     }
@@ -406,7 +293,6 @@ namespace boost {
             }
             return NULL_ENCODING;
         }
-        
 
         const transfer_syntax_type& to_transfer_syntax(encoding_rule rule) {
             switch (rule) {

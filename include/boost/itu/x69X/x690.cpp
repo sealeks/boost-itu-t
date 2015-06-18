@@ -62,7 +62,7 @@ namespace boost {
             void x690_string_to_stream_cast(const bit_string& val, output_coder& stream, octet_type lentype) {
                 if (!lentype) {
                     stream.add(octet_sequnce(1, static_cast<octet_type> (val.unusebits() % 8)));
-                    stream.add(val);
+                    stream.add(val.as_octet_sequnce());
                     return;
                 } else {
 

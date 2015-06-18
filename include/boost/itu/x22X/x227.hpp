@@ -35,7 +35,7 @@ namespace boost {
             //typedef boost::asn1::bit_string userses_req_type;
             typedef boost::asn1::bit_string application_ver_type;
 
-            const application_ver_type DEFAULT_APPLICATION_VER = boost::asn1::bit_string((int8_t) 3, 6);
+            const application_ver_type DEFAULT_APPLICATION_VER = boost::asn1::bit_string(1, (octet_type) 0xC0 , 6);
 
             /*const presentation_req_type PRSNT_CONTEXT_MREQ = boost::asn1::bit_string(true, 0);
             const presentation_req_type PRSNT_REST_MREQ = boost::asn1::bit_string(true, 1);

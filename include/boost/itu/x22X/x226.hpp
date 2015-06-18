@@ -86,7 +86,7 @@ namespace boost {
 
             const presentation_req_type PRSNT_CONTEXT_MREQ = boost::asn1::bit_string(true, 0);
             const presentation_req_type PRSNT_REST_MREQ = boost::asn1::bit_string(true, 1);
-            const presentation_req_type PRSNT_NULL_MREQ = boost::asn1::bit_string((int8_t) 0, 6);
+            const presentation_req_type PRSNT_NULL_MREQ = boost::asn1::bit_string(1, (octet_type) 0, 6);
 
             typedef int context_id_type;
 
