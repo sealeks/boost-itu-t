@@ -8,6 +8,7 @@
 
 #include <boost/itu/x68X/semantics.hpp>
 #include <boost/program_options.hpp>
+#include <boost/lexical_cast.hpp>
 
 namespace x680 {
 
@@ -15,6 +16,16 @@ namespace x680 {
 
     bool dir_exists(const std::string& path);
     bool dir_create(const std::string& path, const std::string& outdir);
+    
+        template<typename T>
+        std::string to_string(T val) {
+            try {
+                return boost::lexical_cast<std::string > (val);
+            } catch (boost::bad_lexical_cast) {
+            }
+            return "???";
+        }
+    
        
 
     namespace po = boost::program_options;

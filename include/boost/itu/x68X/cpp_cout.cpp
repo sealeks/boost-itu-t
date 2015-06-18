@@ -12,17 +12,6 @@ namespace x680 {
 
         namespace fsnsp = boost::filesystem;
 
-        template<typename T>
-        std::string to_string(T val) {
-            try {
-                return boost::lexical_cast<std::string > (val);
-            } catch (boost::bad_lexical_cast) {
-            }
-            return "???";
-        }
-
-
-
 
 
         //////////////////////////////////////////////////////
@@ -612,7 +601,7 @@ namespace x680 {
                                 std::string subelmt = "";
                                 namedvalue_initer_set::iterator fid = values->find(namedvalue_initer(subtpassmt->name()));
                                 if (fid != values->end())
-                                    subelmt = " new " + valueassmnt_str(subtpassmt->type(), fid->val, fid->str, true) + "";
+                                    subelmt = " new " + valueassmnt_str(subtpassmt->type(), fid->val, fid->str) + "";
                                 rslt += ("shared_ptr<" + fromtype_str((*it)->as_typeassigment()->type()) +
                                         " >(" + subelmt + ")");
                             }
@@ -624,14 +613,14 @@ namespace x680 {
             return rslt;
         }
 
-        std::string valueassmnt_str(type_atom_ptr tp, value_atom_ptr vl, const std::string& nm, bool ext) {
+        std::string valueassmnt_str(type_atom_ptr tp, value_atom_ptr vl, const std::string& nm) {
             switch (tp->root_builtin()) {
-                case t_NULL: return nested_init_str(tp, value_null_str(vl), ext);
-                case t_INTEGER: return nested_init_str(tp, value_int_str(vl), ext);
-                case t_BOOLEAN: return nested_init_str(tp, value_bool_str(vl), ext);
-                case t_REAL: return nested_init_str(tp, value_real_str(vl), ext);
-                case t_BIT_STRING: return nested_init_str(tp, value_bs_str(vl), ext);
-                case t_ENUMERATED: return nested_init_str(tp, value_enum_str(tp, vl), ext);
+                case t_NULL: return nested_init_str(tp, value_null_str(vl));
+                case t_INTEGER: return nested_init_str(tp, value_int_str(vl));
+                case t_BOOLEAN: return nested_init_str(tp, value_bool_str(vl));
+                case t_REAL: return nested_init_str(tp, value_real_str(vl));
+                case t_BIT_STRING: return nested_init_str(tp, value_bs_str(vl));
+                case t_ENUMERATED: return nested_init_str(tp, value_enum_str(tp, vl));
                 case t_OBJECT_IDENTIFIER: return " ? ";
                 case t_RELATIVE_OID: return " ? ";
                 case t_NumericString:
@@ -642,10 +631,10 @@ namespace x680 {
                 case t_VisibleString:
                 case t_GeneralString:
                 case t_ObjectDescriptor:
-                case t_IA5String: return nested_init_str(tp, value_chars8_str(vl, tp->root_builtin() == t_IA5String), ext);
-                case t_BMPString: return nested_init_str(tp, value_chars16_str(vl), ext);
+                case t_IA5String: return nested_init_str(tp, value_chars8_str(vl, tp->root_builtin() == t_IA5String));
+                case t_BMPString: return nested_init_str(tp, value_chars16_str(vl));
                 case t_UniversalString:
-                case t_UTF8String: return nested_init_str(tp, value_utfchars_str(vl), ext);
+                case t_UTF8String: return nested_init_str(tp, value_utfchars_str(vl));
                 default:
                 {
                 }
@@ -653,7 +642,7 @@ namespace x680 {
             return "?";
         }
 
-        std::string valueassmnt_str_ext(type_atom_ptr tp, value_atom_ptr vl, const std::string& nm, bool ext) {
+        std::string valueassmnt_str_ext(type_atom_ptr tp, value_atom_ptr vl, const std::string& nm) {
             std::string rslt;
             bool isreff = tp->isrefferrence();
             switch (tp->root_builtin()) {
@@ -717,7 +706,7 @@ namespace x680 {
                                     rslt += ", ";
                                 rslt += ("'" + string_to_literal(std::string(it, it + 1)) + "'");
                             }
-                            return rslt += "));";
+                            return rslt += "), 0);";
                         } else
                             return "const " + fromtype_str(tp) + " " + nm + " = octet_string();";
                     } else if (vl && vl->get_value<bstring_initer>()) {
@@ -889,7 +878,7 @@ namespace x680 {
                     tp + "& arch)";
         }
 
-        std::string nested_init_str(type_atom_ptr self, const std::string& nm, bool ext) {
+        std::string nested_init_str(type_atom_ptr self, const std::string& nm) {
             type_atom_ptr next = self->textualy_type();
             if (!next || next == self || !next->reff())
                 return (next && next->tag() && next->isrefferrence()) ? (fromtype_str(next) + "(" + nm + ")") : nm;
