@@ -1500,10 +1500,10 @@ namespace x680 {
                 case t_BIT_STRING:
                 {
                     if (self->value()->as_cstr())
-                        stream << "\n" << tabformat(scp, 2) << valueassmnt_str_ext(self->type(), self->value(), nameconvert(self->name())) << ";\n";
+                        stream << "\n" << tabformat(scp, 2) << valueassmnt_str_ext(self->type(), self->value(), nameconvert(self->name())) << "\n";
                     else
                         stream << "\n" << tabformat(scp, 2) << "const " << fromtype_str(self->type()) << " " <<
-                        nameconvert(self->name()) << " = " << valueassmnt_str(self->type(), self->value(), nameconvert(self->name())) << "\n";
+                        nameconvert(self->name()) << " = " << valueassmnt_str(self->type(), self->value(), nameconvert(self->name())) << ";\n";
                 }
                 default:
                 {
