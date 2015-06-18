@@ -310,7 +310,7 @@
             <pElem>../../../include</pElem>
             <pElem>${BOOST_DIR}</pElem>
           </incDir>
-          <commandLine>-mthreads -fno-strict-aliasing</commandLine>
+          <commandLine>-mthreads -fno-strict-aliasing -s</commandLine>
           <preprocessorList>
             <Elem>_WIN32_WINNT=0x0601</Elem>
           </preprocessorList>

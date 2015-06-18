@@ -50,8 +50,8 @@ namespace x680 {
         std::string value_utfchars_str(value_atom_ptr self);
         std::string value_enum_str(type_atom_ptr tp, value_atom_ptr self);
         bool value_oid_str(value_atom_ptr self, std::vector<std::string>& rslt);
-        std::string valueassmnt_str(valueassignment_entity_ptr self);
         std::string valueassmnt_str(type_atom_ptr val, value_atom_ptr vl, const std::string& nm = "", bool ext = false);
+        std::string valueassmnt_str_ext(type_atom_ptr tp, value_atom_ptr vl, const std::string& nm = "", bool ext = false);
         std::string value_struct_str(value_atom_ptr vl, type_atom_ptr tp);
         
         std::string nameconvert(std::string name);
@@ -220,7 +220,7 @@ namespace x680 {
                 stream << "\n";
             }
 
-
+      
 
 
 
@@ -256,6 +256,7 @@ namespace x680 {
             void execute_typedef_native_local(basic_entity_ptr self);
 
             virtual void execute_valueassignment(valueassignment_entity_ptr self);
+            void execute_valueassignment_ext(valueassignment_entity_ptr self);            
             virtual void execute_typeassignment(typeassignment_entity_ptr tpas);
 
 
@@ -277,6 +278,15 @@ namespace x680 {
             std::size_t registrate_struct_set(basic_entity_ptr self);
             std::size_t execute_struct_meth_hpp(basic_entity_ptr self, const std::string& ctp);
             std::size_t execute_struct_cout_meth(basic_entity_ptr self);
+            
+            template<typename Iter>
+            void execute_valueassignments_ext(Iter beg, Iter end) {
+                stream << "\n";
+                for (Iter it = beg; it != end; ++it) 
+                    if (valueassignment_entity_ptr vpas = (*it)->as_valueassigment())
+                        execute_valueassignment_ext(vpas);
+                stream << "\n";
+            }                  
 
 
         };
