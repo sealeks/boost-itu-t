@@ -387,19 +387,14 @@ namespace x680 {
         /* value in string*/
 
         std::string value_int_str(value_atom_ptr self) {
-            if (self && (self->get_value<int64_t>())) {
-                try {
-                    return boost::lexical_cast<std::string > (*(self->get_value<int64_t>()));
-                } catch (boost::bad_lexical_cast) {
-                }
-            }
+            if (self && (self->get_value<int64_t>()))
+                return to_string(*(self->get_value<int64_t>()));
             return "?num?";
         }
 
         std::string value_null_str(value_atom_ptr self) {
-            if (self && (self->get_value<null_initer>())) {
-                return "boost::asn1::null_type()";
-            }
+            if (self && (self->get_value<null_initer>()))
+                return "null_type()";
             return "?null?";
         }
 
@@ -418,7 +413,7 @@ namespace x680 {
                     return "std::numeric_limits<double>::infinity()";
                 if (tmp == -std::numeric_limits<double>::infinity())
                     return " - std::numeric_limits<double>::infinity()";
-                return boost::lexical_cast<std::string > (*(self->get_value<double>()));
+                return to_string(*(self->get_value<double>()));
             }
             return "?real?";
         }
@@ -470,56 +465,18 @@ namespace x680 {
             return rslt;
         }
 
-        std::string value_bs_str(value_atom_ptr self) {
-            self = value_skip_defined(self);
-            if (self->as_empty()) {
-                return "";
-            } else if (self->as_list()) {
-                std::string rslt;
-                for (value_vct::const_iterator it = self->as_list()->values().begin(); it != self->as_list()->values().end(); ++it) {
-                    if (it != self->as_list()->values().begin())
-                        rslt = " | ";
-                    if ((*it)->as_defined())
-                        rslt += value_reff_str((*it)->as_defined());
-                    else
-                        rslt += "?bitsting?";
-                }
-                return rslt;
-            } else if (self->as_cstr()) {
-                if (self->get_value<bstring_initer>()) {
-                    boost::shared_ptr<bstring_initer> tmp = self->get_value<bstring_initer>();
-                    if (!tmp->str.empty())
-                        return "boost::asn1::bit_string(?)";
-                    else
-                        return "boost::asn1::bit_string()";
-                }
-            } else if (self->as_assign())
-                return nameconvert(self->as_assign()->name());
-            return "?bitsting?";
-        }
-
-        /*std::string value_os_str(value_atom_ptr self) {
-            if (self->get_value<hstring_initer>()) {
-                boost::shared_ptr<hstring_initer> tmp = self->get_value<hstring_initer>();
-                if (!tmp->str.empty())
-                    return "boost::asn1::octet_string(std::string(\"" + string_to_literal(tmp->str) + "\", "
-                    + boost::lexical_cast<std::string >(tmp->str.size()) + "))";
-                else
-                    return "boost::asn1::octet_string()";
-            };
-            return "?octetsting?";
-        }*/
-
         std::string value_chars8_str(value_atom_ptr self, bool cantuple) {
             if (cantuple && self->get_value<tuple>()) {
                 boost::shared_ptr<tuple> tmp = self->get_value<tuple>();
-                return "std::string(1, \'" +
-                string_to_literal(std::string(1, std::string::value_type(static_cast<std::string::value_type> (tmp->tablecolumn * 16 + tmp->tablerow)))) +
-                        "\')";
+                return "\'" +
+                string_to_literal(std::string(1,
+                        std::string::value_type(static_cast<std::string::value_type>
+                        (tmp->tablecolumn * 16 + tmp->tablerow)))) +
+                        "\'";
             } else if (self->get_value<std::string>()) {
-                return "std::string(\"" +
+                return "\"" +
                 *(self->get_value<std::string>()) +
-                        "\")";
+                        "\"";
             }
             return "?str?";
         }
@@ -527,9 +484,9 @@ namespace x680 {
         std::string value_chars16_str(value_atom_ptr self) {
             if (self->get_value<quadruple>()) {
                 boost::shared_ptr<quadruple> tmp = self->get_value<quadruple>();
-                return "std::wstring(1, L\'" +
+                return "L\'" +
                 string_to_literal(std::wstring(1, std::wstring::value_type(static_cast<std::wstring::value_type> (tmp->row * 256 + tmp->cell)))) +
-                        "\')";
+                        "')";
             }
             return "?wstr?";
         }
@@ -539,7 +496,7 @@ namespace x680 {
             std::string rslt;
             if (boost::asn1::quadrople_to_str(tmp, rslt))
                 return rslt;
-            return "";
+            return "?utfstr?";
         }
 
         std::string value_utfchars_str(value_atom_ptr self) {
@@ -549,9 +506,9 @@ namespace x680 {
                 for (quadruple_vector::const_iterator it = tmp->begin(); it != tmp->end(); ++it)
                     rslt += value_utfchar_str(*it);
                 if (!rslt.empty())
-                    return "std::string(\"" + string_to_literal(rslt) + "\" , " + boost::lexical_cast<std::string >(rslt.size()) + ")";
+                    return "\"" + string_to_literal(rslt) + "\""; // + boost::lexical_cast<std::string >(rslt.size()) + "";
                 else
-                    return "std::string()";
+                    return "\'\'";
             }
             return "?wstr?";
         }
@@ -576,15 +533,160 @@ namespace x680 {
         bool value_oid_str(value_atom_ptr self, std::vector<std::string>& rslt) {
             if (self && self->get_value<unum_vector>()) {
                 boost::shared_ptr<unum_vector> lst = self->get_value<unum_vector>();
-                if (!lst->empty()) {
-                    for (unum_vector::const_iterator it = lst->begin(); it != lst->end(); ++it)
-                        rslt.push_back(boost::lexical_cast<std::string >(*it));
-                } else rslt.push_back("?oid?");
-            } else rslt.push_back("?oid?");
-            return !rslt.empty();
+                for (unum_vector::const_iterator it = lst->begin(); it != lst->end(); ++it)
+                    rslt.push_back(to_string(*it));
+                return true;
+            }
+            return false;
         }
 
-        std::string value_struct_str(value_atom_ptr vl, type_atom_ptr tp) {
+        bool value_octets_str(value_atom_ptr self, std::vector<std::string>& rslt) {
+            if (self && self->get_value<hstring_initer>()) {
+                boost::shared_ptr<hstring_initer> lst = self->get_value<hstring_initer>();
+                std::string ostr = lst->str;
+                for (std::string::const_iterator it = ostr.begin(); it != ostr.end(); ++it)
+                    rslt.push_back("'" + string_to_literal(std::string(it, it + 1)) + "'");
+                return true;
+            }
+            return false;
+        }
+
+        bool value_bits_str(value_atom_ptr self, std::vector<std::string>& rslt, std::size_t& sz) {
+            self = value_skip_defined(self);
+            if (self && self->get_value<bstring_initer>()) {
+                boost::shared_ptr<bstring_initer> lst = self->get_value<bstring_initer>();
+                std::string bstr = lst->str;
+                for (std::string::const_iterator it = bstr.begin(); it != bstr.end(); ++it)
+                    rslt.push_back("'" + string_to_literal(std::string(it, it + 1)) + "'");
+                sz = lst->unused;
+                return true;
+            }
+            sz = 0;
+            return value_octets_str(self, rslt);
+        }
+
+        std::string value_bits_str(value_atom_ptr self) {
+            self = value_skip_defined(self);
+            if (self->as_empty()) {
+                return "";
+            } else if (self->as_list()) {
+                std::string rslt;
+                for (value_vct::const_iterator it = self->as_list()->values().begin(); it != self->as_list()->values().end(); ++it) {
+                    if (it != self->as_list()->values().begin())
+                        rslt = " | ";
+                    if ((*it)->as_defined())
+                        rslt += value_reff_str((*it)->as_defined());
+                    else
+                        rslt += "?bitsting?";
+                }
+                return rslt;
+            } else if (self->as_assign())
+                return nameconvert(self->as_assign()->name());
+            return "?bitsting?";
+        }
+
+        std::string print_initializer(const std::vector<std::string> vl) {
+            std::string rslt;
+            for (std::vector<std::string>::const_iterator it = vl.begin(); it != vl.end(); ++it) {
+                if (it != vl.begin())
+                    rslt += ", ";
+                rslt += (*it);
+            }
+            return rslt;
+        }
+
+        std::string valueassmnt_str(type_atom_ptr tp, value_atom_ptr vl, const std::string& nm) {
+            std::vector<std::string> vstr;
+            std::size_t numbt = 0;
+            switch (tp->root_builtin()) {
+                case t_NULL: return value_null_str(vl); //nested_init_str(tp, value_null_str(vl));
+                case t_INTEGER: return value_int_str(vl); //nested_init_str(tp, value_int_str(vl));
+                case t_BOOLEAN: return value_bool_str(vl); //nested_init_str(tp, value_bool_str(vl));
+                case t_REAL: return value_real_str(vl); //nested_init_str(tp, value_real_str(vl));
+                case t_ENUMERATED: return nested_init_str(tp, value_enum_str(tp, vl));
+                case t_BIT_STRING: return (value_bits_str(vl, vstr, numbt)) ? ("bit_string({" + print_initializer(vstr) + "}, " + to_string(numbt) + ")"):
+                    ("bit_string(" + value_bits_str(vl) + ")");
+                case t_OCTET_STRING: return (value_octets_str(vl, vstr)) ? ("octet_string({" + print_initializer(vstr) + "})"): "octet_string({ ? })";
+                case t_OBJECT_IDENTIFIER: return value_oid_str(vl, vstr) ? ("oid_type{" + print_initializer(vstr) + "})"): "oid_type({ ? })";
+                case t_RELATIVE_OID: return value_oid_str(vl, vstr) ? ("reloid_type{" + print_initializer(vstr) + "})"): "reloid_type({ ? })";
+                case t_NumericString:
+                case t_PrintableString:
+                case t_T61String:
+                case t_VideotexString:
+                case t_GraphicString:
+                case t_VisibleString:
+                case t_GeneralString:
+                case t_ObjectDescriptor:
+                case t_IA5String: return value_chars8_str(vl, tp->root_builtin() == t_IA5String); //nested_init_str(tp, value_chars8_str(vl, tp->root_builtin() == t_IA5String));
+                case t_BMPString: return value_chars16_str(vl); //nested_init_str(tp, value_chars16_str(vl));
+                case t_UniversalString:
+                case t_UTF8String: return nested_init_str(tp, value_utfchars_str(vl));
+                default:
+                {
+                }
+            }
+            return "?";
+        }
+
+        std::string valueassmnt_str_ext(type_atom_ptr tp, value_atom_ptr vl, const std::string& nm) {
+            std::string rslt;
+            std::vector<std::string> arr;
+            bool isreff = tp->isrefferrence();
+            switch (tp->root_builtin()) {
+                case t_OBJECT_IDENTIFIER:
+                case t_RELATIVE_OID:
+                {
+                    if (value_oid_str(vl, arr)) {
+                        rslt += "ITU_T_";
+                        if (isreff)
+                            rslt += "TP_";
+                        rslt += ((tp->root_builtin() == t_OBJECT_IDENTIFIER) ? "OID( " : "RELOID( ");
+                        if (isreff)
+                            rslt += (fromtype_str(tp) + ", ");
+                        rslt += (nm + " , ITU_T_VARRAY(  ");
+                        rslt += print_initializer(arr);
+                        return rslt += "))";
+                    }
+                    return nm + " ? ";
+                    break;
+                }
+                case t_OCTET_STRING:
+                {
+                    if (value_octets_str(vl, arr)) {
+                        if (!arr.empty()) {
+                            rslt += (isreff ? ("ITU_T_TP_OCTETS( " + fromtype_str(tp) + ", ") : ("ITU_T_OCTETS( "));
+                            rslt += (nm + " , ITU_T_VARRAY(  ");
+                            rslt += print_initializer(arr);
+                            return rslt += "))";
+                        } else
+                            return "const " + fromtype_str(tp) + " " + nm + " = " + fromtype_str(tp) + "()";
+                    }
+                    return nm + " =  ? ";
+                    break;
+                }
+                case t_BIT_STRING:
+                {
+                    std::size_t numbt = 0;
+                    if (value_bits_str(vl, arr, numbt)) {
+                        if (!arr.empty()) {
+                            rslt += (isreff ? ("ITU_T_TP_BITS( " + fromtype_str(tp) + ", ") : ("ITU_T_BITS( "));
+                            rslt += (nm + " , ITU_T_VARRAY(  ");
+                            rslt += print_initializer(arr);
+                            return rslt += ("), " + to_string(numbt) + ")");
+                        } else
+                            return "const " + fromtype_str(tp) + " " + nm + " = " + fromtype_str(tp) + "()";
+                    }
+                    return "const " + fromtype_str(tp) + " " + nm + " = bit_string(" + value_bits_str(vl) + ")";
+                    break;
+                }
+                default:
+                {
+                }
+            }
+            return nm + " = ? ";
+        }
+
+        std::string value_struct_str(value_atom_ptr vl, type_atom_ptr tp, std::size_t lev) {
             std::string rslt = fromtype_str(tp) + "(";
             if (tp && tp->refference_to() && tp->refference_to()->as_typeassigment()) {
                 typeassignment_entity_ptr tpassmt = tp->refference_to()->as_typeassigment();
@@ -611,127 +713,6 @@ namespace x680 {
             }
             rslt += ")";
             return rslt;
-        }
-
-        std::string valueassmnt_str(type_atom_ptr tp, value_atom_ptr vl, const std::string& nm) {
-            switch (tp->root_builtin()) {
-                case t_NULL: return nested_init_str(tp, value_null_str(vl));
-                case t_INTEGER: return nested_init_str(tp, value_int_str(vl));
-                case t_BOOLEAN: return nested_init_str(tp, value_bool_str(vl));
-                case t_REAL: return nested_init_str(tp, value_real_str(vl));
-                case t_BIT_STRING: return nested_init_str(tp, value_bs_str(vl));
-                case t_ENUMERATED: return nested_init_str(tp, value_enum_str(tp, vl));
-                case t_OBJECT_IDENTIFIER: return " ? ";
-                case t_RELATIVE_OID: return " ? ";
-                case t_NumericString:
-                case t_PrintableString:
-                case t_T61String:
-                case t_VideotexString:
-                case t_GraphicString:
-                case t_VisibleString:
-                case t_GeneralString:
-                case t_ObjectDescriptor:
-                case t_IA5String: return nested_init_str(tp, value_chars8_str(vl, tp->root_builtin() == t_IA5String));
-                case t_BMPString: return nested_init_str(tp, value_chars16_str(vl));
-                case t_UniversalString:
-                case t_UTF8String: return nested_init_str(tp, value_utfchars_str(vl));
-                default:
-                {
-                }
-            }
-            return "?";
-        }
-
-        std::string valueassmnt_str_ext(type_atom_ptr tp, value_atom_ptr vl, const std::string& nm) {
-            std::string rslt;
-            bool isreff = tp->isrefferrence();
-            switch (tp->root_builtin()) {
-                case t_OBJECT_IDENTIFIER:
-                case t_RELATIVE_OID:
-                {
-                    std::vector<std::string> arr;
-                    if (value_oid_str(vl, arr)) {
-                        if (isreff) {
-                            if (tp->root_builtin() == t_OBJECT_IDENTIFIER)
-                                rslt += ("ITU_T_TP_OID( "  + fromtype_str(tp) + ", ");
-                            else
-                                rslt += ("ITU_T_TP_RELOID(  "  + fromtype_str(tp) + ", ");
-                        } else {
-                            if (tp->root_builtin() == t_OBJECT_IDENTIFIER)
-                                rslt += "ITU_T_OID( ";
-                            else
-                                rslt += "ITU_T_RELOID( ";
-                        }
-                        rslt += (nm + " , ITU_T_VARRAY(  ");
-                        for (std::vector<std::string>::const_iterator it = arr.begin(); it != arr.end(); ++it) {
-                            if (it != arr.begin())
-                                rslt += ", ";
-                            rslt += (*it);
-                        }
-                        return rslt += "));";
-                    }
-                    return nm + " ? ";
-                    break;
-                }
-                case t_OCTET_STRING:
-                {
-                    if (vl && vl->get_value<hstring_initer>()) {
-                        boost::shared_ptr<hstring_initer> tmp = vl->get_value<hstring_initer>();
-                        if (!tmp->str.empty()) {
-                            std::string ostr = tmp->str;
-                            rslt += (isreff ?  ("ITU_T_TP_OCTETS( "  + fromtype_str(tp) + ", ") : ("ITU_T_OCTETS( " ));
-                            rslt +=  (nm + " , ITU_T_VARRAY(  ");
-                            for (std::string::const_iterator it = ostr.begin(); it != ostr.end(); ++it) {
-                                if (it != ostr.begin())
-                                    rslt += ", ";
-                                rslt += ("'" + string_to_literal(std::string(it, it + 1)) + "'");
-                            }
-                            return rslt += "));";
-                        } else
-                            return "const " + fromtype_str(tp) + " " + nm + " = octet_string();";
-                    } else
-                        return nm + " ? ";
-                    break;
-                }
-                case t_BIT_STRING:
-                {
-                    if (vl && vl->get_value<hstring_initer>()) {
-                        boost::shared_ptr<hstring_initer> tmp = vl->get_value<hstring_initer>();
-                        if (!tmp->str.empty()) {
-                            std::string ostr = tmp->str;
-                            rslt += (isreff ?  ("ITU_T_TP_BITS( "  + fromtype_str(tp) + ", ") : ("ITU_T_BITS( " ));
-                            rslt += (nm + " , ITU_T_VARRAY(  ");
-                            for (std::string::const_iterator it = ostr.begin(); it != ostr.end(); ++it) {
-                                if (it != ostr.begin())
-                                    rslt += ", ";
-                                rslt += ("'" + string_to_literal(std::string(it, it + 1)) + "'");
-                            }
-                            return rslt += "), 0);";
-                        } else
-                            return "const " + fromtype_str(tp) + " " + nm + " = octet_string();";
-                    } else if (vl && vl->get_value<bstring_initer>()) {
-                        boost::shared_ptr<bstring_initer> tmp = vl->get_value<bstring_initer>();
-                        if (!tmp->str.empty()) {
-                            std::string ostr = tmp->str;
-                            rslt += ("ITU_T_BITS( " + nm + " , ITU_T_VARRAY(  ");
-                            for (std::string::const_iterator it = ostr.begin(); it != ostr.end(); ++it) {
-                                if (it != ostr.begin())
-                                    rslt += ", ";
-                                rslt += ("'" + string_to_literal(std::string(it, it + 1)) + "'");
-                            }
-                            return rslt += ("), " + to_string(tmp.use_count()) + ");");
-                        } else
-                            return "const " + fromtype_str(tp) + " " + nm + " = octet_string();";
-                    } else
-                        return nm + " ? ";
-                    break;
-                }
-                default:
-                {
-
-                }
-            }
-            return nm + " ? ";
         }
 
         declare_vect::iterator find_remote_reff(declare_vect& vct, const std::string& nm, declare_vect::iterator from) {
@@ -1487,24 +1468,25 @@ namespace x680 {
                 case t_ObjectDescriptor:
                 {
                     stream << "\n" << tabformat(scp, 2) << "const " << fromtype_str(self->type()) << " " <<
-                            nameconvert(self->name()) << " = " << valueassmnt_str(self->type(), self->value(), nameconvert(self->name())) << "\n";
+                            nameconvert(self->name()) << " = " << valueassmnt_str(self->type(), self->value(), nameconvert(self->name())) << ";\n";
                     break;
                 }
                 case t_OBJECT_IDENTIFIER:
                 case t_RELATIVE_OID:
                 case t_OCTET_STRING:
-                {
-                    stream << "\n" << tabformat(scp, 2) << valueassmnt_str_ext(self->type(), self->value(), nameconvert(self->name())) << "\n";
-                    break;
-                }
                 case t_BIT_STRING:
                 {
-                    if (self->value()->as_cstr())
-                        stream << "\n" << tabformat(scp, 2) << valueassmnt_str_ext(self->type(), self->value(), nameconvert(self->name())) << "\n";
-                    else
-                        stream << "\n" << tabformat(scp, 2) << "const " << fromtype_str(self->type()) << " " <<
-                        nameconvert(self->name()) << " = " << valueassmnt_str(self->type(), self->value(), nameconvert(self->name())) << ";\n";
+                    stream << "\n" << tabformat(scp, 2) << valueassmnt_str_ext(self->type(), self->value(), nameconvert(self->name())) << ";\n";
+                    break;
                 }
+                    /*case t_BIT_STRING:
+                    {
+                        if (self->value()->as_cstr())
+                            stream << "\n" << tabformat(scp, 2) << valueassmnt_str_ext(self->type(), self->value(), nameconvert(self->name())) << "\n";
+                        else
+                            stream << "\n" << tabformat(scp, 2) << "const " << fromtype_str(self->type()) << " " <<
+                            nameconvert(self->name()) << " = " << valueassmnt_str(self->type(), self->value(), nameconvert(self->name())) << ";\n";
+                    }*/
                 default:
                 {
                 }

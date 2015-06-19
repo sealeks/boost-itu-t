@@ -35,25 +35,27 @@ namespace x680 {
         void resolve_remote_reff(declare_vect& vct);
         bool sort_reff(declare_vect& vct);
         bool default_supported(typeassignment_entity_ptr self);
-        
+
         value_atom_ptr value_skip_defined(value_atom_ptr self);
         std::string value_int_str(value_atom_ptr self);
         std::string value_null_str(value_atom_ptr self);
         std::string value_bool_str(value_atom_ptr self);
         std::string value_real_str(value_atom_ptr self);
         std::string value_reff_str(defined_value_atom_ptr self);
-        std::string value_bs_str(value_atom_ptr self);
-        std::string value_os_str(value_atom_ptr self);
         std::string value_chars8_str(value_atom_ptr self, bool cantuple);
         std::string value_chars16_str(value_atom_ptr self);
         std::string value_utfchar_str(const quadruple& self);
         std::string value_utfchars_str(value_atom_ptr self);
         std::string value_enum_str(type_atom_ptr tp, value_atom_ptr self);
         bool value_oid_str(value_atom_ptr self, std::vector<std::string>& rslt);
+        bool value_octets_str(value_atom_ptr self, std::vector<std::string>& rslt);
+        bool value_bits_str(value_atom_ptr self, std::vector<std::string>& rslt, std::size_t& sz);
+        std::string value_bits_str(value_atom_ptr self);
+        std::string print_initializer(const std::vector<std::string> vl);
         std::string valueassmnt_str(type_atom_ptr val, value_atom_ptr vl, const std::string& nm = "");
         std::string valueassmnt_str_ext(type_atom_ptr tp, value_atom_ptr vl, const std::string& nm = "");
-        std::string value_struct_str(value_atom_ptr vl, type_atom_ptr tp);
-        
+        std::string value_struct_str(value_atom_ptr vl, type_atom_ptr tp, std::size_t lev = 0);
+
         std::string nameconvert(std::string name);
         std::string argumentname(std::string name);
         std::string tabformat(basic_entity_ptr selft = basic_entity_ptr(), std::size_t delt = 0, const std::string& tab = "    ");
@@ -73,14 +75,14 @@ namespace x680 {
         member_vect parse_default_membervct(const member_vect& vct);
 
 
-        
-        
-        
-        
+
+
+
+
         //////////////////////////////////////////////////////
         //  base_moduleout
         //////////////////////////////////////////////////////        
-        
+
         class base_moduleout : public base_options {
 
         public:
@@ -88,7 +90,7 @@ namespace x680 {
             base_moduleout(const char* path, module_entity_ptr mod, const compile_option& opt);
             virtual ~base_moduleout();
 
-            virtual void execute() = 0;         
+            virtual void execute() = 0;
 
         protected:
 
@@ -112,7 +114,7 @@ namespace x680 {
 
         public:
 
-            cppout(global_entity_ptr glb, const compile_option& opt) : 
+            cppout(global_entity_ptr glb, const compile_option& opt) :
             base_options(opt), global_(glb) {
             };
             virtual ~cppout();
@@ -126,7 +128,7 @@ namespace x680 {
                 std::string filepath = modl->name() + add + "." + ext;
                 boost::filesystem::path p(path.c_str());
                 boost::filesystem::path f(filepath.c_str());
-                boost::filesystem::path r=p/f;                
+                boost::filesystem::path r = p / f;
                 return moduleout_ptr(new T(r.generic_string().c_str(), modl, opt_));
             }
 
@@ -185,7 +187,7 @@ namespace x680 {
 
             void mark_constraints(typeassignment_entity_ptr self);
             void execute_member(typeassignment_entity_ptr self);
-            
+
             void print_name_type(typeassignment_entity_ptr tpas, basic_entity_ptr scp = basic_entity_ptr());
 
             virtual void execute_typeassignment(typeassignment_entity_ptr tpas) = 0;
@@ -197,7 +199,7 @@ namespace x680 {
                     typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
                     if (tpas && (tpas->type()) && (tpas->is_cpp_expressed()))
                         execute_typeassignment(tpas);
-                    if (valueassignment_entity_ptr vpas = (*it)->as_valueassigment()) 
+                    if (valueassignment_entity_ptr vpas = (*it)->as_valueassigment())
                         execute_valueassignment(vpas);
                 }
             }
@@ -214,13 +216,13 @@ namespace x680 {
             template<typename Iter>
             void execute_valueassignments(Iter beg, Iter end) {
                 stream << "\n";
-                for (Iter it = beg; it != end; ++it) 
+                for (Iter it = beg; it != end; ++it)
                     if (valueassignment_entity_ptr vpas = (*it)->as_valueassigment())
                         execute_valueassignment(vpas);
                 stream << "\n";
             }
 
-      
+
 
 
 
@@ -256,7 +258,7 @@ namespace x680 {
             void execute_typedef_native_local(basic_entity_ptr self);
 
             virtual void execute_valueassignment(valueassignment_entity_ptr self);
-            void execute_valueassignment_ext(valueassignment_entity_ptr self);            
+            void execute_valueassignment_ext(valueassignment_entity_ptr self);
             virtual void execute_typeassignment(typeassignment_entity_ptr tpas);
 
 
@@ -278,15 +280,15 @@ namespace x680 {
             std::size_t registrate_struct_set(basic_entity_ptr self);
             std::size_t execute_struct_meth_hpp(basic_entity_ptr self, const std::string& ctp);
             std::size_t execute_struct_cout_meth(basic_entity_ptr self);
-            
+
             template<typename Iter>
             void execute_valueassignments_ext(Iter beg, Iter end) {
                 stream << "\n";
-                for (Iter it = beg; it != end; ++it) 
+                for (Iter it = beg; it != end; ++it)
                     if (valueassignment_entity_ptr vpas = (*it)->as_valueassigment())
                         execute_valueassignment_ext(vpas);
                 stream << "\n";
-            }                  
+            }
 
 
         };
@@ -341,14 +343,14 @@ namespace x680 {
 
 
             virtual void execute_archive_choice_output(typeassignment_entity_ptr self);
-            virtual void execute_archive_choice_input(typeassignment_entity_ptr self);            
+            virtual void execute_archive_choice_input(typeassignment_entity_ptr self);
             virtual void execute_archive_struct_output(typeassignment_entity_ptr self);
             virtual void execute_archive_struct_input(typeassignment_entity_ptr self);
 
             std::string archive_member_ber_str(namedtypeassignment_entity_ptr self, const std::string& name, bool afterext = false);
             void execute_archive_member(namedtypeassignment_entity_ptr self, bool afterext);
-            void execute_archive_choice_input_helper_mbr(typeassignment_entity_ptr self, tagclass_type cls, bool notag, std::size_t scpcnt = 6); 
-            void execute_archive_choice_input_helper(typeassignment_entity_ptr self, tagclass_type cls, bool notag);            
+            void execute_archive_choice_input_helper_mbr(typeassignment_entity_ptr self, tagclass_type cls, bool notag, std::size_t scpcnt = 6);
+            void execute_archive_choice_input_helper(typeassignment_entity_ptr self, tagclass_type cls, bool notag);
             void execute_archive_choice_output_helper(typeassignment_entity_ptr self);
 
         };
@@ -393,7 +395,7 @@ namespace x680 {
             void execute_struct_cpp(typeassignment_entity_ptr self);
             void execute_ctor_cpp(typeassignment_entity_ptr self);
             void execute_default_cpp(typeassignment_entity_ptr self);
-            std::size_t execute_struct_cout_meth(basic_entity_ptr self);            
+            std::size_t execute_struct_cout_meth(basic_entity_ptr self);
 
         };
 
@@ -412,12 +414,11 @@ namespace x680 {
         class ber_cpp_out : public base_ber_arch_out {
 
         public:
-            
+
             struct ber_helper_finder {
 
                 static namedtypeassignment_entity_ptr check(typeassignment_entity_ptr tpas);
-            };            
-            
+            };
 
             ber_cpp_out(const char* path, module_entity_ptr mod, const compile_option& opt) :
             base_ber_arch_out(path, mod, opt) {
@@ -428,7 +429,7 @@ namespace x680 {
         protected:
 
             void add_helpers(namedtypeassignment_entity_ptr tpas);
-            
+
             template<typename CriteriaT>
             void find_typeassignments(basic_entity_ptr self) {
                 find_typeassignments<CriteriaT>(self->childs().begin(), self->childs().end());
@@ -442,7 +443,7 @@ namespace x680 {
                     if (tpas)
                         find_typeassignments<CriteriaT>(tpas);
                 }
-            }            
+            }
 
             virtual void execute_valueassignment(valueassignment_entity_ptr self) {
             };
