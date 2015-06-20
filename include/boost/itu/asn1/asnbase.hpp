@@ -156,8 +156,8 @@ namespace boost {\
     using boost::asn1::prefixed_type;
 
 #define ITU_T_MAKE(tp) boost::make_shared< tp >
-#define ITU_T_SHARED(tp) boost::shared_ptr< tp >
-#define ITU_T_OPTIONAL(tp) boost::shared_ptr< tp >
+#define ITU_T_SHARED(tp) shared_ptr< tp >
+#define ITU_T_OPTIONAL(tp) shared_ptr< tp >
 
 #define ITU_T_EXTENTION_READ  bool __is_extention__ =  arch.get_pop_bmp(1).bit(0);
 #define ITU_T_EXTENTION_WRITE_NULL  bool __is_extention__ = false;boost::asn1::bit_string __extention_bmp__ =  boost::asn1::bit_string(__is_extention__); arch.add_bitmap(__extention_bmp__);
