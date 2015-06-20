@@ -54,7 +54,10 @@ namespace x680 {
         std::string print_initializer(const std::vector<std::string> vl);
         std::string valueassmnt_str(type_atom_ptr val, value_atom_ptr vl, const std::string& nm = "");
         std::string valueassmnt_str_ext(type_atom_ptr tp, value_atom_ptr vl, const std::string& nm = "");
+        std::string value_structure_str(type_atom_ptr tp, value_atom_ptr vl,  std::size_t lev = 0);        
         std::string value_struct_str(type_atom_ptr tp, value_atom_ptr vl,  std::size_t lev = 0);
+        std::string value_struct_of_str(type_atom_ptr tp, value_atom_ptr vl,  std::size_t lev = 0);
+        std::string value_choice_str(type_atom_ptr tp, value_atom_ptr vl,  std::size_t lev = 0);        
 
         std::string nameconvert(std::string name);
         std::string argumentname(std::string name);
@@ -73,6 +76,7 @@ namespace x680 {
         bool expressed_import(module_entity_ptr self, const std::string& name);
         member_vect parse_membervct(const member_vect& vct, bool obligate);
         member_vect parse_default_membervct(const member_vect& vct);
+        void load_member(member_vect& vct, typeassignment_entity_ptr self);        
 
 
 
@@ -168,8 +172,6 @@ namespace x680 {
             void load_typedef_ref(declare_vect& vct, basic_entity_ptr self);
             void load_typedef_structof(declare_vect& vct, basic_entity_ptr self);
             bool load_typedef_structof_impl(declare_vect& vct, typeassignment_entity_ptr self);
-
-            void load_member(member_vect& vct, typeassignment_entity_ptr self);
 
             void headerlock();
             void bottomlock();

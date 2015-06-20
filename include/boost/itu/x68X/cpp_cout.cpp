@@ -618,9 +618,9 @@ namespace x680 {
                 case t_GeneralString:
                 case t_ObjectDescriptor:
                 case t_IA5String: return value_chars8_str(vl, tp->root_builtin() == t_IA5String); //nested_init_str(tp, value_chars8_str(vl, tp->root_builtin() == t_IA5String));
-                case t_BMPString: 
+                case t_BMPString:
                 case t_UniversalString: return value_chars16_str(vl); //nested_init_str(tp, value_chars16_str(vl));
-                case t_UTF8String: return value_utfchars_str(vl);//nested_init_str(tp, value_utfchars_str(vl));
+                case t_UTF8String: return value_utfchars_str(vl); //nested_init_str(tp, value_utfchars_str(vl));
                 default:
                 {
                 }
@@ -686,8 +686,31 @@ namespace x680 {
             return nm + " = ? ";
         }
 
-        std::string value_struct_str(type_atom_ptr tp,value_atom_ptr vl,  std::size_t lev) {
+        std::string value_structure_str(type_atom_ptr tp, value_atom_ptr vl, std::size_t lev) {
+            switch (tp->root_builtin()) {
+                case t_SET:
+                case t_SEQUENCE: return value_struct_str(tp, vl, lev);
+                case t_CHOICE: return value_choice_str(tp, vl, lev);
+                case t_SET_OF:
+                case t_SEQUENCE_OF: return value_struct_of_str(tp, vl, lev);
+                default:
+                {
+                }
+            }
+            return "()";
+        }
+
+        std::string value_struct_str(type_atom_ptr tp, value_atom_ptr vl, std::size_t lev) {
             std::string rslt = "(";
+            if (typeassignment_entity_ptr tpas = tp->valuestructure()) {
+                member_vect mmbr;
+                load_member(mmbr, tpas);
+                member_vect oblig = parse_membervct(mmbr, true);
+                member_vect nooblig = parse_membervct(mmbr, false);
+            }
+            else {
+                rslt += " ? ";
+            }
             /*if (tp && tp->refference_to() && tp->refference_to()->as_typeassigment()) {
                 typeassignment_entity_ptr tpassmt = tp->refference_to()->as_typeassigment();
                 if (tpassmt->type()) {
@@ -711,6 +734,18 @@ namespace x680 {
                     }
                 }
             }*/
+            rslt += ")";
+            return rslt;
+        }
+
+        std::string value_struct_of_str(type_atom_ptr tp, value_atom_ptr vl, std::size_t lev) {
+            std::string rslt = "(";
+            rslt += ")";
+            return rslt;
+        }
+
+        std::string value_choice_str(type_atom_ptr tp, value_atom_ptr vl, std::size_t lev) {
+            std::string rslt = "(";
             rslt += ")";
             return rslt;
         }
@@ -763,12 +798,12 @@ namespace x680 {
             switch (self->root_builtin()) {
                 case t_INTEGER:
                 case t_BOOLEAN:
-                case t_REAL:                   
+                case t_REAL:
                 case t_ENUMERATED: return true;
-                /*case t_BIT_STRING:
-                case t_OCTET_STRING:                    
-                case t_OBJECT_IDENTIFIER:
-                case t_RELATIVE_OID: */
+                    /*case t_BIT_STRING:
+                    case t_OCTET_STRING:                    
+                    case t_OBJECT_IDENTIFIER:
+                    case t_RELATIVE_OID: */
                 default: return false;
             }
             return false;
@@ -918,6 +953,36 @@ namespace x680 {
             return rslt;
         }
 
+        static void load_member_static(typeassignment_entity_ptr self, member_vect& vct, namedtypeassignment_entity_vct & from) {
+            for (namedtypeassignment_entity_vct::iterator it = from.begin(); it != from.end(); ++it) {
+                tagmarker_type mkr = (*it)->marker();
+                if ((*it)->type()) {
+                    if (mkr == mk_default && !default_supported(*it))
+                        mkr = mk_optional;
+                    if (is_named(mkr))
+                        vct.push_back(member_atom(mkr, nameconvert((*it)->name()), fromtype_str(*it),
+                            ((self->builtin() == t_CHOICE) ? (type_str(self) + "_" + nameconvert((*it)->name())) : ""),
+                            (*it), (*it)->istextualy_choice()));
+                }
+            }
+        }
+
+        void load_member(member_vect& vct, typeassignment_entity_ptr self) {
+            namedtypeassignment_entity_vct root1 = self->child_root_1(false);
+            namedtypeassignment_entity_vct root2 = self->child_root_2(false);
+            namedtypeassignment_entity_vct extentions = self->extentions();
+
+            load_member_static(self, vct, root1);
+
+            for (namedtypeassignment_entity_vct::iterator it = extentions.begin(); it != extentions.end(); ++it)
+                if ((*it)->type())
+                    vct.push_back(member_atom(mk_optional, nameconvert((*it)->name()), fromtype_str(*it),
+                        ((self->builtin() == t_CHOICE) ? (type_str(self) + "_" + nameconvert((*it)->name())) : ""),
+                        (*it), (*it)->istextualy_choice()));
+
+            load_member_static(self, vct, root2);
+        }
+
         static std::string get_ber_helper_name(typeassignment_entity_ptr tp) {
             return fulltype_str_ext(tp, false, "__");
         }
@@ -925,6 +990,7 @@ namespace x680 {
         static std::string get_per_helper_name(typeassignment_entity_ptr tp) {
             return fulltype_str_ext(tp, false, "__");
         }
+
 
 
 
@@ -1129,36 +1195,6 @@ namespace x680 {
             return false;
         }
 
-        static void load_member_static(typeassignment_entity_ptr self, member_vect& vct, namedtypeassignment_entity_vct & from) {
-            for (namedtypeassignment_entity_vct::iterator it = from.begin(); it != from.end(); ++it) {
-                tagmarker_type mkr = (*it)->marker();
-                if ((*it)->type()) {
-                    if (mkr == mk_default && !default_supported(*it))
-                        mkr = mk_optional;
-                    if (is_named(mkr))
-                        vct.push_back(member_atom(mkr, nameconvert((*it)->name()), fromtype_str(*it),
-                            ((self->builtin() == t_CHOICE) ? (type_str(self) + "_" + nameconvert((*it)->name())) : ""),
-                            (*it), (*it)->istextualy_choice()));
-                }
-            }
-        }
-
-        void moduleout::load_member(member_vect& vct, typeassignment_entity_ptr self) {
-            namedtypeassignment_entity_vct root1 = self->child_root_1(false);
-            namedtypeassignment_entity_vct root2 = self->child_root_2(false);
-            namedtypeassignment_entity_vct extentions = self->extentions();
-
-            load_member_static(self, vct, root1);
-
-            for (namedtypeassignment_entity_vct::iterator it = extentions.begin(); it != extentions.end(); ++it)
-                if ((*it)->type())
-                    vct.push_back(member_atom(mk_optional, nameconvert((*it)->name()), fromtype_str(*it),
-                        ((self->builtin() == t_CHOICE) ? (type_str(self) + "_" + nameconvert((*it)->name())) : ""),
-                        (*it), (*it)->istextualy_choice()));
-
-            load_member_static(self, vct, root2);
-        }
-
         void moduleout::headerlock() {
             std::string name = nameconvert(module_->name());
             boost::algorithm::to_upper(name);
@@ -1349,7 +1385,7 @@ namespace x680 {
                 execute_typeassignments<basic_entity_vector::const_iterator>(module_->childs().begin(), module_->childs().end());
 
             if (option_define_struct()) {
-                stream << "\n" << tabformat(scp, 2) << "// struct var" << "\n";                
+                stream << "\n" << tabformat(scp, 2) << "// struct var" << "\n";
                 if (option_reverse_decl())
                     execute_valueassignments_ext<basic_entity_vector::const_reverse_iterator>(module_->childs().rbegin(), module_->childs().rend());
                 else
@@ -1494,13 +1530,14 @@ namespace x680 {
                 case t_SEQUENCE:
                 case t_CHOICE:
                 case t_SET_OF:
-                case t_SEQUENCE_OF:{
-                     stream << "\n" << tabformat(scp, 2) <<  "static " << fromtype_str(self->type()) << " " <<
-                            nameconvert(self->name()) << " = "  <<  fromtype_str(self->type()) << value_struct_str(self->type(), self->value()) << ";\n";
+                case t_SEQUENCE_OF:
+                {
+                    stream << "\n" << tabformat(scp, 2) << "static " << fromtype_str(self->type()) << " " <<
+                            nameconvert(self->name()) << " = " << fromtype_str(self->type()) << value_structure_str(self->type(), self->value()) << ";\n";
                     break;
                 }
                 default:
-                {             
+                {
                 }
             }
         }
