@@ -54,7 +54,7 @@ namespace x680 {
         std::string print_initializer(const std::vector<std::string> vl);
         std::string valueassmnt_str(type_atom_ptr val, value_atom_ptr vl, const std::string& nm = "");
         std::string valueassmnt_str_ext(type_atom_ptr tp, value_atom_ptr vl, const std::string& nm = "");
-        std::string value_struct_str(value_atom_ptr vl, type_atom_ptr tp, std::size_t lev = 0);
+        std::string value_struct_str(type_atom_ptr tp, value_atom_ptr vl,  std::size_t lev = 0);
 
         std::string nameconvert(std::string name);
         std::string argumentname(std::string name);

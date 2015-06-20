@@ -468,11 +468,11 @@ namespace x680 {
         std::string value_chars8_str(value_atom_ptr self, bool cantuple) {
             if (cantuple && self->get_value<tuple>()) {
                 boost::shared_ptr<tuple> tmp = self->get_value<tuple>();
-                return "\'" +
+                return "\"" +
                 string_to_literal(std::string(1,
                         std::string::value_type(static_cast<std::string::value_type>
                         (tmp->tablecolumn * 16 + tmp->tablerow)))) +
-                        "\'";
+                        "\"";
             } else if (self->get_value<std::string>()) {
                 return "\"" +
                 *(self->get_value<std::string>()) +
@@ -618,9 +618,9 @@ namespace x680 {
                 case t_GeneralString:
                 case t_ObjectDescriptor:
                 case t_IA5String: return value_chars8_str(vl, tp->root_builtin() == t_IA5String); //nested_init_str(tp, value_chars8_str(vl, tp->root_builtin() == t_IA5String));
-                case t_BMPString: return value_chars16_str(vl); //nested_init_str(tp, value_chars16_str(vl));
-                case t_UniversalString:
-                case t_UTF8String: return nested_init_str(tp, value_utfchars_str(vl));
+                case t_BMPString: 
+                case t_UniversalString: return value_chars16_str(vl); //nested_init_str(tp, value_chars16_str(vl));
+                case t_UTF8String: return value_utfchars_str(vl);//nested_init_str(tp, value_utfchars_str(vl));
                 default:
                 {
                 }
@@ -686,9 +686,9 @@ namespace x680 {
             return nm + " = ? ";
         }
 
-        std::string value_struct_str(value_atom_ptr vl, type_atom_ptr tp, std::size_t lev) {
-            std::string rslt = fromtype_str(tp) + "(";
-            if (tp && tp->refference_to() && tp->refference_to()->as_typeassigment()) {
+        std::string value_struct_str(type_atom_ptr tp,value_atom_ptr vl,  std::size_t lev) {
+            std::string rslt = "(";
+            /*if (tp && tp->refference_to() && tp->refference_to()->as_typeassigment()) {
                 typeassignment_entity_ptr tpassmt = tp->refference_to()->as_typeassigment();
                 if (tpassmt->type()) {
                     boost::shared_ptr<namedvalue_initer_set> values = vl->get_value<namedvalue_initer_set>();
@@ -710,7 +710,7 @@ namespace x680 {
                         }
                     }
                 }
-            }
+            }*/
             rslt += ")";
             return rslt;
         }
@@ -763,11 +763,12 @@ namespace x680 {
             switch (self->root_builtin()) {
                 case t_INTEGER:
                 case t_BOOLEAN:
-                case t_REAL:
-                case t_BIT_STRING:
-                case t_ENUMERATED:
+                case t_REAL:                   
+                case t_ENUMERATED: return true;
+                /*case t_BIT_STRING:
+                case t_OCTET_STRING:                    
                 case t_OBJECT_IDENTIFIER:
-                case t_RELATIVE_OID: return true;
+                case t_RELATIVE_OID: */
                 default: return false;
             }
             return false;
@@ -1348,6 +1349,7 @@ namespace x680 {
                 execute_typeassignments<basic_entity_vector::const_iterator>(module_->childs().begin(), module_->childs().end());
 
             if (option_define_struct()) {
+                stream << "\n" << tabformat(scp, 2) << "// struct var" << "\n";                
                 if (option_reverse_decl())
                     execute_valueassignments_ext<basic_entity_vector::const_reverse_iterator>(module_->childs().rbegin(), module_->childs().rend());
                 else
@@ -1479,14 +1481,6 @@ namespace x680 {
                     stream << "\n" << tabformat(scp, 2) << valueassmnt_str_ext(self->type(), self->value(), nameconvert(self->name())) << ";\n";
                     break;
                 }
-                    /*case t_BIT_STRING:
-                    {
-                        if (self->value()->as_cstr())
-                            stream << "\n" << tabformat(scp, 2) << valueassmnt_str_ext(self->type(), self->value(), nameconvert(self->name())) << "\n";
-                        else
-                            stream << "\n" << tabformat(scp, 2) << "const " << fromtype_str(self->type()) << " " <<
-                            nameconvert(self->name()) << " = " << valueassmnt_str(self->type(), self->value(), nameconvert(self->name())) << ";\n";
-                    }*/
                 default:
                 {
                 }
@@ -1500,9 +1494,13 @@ namespace x680 {
                 case t_SEQUENCE:
                 case t_CHOICE:
                 case t_SET_OF:
-                case t_SEQUENCE_OF:
+                case t_SEQUENCE_OF:{
+                     stream << "\n" << tabformat(scp, 2) <<  "static " << fromtype_str(self->type()) << " " <<
+                            nameconvert(self->name()) << " = "  <<  fromtype_str(self->type()) << value_struct_str(self->type(), self->value()) << ";\n";
+                    break;
+                }
                 default:
-                {
+                {             
                 }
             }
         }
@@ -1784,12 +1782,12 @@ namespace x680 {
                             stream << ");\n";
                         }
 
-                        if (!nooblig.empty() && (nooblig.size() > oblig.size())) {
+                        if (/*!nooblig.empty() && (nooblig.size() > oblig.size())*/!nooblig.empty()) {
                             stream << "\n" << tabformat(self, 1) << type_str(self) << "(";
                             for (member_vect::const_iterator it = nooblig.begin(); it != nooblig.end(); ++it) {
                                 if (it != nooblig.begin())
                                     stream << ",\n " << tabformat(self, 2);
-                                stream << "shared_ptr< " << it->typenam << ">  " << argumentname(it->name);
+                                stream << "ITU_T_SHARED( " << it->typenam << ")  " << argumentname(it->name);
                             }
                             stream << ");\n";
                         }
@@ -2496,12 +2494,12 @@ namespace x680 {
                             stream << " {}; \n ";
                         }
 
-                        if (!nooblig.empty() && (nooblig.size() > oblig.size())) {
+                        if (/*!nooblig.empty() && (nooblig.size() > oblig.size())*/!nooblig.empty()) {
                             stream << "\n" << tabformat(scp, 1) << fulltype_str(self, false) << "::" << type_str(self) << "(";
                             for (member_vect::const_iterator it = nooblig.begin(); it != nooblig.end(); ++it) {
                                 if (it != nooblig.begin())
                                     stream << ",\n" << tabformat(scp, 2);
-                                stream << "shared_ptr< " << it->typenam << ">  " << argumentname(it->name);
+                                stream << "ITU_T_SHARED( " << it->typenam << ")  " << argumentname(it->name);
                             }
                             stream << ") : \n";
                             for (member_vect::const_iterator it = nooblig.begin(); it != nooblig.end(); ++it) {
