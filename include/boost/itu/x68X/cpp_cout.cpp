@@ -315,6 +315,17 @@ namespace x680 {
             return "";
         }
 
+        std::string fulltype_str(type_atom_ptr self, bool withns) {
+            if (self->isprimitive())
+                return builtin_str(self->root_builtin(), self ?
+                    (self->integer_constraint()) : integer_constraints_ptr());
+            else if (self->reff() && self->reff()->as_typeassigment())
+                return fulltype_str(self->reff()->as_typeassigment(), withns);
+            else if (self->scope() && self->scope()->as_typeassigment())
+                return fulltype_str(self->scope()->as_typeassigment(), withns);
+            return fulltype_str(boost::make_shared<typeassignment_entity>(self->scope(), "", self), withns);
+        }
+
         std::string fulltype_str_ext(basic_entity_ptr self, bool withns, const std::string& delim) {
             if ((self->as_typeassigment()) || (self->as_module())) {
                 if (self->as_module()) {
@@ -687,67 +698,72 @@ namespace x680 {
         }
 
         std::string value_structure_str(type_atom_ptr tp, value_atom_ptr vl, std::size_t lev) {
+            std::string rslt;
             switch (tp->root_builtin()) {
                 case t_SET:
-                case t_SEQUENCE: return value_struct_str(tp, vl, lev);
-                case t_CHOICE: return value_choice_str(tp, vl, lev);
+                case t_SEQUENCE: return !lev ? (fulltype_str(tp) + "(" + value_struct_str(tp, vl, ++lev) + ")"):
+                    ("ITU_T_MAKE(" + fulltype_str(tp) + ")(" + value_struct_str(tp, vl, ++lev) + ")");
+                case t_CHOICE: return !lev ? (fromtype_str(tp) + "(" + value_struct_str(tp, vl, ++lev) + ")"):
+                    ("ITU_T_MAKE(" + fromtype_str(tp) + ")(" + value_struct_str(tp, vl, ++lev) + ")");
                 case t_SET_OF:
-                case t_SEQUENCE_OF: return value_struct_of_str(tp, vl, lev);
+                case t_SEQUENCE_OF: return !lev ? (fulltype_str(tp) + "(" + value_struct_of_str(tp, vl, ++lev) + ")"):
+                    ("ITU_T_MAKE(" + fulltype_str(tp) + ")(" + value_struct_of_str(tp, vl, ++lev) + ")");
                 default:
                 {
+                    return ("ITU_T_MAKE(" + fulltype_str(tp) + ")(" + valueassmnt_str(tp, vl) + ")");
                 }
             }
             return "()";
         }
 
         std::string value_struct_str(type_atom_ptr tp, value_atom_ptr vl, std::size_t lev) {
-            std::string rslt = "(";
+            basic_entity_ptr scp;
+            std::string rslt = "";
             if (typeassignment_entity_ptr tpas = tp->valuestructure()) {
                 member_vect mmbr;
                 load_member(mmbr, tpas);
-                member_vect oblig = parse_membervct(mmbr, true);
-                member_vect nooblig = parse_membervct(mmbr, false);
-            }
-            else {
-                rslt += " ? ";
-            }
-            /*if (tp && tp->refference_to() && tp->refference_to()->as_typeassigment()) {
-                typeassignment_entity_ptr tpassmt = tp->refference_to()->as_typeassigment();
-                if (tpassmt->type()) {
-                    boost::shared_ptr<namedvalue_initer_set> values = vl->get_value<namedvalue_initer_set>();
-                    bool first = true;
-                    if (values) {
-                        for (basic_entity_vector::iterator it = tpassmt->childs().begin(); it != tpassmt->childs().end(); ++it) {
-                            if (typeassignment_entity_ptr subtpassmt = (*it)->as_typeassigment()) {
-                                if (first)
-                                    first = false;
-                                else
-                                    rslt += ", ";
-                                std::string subelmt = "";
-                                namedvalue_initer_set::iterator fid = values->find(namedvalue_initer(subtpassmt->name()));
-                                if (fid != values->end())
-                                    subelmt = " new " + valueassmnt_str(subtpassmt->type(), fid->val, fid->str) + "";
-                                rslt += ("shared_ptr<" + fromtype_str((*it)->as_typeassigment()->type()) +
-                                        " >(" + subelmt + ")");
-                            }
+                if (boost::shared_ptr<namedvalue_initer_set> vlus = vl->get_value<namedvalue_initer_set>()) {
+                    bool fst = true;
+                    for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
+                        if (fst)
+                            fst = false;
+                        else
+                            rslt += (std::string(", \n") + tabformat(scp, 3 + lev));
+                        namedvalue_initer_set::const_iterator fit = vlus->find(namedvalue_initer(it->typ->name()));
+                        if (fit != vlus->end()) {
+                            rslt += value_structure_str(it->typ->type(), fit->val, lev);
+                        } else {
+                            rslt += ("ITU_T_MAKE(" + fulltype_str(it->typ->type()) +
+                                    ")( " + (it->marker == mk_none ? " ? " : "") + " )");
                         }
                     }
                 }
-            }*/
-            rslt += ")";
+            } else {
+                rslt += " ? ";
+            }
             return rslt;
         }
 
         std::string value_struct_of_str(type_atom_ptr tp, value_atom_ptr vl, std::size_t lev) {
-            std::string rslt = "(";
-            rslt += ")";
+            std::string rslt = "";
             return rslt;
         }
 
         std::string value_choice_str(type_atom_ptr tp, value_atom_ptr vl, std::size_t lev) {
-            std::string rslt = "(";
-            rslt += ")";
-            return rslt;
+            if (typeassignment_entity_ptr tpas = tp->valuestructure()) {
+                member_vect mmbr;
+                load_member(mmbr, tpas);
+                if (boost::shared_ptr<namedvalue_initer> vlus = vl->get_value<namedvalue_initer>()) {
+                    for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
+                        if (it->name == vlus->str) {
+                            return "ITU_T_MAKE(" + fulltype_str(it->typ->type()) + ")(" +
+                                    value_structure_str(it->typ->type(), vlus->val, lev);
+                        }
+                    }
+                    return "";
+                }
+            }
+            return " ? ";
         }
 
         declare_vect::iterator find_remote_reff(declare_vect& vct, const std::string& nm, declare_vect::iterator from) {
@@ -1533,7 +1549,7 @@ namespace x680 {
                 case t_SEQUENCE_OF:
                 {
                     stream << "\n" << tabformat(scp, 2) << "static " << fromtype_str(self->type()) << " " <<
-                            nameconvert(self->name()) << " = " << fromtype_str(self->type()) << value_structure_str(self->type(), self->value()) << ";\n";
+                            nameconvert(self->name()) << " = " << value_structure_str(self->type(), self->value()) << ";\n";
                     break;
                 }
                 default:

@@ -1279,18 +1279,17 @@ namespace x680 {
     typeassignment_entity_ptr type_atom::valuestructure() {
         if (isvaluestructure()) {
             if ((reff()) && (reff()->extract_type())) {
-                if ((reff()->extract_type()->builtin() == t_SEQUENCE) || (reff()->extract_type()->builtin() == t_SET))
+                if ((reff()->extract_type()->builtin() == t_SEQUENCE) || 
+                        (reff()->extract_type()->builtin() == t_SET) || 
+                        (reff()->extract_type()->builtin() == t_CHOICE))
                     return reff()->as_typeassigment();
                 return reff()->extract_type()->valuestructure();
             } else if ((scope()) && (scope()->extract_type())) {
                 switch (builtin()) {
                     case t_SEQUENCE:
                     case t_SET:
+                    case t_CHOICE :
                         return scope()->as_typeassigment();
-                        //case t_EXTERNAL:
-                        //case t_REAL:
-                        //case t_EMBEDDED_PDV:                              
-                        //case t_CHARACTER_STRING: 
                     default:
                     {
                     }

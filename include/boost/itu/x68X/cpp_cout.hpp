@@ -26,6 +26,7 @@ namespace x680 {
         std::string namelower(std::string name);
         std::string type_str(typeassignment_entity_ptr self, bool native = false);
         std::string fulltype_str(basic_entity_ptr self, bool withns = false);
+        std::string fulltype_str(type_atom_ptr self, bool withns = false);             
         std::string fulltype_str_ext(basic_entity_ptr self, bool withns = false, const std::string& delim = "::");
         std::string fullpathtype_str(typeassignment_entity_ptr self, typeassignment_entity_ptr root, std::string tp);
         std::string fromtype_str(typeassignment_entity_ptr self);
