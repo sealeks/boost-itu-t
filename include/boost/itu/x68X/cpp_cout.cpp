@@ -163,6 +163,19 @@ namespace x680 {
         const std::string CHHEADER = "\n#ifdef _MSC_VER\n#pragma warning(push)\n#pragma warning(disable: 4065)\n#endif\n\n";
         const std::string CHBOTTOM = "\n\n#ifdef _MSC_VER\n#pragma warning(pop)\n#endif\n";
         const std::string MNDCL = "    ITU_T_USE_UNIVESAL_DECL;\n";
+        
+        
+        
+        
+
+        typeassignment_entity_ptr typeassignment_from_type(type_atom_ptr self) {
+            //if (self->scope() && self->scope()->as_typeassigment())
+                //return self->scope()->as_typeassigment();
+            if (self->reff() && self->reff()->as_typeassigment())
+                return self->reff()->as_typeassigment();
+            return typeassignment_entity_ptr();
+        }        
+        
 
         std::string correct_name(std::string vl) {
             const std::set<std::string>& base = token_base();
@@ -296,43 +309,22 @@ namespace x680 {
             return "";
         }
 
-        std::string fulltype_str(basic_entity_ptr self, bool withns) {
-            if ((self->as_typeassigment()) || (self->as_module())) {
-                if (self->as_module()) {
-                    return withns ? nameconvert(self->name()) : "";
-                } else if (self->as_typeassigment()) {
-                    typeassignment_entity_ptr ppas = self->as_typeassigment();
-                    std::string tmp = fulltype_str(self->scope(), withns);
-                    if ((ppas->type())/* && (!ppas->isstruct_of())*/)
-                        return tmp.empty() ? type_str(ppas) : (tmp + "::" + type_str(ppas));
-                    else
-                        return tmp;
-                }
-            }
-            typeassignment_entity_ptr ppas = self->as_typeassigment();
-            if ((ppas->type())/* && (!ppas->isstruct_of())*/)
-                return type_str(self->as_typeassigment());
-            return "";
-        }
-
-        std::string fulltype_str(type_atom_ptr self, bool withns) {
+        std::string type_str(type_atom_ptr self, bool native) {  
+            if (typeassignment_entity_ptr tpas = typeassignment_from_type(self))
+                return type_str(tpas, native);
             if (self->isprimitive())
                 return builtin_str(self->root_builtin(), self ?
-                    (self->integer_constraint()) : integer_constraints_ptr());
-            else if (self->reff() && self->reff()->as_typeassigment())
-                return fulltype_str(self->reff()->as_typeassigment(), withns);
-            else if (self->scope() && self->scope()->as_typeassigment())
-                return fulltype_str(self->scope()->as_typeassigment(), withns);
-            return fulltype_str(boost::make_shared<typeassignment_entity>(self->scope(), "", self), withns);
-        }
+                    (self->integer_constraint()) : integer_constraints_ptr());                     
+            return "?type?";
+        }   
 
-        std::string fulltype_str_ext(basic_entity_ptr self, bool withns, const std::string& delim) {
+        std::string fulltype_str(basic_entity_ptr self, bool withns, const std::string& delim) {
             if ((self->as_typeassigment()) || (self->as_module())) {
                 if (self->as_module()) {
                     return withns ? nameconvert(self->name()) : "";
                 } else if (self->as_typeassigment()) {
                     typeassignment_entity_ptr ppas = self->as_typeassigment();
-                    std::string tmp = fulltype_str_ext(self->scope(), withns, delim);
+                    std::string tmp = fulltype_str(self->scope(), withns, delim);
                     if (ppas->type())
                         return tmp.empty() ? type_str(ppas) : (tmp + delim + type_str(ppas));
                     else
@@ -342,6 +334,15 @@ namespace x680 {
             if (self->extract_type())
                 return type_str(self->as_typeassigment());
             return "";
+        }
+
+        std::string fulltype_str(type_atom_ptr self, bool withns) {
+            if (typeassignment_entity_ptr tpas = typeassignment_from_type(self))
+                return fulltype_str(tpas, withns);
+            if (self->isprimitive())
+                return builtin_str(self->root_builtin(), self ?
+                    (self->integer_constraint()) : integer_constraints_ptr());            
+            return "?type?";
         }
 
         std::string fullpathtype_str(typeassignment_entity_ptr self, typeassignment_entity_ptr root, std::string tp) {
@@ -517,7 +518,7 @@ namespace x680 {
                 for (quadruple_vector::const_iterator it = tmp->begin(); it != tmp->end(); ++it)
                     rslt += value_utfchar_str(*it);
                 if (!rslt.empty())
-                    return "\"" + string_to_literal(rslt) + "\""; // + boost::lexical_cast<std::string >(rslt.size()) + "";
+                    return "\"" + string_to_literal(rslt) + "\"";
                 else
                     return "\'\'";
             }
@@ -610,10 +611,10 @@ namespace x680 {
             std::vector<std::string> vstr;
             std::size_t numbt = 0;
             switch (tp->root_builtin()) {
-                case t_NULL: return value_null_str(vl); //nested_init_str(tp, value_null_str(vl));
-                case t_INTEGER: return value_int_str(vl); //nested_init_str(tp, value_int_str(vl));
-                case t_BOOLEAN: return value_bool_str(vl); //nested_init_str(tp, value_bool_str(vl));
-                case t_REAL: return value_real_str(vl); //nested_init_str(tp, value_real_str(vl));
+                case t_NULL: return value_null_str(vl); 
+                case t_INTEGER: return value_int_str(vl); 
+                case t_BOOLEAN: return value_bool_str(vl); 
+                case t_REAL: return value_real_str(vl); 
                 case t_ENUMERATED: return nested_init_str(tp, value_enum_str(tp, vl));
                 case t_BIT_STRING: return (value_bits_str(vl, vstr, numbt)) ? ("bit_string({" + print_initializer(vstr) + "}, " + to_string(numbt) + ")"):
                     ("bit_string(" + value_bits_str(vl) + ")");
@@ -628,10 +629,10 @@ namespace x680 {
                 case t_VisibleString:
                 case t_GeneralString:
                 case t_ObjectDescriptor:
-                case t_IA5String: return value_chars8_str(vl, tp->root_builtin() == t_IA5String); //nested_init_str(tp, value_chars8_str(vl, tp->root_builtin() == t_IA5String));
+                case t_IA5String: return value_chars8_str(vl, tp->root_builtin() == t_IA5String); 
                 case t_BMPString:
-                case t_UniversalString: return value_chars16_str(vl); //nested_init_str(tp, value_chars16_str(vl));
-                case t_UTF8String: return value_utfchars_str(vl); //nested_init_str(tp, value_utfchars_str(vl));
+                case t_UniversalString: return value_chars16_str(vl); 
+                case t_UTF8String: return value_utfchars_str(vl);
                 default:
                 {
                 }
@@ -697,31 +698,35 @@ namespace x680 {
             return nm + " = ? ";
         }
 
-        std::string value_structure_str(type_atom_ptr tp, value_atom_ptr vl, std::size_t lev) {
+        std::string value_structure_str(typeassignment_entity_ptr  tp, value_atom_ptr vl, std::size_t lev) {
             std::string rslt;
             switch (tp->root_builtin()) {
                 case t_SET:
-                case t_SEQUENCE: return !lev ? (fulltype_str(tp) + "(" + value_struct_str(tp, vl, ++lev) + ")"):
-                    ("ITU_T_MAKE(" + fulltype_str(tp) + ")(" + value_struct_str(tp, vl, ++lev) + ")");
+                case t_SEQUENCE: return !lev ? (fromtype_str(tp) + "(" + value_struct_str(tp, vl, ++lev) + ")"):
+                    ("ITU_T_MAKE(" + fromtype_str(tp) + ")(" + value_struct_str(tp, vl, ++lev) + ")");
                 case t_CHOICE: return !lev ? (fromtype_str(tp) + "(" + value_struct_str(tp, vl, ++lev) + ")"):
                     ("ITU_T_MAKE(" + fromtype_str(tp) + ")(" + value_struct_str(tp, vl, ++lev) + ")");
                 case t_SET_OF:
-                case t_SEQUENCE_OF: return !lev ? (fulltype_str(tp) + "(" + value_struct_of_str(tp, vl, ++lev) + ")"):
-                    ("ITU_T_MAKE(" + fulltype_str(tp) + ")(" + value_struct_of_str(tp, vl, ++lev) + ")");
+                case t_SEQUENCE_OF: return !lev ? (fromtype_str(tp) + "(" + value_struct_of_str(tp, vl, ++lev) + ")"):
+                    ("ITU_T_MAKE(" + fromtype_str(tp) + ")(" + value_struct_of_str(tp, vl, ++lev) + ")");
                 default:
                 {
-                    return ("ITU_T_MAKE(" + fulltype_str(tp) + ")(" + valueassmnt_str(tp, vl) + ")");
+                    return value_structure_str(tp->type(), vl,++lev);
                 }
             }
             return "()";
         }
+        
+        std::string value_structure_str(type_atom_ptr  tp, value_atom_ptr vl, std::size_t lev) {
+            return ("ITU_T_MAKE(" + fromtype_str(tp) + ")(" + valueassmnt_str(tp, vl) + ")");
+        }        
 
-        std::string value_struct_str(type_atom_ptr tp, value_atom_ptr vl, std::size_t lev) {
+        std::string value_struct_str(typeassignment_entity_ptr tp, value_atom_ptr vl, std::size_t lev) {
             basic_entity_ptr scp;
             std::string rslt = "";
-            if (typeassignment_entity_ptr tpas = tp->valuestructure()) {
+            if (tp) {
                 member_vect mmbr;
-                load_member(mmbr, tpas);
+                load_member(mmbr, tp);
                 if (boost::shared_ptr<namedvalue_initer_set> vlus = vl->get_value<namedvalue_initer_set>()) {
                     bool fst = true;
                     for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
@@ -731,9 +736,9 @@ namespace x680 {
                             rslt += (std::string(", \n") + tabformat(scp, 3 + lev));
                         namedvalue_initer_set::const_iterator fit = vlus->find(namedvalue_initer(it->typ->name()));
                         if (fit != vlus->end()) {
-                            rslt += value_structure_str(it->typ->type(), fit->val, lev);
+                            rslt += value_structure_str(it->typ, fit->val, lev);
                         } else {
-                            rslt += ("ITU_T_MAKE(" + fulltype_str(it->typ->type()) +
+                            rslt += ("ITU_T_MAKE(" + fromtype_str(it->typ) +
                                     ")( " + (it->marker == mk_none ? " ? " : "") + " )");
                         }
                     }
@@ -744,20 +749,21 @@ namespace x680 {
             return rslt;
         }
 
-        std::string value_struct_of_str(type_atom_ptr tp, value_atom_ptr vl, std::size_t lev) {
+        std::string value_struct_of_str(typeassignment_entity_ptr  tp, value_atom_ptr vl, std::size_t lev) {
             std::string rslt = "";
             return rslt;
         }
 
-        std::string value_choice_str(type_atom_ptr tp, value_atom_ptr vl, std::size_t lev) {
-            if (typeassignment_entity_ptr tpas = tp->valuestructure()) {
+        std::string value_choice_str(typeassignment_entity_ptr tp, value_atom_ptr vl, std::size_t lev) {
+            if (tp) {
                 member_vect mmbr;
-                load_member(mmbr, tpas);
+                load_member(mmbr, tp);
                 if (boost::shared_ptr<namedvalue_initer> vlus = vl->get_value<namedvalue_initer>()) {
                     for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
                         if (it->name == vlus->str) {
-                            return "ITU_T_MAKE(" + fulltype_str(it->typ->type()) + ")(" +
-                                    value_structure_str(it->typ->type(), vlus->val, lev);
+                            return "ITU_T_MAKE(" + fulltype_str(it->typ) + ")(" +
+                                    value_structure_str(it->typ, vlus->val, lev) +", " + 
+                                    type_str(tp) + "_" + nameconvert(it->name) +")";
                         }
                     }
                     return "";
@@ -1000,11 +1006,11 @@ namespace x680 {
         }
 
         static std::string get_ber_helper_name(typeassignment_entity_ptr tp) {
-            return fulltype_str_ext(tp, false, "__");
+            return fulltype_str(tp, false, "__");
         }
 
         static std::string get_per_helper_name(typeassignment_entity_ptr tp) {
-            return fulltype_str_ext(tp, false, "__");
+            return fulltype_str(tp, false, "__");
         }
 
 
@@ -1549,7 +1555,7 @@ namespace x680 {
                 case t_SEQUENCE_OF:
                 {
                     stream << "\n" << tabformat(scp, 2) << "static " << fromtype_str(self->type()) << " " <<
-                            nameconvert(self->name()) << " = " << value_structure_str(self->type(), self->value()) << ";\n";
+                            nameconvert(self->name()) << " = " << value_structure_str(self->type()->valuestructure(), self->value()) << ";\n";
                     break;
                 }
                 default:
@@ -1680,7 +1686,6 @@ namespace x680 {
 
             execute_archive_meth_hpp(self);
 
-            //execute_member(stream, self);
 
             stream << "\n" << tabformat(self) << "};";
             stream << "\n ";
@@ -1708,8 +1713,6 @@ namespace x680 {
                         default:
                         {
                         }
-                            // t_BIT_STRING,
-                            // t_OCTET_STRING
                     }
                 }
             }
@@ -2399,7 +2402,7 @@ namespace x680 {
                         else
                             stream << "ITU_T_CHOICEC_DEFN( ";
                         stream << fulltype_str(self, false) << "::" << it->name << ", " << it->name << ", ";
-                        stream << /*it->typenam*/ fullpathtype_str(it->typ, self, it->typenam) << ", " << choice_enum_str(self, it->typ) << ");";
+                        stream <<  fullpathtype_str(it->typ, self, it->typenam) << ", " << choice_enum_str(self, it->typ) << ");";
                     }
                 }
             } else {
@@ -2620,7 +2623,6 @@ namespace x680 {
                             chek_tpas.reset();
                     }
                     if (tpas->isstruct() || chek_tpas) {
-                        //fullpathtype_str(it->typ, self, );
                         stream << "\n" << tabformat(basic_entity_ptr(), 2) << "std::ostream& operator<<(std::ostream& stream, const ";
                         stream << fulltype_str(tpas, false) << "& vl) {";
                         if (tpas->isstruct()) {

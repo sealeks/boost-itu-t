@@ -1255,6 +1255,7 @@ namespace x680 {
             case t_EMBEDDED_PDV:
             case t_SEQUENCE:
             case t_SET:
+            case t_CHOICE:                
             case t_CHARACTER_STRING: return true;
             default:
             {
