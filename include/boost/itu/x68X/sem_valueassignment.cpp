@@ -187,6 +187,17 @@ namespace x680 {
 
     template<>
     boost::shared_ptr<value_vct> value_atom::get_value(bool except_abstract) {
+        if (as_defined()) {
+            return get_value_parent<value_vct>(except_abstract);
+        } else if (as_empty()) {
+             return boost::make_shared<value_vct>();
+        } else if (as_list()) {
+            value_vct rslt;
+            structvalue_atom_ptr lst = as_list();
+            for (value_vct::const_iterator it = lst->values().begin(); it != lst->values().end(); ++it)
+                rslt.push_back(*it);
+             return boost::make_shared<value_vct>(rslt);            
+        }
         return boost::shared_ptr<value_vct>();
     }
 
