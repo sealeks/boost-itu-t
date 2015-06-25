@@ -1282,12 +1282,16 @@ namespace x680 {
     typeassignment_entity_ptr type_atom::valuestructure() {
         if (isvaluestructure()) {
             if ((reff()) && (reff()->extract_type())) {
-                if ((reff()->extract_type()->builtin() == t_SEQUENCE) ||
-                        (reff()->extract_type()->builtin() == t_SET) ||
-                        (reff()->extract_type()->builtin() == t_CHOICE) ||
-                        (reff()->extract_type()->builtin() == t_SEQUENCE_OF) ||
-                        (reff()->extract_type()->builtin() == t_SET_OF))                 
-                    return reff()->as_typeassigment();
+                switch (reff()->extract_type()->builtin()) {
+                    case t_SEQUENCE:
+                    case t_SET:
+                    case t_SEQUENCE_OF:
+                    case t_SET_OF:
+                    case t_CHOICE: return reff()->as_typeassigment();
+                    default:
+                    {
+                    }
+                }
                 return reff()->extract_type()->valuestructure();
             } else if ((scope()) && (scope()->extract_type())) {
                 switch (builtin()) {
@@ -1309,7 +1313,7 @@ namespace x680 {
     typeassignment_entity_ptr type_atom::struct_of_kerrnel() {
         if (typeassignment_entity_ptr tmptp = valuestructure()) {
             if ((root_builtin() == t_SEQUENCE_OF)
-                    && (root_builtin() == t_SET_OF))
+                    || (root_builtin() == t_SET_OF))
                 if (!tmptp->childs().empty() && tmptp->childs().front() &&
                         tmptp->childs().front()->as_typeassigment())
                     return tmptp->childs().front()->as_typeassigment();

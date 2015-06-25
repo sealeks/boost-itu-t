@@ -303,6 +303,9 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <cTool>
+          <commandlineTool>gcc</commandlineTool>
+        </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
           <commandlineTool>g++</commandlineTool>
@@ -310,7 +313,7 @@
             <pElem>../../../include</pElem>
             <pElem>${BOOST_DIR}</pElem>
           </incDir>
-          <commandLine>-mthreads -fno-strict-aliasing -s</commandLine>
+          <commandLine>-s</commandLine>
           <preprocessorList>
             <Elem>_WIN32_WINNT=0x0601</Elem>
           </preprocessorList>

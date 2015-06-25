@@ -702,13 +702,18 @@ namespace x680 {
             std::string rslt;
             switch (tp->root_builtin()) {
                 case t_SET:
-                case t_SEQUENCE: return !lev ? (fromtype_str(tp) + "(" + value_struct_str(tp, vl, ++lev) + ")"):
-                    ("ITU_T_MAKE(" + fromtype_str(tp) + ")(" + value_struct_str(tp, vl, ++lev) + ")");
-                case t_CHOICE: return !lev ? (fromtype_str(tp) + "(" + value_struct_str(tp, vl, ++lev) + ")"):
-                    ("ITU_T_MAKE(" + fromtype_str(tp) + ")(" + value_struct_str(tp, vl, ++lev) + ")");
+                case t_SEQUENCE: 
+                    if (tp->isrefferrence() && tp->type() && tp->type()->valuestructure())
+                        tp=tp->type()->valuestructure();
+                    return !lev ? (fulltype_str(tp) + "(" + value_struct_str(tp, vl, ++lev) + ")"):
+                    ("ITU_T_MAKE(" + fulltype_str(tp) + ")(" + value_struct_str(tp, vl, ++lev) + ")");
+                case t_CHOICE:
+                    if (tp->isrefferrence() && tp->type() && tp->type()->valuestructure())
+                        tp = tp->type()->valuestructure();                    
+                    return !lev ? (fulltype_str(tp) + "(" + value_struct_str(tp, vl, ++lev) + ")"):
+                    ("ITU_T_MAKE(" + fulltype_str(tp) + ")(" + value_struct_str(tp, vl, ++lev) + ")");
                 case t_SET_OF:
-                case t_SEQUENCE_OF: return !lev ? (fromtype_str(tp) + "(" + value_struct_of_str(tp, vl, ++lev) + ")"):
-                    ("ITU_T_MAKE(" + fromtype_str(tp) + ")(" + value_struct_of_str(tp, vl, ++lev) + ")");
+                case t_SEQUENCE_OF: return (fulltype_str(tp) + "(" + value_struct_of_str(tp, vl, ++lev) + ")");
                 default:
                 {
                     return value_structure_str(tp->type(), vl,++lev);
@@ -718,9 +723,10 @@ namespace x680 {
         }
         
         std::string value_structure_str(type_atom_ptr  tp, value_atom_ptr vl, std::size_t lev) {
-            return ("ITU_T_MAKE(" + fromtype_str(tp) + ")(" + valueassmnt_str(tp, vl) + ")");
+            return "ITU_T_MAKE(" + (tp->isprimitive() ? type_str(tp) : fromtype_str( tp)) + ")(" + valueassmnt_str(tp, vl) + ")";
         }        
 
+        
         std::string value_struct_str(typeassignment_entity_ptr tp, value_atom_ptr vl, std::size_t lev) {
             basic_entity_ptr scp;
             std::string rslt = "";
@@ -738,8 +744,8 @@ namespace x680 {
                         if (fit != vlus->end()) {
                             rslt += value_structure_str(it->typ, fit->val, lev);
                         } else {
-                            rslt += ("ITU_T_MAKE(" + fromtype_str(it->typ) +
-                                    ")( " + (it->marker == mk_none ? " ? " : "") + " )");
+                            rslt += ("ITU_T_MAKE(" + (it->typ->isprimitive() ? type_str(it->typ->type()) : fulltype_str(it->typ)) +
+                                    ")(" + (it->marker == mk_none ? " ? " : "") + ")");
                         }
                     }
                 }
@@ -749,8 +755,16 @@ namespace x680 {
             return rslt;
         }
 
-        std::string value_struct_of_str(typeassignment_entity_ptr  tp, value_atom_ptr vl, std::size_t lev) {
+        std::string value_struct_of_str(typeassignment_entity_ptr tp, value_atom_ptr vl, std::size_t lev) {
             std::string rslt = "";
+            if (typeassignment_entity_ptr krnl = tp->struct_of_kerrnel()) {
+                if (boost::shared_ptr<value_vct> vlus = vl->get_value<value_vct>()) {
+                    defined_type rootbltn =  krnl->root_builtin();
+
+                } else
+                    rslt += " ?? ";
+            } else
+                rslt += " ? ";
             return rslt;
         }
 
@@ -1551,13 +1565,18 @@ namespace x680 {
                 case t_SET:
                 case t_SEQUENCE:
                 case t_CHOICE:
-                case t_SET_OF:
-                case t_SEQUENCE_OF:
                 {
                     stream << "\n" << tabformat(scp, 2) << "static " << fromtype_str(self->type()) << " " <<
                             nameconvert(self->name()) << " = " << value_structure_str(self->type()->valuestructure(), self->value()) << ";\n";
                     break;
                 }
+                case t_SET_OF:
+                case t_SEQUENCE_OF:{
+                    stream << "\n" << tabformat(scp, 2) << "static " << fromtype_str(self->type()) << " " <<
+                            nameconvert(self->name()) << " = " << value_structure_str(self->type()->valuestructure(), self->value()) << ";\n";
+                    break;                    
+                }
+                
                 default:
                 {
                 }
@@ -1843,7 +1862,7 @@ namespace x680 {
                             for (member_vect::const_iterator it = nooblig.begin(); it != nooblig.end(); ++it) {
                                 if (it != nooblig.begin())
                                     stream << ",\n " << tabformat(self, 2);
-                                stream << "ITU_T_SHARED( " << it->typenam << ")  " << argumentname(it->name);
+                                stream << "ITU_T_SHARED(" << it->typenam << ") " << argumentname(it->name);
                             }
                             stream << ");\n";
                         }
