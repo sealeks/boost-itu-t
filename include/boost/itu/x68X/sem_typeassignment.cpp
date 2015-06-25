@@ -982,7 +982,7 @@ namespace x680 {
     }
 
     defined_type type_atom::root_builtin() {
-        if (builtin() != t_Reference)
+        if (!isrefferrence())
             return builtin();
         if (reff() && (reff()->extract_type()))
             return reff()->extract_type()->root_builtin();
@@ -1255,6 +1255,8 @@ namespace x680 {
             case t_EMBEDDED_PDV:
             case t_SEQUENCE:
             case t_SET:
+            case t_SEQUENCE_OF:
+            case t_SET_OF:                
             case t_CHOICE:                
             case t_CHARACTER_STRING: return true;
             default:
@@ -1280,15 +1282,19 @@ namespace x680 {
     typeassignment_entity_ptr type_atom::valuestructure() {
         if (isvaluestructure()) {
             if ((reff()) && (reff()->extract_type())) {
-                if ((reff()->extract_type()->builtin() == t_SEQUENCE) || 
-                        (reff()->extract_type()->builtin() == t_SET) || 
-                        (reff()->extract_type()->builtin() == t_CHOICE))
+                if ((reff()->extract_type()->builtin() == t_SEQUENCE) ||
+                        (reff()->extract_type()->builtin() == t_SET) ||
+                        (reff()->extract_type()->builtin() == t_CHOICE) ||
+                        (reff()->extract_type()->builtin() == t_SEQUENCE_OF) ||
+                        (reff()->extract_type()->builtin() == t_SET_OF))                 
                     return reff()->as_typeassigment();
                 return reff()->extract_type()->valuestructure();
             } else if ((scope()) && (scope()->extract_type())) {
                 switch (builtin()) {
                     case t_SEQUENCE:
                     case t_SET:
+                    case t_SEQUENCE_OF:
+                    case t_SET_OF:                        
                     case t_CHOICE :
                         return scope()->as_typeassigment();
                     default:
@@ -1296,6 +1302,17 @@ namespace x680 {
                     }
                 }
             }
+        }
+        return typeassignment_entity_ptr();
+    }
+
+    typeassignment_entity_ptr type_atom::struct_of_kerrnel() {
+        if (typeassignment_entity_ptr tmptp = valuestructure()) {
+            if ((root_builtin() == t_SEQUENCE_OF)
+                    && (root_builtin() == t_SET_OF))
+                if (!tmptp->childs().empty() && tmptp->childs().front() &&
+                        tmptp->childs().front()->as_typeassigment())
+                    return tmptp->childs().front()->as_typeassigment();
         }
         return typeassignment_entity_ptr();
     }
@@ -1896,6 +1913,12 @@ namespace x680 {
         }
         return rslt;
     }
+    
+    typeassignment_entity_ptr typeassignment_entity::struct_of_kerrnel() {
+        if (type_atom_ptr tmptype = type()) 
+            return tmptype->struct_of_kerrnel();
+        return typeassignment_entity_ptr();
+    }         
 
     void typeassignment_entity::resolve(basic_atom_ptr holder) {
         unicalelerror_throw(childs());

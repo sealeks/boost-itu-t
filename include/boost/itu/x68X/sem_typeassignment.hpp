@@ -363,6 +363,8 @@ namespace x680 {
 
         typeassignment_entity_ptr valuestructure();
 
+        typeassignment_entity_ptr struct_of_kerrnel();        
+
         bool istextualy_choice();
 
         bool isallways_explicit();
@@ -799,6 +801,8 @@ namespace x680 {
         namedtypeassignment_entity_vct extention_group(std::size_t num);
 
         namedtypeassignment_entity_vct extentions();
+        
+        typeassignment_entity_ptr struct_of_kerrnel();        
 
         /////        
 
