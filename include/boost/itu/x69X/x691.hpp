@@ -144,14 +144,14 @@
 #define  ITU_T_PER_STRINGCODER2(nm, tp, asz, nsz, arr, fl) struct nm {\
     static void out(boost::asn1::x691::output_coder& stream, tp vl) {\
         if (fl || !stream.aligned())\
-            vl = dval(vl);\
+            vl = rval(vl);\
         stream.add_bitmap(boost::asn1::bit_string(boost::asn1::octet_sequnce(1, stream.aligned() ?\
                 boost::asn1::octet_sequnce::value_type(vl << (8 - asz)) : boost::asn1::octet_sequnce::value_type(vl << (8 - nsz))), stream.aligned() ? (8 - asz) : (8 - nsz)));}\
     static tp in(boost::asn1::x691::input_coder& stream) {\
         boost::asn1::bit_string vl = stream.get_pop_bmp(stream.aligned() ? asz : nsz);\
         const boost::asn1::octet_sequnce tmp = vl.as_octet_sequnce();\
         if (!tmp.empty())\
-            return stream.aligned() ? ((fl ? rval(tmp[0]) : tmp[0]) >> (8 - asz)) : ((rval(tmp[0]) >> (8 - nsz)));\
+            return stream.aligned() ? ((fl ? dval(tmp[0]) : tmp[0]) >> (8 - asz)) : ((dval(tmp[0]) >> (8 - nsz)));\
         return 0;}\
     static std::size_t bits_count(bool aligned) {\
         return aligned ? asz : nsz;}\

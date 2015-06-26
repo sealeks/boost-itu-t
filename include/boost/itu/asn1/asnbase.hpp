@@ -17,8 +17,9 @@
 
 
 
-#include <boost/dynamic_bitset.hpp>
 #include <boost/static_assert.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
 
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
@@ -1529,6 +1530,10 @@ namespace boost {
             template<typename T>
             ___asn__choice__base__(T* vl, int id) : val_(new choice_holder<T>(vl, id)) {
             }
+            
+            template<typename T>
+            ___asn__choice__base__(shared_ptr<T> vl, int id) : val_(new choice_holder<T>(vl, id)) {
+            }            
 
             virtual ~___asn__choice__base__() {
             }
