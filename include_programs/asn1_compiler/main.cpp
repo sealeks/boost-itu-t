@@ -27,8 +27,8 @@ int main(int ac, char* av[]) {
                 ("bermain,b", "ber serialization method prints in a main cpp module/ or ")
                 ("cout_noprint,x", "no print cout")
                 ("cout_meth,c", "geterate cout methods for structured type")
-                ("def_struct, v", "define struct var in file")
-                ("standard11, s", "C++11")
+                ("def_struct,v", "define struct var in file")
+                ("standard11,s", "C++11")
                 ("noholder,n", "compile strucrured type without asn1::holder<> ");
 
         x680::compile_option option;
