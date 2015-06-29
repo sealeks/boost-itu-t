@@ -11,9 +11,31 @@ namespace x680 {
     namespace cpp {
 
         namespace fsnsp = boost::filesystem;
+        
+        
+        //////////////////////////////////////////////////////
+        //  typeval_manager
+        //////////////////////////////////////////////////////          
 
+        void typeval_manager::push(namedtypeassignment_entity_ptr tas, value_atom_ptr val) {
+            stack_.push_back(typeasmt_value_atom(tas, val));
+            //std::cout << "typeval_manager PUSH: " << (tas ? tas->name()  : " ???? ")  << std::endl;
+        }
 
+        void typeval_manager::pop() {
+            if (!stack_.empty())
+                stack_.erase(stack_.begin()+(stack_.size() - 1));
+            //std::cout << "typeval_manager POP"  << std::endl;            
+        }
 
+        void typeval_manager::add() {
+            valueslines_.push_back(stack_);
+            if (!stack_.empty())
+                std::cout << "typeval_manager ADD: " <<
+                    (stack_.back().typeassignment() ? stack_.back().typeassignment()->name() : " ???? ") << std::endl;  
+        }
+        
+        
         //////////////////////////////////////////////////////
         //  main func
         //////////////////////////////////////////////////////        
@@ -622,37 +644,54 @@ namespace x680 {
             }
             return nm + " = ? ";
         }
+  
 
-        std::string value_structure_str(typeassignment_entity_ptr tp, value_atom_ptr vl, std::size_t lev) {
-            std::string rslt;
+        std::string value_structure_str(typeassignment_entity_ptr tp, value_atom_ptr vl, std::size_t lev, typeval_manager_ptr vm) {
             switch (tp->root_builtin()) {
                 case t_SET:
                 case t_SEQUENCE:
                     if (tp->isrefferrence() && tp->type() && tp->type()->valuestructure())
                         tp = tp->type()->valuestructure();
-                    return !lev ? (fulltype_str(tp) + "(" + value_struct_str(tp, vl, ++lev) + ")") :
-                            ("ITU_T_MAKE(" + fulltype_str(tp) + ")(" + value_struct_str(tp, vl, ++lev) + ")");
+                    return !lev ? (fulltype_str(tp) + "(" + value_struct_str(tp, vl, ++lev, vm) + ")") :
+                            ("ITU_T_MAKE(" + fulltype_str(tp) + ")(" + value_struct_str(tp, vl, ++lev, vm) + ")");
                 case t_CHOICE:
                     if (tp->isrefferrence() && tp->type() && tp->type()->valuestructure())
                         tp = tp->type()->valuestructure();
-                    return !lev ? (fulltype_str(tp) + "(" + value_choice_str(tp, vl, ++lev) + ")") :
-                            ("ITU_T_MAKE(" + fulltype_str(tp) + ")(" + value_choice_str(tp, vl, ++lev) + ")");
+                    return !lev ? (fulltype_str(tp) + "(" + value_choice_str(tp, vl, ++lev, vm) + ")") :
+                            ("ITU_T_MAKE(" + fulltype_str(tp) + ")(" + value_choice_str(tp, vl, ++lev, vm) + ")");
                 case t_SET_OF:
-                case t_SEQUENCE_OF: return !lev ? (fulltype_str(tp) + "(" + value_struct_of_str(tp, vl, ++lev) + ")"):
-                    ("ITU_T_MAKE(" + fulltype_str(tp) + ")(" + fulltype_str(tp) + "(" + value_struct_of_str(tp, vl, ++lev) + "))");
+                case t_SEQUENCE_OF: return !lev ? (fulltype_str(tp) + "(" + value_struct_of_str(tp, vl, ++lev, vm) + ")"):
+                    ("ITU_T_MAKE(" + fulltype_str(tp) + ")(" + fulltype_str(tp) + "(" + value_struct_of_str(tp, vl, ++lev, vm) + "))");
                 default:
                 {
-                    return value_structure_str(tp->type(), vl, ++lev);
+                    return value_structure_str(tp->type(), vl, ++lev, vm);
                 }
             }
             return "()";
         }
+        
+        static bool iscomplexvalue_decl_static(defined_type tp) {
+            switch (tp) {
+                case t_BIT_STRING:
+                case t_OCTET_STRING:
+                case t_OBJECT_IDENTIFIER:
+                case t_RELATIVE_OID: return true;
+                default:
+                {
+                }
+            }
+            return false;
+        }
 
-        std::string value_structure_str(type_atom_ptr tp, value_atom_ptr vl, std::size_t lev) {
+        std::string value_structure_str(type_atom_ptr tp, value_atom_ptr vl, std::size_t lev, typeval_manager_ptr vm) {
+            if (vm && iscomplexvalue_decl_static(tp->root_builtin())) {
+                vm->add();
+                return "ITU_T_MAKE(" + (tp->isprimitive() ? type_str(tp) : fromtype_str(tp)) + ")()";
+            }
             return "ITU_T_MAKE(" + (tp->isprimitive() ? type_str(tp) : fromtype_str(tp)) + ")(" + valueassmnt_str(tp, vl) + ")";
         }
 
-        std::string value_struct_str(typeassignment_entity_ptr tp, value_atom_ptr vl, std::size_t lev) {
+        std::string value_struct_str(typeassignment_entity_ptr tp, value_atom_ptr vl, std::size_t lev, typeval_manager_ptr vm) {
             basic_entity_ptr scp;
             if (tp) {
                 std::string rslt = "";
@@ -667,7 +706,11 @@ namespace x680 {
                             rslt += (std::string(", \n") + tabformat(scp, 3 + lev));
                         namedvalue_initer_set::const_iterator fit = vlus->find(namedvalue_initer(it->typ->name()));
                         if (fit != vlus->end()) {
-                            rslt += value_structure_str(it->typ, fit->val, lev);
+                            if (vm)
+                                vm->push(it->typ, fit->val);                           
+                            rslt += value_structure_str(it->typ, fit->val, lev, vm);
+                            if (vm)
+                                vm->pop();                             
                         } else {
                             rslt += ("ITU_T_SHARED(" + (it->typ->isprimitive() ? type_str(it->typ->type()) : fulltype_str(it->typ)) +
                                     ")(" + (it->marker == mk_none ? " ? " : "") + ")");
@@ -707,8 +750,13 @@ namespace x680 {
             return rslt;
         }
 
-        std::string value_struct_of_str(typeassignment_entity_ptr tp, value_atom_ptr vl, std::size_t lev) {
+        std::string value_struct_of_str(typeassignment_entity_ptr tp, value_atom_ptr vl, std::size_t lev, typeval_manager_ptr vm) {
             if (tp) {
+                if (vm) {
+                    if (vl && !vl->as_empty())
+                        vm->add();
+                    return "";
+                }
                 if (typeassignment_entity_ptr krnl = tp->struct_of_kerrnel()) {
                     if (boost::shared_ptr<value_vct> vlus = vl->get_value<value_vct>()) {
                         switch (krnl->root_builtin()) {
@@ -728,22 +776,25 @@ namespace x680 {
             return "?";
         }
 
-        std::string value_choice_str(typeassignment_entity_ptr tp, value_atom_ptr vl, std::size_t lev) {
+        std::string value_choice_str(typeassignment_entity_ptr tp, value_atom_ptr vl, std::size_t lev, typeval_manager_ptr vm) {
+            std::string rslt;
             if (tp) {
                 member_vect mmbr;
                 load_member(mmbr, tp);
-                if (vl->as_named()) {
+                if (vl->as_named() || vl->as_choice()) {
+                    std::string name = vl->as_named() ? vl->as_named()->name() : 
+                        vl->as_choice()->name();
+                    value_atom_ptr value = vl->as_named() ? vl->as_named()->value() : 
+                        vl->as_choice()->value();
                     for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
-                        if (it->name == vl->as_named()->name()) {
-                            return value_structure_str(it->typ, vl->as_named()->value(), lev) + ", " +
-                                    fulltype_str(tp, false) + "_" + nameconvert(it->name);
-                        }
-                    }
-                } else if (vl->as_choice()) {
-                    for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
-                        if (it->name == vl->as_choice()->name()) {
-                            return value_structure_str(it->typ, vl->as_choice()->value(), lev) + ", " +
-                                    fulltype_str(tp, false) + "_" + nameconvert(it->name);
+                        if (it->name == name) {
+                            if (vm)
+                                vm->push(it->typ, value);   
+                            rslt=value_structure_str(it->typ, value, lev) + ", " +
+                                    fulltype_str(tp, false) + "_" + nameconvert(name);
+                            if (vm)
+                                vm->pop();
+                            return rslt;                             
                         }
                     }
                 }
@@ -1526,23 +1577,20 @@ namespace x680 {
 
         void mainhpp_out::execute_valueassignment_ext(valueassignment_entity_ptr self) {
             basic_entity_ptr scp;
+            typeval_manager_ptr val_mgr;
+            if (!option_c11())
+                val_mgr=boost::make_shared<typeval_manager>(self);
             switch (self->type()->root_builtin()) {
                 case t_SET:
                 case t_SEQUENCE:
                 case t_CHOICE:
-                {
-                    stream << "\n" << tabformat(scp, 2) << "static " << fromtype_str(self->type()) << " " <<
-                            nameconvert(self->name()) << " = " << value_structure_str(self->type()->valuestructure(), self->value(),0) << ";\n";
-                    break;
-                }
                 case t_SET_OF:
                 case t_SEQUENCE_OF:
                 {
                     stream << "\n" << tabformat(scp, 2) << "static " << fromtype_str(self->type()) << " " <<
-                            nameconvert(self->name()) << " = " << value_structure_str(self->type()->valuestructure(), self->value(),0) << ";\n";
+                            nameconvert(self->name()) << " = " << value_structure_str(self->type()->valuestructure(), self->value(),0, val_mgr) << ";\n";
                     break;
                 }
-
                 default:
                 {
                 }

@@ -148,26 +148,23 @@ namespace x680 {
             valueassignment_(vas) {
             };
 
-            valueassignment_entity_ptr valueassignment() {
+            valueassignment_entity_ptr valueassignment() const {
                 return valueassignment_;
             }
 
             typeasmt_value_atom_vct_vct& valueslines() {
                 return valueslines_;
             }
-
-            void push(namedtypeassignment_entity_ptr tas, value_atom_ptr val) {
-                stack_.push_back(typeasmt_value_atom(tas, val));
+            
+            bool empty() const {
+                return valueslines_.empty();
             }
 
-            void pop() {
-                if (!stack_.empty())
-                    stack_.erase(stack_.begin()+(stack_.size() - 1));
-            }
+            void push(namedtypeassignment_entity_ptr tas, value_atom_ptr val);
 
-            void add() {
-                valueslines_.push_back(stack_);
-            }
+            void pop();
+
+            void add();
 
         private:
 
@@ -219,11 +216,11 @@ namespace x680 {
         std::string print_initializer(const std::vector<std::string> vl);
         std::string valueassmnt_str(type_atom_ptr val, value_atom_ptr vl, const std::string& nm = "");
         std::string valueassmnt_str_ext(type_atom_ptr tp, value_atom_ptr vl, const std::string& nm = "");
-        std::string value_structure_str(typeassignment_entity_ptr tp, value_atom_ptr vl, std::size_t lev);
-        std::string value_structure_str(type_atom_ptr tp, value_atom_ptr vl, std::size_t lev);
-        std::string value_struct_str(typeassignment_entity_ptr tp, value_atom_ptr vl, std::size_t);
-        std::string value_struct_of_str(typeassignment_entity_ptr tp, value_atom_ptr vl, std::size_t);
-        std::string value_choice_str(typeassignment_entity_ptr tp, value_atom_ptr vl, std::size_t);
+        std::string value_structure_str(typeassignment_entity_ptr tp, value_atom_ptr vl, std::size_t lev, typeval_manager_ptr vm = typeval_manager_ptr());
+        std::string value_structure_str(type_atom_ptr tp, value_atom_ptr vl, std::size_t lev, typeval_manager_ptr vm = typeval_manager_ptr());
+        std::string value_struct_str(typeassignment_entity_ptr tp, value_atom_ptr vl, std::size_t lev, typeval_manager_ptr vm = typeval_manager_ptr());
+        std::string value_struct_of_str(typeassignment_entity_ptr tp, value_atom_ptr vl, std::size_t lev, typeval_manager_ptr vm =typeval_manager_ptr());
+        std::string value_choice_str(typeassignment_entity_ptr tp, value_atom_ptr vl, std::size_t lev, typeval_manager_ptr vm =typeval_manager_ptr());
 
         std::string nameconvert(std::string name);
         std::string argumentname(std::string name);
