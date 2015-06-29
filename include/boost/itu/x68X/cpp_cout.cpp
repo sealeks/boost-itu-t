@@ -15,76 +15,6 @@ namespace x680 {
 
 
         //////////////////////////////////////////////////////
-        //  declare_atom
-        //////////////////////////////////////////////////////        
-
-        enum declare_type {
-            declare_typedef,
-            declare_seq,
-            declare_set,
-            declare_explicit,
-            declare_implicit
-        };
-
-        struct declare_atom {
-
-            declare_atom() :
-            decl(declare_typedef), remote_(false) {
-            };
-
-            declare_atom(declare_type decl_, typeassignment_entity_ptr tp, const std::string& typenam_,
-                    const std::string& from_type_, bool rem = false) :
-            decl(decl_), typ(tp), typenam(typenam_), from_type(from_type_), remote_(rem) {
-            };
-
-            declare_atom(declare_type decl_, typeassignment_entity_ptr tp, const std::string& typenam_,
-                    const std::string& from_type_, const std::string& tag_, const std::string& _class_, bool rem = false) :
-            decl(decl_), typ(tp), typenam(typenam_), from_type(from_type_), tag(tag_), class_(_class_), remote_(rem) {
-            };
-
-            declare_type decl;
-            typeassignment_entity_ptr typ;
-            std::string typenam;
-            std::string from_type;
-            std::string tag;
-            std::string class_;
-            bool remote_;
-
-        };
-
-
-
-
-        //////////////////////////////////////////////////////
-        //  member_atom
-        //////////////////////////////////////////////////////              
-
-        struct member_atom {
-
-            member_atom(tagmarker_type mkr = mk_extention) :
-            marker(mkr), ischoice(false) {
-            };
-
-            member_atom(tagmarker_type mkr, const std::string&name_, const std::string& typenam_, const std::string& enm_ = "",
-                    namedtypeassignment_entity_ptr typ_ = namedtypeassignment_entity_ptr(), bool ischoice_ = false) :
-            marker(mkr), name(name_), typenam(typenam_), enm(enm_), typ(typ_), ischoice(ischoice_) {
-            };
-
-
-            tagmarker_type marker;
-            std::string name;
-            std::string typenam;
-            std::string enm;
-            namedtypeassignment_entity_ptr typ;
-            bool ischoice;
-
-        };
-
-
-
-
-
-        //////////////////////////////////////////////////////
         //  main func
         //////////////////////////////////////////////////////        
 
@@ -708,8 +638,8 @@ namespace x680 {
                     return !lev ? (fulltype_str(tp) + "(" + value_choice_str(tp, vl, ++lev) + ")") :
                             ("ITU_T_MAKE(" + fulltype_str(tp) + ")(" + value_choice_str(tp, vl, ++lev) + ")");
                 case t_SET_OF:
-                case t_SEQUENCE_OF: return !lev ? (fulltype_str(tp) + "(" + value_struct_of_str(tp, vl, ++lev) + ")") :
-                            ("ITU_T_MAKE(" + fulltype_str(tp) + ")(" + fulltype_str(tp) + "(" + value_struct_of_str(tp, vl, ++lev) + "))");
+                case t_SEQUENCE_OF: return !lev ? (fulltype_str(tp) + "(" + value_struct_of_str(tp, vl, ++lev) + ")"):
+                    ("ITU_T_MAKE(" + fulltype_str(tp) + ")(" + fulltype_str(tp) + "(" + value_struct_of_str(tp, vl, ++lev) + "))");
                 default:
                 {
                     return value_structure_str(tp->type(), vl, ++lev);
@@ -1602,14 +1532,14 @@ namespace x680 {
                 case t_CHOICE:
                 {
                     stream << "\n" << tabformat(scp, 2) << "static " << fromtype_str(self->type()) << " " <<
-                            nameconvert(self->name()) << " = " << value_structure_str(self->type()->valuestructure(), self->value()) << ";\n";
+                            nameconvert(self->name()) << " = " << value_structure_str(self->type()->valuestructure(), self->value(),0) << ";\n";
                     break;
                 }
                 case t_SET_OF:
                 case t_SEQUENCE_OF:
                 {
                     stream << "\n" << tabformat(scp, 2) << "static " << fromtype_str(self->type()) << " " <<
-                            nameconvert(self->name()) << " = " << value_structure_str(self->type()->valuestructure(), self->value()) << ";\n";
+                            nameconvert(self->name()) << " = " << value_structure_str(self->type()->valuestructure(), self->value(),0) << ";\n";
                     break;
                 }
 

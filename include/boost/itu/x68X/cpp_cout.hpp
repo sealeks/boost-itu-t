@@ -15,12 +15,174 @@
 namespace x680 {
     namespace cpp {
 
-        struct declare_atom;
-        struct member_atom;
+
+
+        //////////////////////////////////////////////////////
+        //  declare_atom
+        //////////////////////////////////////////////////////        
+
+        enum declare_type {
+
+            declare_typedef,
+            declare_seq,
+            declare_set,
+            declare_explicit,
+            declare_implicit
+        };
+
+        struct declare_atom {
+
+            declare_atom() :
+            decl(declare_typedef), remote_(false) {
+            };
+
+            declare_atom(declare_type decl_, typeassignment_entity_ptr tp, const std::string& typenam_,
+                    const std::string& from_type_, bool rem = false) :
+            decl(decl_), typ(tp), typenam(typenam_), from_type(from_type_), remote_(rem) {
+            };
+
+            declare_atom(declare_type decl_, typeassignment_entity_ptr tp, const std::string& typenam_,
+                    const std::string& from_type_, const std::string& tag_, const std::string& _class_, bool rem = false) :
+            decl(decl_), typ(tp), typenam(typenam_), from_type(from_type_), tag(tag_), class_(_class_), remote_(rem) {
+            };
+
+            declare_type decl;
+            typeassignment_entity_ptr typ;
+            std::string typenam;
+            std::string from_type;
+            std::string tag;
+            std::string class_;
+            bool remote_;
+
+        };
+
+
+
+
+        //////////////////////////////////////////////////////
+        //  member_atom
+        //////////////////////////////////////////////////////              
+
+        struct member_atom {
+
+            member_atom(tagmarker_type mkr = mk_extention) :
+            marker(mkr), ischoice(false) {
+            };
+
+            member_atom(tagmarker_type mkr, const std::string&name_, const std::string& typenam_, const std::string& enm_ = "",
+                    namedtypeassignment_entity_ptr typ_ = namedtypeassignment_entity_ptr(), bool ischoice_ = false) :
+            marker(mkr), name(name_), typenam(typenam_), enm(enm_), typ(typ_), ischoice(ischoice_) {
+            };
+
+
+            tagmarker_type marker;
+            std::string name;
+            std::string typenam;
+            std::string enm;
+            namedtypeassignment_entity_ptr typ;
+            bool ischoice;
+
+        };
+
         typedef std::vector<declare_atom> declare_vect;
         typedef std::vector<std::string> structdeclare_vect;
         typedef std::vector<member_atom> member_vect;
-        
+
+
+
+
+
+
+
+
+        //////////////////////////////////////////////////////
+        //  typeasmt_value_atom
+        //////////////////////////////////////////////////////  
+
+        class typeasmt_value_atom {
+
+        public:
+
+            typeasmt_value_atom() {
+            };
+
+            typeasmt_value_atom(namedtypeassignment_entity_ptr tas, value_atom_ptr val) :
+            typeassignment_(tas), value_(val) {
+            };
+
+            namedtypeassignment_entity_ptr typeassignment() {
+                return typeassignment_;
+            }
+
+            type_atom_ptr type() {
+                return typeassignment_ ? typeassignment_->type() : type_atom_ptr();
+            }
+
+            tagmarker_type marker() {
+                return typeassignment_ ? typeassignment_->marker() : mk_none;
+            }
+
+            value_atom_ptr value() {
+                return value_;
+            }
+
+        private:
+
+            namedtypeassignment_entity_ptr typeassignment_;
+            value_atom_ptr value_;
+        };
+
+
+
+
+
+
+        typedef std::vector<typeasmt_value_atom> typeasmt_value_atom_vct;
+        typedef std::vector<typeasmt_value_atom_vct> typeasmt_value_atom_vct_vct;
+
+        class typeval_manager {
+
+        public:
+
+            typeval_manager(valueassignment_entity_ptr vas) :
+            valueassignment_(vas) {
+            };
+
+            valueassignment_entity_ptr valueassignment() {
+                return valueassignment_;
+            }
+
+            typeasmt_value_atom_vct_vct& valueslines() {
+                return valueslines_;
+            }
+
+            void push(namedtypeassignment_entity_ptr tas, value_atom_ptr val) {
+                stack_.push_back(typeasmt_value_atom(tas, val));
+            }
+
+            void pop() {
+                if (!stack_.empty())
+                    stack_.erase(stack_.begin()+(stack_.size() - 1));
+            }
+
+            void add() {
+                valueslines_.push_back(stack_);
+            }
+
+        private:
+
+            valueassignment_entity_ptr valueassignment_;
+            typeasmt_value_atom_vct stack_;
+            typeasmt_value_atom_vct_vct valueslines_;
+        };
+
+
+        typedef boost::shared_ptr<typeval_manager> typeval_manager_ptr;
+
+
+
+
+
         typeassignment_entity_ptr typeassignment_from_type(type_atom_ptr self);
 
         std::string correct_name(std::string vl);
@@ -29,7 +191,7 @@ namespace x680 {
         std::string type_str(typeassignment_entity_ptr self, bool native = false);
         std::string type_str(type_atom_ptr self, bool native = false);
         std::string fulltype_str(basic_entity_ptr self, bool withns = false, const std::string& delim = "::");
-        std::string fulltype_str(type_atom_ptr self, bool withns = false);             
+        std::string fulltype_str(type_atom_ptr self, bool withns = false);
         std::string fullpathtype_str(typeassignment_entity_ptr self, typeassignment_entity_ptr root, std::string tp);
         std::string fromtype_str(typeassignment_entity_ptr self);
         std::string fromtype_str(type_atom_ptr self);
@@ -57,11 +219,11 @@ namespace x680 {
         std::string print_initializer(const std::vector<std::string> vl);
         std::string valueassmnt_str(type_atom_ptr val, value_atom_ptr vl, const std::string& nm = "");
         std::string valueassmnt_str_ext(type_atom_ptr tp, value_atom_ptr vl, const std::string& nm = "");
-        std::string value_structure_str(typeassignment_entity_ptr tp, value_atom_ptr vl,  std::size_t lev = 0);        
-        std::string value_structure_str(type_atom_ptr  tp, value_atom_ptr vl, std::size_t lev = 0);        
-        std::string value_struct_str(typeassignment_entity_ptr  tp, value_atom_ptr vl,  std::size_t lev = 0);
-        std::string value_struct_of_str(typeassignment_entity_ptr tp, value_atom_ptr vl,  std::size_t lev = 0);
-        std::string value_choice_str(typeassignment_entity_ptr tp, value_atom_ptr vl,  std::size_t lev = 0);        
+        std::string value_structure_str(typeassignment_entity_ptr tp, value_atom_ptr vl, std::size_t lev);
+        std::string value_structure_str(type_atom_ptr tp, value_atom_ptr vl, std::size_t lev);
+        std::string value_struct_str(typeassignment_entity_ptr tp, value_atom_ptr vl, std::size_t);
+        std::string value_struct_of_str(typeassignment_entity_ptr tp, value_atom_ptr vl, std::size_t);
+        std::string value_choice_str(typeassignment_entity_ptr tp, value_atom_ptr vl, std::size_t);
 
         std::string nameconvert(std::string name);
         std::string argumentname(std::string name);
@@ -80,7 +242,7 @@ namespace x680 {
         bool expressed_import(module_entity_ptr self, const std::string& name);
         member_vect parse_membervct(const member_vect& vct, bool obligate);
         member_vect parse_default_membervct(const member_vect& vct);
-        void load_member(member_vect& vct, typeassignment_entity_ptr self);        
+        void load_member(member_vect& vct, typeassignment_entity_ptr self);
 
 
 
