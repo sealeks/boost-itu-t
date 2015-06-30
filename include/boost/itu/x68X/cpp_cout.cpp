@@ -562,7 +562,7 @@ namespace x680 {
                 case t_INTEGER: return value_int_str(vl);
                 case t_BOOLEAN: return value_bool_str(vl);
                 case t_REAL: return value_real_str(vl);
-                case t_ENUMERATED: return nested_init_str(tp, value_enum_str(tp, vl));
+                case t_ENUMERATED: return value_enum_str(tp, vl);
                 case t_BIT_STRING: return (value_bits_str(vl, vstr, numbt)) ? ("bit_string({" + print_initializer(vstr) + "}, " + to_string(numbt) + ")"):
                     ("bit_string(" + value_bits_str(vl) + ")");
                 case t_OCTET_STRING: return (value_octets_str(vl, vstr)) ? ("octet_string({" + print_initializer(vstr) + "})"): "octet_string({ ? ? })";
@@ -1581,21 +1581,26 @@ namespace x680 {
                 rslt+=("__"+ (it->typeassignment() ? nameconvert(it->typeassignment()->name()) : "?"));
             return rslt;
         }
-        
-        static std::string calculate_valuesetter_static(typeval_manager_ptr self, const typeasmt_value_atom_vct& seq) {
+
+        static std::string calculate_valuesetter_static(typeval_manager_ptr self, const typeasmt_value_atom_vct& seq, bool structof) {
             std::string rslt = nameconvert(self->valueassignment()->name()) + ".";
-            typeasmt_value_atom_vct::const_iterator pit = !seq.empty() ? (seq.begin()+(seq.size()-1)) : seq.end();
+            typeasmt_value_atom_vct::const_iterator pit = !seq.empty() ? (seq.begin()+(seq.size() - 1)) : seq.end();
             for (typeasmt_value_atom_vct::const_iterator it = seq.begin(); it != seq.end(); ++it) {
                 rslt += (it->typeassignment() ? nameconvert(it->typeassignment()->name()) : "name?");
-                if (it != pit) {
+                if (it != pit || structof) {
                     if (it->typeassignment() && it->marker() == mk_optional)
                         rslt += "()->";
                     else
                         rslt += "().";
+                    if (it != pit) {
+                        if (it->typeassignment() && ((it->typeassignment()->root_builtin() == t_SET_OF) ||
+                                (it->typeassignment()->root_builtin() == t_SEQUENCE_OF)))
+                            rslt += "back().";
+                    }
                 }
             }
             return rslt;
-        }        
+        }
 
         void mainhpp_out::execute_valueassignment_ext(typeval_manager_ptr self) {
             basic_entity_ptr scp;
@@ -1609,15 +1614,26 @@ namespace x680 {
                             defined_type dtype = tps->builtin();
                             if (iscomplexvalue_decl_static(dtype)) {
                                 std::string name = calculate_valuename_static(self, curit);
-                                stream <<  "\n" <<  tabformat(scp, 2) << valueassmnt_str_ext( tps->type(), vls, name) <<  ";";          
-                                stream << "\n" <<   tabformat(scp, 2) << calculate_valuesetter_static(self, curit) << "(" <<  name<< ");";
+                                stream << "\n" << tabformat(scp, 2) << valueassmnt_str_ext(tps->type(), vls, name) << ";";
+                                stream << "\n" << tabformat(scp, 2) << calculate_valuesetter_static(self, curit, false) << "(" << name << ");";
                             } else {
+                                typeassignment_entity_ptr krnl = tps->struct_of_kerrnel();
+                                if (krnl &&  (dtype == t_SET_OF || dtype == t_SEQUENCE_OF)) {
+                                    if (boost::shared_ptr<value_vct> vllst = vls->get_value<value_vct>()) {
+                                        for (value_vct::const_iterator vit = vllst->begin(); vit != vllst->end(); ++vit) {
+                                            typeval_manager_ptr val_mgr = boost::make_shared<typeval_manager>(*self, curit);
+                                            stream << "\n" << tabformat(scp, 2) << calculate_valuesetter_static(self, curit, true) << "push_back(" <<
+                                                    value_structure_str(krnl->type()->valuestructure(), *vit , 0, val_mgr) << ");";
+                                            execute_valueassignment_ext(val_mgr);
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
-        }         
+        }      
 
         void mainhpp_out::execute_valueassignment_ext(valueassignment_entity_ptr self) {
             basic_entity_ptr scp;
@@ -1631,9 +1647,17 @@ namespace x680 {
                 case t_SET_OF:
                 case t_SEQUENCE_OF:
                 {
+                    if (val_mgr)
+                        stream << "\n" << tabformat(scp, 2) << "static " << fromtype_str(self->type()) << " __" << nameconvert(self->name()) << "(){";
                     stream << "\n" << tabformat(scp, 2) << "static " << fromtype_str(self->type()) << " " <<
                             nameconvert(self->name()) << " = " << value_structure_str(self->type()->valuestructure(), self->value(),0, val_mgr) << ";\n";
                     execute_valueassignment_ext(val_mgr);
+                    if (val_mgr) {
+                        stream << "\n" << tabformat(scp, 2) << "return "  <<  nameconvert(self->name()) << ";";
+                        stream << "\n" << tabformat(scp, 2) << "};\n";
+                        stream << "\n" << tabformat(scp, 2) << "static " << fromtype_str(self->type()) << " " <<
+                                nameconvert(self->name()) << " = " <<  " __" << nameconvert(self->name()) << "();";                      
+                    }                                   
                     stream << "\n";
                     break;
                 }
@@ -2720,8 +2744,8 @@ namespace x680 {
                                                     fullpath += "::";
                                                 stream << "\n" << tabformat(basic_entity_ptr(), 4) << "case " << fullpath << choice_enum_str(tpas, (*tit)) << ": ";
                                                 stream << "stream  << \"" << nameconvert((*tit)->as_named_typeassigment()->name()) <<
-                                                        " :  \" " << quatation_val_static(*tit) << " << vl." <<
-                                                        nameconvert((*tit)->as_named_typeassigment()->name()) << "() " <<
+                                                        " :  \" " << quatation_val_static(*tit) << " << *(vl." <<
+                                                        nameconvert((*tit)->as_named_typeassigment()->name()) << "()) " <<
                                                         quatation_val_static(*tit) << "; break; ";
                                             }
                                         }

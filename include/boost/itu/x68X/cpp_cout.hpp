@@ -146,7 +146,11 @@ namespace x680 {
 
             typeval_manager(valueassignment_entity_ptr vas) :
             valueassignment_(vas) {
-            };
+            }
+            
+            typeval_manager(const typeval_manager& krnl,  const typeasmt_value_atom_vct& stck):
+            valueassignment_(krnl.valueassignment_), stack_(stck) {
+            }
 
             valueassignment_entity_ptr valueassignment() const {
                 return valueassignment_;
