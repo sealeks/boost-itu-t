@@ -110,19 +110,19 @@ namespace x680 {
             typeassignment_(tas), value_(val) {
             };
 
-            namedtypeassignment_entity_ptr typeassignment() {
+            namedtypeassignment_entity_ptr typeassignment() const {
                 return typeassignment_;
             }
 
-            type_atom_ptr type() {
+            type_atom_ptr type() const {
                 return typeassignment_ ? typeassignment_->type() : type_atom_ptr();
             }
 
-            tagmarker_type marker() {
+            tagmarker_type marker() const {
                 return typeassignment_ ? typeassignment_->marker() : mk_none;
             }
 
-            value_atom_ptr value() {
+            value_atom_ptr value() const {
                 return value_;
             }
 
@@ -423,6 +423,7 @@ namespace x680 {
             void execute_typedef_native_local(basic_entity_ptr self);
 
             virtual void execute_valueassignment(valueassignment_entity_ptr self);
+            void execute_valueassignment_ext(typeval_manager_ptr self);
             void execute_valueassignment_ext(valueassignment_entity_ptr self);
             virtual void execute_typeassignment(typeassignment_entity_ptr tpas);
 

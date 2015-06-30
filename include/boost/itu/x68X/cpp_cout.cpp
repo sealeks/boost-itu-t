@@ -565,9 +565,9 @@ namespace x680 {
                 case t_ENUMERATED: return nested_init_str(tp, value_enum_str(tp, vl));
                 case t_BIT_STRING: return (value_bits_str(vl, vstr, numbt)) ? ("bit_string({" + print_initializer(vstr) + "}, " + to_string(numbt) + ")"):
                     ("bit_string(" + value_bits_str(vl) + ")");
-                case t_OCTET_STRING: return (value_octets_str(vl, vstr)) ? ("octet_string({" + print_initializer(vstr) + "})"): "octet_string({ ? })";
-                case t_OBJECT_IDENTIFIER: return value_oid_str(vl, vstr) ? ("oid_type{" + print_initializer(vstr) + "})"): "oid_type({ ? })";
-                case t_RELATIVE_OID: return value_oid_str(vl, vstr) ? ("reloid_type{" + print_initializer(vstr) + "})"): "reloid_type({ ? })";
+                case t_OCTET_STRING: return (value_octets_str(vl, vstr)) ? ("octet_string({" + print_initializer(vstr) + "})"): "octet_string({ ? ? })";
+                case t_OBJECT_IDENTIFIER: return value_oid_str(vl, vstr) ? ("oid_type({" + print_initializer(vstr) + "})"): "oid_type({ ? ? })";
+                case t_RELATIVE_OID: return value_oid_str(vl, vstr) ? ("reloid_type({" + print_initializer(vstr) + "})"): "reloid_type({ ? ? })";
                 case t_NumericString:
                 case t_PrintableString:
                 case t_T61String:
@@ -1574,6 +1574,50 @@ namespace x680 {
                 }
             }
         }
+        
+        static std::string calculate_valuename_static(typeval_manager_ptr self, const typeasmt_value_atom_vct& seq) {    
+            std::string rslt = nameconvert(self->valueassignment()->name());
+            for (typeasmt_value_atom_vct::const_iterator it = seq.begin(); it != seq.end(); ++it) 
+                rslt+=("__"+ (it->typeassignment() ? nameconvert(it->typeassignment()->name()) : "?"));
+            return rslt;
+        }
+        
+        static std::string calculate_valuesetter_static(typeval_manager_ptr self, const typeasmt_value_atom_vct& seq) {
+            std::string rslt = nameconvert(self->valueassignment()->name()) + ".";
+            typeasmt_value_atom_vct::const_iterator pit = !seq.empty() ? (seq.begin()+(seq.size()-1)) : seq.end();
+            for (typeasmt_value_atom_vct::const_iterator it = seq.begin(); it != seq.end(); ++it) {
+                rslt += (it->typeassignment() ? nameconvert(it->typeassignment()->name()) : "name?");
+                if (it != pit) {
+                    if (it->typeassignment() && it->marker() == mk_optional)
+                        rslt += "()->";
+                    else
+                        rslt += "().";
+                }
+            }
+            return rslt;
+        }        
+
+        void mainhpp_out::execute_valueassignment_ext(typeval_manager_ptr self) {
+            basic_entity_ptr scp;
+            if (self && !self->empty()) {
+                for (typeasmt_value_atom_vct_vct::const_iterator it = self->valueslines().begin(); it != self->valueslines().end(); ++it) {
+                    const typeasmt_value_atom_vct& curit = *it;
+                    if (!curit.empty()) {
+                        namedtypeassignment_entity_ptr tps = curit.back().typeassignment();
+                        value_atom_ptr vls = curit.back().value();
+                        if (tps && vls) {
+                            defined_type dtype = tps->builtin();
+                            if (iscomplexvalue_decl_static(dtype)) {
+                                std::string name = calculate_valuename_static(self, curit);
+                                stream <<  "\n" <<  tabformat(scp, 2) << valueassmnt_str_ext( tps->type(), vls, name) <<  ";";          
+                                stream << "\n" <<   tabformat(scp, 2) << calculate_valuesetter_static(self, curit) << "(" <<  name<< ");";
+                            } else {
+                            }
+                        }
+                    }
+                }
+            }
+        }         
 
         void mainhpp_out::execute_valueassignment_ext(valueassignment_entity_ptr self) {
             basic_entity_ptr scp;
@@ -1589,12 +1633,15 @@ namespace x680 {
                 {
                     stream << "\n" << tabformat(scp, 2) << "static " << fromtype_str(self->type()) << " " <<
                             nameconvert(self->name()) << " = " << value_structure_str(self->type()->valuestructure(), self->value(),0, val_mgr) << ";\n";
+                    execute_valueassignment_ext(val_mgr);
+                    stream << "\n";
                     break;
                 }
                 default:
                 {
                 }
             }
+            
         }
 
         void mainhpp_out::execute_typeassignment(typeassignment_entity_ptr tpas) {
