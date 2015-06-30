@@ -515,8 +515,15 @@ namespace x680 {
             if (self && self->get_value<bstring_initer>()) {
                 boost::shared_ptr<bstring_initer> lst = self->get_value<bstring_initer>();
                 std::string bstr = lst->str;
-                for (std::string::const_iterator it = bstr.begin(); it != bstr.end(); ++it)
-                    rslt.push_back("'" + string_to_literal(std::string(it, it + 1)) + "'");
+                std::string::const_iterator pit=(!bstr.empty() && lst->unused) ?  (bstr.begin()+(bstr.size()-1)) : bstr.end();
+                for (std::string::const_iterator it = bstr.begin(); it != bstr.end(); ++it) {
+                    if (pit == it) {
+                        std::string tstr(it, it + 1);
+                        tstr[0]<<=(lst->unused%8);
+                        rslt.push_back("'" + string_to_literal(tstr) + "'");
+                    } else
+                        rslt.push_back("'" + string_to_literal(std::string(it, it + 1)) + "'");
+                }
                 sz = lst->unused;
                 return true;
             }
@@ -539,8 +546,13 @@ namespace x680 {
                         rslt += "?bitsting?";
                 }
                 return rslt;
-            } else if (self->as_assign())
+            } else if (self->as_assign()) {
                 return nameconvert(self->as_assign()->name());
+            } else if (self->as_defined() && self->as_defined()->root() && 
+                    self->as_defined()->root()->as_value() && 
+                    self->as_defined()->root()->as_value()->as_number()) {
+                return "bitsting(true, "+to_string(self->as_defined()->root()->as_value()->as_number()->value())+")" ;
+            }
             return "?bitsting?";
         }
 
