@@ -65,8 +65,8 @@ namespace boost {
             return rslt;
         }
 
-        std::ostream& operator<<(std::ostream& stream, const enumerated& vl){
-            return stream << "(enum)"  << vl.as_base();
+        std::ostream& operator<<(std::ostream& stream, const enumerated& vl) {
+            return stream << "(enum)" << vl.as_base();
         }
 
         // null_type
@@ -77,6 +77,15 @@ namespace boost {
 
 
         // relative oid type
+
+        std::ostream& operator<<(std::ostream& stream, const reloid_type& vl) {
+            for (reloid_type::const_iterator it = vl.begin(); it != vl.end(); ++it)
+                if (it == vl.begin())
+                    stream << *it;
+                else
+                    stream << "." << *it;
+            return stream;
+        }
 
 
         // utf8_string
@@ -89,9 +98,7 @@ namespace boost {
 
 
         // universal_string  // bmp_string
-        
-        
-       
+
         octet_sequnce as_octet_sequnce(const universal_string& vl) {
             octet_sequnce rslt;
             rslt.reserve(4 * vl.size());
@@ -103,14 +110,14 @@ namespace boost {
 #ifdef __ITU__WCHAR16__ 
                 rslt.insert(rslt.end(), 2, 0);
 #endif                  
-                rslt.insert(rslt.end(), tmp.rbegin(), tmp.rend());               
+                rslt.insert(rslt.end(), tmp.rbegin(), tmp.rend());
 #else
                 const universal_string::value_type& el = *it;
 #ifdef __ITU__WCHAR16__ 
                 rslt.insert(rslt.end(), 2, 0);
 #endif                   
                 rslt.insert(rslt.end(), reinterpret_cast<octet_sequnce::const_pointer> (&el),
-                        reinterpret_cast<octet_sequnce::const_pointer> (&el) + sizeof (universal_string::value_type));        
+                        reinterpret_cast<octet_sequnce::const_pointer> (&el) + sizeof (universal_string::value_type));
 #endif            
             }
             return rslt;
@@ -189,39 +196,41 @@ namespace boost {
         // universal_string
 
         std::ostream& operator<<(std::ostream& stream, const universal_string& vl) {
-            return stream << "UNIVERSALSTRING";//vl.as_utf8().as_base();
+            return stream << "UNIVERSALSTRING"; //vl.as_utf8().as_base();
         }
 
 
         // bmp_string       
 
         std::ostream& operator<<(std::ostream& stream, const bmp_string& vl) {
-            return stream << "BMPSTRING";//vl.as_utf8().as_base();
+            return stream << "BMPSTRING"; //vl.as_utf8().as_base();
         }
 
 
 
         // time types      
 
-        static utctime to_z_impltime(const std::string& val, const utctime& tm) {
+        static base_time to_z_impltime(const std::string& val, const base_time& tm) {
             if (val.empty())
                 return tm;
             if (val.size() != 5)
-                return utctime();
+                return base_time();
             switch (val[0]) {
                 case '+':
                 {
-                    return (tm + (boost::posix_time::hours(string_to<int>(val.substr(1, 2))) + boost::posix_time::minutes(string_to<int>(val.substr(3, 2)))));
+                    return (tm + (boost::posix_time::hours(string_to<int>(val.substr(1, 2))) +
+                            boost::posix_time::minutes(string_to<int>(val.substr(3, 2)))));
                 }
                 case '-':
                 {
-                    return (tm - (boost::posix_time::hours(string_to<int>(val.substr(1, 2))) + boost::posix_time::minutes(string_to<int>(val.substr(3, 2)))));
+                    return (tm - (boost::posix_time::hours(string_to<int>(val.substr(1, 2))) +
+                            boost::posix_time::minutes(string_to<int>(val.substr(3, 2)))));
                 }
             }
-            return utctime();
+            return base_time();
         }
 
-        static octet_sequnce from_impltime(const utctime& val, bool full) {
+        static octet_sequnce from_impltime(const base_time& val, bool full) {
             octet_sequnce rslt;
             if (!val.is_special()) {
                 std::string tmp = boost::posix_time::to_iso_string(val) + "Z";
@@ -238,7 +247,7 @@ namespace boost {
             return rslt;
         }
 
-        static utctime to_impl_time(const octet_sequnce& val, bool full) {
+        static base_time to_impl_time(const octet_sequnce& val, bool full) {
             if (val.size() > 8) {
                 try {
                     std::string tmp(val.begin(), val.end());
@@ -262,15 +271,15 @@ namespace boost {
                         tmp = tmp.substr(0, it);
 
                     if (tmp.empty())
-                        return utctime();
+                        return base_time();
 
                     if (!full)
                         tmp = ((tmp[0] == '9') || (tmp[0] == '8')) ? ("19" + tmp) : ("20" + tmp);
 
                     if (tmp.size() < 8)
-                        return utctime();
+                        return base_time();
 
-                    utctime rslt(boost::gregorian::date(string_to<int>(tmp.substr(0, 4)), string_to<int>(tmp.substr(4, 2)), string_to<int>(tmp.substr(6, 2))));
+                    base_time rslt(boost::gregorian::date(string_to<int>(tmp.substr(0, 4)), string_to<int>(tmp.substr(4, 2)), string_to<int>(tmp.substr(6, 2))));
 
                     if (tmp.size() == 8)
                         return zdelt.empty() ? rslt : to_z_impltime(zdelt, rslt);
@@ -278,7 +287,7 @@ namespace boost {
                         tmp = tmp.substr(8);
 
                     if (tmp.size() < 2)
-                        return utctime();
+                        return base_time();
 
                     rslt += boost::posix_time::hours(string_to<int>(tmp.substr(0, 2)));
 
@@ -292,7 +301,7 @@ namespace boost {
                                 to_z_impltime(zdelt, (rslt + boost::posix_time::millisec(static_cast<int> (3600000 * string_to<double>("0" + tmp)))));
                     } else {
                         if (tmp.size() < 2)
-                            return utctime();
+                            return base_time();
                     }
 
                     rslt += boost::posix_time::minutes(string_to<int>(tmp.substr(0, 2)));
@@ -307,7 +316,7 @@ namespace boost {
                                 to_z_impltime(zdelt, (rslt + boost::posix_time::microsec(static_cast<int> (60000000 * string_to<double>("0" + tmp)))));
                     } else {
                         if (tmp.size() < 2)
-                            return utctime();
+                            return base_time();
                     }
 
                     rslt += boost::posix_time::seconds(string_to<int>(tmp.substr(0, 2)));
@@ -318,7 +327,7 @@ namespace boost {
                         tmp = tmp.substr(2);
 
                     if (tmp[0] != '.')
-                        return utctime();
+                        return base_time();
 
 
                     if (tmp.size() == 1)
@@ -331,11 +340,39 @@ namespace boost {
                 } catch (...) {
                 }
             }
-            return utctime();
+            return base_time();
+        }
+
+
+
+
+
+        // utctime      
+
+        utctime::utctime(const boost::posix_time::ptime& vl) :
+        val_(vl) {
+        }
+
+        utctime::utctime(const std::string::value_type* val) :
+        val_(to_utctime(std::string(val))) {
+        }
+
+        utctime::utctime(const std::string& val) :
+        val_(to_utctime(val)) {
+        }
+
+        utctime& utctime::operator=(const std::string::value_type* val) {
+            val_ = to_utctime(std::string(val));
+            return *this;
+        }
+
+        utctime& utctime::operator=(const std::string& val) {
+            val_ = to_utctime(val);
+            return *this;
         }
 
         octet_sequnce from_utctime(const utctime& val) {
-            return from_impltime(val, false);
+            return from_impltime(val.value(), false);
         }
 
         visible_string as_visiblestring(const utctime& val) {
@@ -344,11 +381,44 @@ namespace boost {
         }
 
         utctime to_utctime(const octet_sequnce& val) {
-            return to_impl_time(val, false);
+            return utctime(to_impl_time(val, false));
         }
 
         utctime to_utctime(const visible_string& val) {
             return to_utctime(as_octet_sequnce(val));
+        }
+
+        utctime to_utctime(const std::string& val) {
+            return to_utctime(octet_sequnce(val.begin(), val.end()));
+        }
+
+        std::ostream& operator<<(std::ostream& stream, const utctime& vl) {
+            return stream << vl.value();
+        }
+
+
+        // gentime      
+
+        gentime::gentime(const boost::posix_time::ptime& vl) :
+        val_(vl) {
+        }
+
+        gentime::gentime(const std::string::value_type* val) :
+        val_(to_gentime(std::string(val))) {
+        }
+
+        gentime::gentime(const std::string& val) :
+        val_(to_gentime(val)) {
+        }
+
+        gentime& gentime::operator=(const std::string::value_type* val) {
+            val_ = to_gentime(std::string(val));
+            return *this;
+        }
+
+        gentime& gentime::operator=(const std::string& val) {
+            val_ = to_gentime(val);
+            return *this;
         }
 
         octet_sequnce from_gentime(const gentime& val) {
@@ -366,6 +436,10 @@ namespace boost {
 
         gentime to_gentime(const visible_string& val) {
             return to_gentime(as_octet_sequnce(val));
+        }
+
+        gentime to_gentime(const std::string& val) {
+            return to_gentime(octet_sequnce(val.begin(), val.end()));
         }
 
         std::ostream& operator<<(std::ostream& stream, const gentime& vl) {

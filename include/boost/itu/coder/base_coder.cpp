@@ -67,59 +67,20 @@ namespace boost {
                     stream << *it;
                 else
                     stream << "." << *it;
-            //stream << std::endl;
             return stream;
         }
 
 
-        /// bitstring type
+        /// octetstring type        
 
-        /*bit_string::bit_string() : std::vector<octet_type>(), unuse_(0) {
-        };
-
-        bit_string::bit_string(uint8_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
-            construct(vl, unuse);
-        };
-
-        bit_string::bit_string(uint16_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
-            construct(vl, unuse);
-        };
-
-        bit_string::bit_string(uint32_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
-            construct(vl, unuse);
-        };
-
-        bit_string::bit_string(uint64_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
-            construct(vl, unuse);
-        };
-
-        bit_string::bit_string(int8_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
-            construct(*reinterpret_cast<uint8_t*> (&vl), unuse);
-        };
-
-        bit_string::bit_string(int16_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
-            construct(*reinterpret_cast<uint16_t*> (&vl), unuse);
-        };
-
-        bit_string::bit_string(int32_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
-            construct(*reinterpret_cast<uint32_t*> (&vl), unuse);
-        };
-
-        bit_string::bit_string(int64_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
-            construct(*reinterpret_cast<uint64_t*> (&vl), unuse);
-        };
-
-        bit_string::bit_string(bool const * const arr, std::size_t cnt) : std::vector<octet_type>() {
-            construct(std::vector<bool>(arr, arr + cnt));
+        std::ostream& operator<<(std::ostream& stream, const octet_string& vl) {
+            for (octet_string::const_iterator it = vl.begin(); it != vl.end(); ++it)
+                stream << boost::itu::binary_to_hexsequence_debug(std::string(it, it + 1));
+            return stream;
         }
 
-        bit_string::bit_string(const octet_sequnce& vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse % 8) {
-            insert_bitstring(vl, unuse);
-        };
+        /// bitstring type
 
-        bit_string::bit_string(const std::vector<bool>& vl) : std::vector<octet_type>() {
-            construct(vl);
-        };*/
 
         bit_string::bit_string(bool vl, std::size_t n) : std::vector<octet_type>(), unuse_(7 - n % 8) {
             reserve((n / 8 + 1));
@@ -257,14 +218,6 @@ namespace boost {
         void bit_string::append(const octet_string& vl) {
             itu::split_bits_in_octets(*this, unusebits(), vl.as_base(), 0);
         }
-
-        /*void bit_string::construct(const std::vector<bool>& vl) {
-            assign((vl.size() % 8) ? (vl.size() / 8 + 1) : (vl.size() / 8), 0);
-            unuse_ = (8 - vl.size() % 8) % 8;
-            std::size_t sz = 0;
-            for (std::vector<bool>::const_iterator it = vl.begin(); it != vl.end(); ++it)
-                bit(sz++, *it);
-        };*/
 
         std::ostream& operator<<(std::ostream& stream, const bit_string& vl) {
             for (std::size_t it = 0; it < vl.sizebits(); ++it) {

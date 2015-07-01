@@ -427,10 +427,6 @@ namespace boost {
             enumerated(enum_base_type vl = 0) : value_(vl) {
             }
 
-            void value(enum_base_type vl) {
-                value_ = vl;
-            }
-
             enum_base_type value() const {
                 return value_;
             }
@@ -463,6 +459,8 @@ namespace boost {
         std::ostream& operator<<(std::ostream& stream, const enumerated& vl);
 
 
+        
+        
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // reloid_type
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -564,6 +562,10 @@ namespace boost {
         inline std::ostream& operator<<(std::ostream& stream, const general_string& vl) {
             return stream << std::string(vl.begin(), vl.end());
         }
+        
+        inline std::ostream& operator<<(std::ostream& stream, const object_descriptor& vl) {
+            return stream << std::string(vl.begin(), vl.end());
+        }        
 
 
 
@@ -625,10 +627,56 @@ namespace boost {
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        // utctime
+        // base_time
         ////////////////////////////////////////////////////////////////////////////////////////////////////
+        
 
-        typedef boost::posix_time::ptime utctime;
+        typedef boost::posix_time::ptime base_time;
+
+        inline base_time now_generator() {
+            return boost::posix_time::microsec_clock::universal_time();
+        }
+        
+        
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        // utctime
+        ////////////////////////////////////////////////////////////////////////////////////////////////////  
+
+        class utctime {
+
+        public:
+
+            utctime() : val_() {
+            }
+
+            utctime(const boost::posix_time::ptime& vl);
+            
+            utctime(const std::string::value_type* val);
+            
+            utctime(const std::string& val);    
+            
+            utctime& operator=(const std::string::value_type* val);           
+            
+            utctime& operator=(const std::string& val);           
+            
+            boost::posix_time::ptime value() const {
+                return val_;
+            }            
+
+            void value(const boost::posix_time::ptime vl) {
+                val_ = vl;
+            }
+
+            operator boost::posix_time::ptime() const {
+                return val_;
+            }
+
+        private:
+            boost::posix_time::ptime val_;
+        };
+
+
 
         octet_sequnce from_utctime(const utctime& val);
 
@@ -638,11 +686,9 @@ namespace boost {
 
         utctime to_utctime(const visible_string& val);
 
-        inline utctime now_generator() {
-            return boost::posix_time::microsec_clock::universal_time();
-        }
+        utctime to_utctime(const std::string& val);        
 
-
+        std::ostream& operator<<(std::ostream& stream, const utctime& vl);    
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -656,12 +702,19 @@ namespace boost {
             gentime() : val_() {
             }
 
-            gentime(const boost::posix_time::ptime& vl) : val_(vl) {
-            }
-
+            gentime(const boost::posix_time::ptime& vl);
+            
+            gentime(const std::string::value_type* val);
+            
+            gentime(const std::string& val);    
+            
+            gentime& operator=(const std::string::value_type* val);           
+            
+            gentime& operator=(const std::string& val);           
+            
             boost::posix_time::ptime value() const {
                 return val_;
-            }
+            }            
 
             void value(const boost::posix_time::ptime vl) {
                 val_ = vl;
@@ -684,6 +737,11 @@ namespace boost {
         gentime to_gentime(const octet_sequnce& val);
 
         gentime to_gentime(const visible_string& val);
+
+        gentime to_gentime(const std::string& val);        
+        
+        std::ostream& operator<<(std::ostream& stream, const gentime& vl);            
+        
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////

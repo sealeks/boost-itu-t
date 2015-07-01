@@ -146,9 +146,6 @@ namespace boost {
 
 
 
-
-
-
         ///  BITSTRING TYPE       
 
         class bit_string : protected std::vector<octet_type> {
