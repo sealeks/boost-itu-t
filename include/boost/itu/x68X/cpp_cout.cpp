@@ -535,25 +535,21 @@ namespace x680 {
             self = value_skip_defined(self);
             if (self->as_empty()) {
                 return "";
+            } else if (self->as_number()) {
+                return "true, "+to_string(self->as_number()->value());
             } else if (self->as_list()) {
                 std::string rslt;
                 for (value_vct::const_iterator it = self->as_list()->values().begin(); it != self->as_list()->values().end(); ++it) {
                     if (it != self->as_list()->values().begin())
-                        rslt = " | ";
-                    if ((*it)->as_defined())
-                        rslt += value_reff_str((*it)->as_defined());
+                        rslt += " |";
+                    if (value_atom_ptr itel = value_skip_defined((*it)))
+                        rslt += (itel->as_number() ? ("bitsting(true, "+to_string(itel->as_number()->value())+")") : " ?");
                     else
-                        rslt += "?bitsting?";
+                        rslt += " ?";
                 }
                 return rslt;
-            } else if (self->as_assign()) {
-                return nameconvert(self->as_assign()->name());
-            } else if (self->as_defined() && self->as_defined()->root() && 
-                    self->as_defined()->root()->as_value() && 
-                    self->as_defined()->root()->as_value()->as_number()) {
-                return "bitsting(true, "+to_string(self->as_defined()->root()->as_value()->as_number()->value())+")" ;
             }
-            return "?bitsting?";
+            return "?";
         }
 
         std::string print_initializer(const std::vector<std::string> vl) {
@@ -577,20 +573,24 @@ namespace x680 {
                 case t_ENUMERATED: return value_enum_str(tp, vl);
                 case t_BIT_STRING: return (value_bits_str(vl, vstr, numbt)) ? ("bit_string({" + print_initializer(vstr) + "}, " + to_string(numbt) + ")"):
                     ("bit_string(" + value_bits_str(vl) + ")");
-                case t_OCTET_STRING: return (value_octets_str(vl, vstr)) ? ("octet_string({" + print_initializer(vstr) + "})"): "octet_string({ ? ? })";
-                case t_OBJECT_IDENTIFIER: return value_oid_str(vl, vstr) ? ("oid_type({" + print_initializer(vstr) + "})"): "oid_type({ ? ? })";
-                case t_RELATIVE_OID: return value_oid_str(vl, vstr) ? ("reloid_type({" + print_initializer(vstr) + "})"): "reloid_type({ ? ? })";
+                case t_OCTET_STRING: return (value_octets_str(vl, vstr)) ? ("octet_string({" + print_initializer(vstr) + "})"): "octet_string({ ? })";
+                case t_OBJECT_IDENTIFIER: return value_oid_str(vl, vstr) ? ("oid_type({" + print_initializer(vstr) + "})"): "oid_type({ ? })";
+                case t_RELATIVE_OID: return value_oid_str(vl, vstr) ? ("reloid_type({" + print_initializer(vstr) + "})"): "reloid_type({ ? })";
                 case t_NumericString:
                 case t_PrintableString:
                 case t_T61String:
                 case t_VideotexString:
                 case t_GraphicString:
                 case t_VisibleString:
+                case t_UTCTime:
+                case t_GeneralizedTime:                    
                 case t_GeneralString:
                 case t_ObjectDescriptor:
+                case t_RELATIVE_OID_IRI:
+                case t_OID_IRI:                        
                 case t_IA5String: return value_chars8_str(vl, tp->root_builtin() == t_IA5String);
                 case t_BMPString:
-                case t_UniversalString: return value_chars16_str(vl);
+                case t_UniversalString:            
                 case t_UTF8String: return value_utfchars_str(vl);
                 default:
                 {
@@ -1566,8 +1566,12 @@ namespace x680 {
                 case t_VideotexString:
                 case t_GraphicString:
                 case t_VisibleString:
+                case t_UTCTime:
+                case t_GeneralizedTime:
                 case t_GeneralString:
                 case t_ObjectDescriptor:
+                case t_RELATIVE_OID_IRI:
+                case t_OID_IRI:                            
                 {
                     stream << "\n" << tabformat(scp, 2) << "const " << fromtype_str(self->type()) << " " <<
                             nameconvert(self->name()) << " = " << valueassmnt_str(self->type(), self->value(), nameconvert(self->name())) << ";\n";
@@ -1578,7 +1582,12 @@ namespace x680 {
                 case t_OCTET_STRING:
                 case t_BIT_STRING:
                 {
-                    stream << "\n" << tabformat(scp, 2) << valueassmnt_str_ext(self->type(), self->value(), nameconvert(self->name())) << ";\n";
+                    if (option_c11()) {
+                        stream << "\n" << tabformat(scp, 2) << "const " << fromtype_str(self->type()) << " " <<
+                                nameconvert(self->name()) << " = " << valueassmnt_str(self->type(), self->value(), nameconvert(self->name())) << ";\n";
+                    } else {
+                        stream << "\n" << tabformat(scp, 2) << valueassmnt_str_ext(self->type(), self->value(), nameconvert(self->name())) << ";\n";
+                    }
                     break;
                 }
                 default:
