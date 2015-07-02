@@ -8,7 +8,9 @@
       <itemPath>../../../include_programs/test_asn1/Test1-per.cpp</itemPath>
       <itemPath>../../../include_programs/test_asn1/Test1.cpp</itemPath>
       <itemPath>../../../include_programs/test_asn1/Test1.hpp</itemPath>
+      <itemPath>../../../include_programs/test_asn1/Test1b.hpp</itemPath>
       <itemPath>../../../include_programs/test_asn1/main.cpp</itemPath>
+      <itemPath>../../../include_programs/test_asn1/unitTest.hpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Файлы тестов"
@@ -46,13 +48,12 @@
       </toolsSet>
       <compileType>
         <ccTool>
-          <standard>8</standard>
           <commandlineTool>g++ </commandlineTool>
           <incDir>
             <pElem>../../../include</pElem>
             <pElem>${BOOST_DIR}</pElem>
           </incDir>
-          <commandLine>-mthreads</commandLine>
+          <commandLine>-mthreads -s</commandLine>
           <preprocessorList>
             <Elem>DEBUG</Elem>
             <Elem>ITUX200_DEBUG</Elem>
@@ -99,9 +100,19 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include_programs/test_asn1/Test1b.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="../../../include_programs/test_asn1/main.cpp"
             ex="false"
             tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include_programs/test_asn1/unitTest.hpp"
+            ex="false"
+            tool="3"
             flavor2="0">
       </item>
     </conf>
@@ -163,9 +174,19 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include_programs/test_asn1/Test1b.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="../../../include_programs/test_asn1/main.cpp"
             ex="false"
             tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include_programs/test_asn1/unitTest.hpp"
+            ex="false"
+            tool="3"
             flavor2="0">
       </item>
     </conf>
@@ -220,9 +241,19 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include_programs/test_asn1/Test1b.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="../../../include_programs/test_asn1/main.cpp"
             ex="false"
             tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include_programs/test_asn1/unitTest.hpp"
+            ex="false"
+            tool="3"
             flavor2="0">
       </item>
     </conf>
@@ -234,7 +265,6 @@
       </toolsSet>
       <compileType>
         <ccTool>
-          <standard>8</standard>
           <incDir>
             <pElem>../../../include</pElem>
             <pElem>${BOOST_DIR}</pElem>
@@ -277,9 +307,306 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include_programs/test_asn1/Test1b.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="../../../include_programs/test_asn1/main.cpp"
             ex="false"
             tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include_programs/test_asn1/unitTest.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+    </conf>
+    <conf name="nb_gcc11_db_WIN32" type="1">
+      <toolsSet>
+        <compilerSet>MinGW|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <standard>8</standard>
+          <commandlineTool>g++ </commandlineTool>
+          <incDir>
+            <pElem>../../../include</pElem>
+            <pElem>${BOOST_DIR}</pElem>
+          </incDir>
+          <commandLine>-mthreads</commandLine>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>ITUX200_DEBUG</Elem>
+            <Elem>_WIN32_WINNT=0x0601</Elem>
+          </preprocessorList>
+        </ccTool>
+        <linkerTool>
+          <output>../../../bin/${CND_CONF}/test_asn1</output>
+          <linkerAddLib>
+            <pElem>../../../lib/${CND_CONF}</pElem>
+            <pElem>../../../lib/boost/${CND_CONF}</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerLibLibItem>boost_itu_t</linkerLibLibItem>
+            <linkerLibLibItem>boost_thread</linkerLibLibItem>
+            <linkerLibLibItem>boost_date_time</linkerLibLibItem>
+            <linkerLibLibItem>boost_system</linkerLibLibItem>
+            <linkerLibLibItem>boost_chrono</linkerLibLibItem>
+            <linkerLibLibItem>ole32</linkerLibLibItem>
+            <linkerLibLibItem>wsock32</linkerLibLibItem>
+            <linkerLibLibItem>oleaut32</linkerLibLibItem>
+            <linkerLibLibItem>ws2_32</linkerLibLibItem>
+            <linkerLibLibItem>stdc++</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="../../../include_programs/test_asn1/Test1-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1b.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include_programs/test_asn1/main.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="../../../include_programs/test_asn1/unitTest.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+    </conf>
+    <conf name="nb_gcc11_rl_WIN32" type="1">
+      <toolsSet>
+        <compilerSet>MinGW|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <standard>8</standard>
+          <incDir>
+            <pElem>../../../include</pElem>
+            <pElem>${BOOST_DIR}</pElem>
+          </incDir>
+          <commandLine>-mthreads -fno-strict-aliasing</commandLine>
+          <preprocessorList>
+            <Elem>_WIN32_WINNT=0x0601</Elem>
+          </preprocessorList>
+        </ccTool>
+        <linkerTool>
+          <output>../../../bin/${CND_CONF}/test_asn1</output>
+          <linkerAddLib>
+            <pElem>../../../lib/${CND_CONF}</pElem>
+            <pElem>../../../lib/boost/${CND_CONF}</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerLibLibItem>boost_itu_t</linkerLibLibItem>
+            <linkerLibLibItem>boost_date_time</linkerLibLibItem>
+            <linkerLibLibItem>boost_system</linkerLibLibItem>
+            <linkerLibLibItem>boost_thread</linkerLibLibItem>
+            <linkerLibLibItem>boost_chrono</linkerLibLibItem>
+            <linkerLibLibItem>ole32</linkerLibLibItem>
+            <linkerLibLibItem>wsock32</linkerLibLibItem>
+            <linkerLibLibItem>oleaut32</linkerLibLibItem>
+            <linkerLibLibItem>ws2_32</linkerLibLibItem>
+            <linkerLibLibItem>stdc++</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="../../../include_programs/test_asn1/Test1-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1b.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include_programs/test_asn1/main.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="../../../include_programs/test_asn1/unitTest.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+    </conf>
+    <conf name="nb_gcc11_rl_LIN64" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <standard>8</standard>
+          <incDir>
+            <pElem>../../../include</pElem>
+            <pElem>${BOOST_DIR}</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>../../../bin/${CND_CONF}/test_asn1</output>
+          <linkerAddLib>
+            <pElem>../../../lib/${CND_CONF}</pElem>
+            <pElem>../../../lib/boost/${CND_CONF}</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerLibLibItem>boost_itu_t</linkerLibLibItem>
+            <linkerLibLibItem>boost_date_time</linkerLibLibItem>
+            <linkerLibLibItem>boost_system</linkerLibLibItem>
+            <linkerLibLibItem>boost_thread</linkerLibLibItem>
+            <linkerLibLibItem>boost_chrono</linkerLibLibItem>
+            <linkerLibLibItem>stdc++</linkerLibLibItem>
+            <linkerLibLibItem>rt</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="../../../include_programs/test_asn1/Test1-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1b.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include_programs/test_asn1/main.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="../../../include_programs/test_asn1/unitTest.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+    </conf>
+    <conf name="nb_gcc11_db_LIN64" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <standard>8</standard>
+          <incDir>
+            <pElem>../../../include</pElem>
+            <pElem>${BOOST_DIR}</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>../../../bin/${CND_CONF}/test_asn1</output>
+          <linkerAddLib>
+            <pElem>../../../lib/${CND_CONF}</pElem>
+            <pElem>../../../lib/boost/${CND_CONF}</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerLibLibItem>boost_itu_t</linkerLibLibItem>
+            <linkerLibLibItem>boost_date_time</linkerLibLibItem>
+            <linkerLibLibItem>boost_system</linkerLibLibItem>
+            <linkerLibLibItem>boost_thread</linkerLibLibItem>
+            <linkerLibLibItem>boost_chrono</linkerLibLibItem>
+            <linkerLibLibItem>stdc++</linkerLibLibItem>
+            <linkerLibLibItem>rt</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="../../../include_programs/test_asn1/Test1-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1b.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include_programs/test_asn1/main.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+      </item>
+      <item path="../../../include_programs/test_asn1/unitTest.hpp"
+            ex="false"
+            tool="3"
             flavor2="0">
       </item>
     </conf>

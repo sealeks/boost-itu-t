@@ -26,12 +26,12 @@ namespace Test1 {
     nameOfSpouse_(arg__nameOfSpouse) {
     };
 
-    PersonnelRecord::PersonnelRecord(shared_ptr< Name> arg__name,
-            shared_ptr< visible_string> arg__title,
-            shared_ptr< EmployeeNumber> arg__number,
-            shared_ptr< Date> arg__dateOfHire,
-            shared_ptr< Name> arg__nameOfSpouse,
-            shared_ptr< Children_type> arg__children) :
+    PersonnelRecord::PersonnelRecord(ITU_T_SHARED(Name) arg__name,
+            ITU_T_SHARED(visible_string) arg__title,
+            ITU_T_SHARED(EmployeeNumber) arg__number,
+            ITU_T_SHARED(Date) arg__dateOfHire,
+            ITU_T_SHARED(Name) arg__nameOfSpouse,
+            ITU_T_SHARED(Children_type) arg__children) :
     name_(arg__name),
     title_(arg__title),
     number_(arg__number),
@@ -65,12 +65,12 @@ namespace Test1 {
     nameOfSpouse_(arg__nameOfSpouse) {
     };
 
-    PersonnelRecord_s::PersonnelRecord_s(shared_ptr< Name> arg__name,
-            shared_ptr< visible_string> arg__title,
-            shared_ptr< EmployeeNumber> arg__number,
-            shared_ptr< Date> arg__dateOfHire,
-            shared_ptr< Name> arg__nameOfSpouse,
-            shared_ptr< Children_type> arg__children) :
+    PersonnelRecord_s::PersonnelRecord_s(ITU_T_SHARED(Name) arg__name,
+            ITU_T_SHARED(visible_string) arg__title,
+            ITU_T_SHARED(EmployeeNumber) arg__number,
+            ITU_T_SHARED(Date) arg__dateOfHire,
+            ITU_T_SHARED(Name) arg__nameOfSpouse,
+            ITU_T_SHARED(Children_type) arg__children) :
     name_(arg__name),
     title_(arg__title),
     number_(arg__number),
@@ -101,9 +101,9 @@ namespace Test1 {
     dateOfBirth_(arg__dateOfBirth) {
     };
 
-    ChildInformation::ChildInformation(shared_ptr< Name> arg__name,
-            shared_ptr< Date> arg__dateOfBirth,
-            shared_ptr< enumerated> arg__sex) :
+    ChildInformation::ChildInformation(ITU_T_SHARED(Name) arg__name,
+            ITU_T_SHARED(Date) arg__dateOfBirth,
+            ITU_T_SHARED(enumerated) arg__sex) :
     name_(arg__name),
     dateOfBirth_(arg__dateOfBirth),
     sex_(arg__sex) {
@@ -125,6 +125,12 @@ namespace Test1 {
     dateOfBirth_(arg__dateOfBirth) {
     };
 
+    ChildInformation_s::ChildInformation_s(ITU_T_SHARED(Name) arg__name,
+            ITU_T_SHARED(Date) arg__dateOfBirth) :
+    name_(arg__name),
+    dateOfBirth_(arg__dateOfBirth) {
+    };
+
 
     ITU_T_HOLDERH_DEFN(ChildInformation_s::name, name, Name);
     ITU_T_HOLDERH_DEFN(ChildInformation_s::dateOfBirth, dateOfBirth, Date);
@@ -137,6 +143,14 @@ namespace Test1 {
     Name::Name(const NameString& arg__givenName,
             const NameString& arg__initial,
             const NameString& arg__familyName) :
+    givenName_(arg__givenName),
+    initial_(arg__initial),
+    familyName_(arg__familyName) {
+    };
+
+    Name::Name(ITU_T_SHARED(NameString) arg__givenName,
+            ITU_T_SHARED(NameString) arg__initial,
+            ITU_T_SHARED(NameString) arg__familyName) :
     givenName_(arg__givenName),
     initial_(arg__initial),
     familyName_(arg__familyName) {
@@ -160,13 +174,13 @@ namespace Test1 {
     c_(arg__c) {
     };
 
-    Ax::Ax(shared_ptr< uint8_t> arg__a,
-            shared_ptr< bool> arg__b,
-            shared_ptr< C_type> arg__c,
-            shared_ptr< numeric_string> arg__g,
-            shared_ptr< bool> arg__h,
-            shared_ptr< bmp_string> arg__i,
-            shared_ptr< printable_string> arg__j) :
+    Ax::Ax(ITU_T_SHARED(uint8_t) arg__a,
+            ITU_T_SHARED(bool) arg__b,
+            ITU_T_SHARED(C_type) arg__c,
+            ITU_T_SHARED(numeric_string) arg__g,
+            ITU_T_SHARED(bool) arg__h,
+            ITU_T_SHARED(bmp_string) arg__i,
+            ITU_T_SHARED(printable_string) arg__j) :
     a_(arg__a),
     b_(arg__b),
     c_(arg__c),
@@ -190,6 +204,104 @@ namespace Test1 {
     ITU_T_OPTIONAL_DEFN(Ax::h, h, bool);
     ITU_T_OPTIONAL_DEFN(Ax::i, i, bmp_string);
     ITU_T_OPTIONAL_DEFN(Ax::j, j, printable_string);
+
+    // std::cout methods
+
+    std::ostream& operator<<(std::ostream& stream, const PersonnelRecord& vl) {
+        stream << "{ ";
+        stream << "name :  " << vl.name();
+        stream << ", title :  " << "\"" << vl.title() << "\"";
+        stream << ", number :  " << vl.number();
+        stream << ", dateOfHire :  " << "\"" << vl.dateOfHire() << "\"";
+        stream << ", nameOfSpouse :  " << vl.nameOfSpouse();
+        if (vl.children()) stream << ", children :  " << *(vl.children());
+        stream << " }";
+        return stream;
+    };
+
+    std::ostream& operator<<(std::ostream& stream, const PersonnelRecord::Children_type& vl) {
+        for (PersonnelRecord::Children_type::const_iterator it = vl.begin(); it != vl.end(); ++it) {
+            stream << " {" << *it << "}";
+        };
+        return stream;
+    };
+
+    std::ostream& operator<<(std::ostream& stream, const PersonnelRecord_s& vl) {
+        stream << "{ ";
+        stream << "name :  " << vl.name();
+        stream << ", title :  " << "\"" << vl.title() << "\"";
+        stream << ", number :  " << vl.number();
+        stream << ", dateOfHire :  " << "\"" << vl.dateOfHire() << "\"";
+        stream << ", nameOfSpouse :  " << vl.nameOfSpouse();
+        if (vl.children()) stream << ", children :  " << *(vl.children());
+        stream << " }";
+        return stream;
+    };
+
+    std::ostream& operator<<(std::ostream& stream, const PersonnelRecord_s::Children_type& vl) {
+        for (PersonnelRecord_s::Children_type::const_iterator it = vl.begin(); it != vl.end(); ++it) {
+            stream << " {" << *it << "}";
+        };
+        return stream;
+    };
+
+    std::ostream& operator<<(std::ostream& stream, const ChildInformation& vl) {
+        stream << "{ ";
+        stream << "name :  " << vl.name();
+        stream << ", dateOfBirth :  " << "\"" << vl.dateOfBirth() << "\"";
+        if (vl.sex()) stream << ", sex :  " << *(vl.sex());
+        stream << " }";
+        return stream;
+    };
+
+    std::ostream& operator<<(std::ostream& stream, const ChildInformation_s& vl) {
+        stream << "{ ";
+        stream << "name :  " << vl.name();
+        stream << ", dateOfBirth :  " << "\"" << vl.dateOfBirth() << "\"";
+        stream << " }";
+        return stream;
+    };
+
+    std::ostream& operator<<(std::ostream& stream, const Name& vl) {
+        stream << "{ ";
+        stream << "givenName :  " << "\"" << vl.givenName() << "\"";
+        stream << ", initial :  " << "\"" << vl.initial() << "\"";
+        stream << ", familyName :  " << "\"" << vl.familyName() << "\"";
+        stream << " }";
+        return stream;
+    };
+
+    std::ostream& operator<<(std::ostream& stream, const Ax& vl) {
+        stream << "{ ";
+        stream << "a :  " << vl.a();
+        stream << ", b :  " << vl.b();
+        stream << ", c :  " << vl.c();
+        if (vl.g()) stream << ", g :  " << "\"" << *(vl.g()) << "\"";
+        if (vl.h()) stream << ", h :  " << *(vl.h());
+        if (vl.i()) stream << ", i :  " << "\"" << *(vl.i()) << "\"";
+        if (vl.j()) stream << ", j :  " << "\"" << *(vl.j()) << "\"";
+        stream << " }";
+        return stream;
+    };
+
+    std::ostream& operator<<(std::ostream& stream, const Ax::C_type& vl) {
+        stream << "{ ";
+        switch (vl.type()) {
+            case Ax::C_type_d: stream << "d :  " << *(vl.d());
+                break;
+            case Ax::C_type_e: stream << "e :  " << *(vl.e());
+                break;
+            case Ax::C_type_f: stream << "f :  " << "\"" << *(vl.f()) << "\"";
+                break;
+            default:
+            {
+                stream << " null ";
+            }
+        };
+        stream << " }";
+        return stream;
+    };
+
 
 }
 

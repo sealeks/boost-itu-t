@@ -17,30 +17,11 @@ namespace Test1 {
 
 
     //  helper name:   Date           type:  alphabet helper     //    Sc (  [ 8 ]   ...ext...)   //    c8C (  [ 0  ...   9 ]   
+    ITU_T_PER_STRINGCODER2(Date__shelper, boost::asn1::visible_string::value_type, 4, 4, ITU_T_ARRAY('\x30', '\x31', '\x32', '\x33', '\x34', '\x35', '\x36', '\x37', '\x38', '\x39'), true);
 
-    struct Date__shelper {
 
-        static void out(boost::asn1::x691::output_coder& stream, visible_string::value_type vl) {
-            stream.add_bitmap(bit_string(boost::asn1::octet_sequnce(1,
-                    boost::asn1::octet_sequnce::value_type((vl - '\x30') << 4)), 4));
-        }
-
-        static visible_string::value_type in(boost::asn1::x691::input_coder& stream) {
-            bit_string vl = stream.get_pop_bmp(4);
-            boost::asn1::octet_sequnce tmp = vl.as_octet_sequnce();
-            if (!tmp.empty()) {
-                tmp[0] >>= 4;
-                tmp[0] &= '\xF';
-                return (tmp[0] + '\x30');
-        }
-            return 0;
-        }
-
-        static std::size_t bits_count(bool aligned) {
-            return 4;
-        }
-
-    };
+    //  helper name:   NameString           type:  alphabet helper     //    Sc (  [ 1  ...   64 ]   ...ext...)   //    c8C (  [ -  ...   . ]   [ A  ...   Z ]   [ a  ...   z ]   
+    ITU_T_PER_STRINGCODER2(NameString__shelper, boost::asn1::visible_string::value_type, 8, 6, ITU_T_ARRAY('\x2D', '\x2E', '\x41', '\x42', '\x43', '\x44', '\x45', '\x46', '\x47', '\x48', '\x49', '\x4A', '\x4B', '\x4C', '\x4D', '\x4E', '\x4F', '\x50', '\x51', '\x52', '\x53', '\x54', '\x55', '\x56', '\x57', '\x58', '\x59', '\x5A', '\x61', '\x62', '\x63', '\x64', '\x65', '\x66', '\x67', '\x68', '\x69', '\x6A', '\x6B', '\x6C', '\x6D', '\x6E', '\x6F', '\x70', '\x71', '\x72', '\x73', '\x74', '\x75', '\x76', '\x77', '\x78', '\x79', '\x7A'), false);
 
     // set  PersonnelRecord
 
@@ -203,17 +184,17 @@ namespace Test1 {
 
         ITU_T_EXTENTION_WRITE_NULL;
 
-        ITU_T_BIND_PER(givenName_);
-        ITU_T_BIND_PER(initial_);
-        ITU_T_BIND_PER(familyName_);
+        ITU_T_BIND_EXSIZE_CONSTRAINT_EXT(visible_string, NameString__shelper, givenName_, 1, 64);
+        ITU_T_BIND_EXSIZE_SNGLCONSTRAINT(visible_string, NameString__shelper, initial_, 1);
+        ITU_T_BIND_EXSIZE_CONSTRAINT_EXT(visible_string, NameString__shelper, familyName_, 1, 64);
     }
 
     template<> void Name::serialize(boost::asn1::x691::input_coder& arch) {
 
         ITU_T_EXTENTION_READ;
-        ITU_T_BIND_PER(givenName_);
-        ITU_T_BIND_PER(initial_);
-        ITU_T_BIND_PER(familyName_);
+        ITU_T_BIND_EXSIZE_CONSTRAINT_EXT(visible_string, NameString__shelper, givenName_, 1, 64);
+        ITU_T_BIND_EXSIZE_SNGLCONSTRAINT(visible_string, NameString__shelper, initial_, 1);
+        ITU_T_BIND_EXSIZE_CONSTRAINT_EXT(visible_string, NameString__shelper, familyName_, 1, 64);
 
         if (ITU_T_EXTENTION) {
 
@@ -302,8 +283,7 @@ namespace Test1 {
 
         if (!ITU_T_EXTENTION) {
             ITU_T_BIND_PER(value<integer_type > (false, C_type_d));
-        }
-        else {
+        } else {
             switch (type()) {
                 case C_type_e:
                 {
@@ -334,8 +314,7 @@ namespace Test1 {
 
         if (!ITU_T_EXTENTION) {
             ITU_T_BIND_PER(value<integer_type > (true, C_type_d));
-        }
-        else {
+        } else {
 
             ITU_T_GET_NSN_SMALL_INDX;
 
