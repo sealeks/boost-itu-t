@@ -518,6 +518,7 @@ namespace boost {
                 while (!state_stack_.empty())
                     state_stack_.pop();
                 size_ = 0;
+                unuse_=0;
             }
 
             bool bind(octet_sequnce& vl);

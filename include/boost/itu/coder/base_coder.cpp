@@ -681,8 +681,9 @@ namespace boost {
 
         void base_input_coder::clear() {
             listbuffers_->clear();
-            rows_vect().clear(); //                                           ???
+            rows_vect().clear(); 
             size_ = 0;
+            unuse_=0;
         }
 
         bool base_input_coder::bind(const octet_sequnce& vl) {
