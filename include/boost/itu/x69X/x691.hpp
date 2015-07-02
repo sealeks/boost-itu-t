@@ -1210,6 +1210,14 @@ namespace boost {
             output_coder& operator<<(output_coder& stream, const utf8_string& vl);
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<utf8_string>& vl);
+            
+            output_coder& operator<<(output_coder& stream, const oid_iri_type& vl);
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<oid_iri_type>& vl);    
+            
+            output_coder& operator<<(output_coder& stream, const reloid_iri_type& vl);
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<reloid_iri_type>& vl);              
 
             output_coder& operator<<(output_coder& stream, const numeric_string& vl);
 
@@ -1874,6 +1882,14 @@ namespace boost {
             input_coder& operator>>(input_coder& stream, utf8_string& vl);
 
             input_coder& operator>>(input_coder& stream, size_constrainter<utf8_string>& vl);
+            
+            input_coder& operator>>(input_coder& stream, oid_iri_type& vl);
+
+            input_coder& operator>>(input_coder& stream, size_constrainter<oid_iri_type>& vl);            
+            
+            input_coder& operator>>(input_coder& stream, reloid_iri_type& vl);
+
+            input_coder& operator>>(input_coder& stream, size_constrainter<reloid_iri_type>& vl);                   
 
 
             input_coder& operator>>(input_coder& stream, numeric_string& vl);

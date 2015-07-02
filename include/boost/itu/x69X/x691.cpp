@@ -364,6 +364,22 @@ namespace boost {
             output_coder& operator<<(output_coder& stream, const size_constrainter<utf8_string>& vl) {
                 return stream << vl.value();
             }
+            
+            output_coder& operator<<(output_coder& stream, const oid_iri_type& vl) {
+                return octet_writer_undefsz(stream, octet_sequnce(vl.begin(), vl.end()));
+            }
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<oid_iri_type>& vl) {
+                return stream << vl.value();
+            }     
+            
+            output_coder& operator<<(output_coder& stream, const reloid_iri_type& vl) {
+                return octet_writer_undefsz(stream, octet_sequnce(vl.begin(), vl.end()));
+            }
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<reloid_iri_type>& vl) {
+                return stream << vl.value();
+            }             
 
             output_coder& operator<<(output_coder& stream, const numeric_string& vl) {
                 return stream << size_constrainter<numeric_string, numericstring_ec>(const_cast<numeric_string&> (vl)); // known-multi 1 oct
@@ -721,6 +737,25 @@ namespace boost {
             input_coder& operator>>(input_coder& stream, size_constrainter<utf8_string>& vl) {
                 return stream >> vl.value();
             }
+            
+            input_coder& operator>>(input_coder& stream, oid_iri_type& vl) {
+                octet_reader_undefsz(stream, vl);
+                return stream;
+            }
+
+            input_coder& operator>>(input_coder& stream, size_constrainter<oid_iri_type>& vl) {
+                return stream >> vl.value();
+            }
+            
+            input_coder& operator>>(input_coder& stream, reloid_iri_type& vl) {
+                octet_reader_undefsz(stream, vl);
+                return stream;
+            }
+
+            input_coder& operator>>(input_coder& stream, size_constrainter<reloid_iri_type>& vl) {
+                return stream >> vl.value();
+            }
+            
 
             input_coder& operator>>(input_coder& stream, numeric_string& vl) {
                 size_constrainter<numeric_string, numericstring_ec> tmp(vl);

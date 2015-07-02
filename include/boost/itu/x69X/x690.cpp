@@ -89,16 +89,26 @@ namespace boost {
                 }
             }
 
-            template<>            
+            template<>
             void x690_string_to_stream_cast(const octet_string& val, output_coder& stream, octet_type lentype) {
                 x690_string_to_stream_cast(val.as_base(), stream, lentype);
             }
-            
-            template<>            
+
+            template<>
             void x690_string_to_stream_cast(const utf8_string& val, output_coder& stream, octet_type lentype) {
                 x690_string_to_stream_cast(as_octet_sequnce(val), stream, lentype);
-            }            
-            
+            }
+
+            template<>
+            void x690_string_to_stream_cast(const oid_iri_type& val, output_coder& stream, octet_type lentype) {
+                x690_string_to_stream_cast(as_octet_sequnce(val), stream, lentype);
+            }
+
+            template<>
+            void x690_string_to_stream_cast(const reloid_iri_type& val, output_coder& stream, octet_type lentype) {
+                x690_string_to_stream_cast(as_octet_sequnce(val), stream, lentype);
+            }
+
             template<>
             void x690_string_to_stream_cast(const bmp_string& val, output_coder& stream, octet_type lentype) {
                 x690_string_to_stream_cast(as_octet_sequnce(val), stream, lentype);
@@ -262,6 +272,18 @@ namespace boost {
 
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<utf8_string>& vl) {
+                stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
+                return stream;
+            }
+
+            template<>
+            output_coder& operator<<(output_coder& stream, const implicit_value<oid_iri_type>& vl) {
+                stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
+                return stream;
+            }
+
+            template<>
+            output_coder& operator<<(output_coder& stream, const implicit_value<reloid_iri_type>& vl) {
                 stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
