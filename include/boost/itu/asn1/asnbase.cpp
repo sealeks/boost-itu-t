@@ -72,7 +72,7 @@ namespace boost {
         // null_type
 
         std::ostream& operator<<(std::ostream& stream, const null_type& vl) {
-            return stream << "NULL TYPE" << std::endl;
+            return stream << "NULL";
         }
 
 
@@ -95,7 +95,19 @@ namespace boost {
             return stream;
         }
 
+        // oid_iri_type
 
+        std::ostream& operator<<(std::ostream& stream, const oid_iri_type& vl) {
+            stream << std::string(vl.begin(), vl.end());
+            return stream;
+        }
+
+        // reloid_iri_type
+
+        std::ostream& operator<<(std::ostream& stream, const reloid_iri_type& vl) {
+            stream << std::string(vl.begin(), vl.end());
+            return stream;
+        }
 
         // universal_string  // bmp_string
 

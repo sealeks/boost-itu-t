@@ -150,6 +150,8 @@ namespace boost {\
     using boost::uint64_t;\
     using boost::asn1::sequence_of;\
     using boost::asn1::set_of;\
+    using boost::asn1::reloid_iri_type;\
+    using boost::asn1::oid_iri_type;\
     using boost::asn1::UNIVERSAL_CLASS;\
     using boost::asn1::APPLICATION_CLASS;\
     using boost::asn1::CONTEXT_CLASS;\
@@ -357,6 +359,7 @@ namespace boost {
         const id_type TYPE_EMBEDDED_PDV = 0xB;
         const id_type TYPE_UTF8STRING = 0xC;
         const id_type TYPE_RELATIVE_OID = 0xD;
+        const id_type TYPE_TIME = 0xE;
 
         const id_type TYPE_SEQ = 0x10;
         const id_type TYPE_SET = 0x11;
@@ -376,6 +379,12 @@ namespace boost {
 
         const id_type EXTENDED_TAGID = 31;
 
+        const id_type TYPE_DATE = 31;
+        const id_type TYPE_TIME_OF_DAY = 32;
+        const id_type TYPE_DATE_TIME = 33;
+        const id_type TYPE_DURATION = 34;
+        const id_type TYPE_IRI_OID = 35;
+        const id_type TYPE_IRI_RELOID = 36;
 
 
 
@@ -459,8 +468,8 @@ namespace boost {
         std::ostream& operator<<(std::ostream& stream, const enumerated& vl);
 
 
-        
-        
+
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // reloid_type
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -475,9 +484,40 @@ namespace boost {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // utf8_string
-        ////////////////////////////////////////////////////////////////////////////////////////////////////           
+        ////////////////////////////////////////////////////////////////////////////////////////////////////         
+
+        typedef utf8_base_string<TYPE_UTF8STRING> utf8_string;
 
         std::ostream& operator<<(std::ostream& stream, const utf8_string& vl);
+
+
+
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        // oid_iri_type
+        ////////////////////////////////////////////////////////////////////////////////////////////////////         
+
+        typedef utf8_base_string<TYPE_IRI_OID> oid_iri_type;
+
+        std::ostream& operator<<(std::ostream& stream, const oid_iri_type& vl);
+
+
+
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        // oid_iri_type
+        ////////////////////////////////////////////////////////////////////////////////////////////////////         
+
+        typedef utf8_base_string<TYPE_IRI_RELOID> reloid_iri_type;
+
+        std::ostream& operator<<(std::ostream& stream, const reloid_iri_type& vl);
+
+
+
 
 
 
@@ -562,21 +602,21 @@ namespace boost {
         inline std::ostream& operator<<(std::ostream& stream, const general_string& vl) {
             return stream << std::string(vl.begin(), vl.end());
         }
-        
+
         inline std::ostream& operator<<(std::ostream& stream, const object_descriptor& vl) {
             return stream << std::string(vl.begin(), vl.end());
-        }        
+        }
 
 
 
 #if __cplusplus >= 201103L
-        typedef smpl_wstring<std::u32string,TYPE_UNIVERSALSTRING > universal_string;
+        typedef smpl_wstring<std::u32string, TYPE_UNIVERSALSTRING > universal_string;
         typedef smpl_wstring<std::u16string, TYPE_BMPSTRING > bmp_string;
 #else
         typedef smpl_wstring<std::wstring, TYPE_UNIVERSALSTRING > universal_string;
-        typedef smpl_wstring<std::wstring,  TYPE_BMPSTRING > bmp_string;        
+        typedef smpl_wstring<std::wstring, TYPE_BMPSTRING > bmp_string;
 #endif
-        
+
         octet_sequnce as_octet_sequnce(const universal_string& vl);
 
         octet_sequnce as_octet_sequnce(const bmp_string& vl);
@@ -629,15 +669,15 @@ namespace boost {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // base_time
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
 
         typedef boost::posix_time::ptime base_time;
 
         inline base_time now_generator() {
             return boost::posix_time::microsec_clock::universal_time();
         }
-        
-        
+
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // utctime
@@ -651,18 +691,21 @@ namespace boost {
             }
 
             utctime(const boost::posix_time::ptime& vl);
-            
+
             utctime(const std::string::value_type* val);
-            
-            utctime(const std::string& val);    
-            
-            utctime& operator=(const std::string::value_type* val);           
-            
-            utctime& operator=(const std::string& val);           
-            
+
+            utctime(const std::string& val);
+
+            virtual ~utctime() {
+            }
+
+            utctime& operator=(const std::string::value_type* val);
+
+            utctime& operator=(const std::string& val);
+
             boost::posix_time::ptime value() const {
                 return val_;
-            }            
+            }
 
             void value(const boost::posix_time::ptime vl) {
                 val_ = vl;
@@ -686,9 +729,9 @@ namespace boost {
 
         utctime to_utctime(const visible_string& val);
 
-        utctime to_utctime(const std::string& val);        
+        utctime to_utctime(const std::string& val);
 
-        std::ostream& operator<<(std::ostream& stream, const utctime& vl);    
+        std::ostream& operator<<(std::ostream& stream, const utctime& vl);
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -703,18 +746,21 @@ namespace boost {
             }
 
             gentime(const boost::posix_time::ptime& vl);
-            
+
             gentime(const std::string::value_type* val);
-            
-            gentime(const std::string& val);    
-            
-            gentime& operator=(const std::string::value_type* val);           
-            
-            gentime& operator=(const std::string& val);           
-            
+
+            gentime(const std::string& val);
+
+            virtual ~gentime() {
+            }
+
+            gentime& operator=(const std::string::value_type* val);
+
+            gentime& operator=(const std::string& val);
+
             boost::posix_time::ptime value() const {
                 return val_;
-            }            
+            }
 
             void value(const boost::posix_time::ptime vl) {
                 val_ = vl;
@@ -738,10 +784,10 @@ namespace boost {
 
         gentime to_gentime(const visible_string& val);
 
-        gentime to_gentime(const std::string& val);        
-        
-        std::ostream& operator<<(std::ostream& stream, const gentime& vl);            
-        
+        gentime to_gentime(const std::string& val);
+
+        std::ostream& operator<<(std::ostream& stream, const gentime& vl);
+
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -884,6 +930,8 @@ namespace boost {
         ITU_T_INTERNAL_REGESTRATE(bmp_string, TYPE_BMPSTRING)
         ITU_T_INTERNAL_REGESTRATE(utctime, TYPE_UTCTIME)
         ITU_T_INTERNAL_REGESTRATE(gentime, TYPE_GENERALZEDTIME)
+        ITU_T_INTERNAL_REGESTRATE(oid_iri_type, TYPE_IRI_OID)
+        ITU_T_INTERNAL_REGESTRATE(reloid_iri_type, TYPE_IRI_RELOID)
 
 
 
@@ -1588,10 +1636,10 @@ namespace boost {
             template<typename T>
             ___asn__choice__base__(T* vl, int id) : val_(new choice_holder<T>(vl, id)) {
             }
-            
+
             template<typename T>
             ___asn__choice__base__(shared_ptr<T> vl, int id) : val_(new choice_holder<T>(vl, id)) {
-            }            
+            }
 
             virtual ~___asn__choice__base__() {
             }
