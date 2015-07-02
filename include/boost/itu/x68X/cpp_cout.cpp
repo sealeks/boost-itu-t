@@ -230,7 +230,8 @@ namespace x680 {
                 case t_DATE:
                 case t_DATE_TIME:
                 case t_DURATION: return "printable_string";
-                case t_OID_IRI: return "null_type";
+                case t_RELATIVE_OID_IRI: return "reloid_iri_type";
+                case t_OID_IRI: return "oid_iri_type";
                 case t_ANY: return "any_type";
                 case t_ClassField: return "any_type";
                 default:
@@ -458,8 +459,10 @@ namespace x680 {
             return "?utfstr?";
         }
 
-        std::string value_utfchars_str(value_atom_ptr self) {
-            if (self->get_value<quadruple_vector>()) {
+        std::string value_utfchars_str(value_atom_ptr self, bool cnsmpl) {
+            if (cnsmpl && self->as_cstr()) {
+                return "\"" + self->as_cstr()->value() +  "\"";
+            } else if (self->get_value<quadruple_vector>()) {
                 boost::shared_ptr<quadruple_vector> tmp = self->get_value<quadruple_vector>();
                 std::string rslt;
                 for (quadruple_vector::const_iterator it = tmp->begin(); it != tmp->end(); ++it)
@@ -473,8 +476,11 @@ namespace x680 {
         }
 
         std::string value_enum_str(type_atom_ptr tp, value_atom_ptr self) {
-            if (tp && self && (self->as_defined()) && (self->as_defined()->reff()))
-                return namelower(fromtype_str(tp)) + "_" + nameconvert(self->as_defined()->reff()->name());
+            value_atom_ptr self2= value_skip_defined(self);
+            if (self2 && self2->as_number())
+                return to_string(self2->as_number()->value());
+            /*if (tp && self && (self->as_defined()) && (self->as_defined()->reff()))
+                return namelower(fromtype_str(tp)) + "_" + nameconvert(self->as_defined()->reff()->name());*/
             return "?enum?";
         }
 
@@ -541,9 +547,9 @@ namespace x680 {
                 std::string rslt;
                 for (value_vct::const_iterator it = self->as_list()->values().begin(); it != self->as_list()->values().end(); ++it) {
                     if (it != self->as_list()->values().begin())
-                        rslt += " |";
+                        rslt += " | ";
                     if (value_atom_ptr itel = value_skip_defined((*it)))
-                        rslt += (itel->as_number() ? ("bitsting(true, "+to_string(itel->as_number()->value())+")") : " ?");
+                        rslt += (itel->as_number() ? ("bit_string(true, "+to_string(itel->as_number()->value())+")") : " ?");
                     else
                         rslt += " ?";
                 }
@@ -585,13 +591,13 @@ namespace x680 {
                 case t_UTCTime:
                 case t_GeneralizedTime:                    
                 case t_GeneralString:
-                case t_ObjectDescriptor:
-                case t_RELATIVE_OID_IRI:
-                case t_OID_IRI:                        
+                case t_ObjectDescriptor:                     
                 case t_IA5String: return value_chars8_str(vl, tp->root_builtin() == t_IA5String);
                 case t_BMPString:
-                case t_UniversalString:            
-                case t_UTF8String: return value_utfchars_str(vl);
+                case t_UniversalString: return value_utfchars_str(vl);          
+                case t_RELATIVE_OID_IRI:
+                case t_OID_IRI:                       
+                case t_UTF8String: return value_utfchars_str(vl, true);
                 default:
                 {
                 }

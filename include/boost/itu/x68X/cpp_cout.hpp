@@ -211,7 +211,7 @@ namespace x680 {
         std::string value_chars8_str(value_atom_ptr self, bool cantuple);
         std::string value_chars16_str(value_atom_ptr self);
         std::string value_utfchar_str(const quadruple& self);
-        std::string value_utfchars_str(value_atom_ptr self);
+        std::string value_utfchars_str(value_atom_ptr self, bool cnsmpl = false);
         std::string value_enum_str(type_atom_ptr tp, value_atom_ptr self);
         bool value_oid_str(value_atom_ptr self, std::vector<std::string>& rslt);
         bool value_octets_str(value_atom_ptr self, std::vector<std::string>& rslt);
