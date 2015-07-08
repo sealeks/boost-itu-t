@@ -4,6 +4,7 @@
 //  See http://www.boost.org/LICENSE_1_0.txt
 
 #include <boost/itu/x68X/setters.hpp>
+#include <boost/algorithm/string.hpp>
 
 namespace x680 {
     namespace syntactic {
@@ -202,7 +203,7 @@ namespace x680 {
 
         void value_setcstring(value_element& holder, const std::string& val) {
             holder.type = v_cstring;
-            holder.value = val;
+            holder.value = boost::algorithm::replace_all_copy(val,  "\n\r\t\f", "");
         }
 
         void value_setvalues(value_element& holder, const value_element_vector& values, const value_type& tp) {

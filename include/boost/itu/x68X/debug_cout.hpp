@@ -85,7 +85,8 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, contentconstraint_atom_ptr self);    
     std::ostream& operator<<(std::ostream& stream,relationconstraint_atom_ptr self);  
     std::ostream& operator<<(std::ostream& stream,tableconstraint_atom_ptr self);    
-    std::ostream& operator<<(std::ostream& stream, tvosoconstraint_atom_ptr self);    
+    std::ostream& operator<<(std::ostream& stream, tvosoconstraint_atom_ptr self);       
+    std::ostream& operator<<(std::ostream& stream, stringconstraint_atom_ptr self); 
     // class
     std::ostream& operator<<(std::ostream& stream, classassignment_entity_ptr self);
     std::ostream& operator<<(std::ostream& stream, class_atom_ptr self);

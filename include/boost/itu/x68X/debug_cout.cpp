@@ -1086,6 +1086,10 @@ namespace x680 {
         }
         return stream << "(" << self->tp() << ")";
     }
+  
+    std::ostream& operator<<(std::ostream& stream, stringconstraint_atom_ptr self) {
+        return stream << "\"" << self->property() << "\"";
+    }
 
     // class
 
