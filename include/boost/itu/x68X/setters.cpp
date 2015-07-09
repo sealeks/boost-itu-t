@@ -203,7 +203,12 @@ namespace x680 {
 
         void value_setcstring(value_element& holder, const std::string& val) {
             holder.type = v_cstring;
-            holder.value = boost::algorithm::replace_all_copy(val,  "\n\r\t\f", "");
+            std::string vl=val;
+            boost::algorithm::replace_all(vl,  "\n", "");
+            boost::algorithm::replace_all(vl,  "\r", "");      
+            boost::algorithm::replace_all(vl,  "\t", "");
+            boost::algorithm::replace_all(vl,  "\f", "");                 
+            holder.value = vl;
         }
 
         void value_setvalues(value_element& holder, const value_element_vector& values, const value_type& tp) {

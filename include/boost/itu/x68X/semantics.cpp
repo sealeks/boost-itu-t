@@ -557,7 +557,7 @@ namespace x680 {
                 case cns_SizeConstraint:
                 case cns_SingleTypeConstraint: return boost::make_shared< complexconstraint_atom>(scope, ent.tp,
                             compile_constraints(scope, ent.constraint));
-                case cns_PropertySettings: return boost::make_shared< stringconstraint_atom>(scope, ent.tp, ent.identifier);
+                case cns_PropertySettings: return boost::make_shared< stringconstraint_atom>(scope, ent.tp, ent.value.value);
                 case cns_MultipleTypeConstraints: return compile_multipletypeconstraint(scope, ent);
                 case cns_NamedConstraint: return compile_namedconstraint(scope, ent);
                 case cns_ValueSetFromObjects: return boost::make_shared< fromdefined_objects_constraint_atom>(scope, ent.fieldreference,
