@@ -1088,7 +1088,18 @@ namespace x680 {
     }
   
     std::ostream& operator<<(std::ostream& stream, stringconstraint_atom_ptr self) {
-        return stream << "\"" << self->property() << "\"";
+        //return stream << "\"" << self->property() << "\"";
+        if (!self->propertys().empty()){
+            for ( stringconstraint_atom::proprtymap_type::const_iterator it =self->propertys().begin(); 
+                    it != self->propertys().end(); ++it) {
+                if (it!=self->propertys().begin())
+                     stream << ";";
+                stream << it->first << "="  << it->second;
+                
+            }            
+            return stream;
+        }
+        return stream << "(null)" << self->property();
     }
 
     // class

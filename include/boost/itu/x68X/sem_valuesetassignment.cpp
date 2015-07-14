@@ -348,6 +348,34 @@ namespace x680 {
         if (type_)
             type_->resolve(holder);
     }
+    
+    /////////////////////////////////////////////////////////////////////////   
+    // stringconstraint_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    
+    void stringconstraint_atom::resolve(basic_atom_ptr holder) {
+        boost::algorithm::trim_right(property_);
+        boost::algorithm::trim_left(property_);
+        typedef std::vector< std::string > split_vector_type;
+        if (!property_.empty()) {       
+            split_vector_type propertysvct;
+            boost::algorithm::split(propertysvct, property_, boost::algorithm::is_any_of(" \n\r"),
+                    boost::algorithm::token_compress_on);
+            if (!propertysvct.empty()) {               
+                for (split_vector_type::const_iterator it = propertysvct.begin(); it != propertysvct.end(); ++it) {
+                    std::string prop = boost::algorithm::trim_copy(*it);
+                    split_vector_type provct;
+                    boost::algorithm::split(provct, prop, boost::algorithm::is_any_of("="),
+                            boost::algorithm::token_compress_on);
+                    if (provct.size() == 2)
+                        propertys_[provct[0]]=provct[1];
+                }
+            }
+        }
+        if (!property_.empty() && propertys_.empty())
+            propertys_["?"]="";
+    }    
 
     /////////////////////////////////////////////////////////////////////////   
     // rangeconstraint_atom

@@ -423,6 +423,9 @@ namespace x680 {
     class stringconstraint_atom : public constraint_atom {
 
     public:
+        
+        
+        typedef std::map< std::string ,std::string> proprtymap_type;        
 
         stringconstraint_atom(basic_entity_ptr scp, constraint_type tpc, const std::string& prop) :
         constraint_atom(scp, tpc), property_(prop) {
@@ -431,10 +434,17 @@ namespace x680 {
         std::string property() {
             return property_;
         }
+        
+        const proprtymap_type& propertys() const {
+            return propertys_;
+        }        
+        
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());        
 
     private:
 
         std::string property_;
+        proprtymap_type propertys_;
 
 
     };

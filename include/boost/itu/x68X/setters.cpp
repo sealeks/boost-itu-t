@@ -204,10 +204,10 @@ namespace x680 {
         void value_setcstring(value_element& holder, const std::string& val) {
             holder.type = v_cstring;
             std::string vl=val;
-            boost::algorithm::replace_all(vl,  "\n", "");
-            boost::algorithm::replace_all(vl,  "\r", "");      
-            boost::algorithm::replace_all(vl,  "\t", "");
-            boost::algorithm::replace_all(vl,  "\f", "");                 
+            boost::algorithm::replace_all(vl,  "\n", " ");
+            boost::algorithm::replace_all(vl,  "\r", " ");      
+            boost::algorithm::replace_all(vl,  "\t", " ");
+            boost::algorithm::replace_all(vl,  "\f", " ");                 
             holder.value = vl;
         }
 
