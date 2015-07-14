@@ -18,6 +18,7 @@
                 <sourceRootElem>../../../include/boost/itu/utils</sourceRootElem>
                 <sourceRootElem>../../../include/boost/itu/x22X</sourceRootElem>
                 <sourceRootElem>../../../include/boost/itu/x69X</sourceRootElem>
+                <sourceRootElem>../../../include/boost/itu/time</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>
