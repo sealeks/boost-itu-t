@@ -1145,43 +1145,43 @@ namespace boost {
         end_(arg__end) {
         };
 
-        /**********START_END_DATE_TIME_INTERVAL_ENCODING::Start_type::Start_type() : date_(), time_() {
+        MIXED_ENCODING::Iterval_SE_Date_Time_type::Start_type::Start_type() : date_(), time_() {
         };
 
-        START_END_DATE_TIME_INTERVAL_ENCODING::Start_type::Start_type(const DATE_TYPE& arg__date,
+        MIXED_ENCODING::Iterval_SE_Date_Time_type::Start_type::Start_type(const DATE_TYPE& arg__date,
                 const TIME_TYPE& arg__time) :
         date_(arg__date),
         time_(arg__time) {
         };
 
-        START_END_DATE_TIME_INTERVAL_ENCODING::Start_type::Start_type(ITU_T_SHARED(DATE_TYPE) arg__date,
+        MIXED_ENCODING::Iterval_SE_Date_Time_type::Start_type::Start_type(ITU_T_SHARED(DATE_TYPE) arg__date,
                 ITU_T_SHARED(TIME_TYPE) arg__time) :
         date_(arg__date),
         time_(arg__time) {
         };
 
 
-        ITU_T_HOLDERH_DEFN(START_END_DATE_TIME_INTERVAL_ENCODING::Start_type::date, date, DATE_TYPE);
-        ITU_T_HOLDERH_DEFN(START_END_DATE_TIME_INTERVAL_ENCODING::Start_type::time, time, TIME_TYPE);
+        ITU_T_HOLDERH_DEFN(MIXED_ENCODING::Iterval_SE_Date_Time_type::Start_type::date, date, DATE_TYPE);
+        ITU_T_HOLDERH_DEFN(MIXED_ENCODING::Iterval_SE_Date_Time_type::Start_type::time, time, TIME_TYPE);
 
-        START_END_DATE_TIME_INTERVAL_ENCODING::End_type::End_type() : date_(), time_() {
+        MIXED_ENCODING::Iterval_SE_Date_Time_type::End_type::End_type() : date_(), time_() {
         };
 
-        START_END_DATE_TIME_INTERVAL_ENCODING::End_type::End_type(const DATE_TYPE& arg__date,
+        MIXED_ENCODING::Iterval_SE_Date_Time_type::End_type::End_type(const DATE_TYPE& arg__date,
                 const TIME_TYPE& arg__time) :
         date_(arg__date),
         time_(arg__time) {
         };
 
-        START_END_DATE_TIME_INTERVAL_ENCODING::End_type::End_type(ITU_T_SHARED(DATE_TYPE) arg__date,
+        MIXED_ENCODING::Iterval_SE_Date_Time_type::End_type::End_type(ITU_T_SHARED(DATE_TYPE) arg__date,
                 ITU_T_SHARED(TIME_TYPE) arg__time) :
         date_(arg__date),
         time_(arg__time) {
         };
 
 
-        ITU_T_HOLDERH_DEFN(START_END_DATE_TIME_INTERVAL_ENCODING::End_type::date, date, DATE_TYPE);
-        ITU_T_HOLDERH_DEFN(START_END_DATE_TIME_INTERVAL_ENCODING::End_type::time, time, TIME_TYPE);*/
+        ITU_T_HOLDERH_DEFN(MIXED_ENCODING::Iterval_SE_Date_Time_type::End_type::date, date, DATE_TYPE);
+        ITU_T_HOLDERH_DEFN(MIXED_ENCODING::Iterval_SE_Date_Time_type::End_type::time, time, TIME_TYPE);
 
 
         ITU_T_HOLDERH_DEFN(MIXED_ENCODING::Iterval_SE_Date_Time_type::start, start, MIXED_ENCODING::Iterval_SE_Date_Time_type::Start_type);
@@ -1240,24 +1240,24 @@ namespace boost {
         duration_(arg__duration) {
         };
 
-        /*START_DATE_TIME_DURATION_INTERVAL_ENCODING::Start_type::Start_type() : date_(), time_() {
+        MIXED_ENCODING::Iterval_SD_Date_Time_type::Start_type::Start_type() : date_(), time_() {
         };
 
-        START_DATE_TIME_DURATION_INTERVAL_ENCODING::Start_type::Start_type(const DATE_TYPE& arg__date,
+        MIXED_ENCODING::Iterval_SD_Date_Time_type::Start_type::Start_type(const DATE_TYPE& arg__date,
                 const TIME_TYPE& arg__time) :
         date_(arg__date),
         time_(arg__time) {
         };
 
-        START_DATE_TIME_DURATION_INTERVAL_ENCODING::Start_type::Start_type(ITU_T_SHARED(DATE_TYPE) arg__date,
+        MIXED_ENCODING::Iterval_SD_Date_Time_type::Start_type::Start_type(ITU_T_SHARED(DATE_TYPE) arg__date,
                 ITU_T_SHARED(TIME_TYPE) arg__time) :
         date_(arg__date),
         time_(arg__time) {
         };
 
 
-        ITU_T_HOLDERH_DEFN(START_DATE_TIME_DURATION_INTERVAL_ENCODING::Start_type::date, date, DATE_TYPE);
-        ITU_T_HOLDERH_DEFN(START_DATE_TIME_DURATION_INTERVAL_ENCODING::Start_type::time, time, TIME_TYPE);*/
+        ITU_T_HOLDERH_DEFN(MIXED_ENCODING::Iterval_SD_Date_Time_type::Start_type::date, date, DATE_TYPE);
+        ITU_T_HOLDERH_DEFN(MIXED_ENCODING::Iterval_SD_Date_Time_type::Start_type::time, time, TIME_TYPE);
 
 
         ITU_T_HOLDERH_DEFN(MIXED_ENCODING::Iterval_SD_Date_Time_type::start, start, MIXED_ENCODING::Iterval_SD_Date_Time_type::Start_type);
@@ -1316,24 +1316,24 @@ namespace boost {
         end_(arg__end) {
         };
 
-        /*DURATION_END_DATE_TIME_INTERVAL_ENCODING::End_type::End_type() : date_(), time_() {
+        MIXED_ENCODING::Iterval_DE_Date_Time_type::End_type::End_type() : date_(), time_() {
         };
 
-        DURATION_END_DATE_TIME_INTERVAL_ENCODING::End_type::End_type(const DATE_TYPE& arg__date,
+        MIXED_ENCODING::Iterval_DE_Date_Time_type::End_type::End_type(const DATE_TYPE& arg__date,
                 const TIME_TYPE& arg__time) :
         date_(arg__date),
         time_(arg__time) {
         };
 
-        DURATION_END_DATE_TIME_INTERVAL_ENCODING::End_type::End_type(ITU_T_SHARED(DATE_TYPE) arg__date,
+        MIXED_ENCODING::Iterval_DE_Date_Time_type::End_type::End_type(ITU_T_SHARED(DATE_TYPE) arg__date,
                 ITU_T_SHARED(TIME_TYPE) arg__time) :
         date_(arg__date),
         time_(arg__time) {
         };
 
 
-        ITU_T_HOLDERH_DEFN(DURATION_END_DATE_TIME_INTERVAL_ENCODING::End_type::date, date, DATE_TYPE);
-        ITU_T_HOLDERH_DEFN(DURATION_END_DATE_TIME_INTERVAL_ENCODING::End_type::time, time, TIME_TYPE);*/
+        ITU_T_HOLDERH_DEFN(MIXED_ENCODING::Iterval_DE_Date_Time_type::End_type::date, date, DATE_TYPE);
+        ITU_T_HOLDERH_DEFN(MIXED_ENCODING::Iterval_DE_Date_Time_type::End_type::time, time, TIME_TYPE);
 
 
         ITU_T_HOLDERH_DEFN(MIXED_ENCODING::Iterval_DE_Date_Time_type::duration, duration, DURATION_INTERVAL_ENCODING);
@@ -1400,43 +1400,43 @@ namespace boost {
         end_(arg__end) {
         };
 
-        /*REC_START_END_DATE_TIME_INTERVAL_ENCODING::Start_type::Start_type() : date_(), time_() {
+        MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::Start_type::Start_type() : date_(), time_() {
         };
 
-        REC_START_END_DATE_TIME_INTERVAL_ENCODING::Start_type::Start_type(const DATE_TYPE& arg__date,
+        MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::Start_type::Start_type(const DATE_TYPE& arg__date,
                 const TIME_TYPE& arg__time) :
         date_(arg__date),
         time_(arg__time) {
         };
 
-        REC_START_END_DATE_TIME_INTERVAL_ENCODING::Start_type::Start_type(ITU_T_SHARED(DATE_TYPE) arg__date,
+        MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::Start_type::Start_type(ITU_T_SHARED(DATE_TYPE) arg__date,
                 ITU_T_SHARED(TIME_TYPE) arg__time) :
         date_(arg__date),
         time_(arg__time) {
         };
 
 
-        ITU_T_HOLDERH_DEFN(REC_START_END_DATE_TIME_INTERVAL_ENCODING::Start_type::date, date, DATE_TYPE);
-        ITU_T_HOLDERH_DEFN(REC_START_END_DATE_TIME_INTERVAL_ENCODING::Start_type::time, time, TIME_TYPE);
+        ITU_T_HOLDERH_DEFN(MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::Start_type::date, date, DATE_TYPE);
+        ITU_T_HOLDERH_DEFN(MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::Start_type::time, time, TIME_TYPE);
 
-        REC_START_END_DATE_TIME_INTERVAL_ENCODING::End_type::End_type() : date_(), time_() {
+        MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::End_type::End_type() : date_(), time_() {
         };
 
-        REC_START_END_DATE_TIME_INTERVAL_ENCODING::End_type::End_type(const DATE_TYPE& arg__date,
+        MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::End_type::End_type(const DATE_TYPE& arg__date,
                 const TIME_TYPE& arg__time) :
         date_(arg__date),
         time_(arg__time) {
         };
 
-        REC_START_END_DATE_TIME_INTERVAL_ENCODING::End_type::End_type(ITU_T_SHARED(DATE_TYPE) arg__date,
+        MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::End_type::End_type(ITU_T_SHARED(DATE_TYPE) arg__date,
                 ITU_T_SHARED(TIME_TYPE) arg__time) :
         date_(arg__date),
         time_(arg__time) {
         };
 
 
-        ITU_T_HOLDERH_DEFN(REC_START_END_DATE_TIME_INTERVAL_ENCODING::End_type::date, date, DATE_TYPE);
-        ITU_T_HOLDERH_DEFN(REC_START_END_DATE_TIME_INTERVAL_ENCODING::End_type::time, time, TIME_TYPE);*/
+        ITU_T_HOLDERH_DEFN(MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::End_type::date, date, DATE_TYPE);
+        ITU_T_HOLDERH_DEFN(MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::End_type::time, time, TIME_TYPE);
 
 
         ITU_T_OPTIONAL_DEFN(MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::recurrence, recurrence, integer_type);
@@ -1504,24 +1504,24 @@ namespace boost {
         duration_(arg__duration) {
         };
 
-        /*REC_START_DATE_TIME_DURATION_INTERVAL_ENCODING::Start_type::Start_type() : date_(), time_() {
+        MIXED_ENCODING::Rec_Interval_SD_Date_Time_type::Start_type::Start_type() : date_(), time_() {
         };
 
-        REC_START_DATE_TIME_DURATION_INTERVAL_ENCODING::Start_type::Start_type(const DATE_TYPE& arg__date,
+        MIXED_ENCODING::Rec_Interval_SD_Date_Time_type::Start_type::Start_type(const DATE_TYPE& arg__date,
                 const TIME_TYPE& arg__time) :
         date_(arg__date),
         time_(arg__time) {
         };
 
-        REC_START_DATE_TIME_DURATION_INTERVAL_ENCODING::Start_type::Start_type(ITU_T_SHARED(DATE_TYPE) arg__date,
+        MIXED_ENCODING::Rec_Interval_SD_Date_Time_type::Start_type::Start_type(ITU_T_SHARED(DATE_TYPE) arg__date,
                 ITU_T_SHARED(TIME_TYPE) arg__time) :
         date_(arg__date),
         time_(arg__time) {
         };
 
 
-        ITU_T_HOLDERH_DEFN(REC_START_DATE_TIME_DURATION_INTERVAL_ENCODING::Start_type::date, date, DATE_TYPE);
-        ITU_T_HOLDERH_DEFN(REC_START_DATE_TIME_DURATION_INTERVAL_ENCODING::Start_type::time, time, TIME_TYPE);*/
+        ITU_T_HOLDERH_DEFN(MIXED_ENCODING::Rec_Interval_SD_Date_Time_type::Start_type::date, date, DATE_TYPE);
+        ITU_T_HOLDERH_DEFN(MIXED_ENCODING::Rec_Interval_SD_Date_Time_type::Start_type::time, time, TIME_TYPE);
 
 
         ITU_T_OPTIONAL_DEFN(MIXED_ENCODING::Rec_Interval_SD_Date_Time_type::recurrence, recurrence, integer_type);
@@ -1589,24 +1589,24 @@ namespace boost {
         end_(arg__end) {
         };
 
-        /*REC_DURATION_END_DATE_TIME_INTERVAL_ENCODING::End_type::End_type() : date_(), time_() {
+        MIXED_ENCODING::Rec_Interval_DE_Date_Time_type::End_type::End_type() : date_(), time_() {
         };
 
-        REC_DURATION_END_DATE_TIME_INTERVAL_ENCODING::End_type::End_type(const DATE_TYPE& arg__date,
+        MIXED_ENCODING::Rec_Interval_DE_Date_Time_type::End_type::End_type(const DATE_TYPE& arg__date,
                 const TIME_TYPE& arg__time) :
         date_(arg__date),
         time_(arg__time) {
         };
 
-        REC_DURATION_END_DATE_TIME_INTERVAL_ENCODING::End_type::End_type(ITU_T_SHARED(DATE_TYPE) arg__date,
+        MIXED_ENCODING::Rec_Interval_DE_Date_Time_type::End_type::End_type(ITU_T_SHARED(DATE_TYPE) arg__date,
                 ITU_T_SHARED(TIME_TYPE) arg__time) :
         date_(arg__date),
         time_(arg__time) {
         };
 
 
-        ITU_T_HOLDERH_DEFN(REC_DURATION_END_DATE_TIME_INTERVAL_ENCODING::End_type::date, date, DATE_TYPE);
-        ITU_T_HOLDERH_DEFN(REC_DURATION_END_DATE_TIME_INTERVAL_ENCODING::End_type::time, time, TIME_TYPE);*/
+        ITU_T_HOLDERH_DEFN(MIXED_ENCODING::Rec_Interval_DE_Date_Time_type::End_type::date, date, DATE_TYPE);
+        ITU_T_HOLDERH_DEFN(MIXED_ENCODING::Rec_Interval_DE_Date_Time_type::End_type::time, time, TIME_TYPE);
 
 
         ITU_T_OPTIONAL_DEFN(MIXED_ENCODING::Rec_Interval_DE_Date_Time_type::recurrence, recurrence, integer_type);
@@ -2292,7 +2292,7 @@ namespace boost {
             return stream;
         };
 
-        /*std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SE_Date_Time_type& vl) {
+        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SE_Date_Time_type& vl) {
             stream << "{ ";
             stream << "start :  " << vl.start();
             stream << ", end :  " << vl.end();
@@ -2300,7 +2300,7 @@ namespace boost {
             return stream;
         };
 
-        std::ostream& operator<<(std::ostream& stream, const START_END_DATE_TIME_INTERVAL_ENCODING::Start_type& vl) {
+        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SE_Date_Time_type::Start_type& vl) {
             stream << "{ ";
             stream << "date :  " << vl.date();
             stream << ", time :  " << vl.time();
@@ -2308,13 +2308,13 @@ namespace boost {
             return stream;
         };
 
-        std::ostream& operator<<(std::ostream& stream, const START_END_DATE_TIME_INTERVAL_ENCODING::End_type& vl) {
+        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SE_Date_Time_type::End_type& vl) {
             stream << "{ ";
             stream << "date :  " << vl.date();
             stream << ", time :  " << vl.time();
             stream << " }";
             return stream;
-        };*/
+        };
 
         std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SD_Date_type& vl) {
             stream << "{ ";
@@ -2332,7 +2332,7 @@ namespace boost {
             return stream;
         };
 
-        /*std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SD_Date_Time_type& vl) {
+        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SD_Date_Time_type& vl) {
             stream << "{ ";
             stream << "start :  " << vl.start();
             stream << ", duration :  " << vl.duration();
@@ -2340,13 +2340,13 @@ namespace boost {
             return stream;
         };
 
-        std::ostream& operator<<(std::ostream& stream, const START_DATE_TIME_DURATION_INTERVAL_ENCODING::Start_type& vl) {
+        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SD_Date_Time_type::Start_type& vl) {
             stream << "{ ";
             stream << "date :  " << vl.date();
             stream << ", time :  " << vl.time();
             stream << " }";
             return stream;
-        };*/
+        };
 
         std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_DE_Date_type& vl) {
             stream << "{ ";
@@ -2364,7 +2364,7 @@ namespace boost {
             return stream;
         };
 
-        /*std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_DE_Date_Time_type& vl) {
+        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_DE_Date_Time_type& vl) {
             stream << "{ ";
             stream << "duration :  " << vl.duration();
             stream << ", end :  " << vl.end();
@@ -2372,13 +2372,13 @@ namespace boost {
             return stream;
         };
 
-        std::ostream& operator<<(std::ostream& stream, const DURATION_END_DATE_TIME_INTERVAL_ENCODING::End_type& vl) {
+        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_DE_Date_Time_type::End_type& vl) {
             stream << "{ ";
             stream << "date :  " << vl.date();
             stream << ", time :  " << vl.time();
             stream << " }";
             return stream;
-        };*/
+        };
 
         std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SE_Date_type& vl) {
             stream << "{ ";
@@ -2398,7 +2398,7 @@ namespace boost {
             return stream;
         };
 
-        /*std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SE_Date_Time_type& vl) {
+        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SE_Date_Time_type& vl) {
             stream << "{ ";
             if (vl.recurrence()) stream << "recurrence :  " << *(vl.recurrence());
             stream << ", start :  " << vl.start();
@@ -2407,7 +2407,7 @@ namespace boost {
             return stream;
         };
 
-        std::ostream& operator<<(std::ostream& stream, const REC_START_END_DATE_TIME_INTERVAL_ENCODING::Start_type& vl) {
+        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::Start_type& vl) {
             stream << "{ ";
             stream << "date :  " << vl.date();
             stream << ", time :  " << vl.time();
@@ -2415,13 +2415,13 @@ namespace boost {
             return stream;
         };
 
-        std::ostream& operator<<(std::ostream& stream, const REC_START_END_DATE_TIME_INTERVAL_ENCODING::End_type& vl) {
+        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::End_type& vl) {
             stream << "{ ";
             stream << "date :  " << vl.date();
             stream << ", time :  " << vl.time();
             stream << " }";
             return stream;
-        };*/
+        };
 
         std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SD_Date_type& vl) {
             stream << "{ ";
@@ -2441,7 +2441,7 @@ namespace boost {
             return stream;
         };
 
-        /*std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SD_Date_Time_type& vl) {
+        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SD_Date_Time_type& vl) {
             stream << "{ ";
             if (vl.recurrence()) stream << "recurrence :  " << *(vl.recurrence());
             stream << ", start :  " << vl.start();
@@ -2450,13 +2450,13 @@ namespace boost {
             return stream;
         };
 
-        std::ostream& operator<<(std::ostream& stream, const REC_START_DATE_TIME_DURATION_INTERVAL_ENCODING::Start_type& vl) {
+        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SD_Date_Time_type::Start_type& vl) {
             stream << "{ ";
             stream << "date :  " << vl.date();
             stream << ", time :  " << vl.time();
             stream << " }";
             return stream;
-        };*/
+        };
 
         std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_DE_Date_type& vl) {
             stream << "{ ";
@@ -2476,7 +2476,7 @@ namespace boost {
             return stream;
         };
 
-        /*std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_DE_Date_Time_type& vl) {
+        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_DE_Date_Time_type& vl) {
             stream << "{ ";
             if (vl.recurrence()) stream << "recurrence :  " << *(vl.recurrence());
             stream << ", duration :  " << vl.duration();
@@ -2485,13 +2485,13 @@ namespace boost {
             return stream;
         };
 
-        std::ostream& operator<<(std::ostream& stream, const REC_DURATION_END_DATE_TIME_INTERVAL_ENCODING::End_type& vl) {
+        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_DE_Date_Time_type::End_type& vl) {
             stream << "{ ";
             stream << "date :  " << vl.date();
             stream << ", time :  " << vl.time();
             stream << " }";
             return stream;
-        };*/
+        };
 
         std::ostream& operator<<(std::ostream& stream, const DATE_TYPE& vl) {
             stream << "{ ";
