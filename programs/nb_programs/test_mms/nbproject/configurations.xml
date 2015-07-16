@@ -177,6 +177,7 @@
             <linkerLibLibItem>boost_thread</linkerLibLibItem>
             <linkerLibLibItem>boost_chrono</linkerLibLibItem>
             <linkerLibLibItem>rt</linkerLibLibItem>
+            <linkerLibLibItem>pthread</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>

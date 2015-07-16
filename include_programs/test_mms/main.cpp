@@ -189,7 +189,7 @@ private:
                     boost::shared_ptr<getnamelist_operation_type > (new getnamelist_operation_type(&socket_));
 
             operation->request_new();
-            operation->request()->objectClass().basicObjectClass(new int( MMS::ObjectClass::basicObjectClass_domain));
+            operation->request()->objectClass().basicObjectClass(new uint8_t( MMS::ObjectClass::basicObjectClass_domain));
             operation->request()->objectScope().vmdSpecific__new();
 
             socket_.async_confirm_request(operation,
@@ -203,7 +203,7 @@ private:
     void handle_domainlist_response(boost::shared_ptr<getnamelist_operation_type> rslt) {
         if (rslt->response()) {
 
-            domain = rslt->response()->listOfIdentifier().operator [](0);
+            domain = rslt->response()->listOfIdentifier().operator [](0).c_str();
             
            typedef MMS::GetNameList_Response::ListOfIdentifier_type domain_list_type;
            
@@ -216,7 +216,7 @@ private:
                         boost::shared_ptr<getnamelist_operation_type > (new getnamelist_operation_type(&socket_));
 
                 operationnext->request_new();
-                operationnext->request()->objectClass().basicObjectClass(new int( MMS::ObjectClass::basicObjectClass_domain));
+                operationnext->request()->objectClass().basicObjectClass(new uint8_t( MMS::ObjectClass::basicObjectClass_domain));
                 operationnext->request()->objectScope().vmdSpecific__new();
                 operationnext->request()->continueAfter(rslt->response()->listOfIdentifier().back());
 
@@ -234,8 +234,8 @@ private:
                     boost::shared_ptr<getnamelist_operation_type > (new getnamelist_operation_type(&socket_));
 
             operation->request_new();
-            operation->request()->objectClass().basicObjectClass(new int(MMS::ObjectClass::basicObjectClass_namedVariable));
-            operation->request()->objectScope().domainSpecific__new(new MMS::Identifier(domain));
+            operation->request()->objectClass().basicObjectClass(new uint8_t(MMS::ObjectClass::basicObjectClass_namedVariable));
+            operation->request()->objectScope().domainSpecific__new(new MMS::Identifier(domain.c_str()));
 
             socket_.async_confirm_request(operation,
                     boost::bind(&client::handle_variablelist_response, this, operation));
@@ -252,9 +252,9 @@ private:
 
             typedef MMS::GetNameList_Response::ListOfIdentifier_type namedlist_type;
             for (namedlist_type::iterator it = rslt->response()->listOfIdentifier().begin(); it != rslt->response()->listOfIdentifier().end(); ++it) {
-                fulllist.push_back((*it));
+                fulllist.push_back((*it).c_str());
                 TestModel.insert_in(*(rslt->request()->objectScope().domainSpecific()),*it);
-                last = (*it);
+                last = (*it).c_str();
             }
 
             if ((!domain.empty()) && (rslt->response()->moreFollows())) {
@@ -263,9 +263,9 @@ private:
                         boost::shared_ptr<getnamelist_operation_type > (new getnamelist_operation_type(&socket_));
 
                 operation->request_new();
-                operation->request()->objectClass().basicObjectClass(new int( MMS::ObjectClass::basicObjectClass_namedVariable));
-                operation->request()->objectScope().domainSpecific__new(new MMS::Identifier(domain));
-                operation->request()->continueAfter(new MMS::Identifier(last));
+                operation->request()->objectClass().basicObjectClass(new uint8_t( MMS::ObjectClass::basicObjectClass_namedVariable));
+                operation->request()->objectScope().domainSpecific__new(new MMS::Identifier(domain.c_str()));
+                operation->request()->continueAfter(new MMS::Identifier(last.c_str()));
                 //operation->request()->continueAfter = MMS::Identifier(last));                
 
                 socket_.async_confirm_request(operation,
@@ -290,8 +290,8 @@ private:
                 operation->request_new();
                 operation->request()->name__new();
                 operation->request()->name()->domain_specific__new();
-                operation->request()->name()->domain_specific()->domainID(domain);
-                operation->request()->name()->domain_specific()->itemID(fulllist[fullcnt]);
+                operation->request()->name()->domain_specific()->domainID(domain.c_str());
+                operation->request()->name()->domain_specific()->itemID(fulllist[fullcnt].c_str());
 
                 socket_.async_confirm_request(operation,
                         boost::bind(&client::handle_accesslist_response, this, operation));
@@ -324,8 +324,8 @@ private:
                 operation->request_new();
                 operation->request()->name__new();
                 operation->request()->name()->domain_specific__new();
-                operation->request()->name()->domain_specific()->domainID(domain);
-                operation->request()->name()->domain_specific()->itemID(fulllist[fullcnt]);
+                operation->request()->name()->domain_specific()->domainID(domain.c_str());
+                operation->request()->name()->domain_specific()->itemID(fulllist[fullcnt].c_str());
 
                 socket_.async_confirm_request(operation,
                         boost::bind(&client::handle_accesslist_response, this, operation));
@@ -377,7 +377,7 @@ private:
                         break;
                 operationl->request()->listOfVariable().push_back(MMS::DefineNamedVariableList_Request::ListOfVariable_type_sequence_of(
                        MMS::VariableSpecification(MMS::ObjectName(
-                        MMS::ObjectName::Domain_specific_type(MMS::Identifier(domain), MMS::Identifier(*it)),MMS::ObjectName_domain_specific),
+                        MMS::ObjectName::Domain_specific_type(MMS::Identifier(domain.c_str()), MMS::Identifier(it->c_str())),MMS::ObjectName_domain_specific),
                         MMS::VariableSpecification_name)));}
                 
                  socket_.async_confirm_request(operationl,
@@ -398,9 +398,9 @@ private:
                     std::cout << *(val.success()->boolean()) << std::endl;
                     break;
                 }
-                case ISO_9506_MMS_1::Data_bit_string:
+                case ISO_9506_MMS_1::Data_bit_stringV:
                 {
-                    std::cout << *(val.success()->bit_string()) << std::endl;
+                    std::cout << *(val.success()->bit_stringV()) << std::endl;
                     break;
                 }
                 case ISO_9506_MMS_1::Data_integer:
@@ -415,17 +415,17 @@ private:
                 }
                 case ISO_9506_MMS_1::Data_floating_point:
                 {
-                    std::cout << *(val.success()->floating_point()) << std::endl;
+                    //std::cout << *(val.success()->floating_point()) << std::endl;
                     break;
                 }
-                case ISO_9506_MMS_1::Data_octet_string:
+                case ISO_9506_MMS_1::Data_octet_stringV:
                 {
-                    std::cout << *(val.success()->octet_string()) << std::endl;
+                    //std::cout << *(val.success()->octet_stringV()) << std::endl;
                     break;
                 }
-                case ISO_9506_MMS_1::Data_visible_string:
+                case ISO_9506_MMS_1::Data_visible_stringV:
                 {
-                    std::cout << *(val.success()->visible_string()) << std::endl;
+                    std::cout << *(val.success()->visible_stringV()) << std::endl;
                     break;
                 }
                 case ISO_9506_MMS_1::Data_generalized_time:
@@ -445,12 +445,12 @@ private:
                 }
                     /*case Data_booleanArray:
                     {
-                        ITU_T_IMPLICIT_TAG(value<bitstring_type > (false, Data_booleanArray), 14);
+                        ITU_T_IMPLICIT_TAG(value<bit_string > (false, Data_booleanArray), 14);
                         break;
                     }*/
                 case ISO_9506_MMS_1::Data_objId:
                 {
-                    std::cout << *(val.success()->objId()) << std::endl;
+                    //std::cout << *(val.success()->objId()) << std::endl;
                     break;
                 }
                 case ISO_9506_MMS_1::Data_mMSString:
