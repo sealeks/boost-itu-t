@@ -24,6 +24,7 @@
 #include "Test1.hpp"
 #include "Test1b.hpp"
 
+#include <boost/itu/time/DefinedTime.hpp>
 
 #define DEBUG_VAL_ITU(a)  std::cout << #a " = "  <<  a  << "    ===> ";   tsstr << a;
 
@@ -148,6 +149,25 @@ namespace Test1 {
     DEBUG_VAL_ITU(valT)
     }
     
+}
+
+namespace TestTm {
+    
+    using namespace boost::asn1;
+    
+    
+
+    template<typename T>
+    inline void test(T& tsstr) {
+        
+        CENTURY_ENCODING cetn_enc(19);
+        ANY_CENTURY_ENCODING acetn_enc(19);        
+        
+        DEBUG_VAL_ITU(cetn_enc)        
+        DEBUG_VAL_ITU(acetn_enc)                 
+
+    }
+
 }
 
 #ifdef _MSC_VER
