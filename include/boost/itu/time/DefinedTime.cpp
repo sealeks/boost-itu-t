@@ -33,6 +33,11 @@ namespace boost {
             return 0;
         }
         
+        
+        
+        
+        
+        
         // sequence CENTURY-ENCODING
 
         CENTURY_ENCODING::CENTURY_ENCODING() : val_() {
@@ -42,12 +47,33 @@ namespace boost {
         val_(to_range(arg__val, (uint8_t)0 , (uint8_t)99)) {
         };
 
-        CENTURY_ENCODING::CENTURY_ENCODING(const std::string& val) :
-        val_(to_range<uint8_t>(string_to_def<int>(val), (uint8_t)0 , (uint8_t)99)) {
+        CENTURY_ENCODING::CENTURY_ENCODING(const std::string& vl) :
+        val_(to_range<uint8_t>(string_to_def<int>(vl), (uint8_t)0 , (uint8_t)99)) {
         };
+
+        CENTURY_ENCODING::CENTURY_ENCODING(const char* vl) :
+        val_(to_range<uint8_t>(string_to_def<int>(std::string(vl)), (uint8_t) 0, (uint8_t) 99)) {
+        };       
+        
+        CENTURY_ENCODING::CENTURY_ENCODING(const base_date_time& vl) :
+        val_(to_range<uint8_t>(vl.date().year() / 100, (uint8_t) 0, (uint8_t) 99)) {      
+        }
+
+        base_date_time CENTURY_ENCODING::as_datetime() const {
+            return base_date_time(base_date(static_cast<int>(val())*100,1,1));
+        }     
+        
+        base_date CENTURY_ENCODING::as_date() const {
+            return base_date(static_cast<int>(val())*100,1,1);
+        }           
 
 
         ITU_T_HOLDERH_DEFN(CENTURY_ENCODING::val, val, uint8_t);
+        
+        
+        
+        
+        
 
         // sequence ANY-CENTURY-ENCODING
 
@@ -58,12 +84,33 @@ namespace boost {
         val_(arg__val) {
         };
 
-        ANY_CENTURY_ENCODING::ANY_CENTURY_ENCODING(ITU_T_SHARED(integer_type) arg__val) :
-        val_(arg__val) {
+        ANY_CENTURY_ENCODING::ANY_CENTURY_ENCODING(const std::string& vl) :
+        val_(string_to_def<integer_type>(vl)) {
         };
+
+        ANY_CENTURY_ENCODING::ANY_CENTURY_ENCODING(const char* vl) :
+        val_(string_to_def<integer_type>(std::string(vl))) {
+        };
+
+        ANY_CENTURY_ENCODING::ANY_CENTURY_ENCODING(const base_date_time& vl) :
+        val_(vl.date().year() / 100) {
+        }
+
+        base_date_time ANY_CENTURY_ENCODING::as_datetime() const {
+            return base_date_time(base_date(static_cast<int> (val())*100, 1, 1));
+        }
+
+        base_date ANY_CENTURY_ENCODING::as_date() const {
+            return base_date(static_cast<int> (val())*100, 1, 1);
+        }
 
 
         ITU_T_HOLDERH_DEFN(ANY_CENTURY_ENCODING::val, val, integer_type);
+        
+        
+        
+        
+        
 
         // choice YEAR-ENCODING
 

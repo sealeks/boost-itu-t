@@ -222,11 +222,11 @@ namespace boost {
 
         // time types      
 
-        static base_time to_z_impltime(const std::string& val, const base_time& tm) {
+        static base_date_time to_z_impltime(const std::string& val, const base_date_time& tm) {
             if (val.empty())
                 return tm;
             if (val.size() != 5)
-                return base_time();
+                return base_date_time();
             switch (val[0]) {
                 case '+':
                 {
@@ -239,10 +239,10 @@ namespace boost {
                             boost::posix_time::minutes(string_to<int>(val.substr(3, 2)))));
                 }
             }
-            return base_time();
+            return base_date_time();
         }
 
-        static octet_sequnce from_impltime(const base_time& val, bool full) {
+        static octet_sequnce from_impltime(const base_date_time& val, bool full) {
             octet_sequnce rslt;
             if (!val.is_special()) {
                 std::string tmp = boost::posix_time::to_iso_string(val) + "Z";
@@ -259,7 +259,7 @@ namespace boost {
             return rslt;
         }
 
-        static base_time to_impl_time(const octet_sequnce& val, bool full) {
+        static base_date_time to_impl_time(const octet_sequnce& val, bool full) {
             if (val.size() > 8) {
                 try {
                     std::string tmp(val.begin(), val.end());
@@ -283,15 +283,15 @@ namespace boost {
                         tmp = tmp.substr(0, it);
 
                     if (tmp.empty())
-                        return base_time();
+                        return base_date_time();
 
                     if (!full)
                         tmp = ((tmp[0] == '9') || (tmp[0] == '8')) ? ("19" + tmp) : ("20" + tmp);
 
                     if (tmp.size() < 8)
-                        return base_time();
+                        return base_date_time();
 
-                    base_time rslt(boost::gregorian::date(string_to<int>(tmp.substr(0, 4)), string_to<int>(tmp.substr(4, 2)), string_to<int>(tmp.substr(6, 2))));
+                    base_date_time rslt(boost::gregorian::date(string_to<int>(tmp.substr(0, 4)), string_to<int>(tmp.substr(4, 2)), string_to<int>(tmp.substr(6, 2))));
 
                     if (tmp.size() == 8)
                         return zdelt.empty() ? rslt : to_z_impltime(zdelt, rslt);
@@ -299,7 +299,7 @@ namespace boost {
                         tmp = tmp.substr(8);
 
                     if (tmp.size() < 2)
-                        return base_time();
+                        return base_date_time();
 
                     rslt += boost::posix_time::hours(string_to<int>(tmp.substr(0, 2)));
 
@@ -313,7 +313,7 @@ namespace boost {
                                 to_z_impltime(zdelt, (rslt + boost::posix_time::millisec(static_cast<int> (3600000 * string_to<double>("0" + tmp)))));
                     } else {
                         if (tmp.size() < 2)
-                            return base_time();
+                            return base_date_time();
                     }
 
                     rslt += boost::posix_time::minutes(string_to<int>(tmp.substr(0, 2)));
@@ -328,7 +328,7 @@ namespace boost {
                                 to_z_impltime(zdelt, (rslt + boost::posix_time::microsec(static_cast<int> (60000000 * string_to<double>("0" + tmp)))));
                     } else {
                         if (tmp.size() < 2)
-                            return base_time();
+                            return base_date_time();
                     }
 
                     rslt += boost::posix_time::seconds(string_to<int>(tmp.substr(0, 2)));
@@ -339,7 +339,7 @@ namespace boost {
                         tmp = tmp.substr(2);
 
                     if (tmp[0] != '.')
-                        return base_time();
+                        return base_date_time();
 
 
                     if (tmp.size() == 1)
@@ -352,7 +352,7 @@ namespace boost {
                 } catch (...) {
                 }
             }
-            return base_time();
+            return base_date_time();
         }
 
 

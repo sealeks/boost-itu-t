@@ -57,21 +57,36 @@ namespace boost {
 
 
 
+        
+        
+        
 
         // sequence CENTURY-ENCODING
 
         struct CENTURY_ENCODING {
-
+            
             CENTURY_ENCODING();
 
-            CENTURY_ENCODING(const uint8_t& arg__val);
+            CENTURY_ENCODING(const uint8_t& arg__vl);
 
-            CENTURY_ENCODING(const std::string& val);
+            CENTURY_ENCODING(const std::string& vl);
+
+            CENTURY_ENCODING(const char* vl);
+
+            CENTURY_ENCODING(const base_date_time& vl);       
+
+            base_date_time as_datetime() const;
+
+            base_date as_date() const;                   
 
             ITU_T_HOLDERH_DECL(val, uint8_t); //   Ic(  [ 0  ...   99 ]   
 
             ITU_T_ARCHIVE_FUNC;
         };
+        
+        
+        
+        
 
         // sequence ANY-CENTURY-ENCODING
 
@@ -79,9 +94,17 @@ namespace boost {
 
             ANY_CENTURY_ENCODING();
 
-            ANY_CENTURY_ENCODING(const integer_type& arg__val);
+            ANY_CENTURY_ENCODING(const integer_type& arg__vl);
 
-            ANY_CENTURY_ENCODING(ITU_T_SHARED(integer_type) arg__val);
+            ANY_CENTURY_ENCODING(const std::string& vl);
+
+            ANY_CENTURY_ENCODING(const char* vl);
+
+            ANY_CENTURY_ENCODING(const base_date_time& vl);       
+
+            base_date_time as_datetime() const;
+
+            base_date as_date() const; 
 
             ITU_T_HOLDERH_DECL(val, integer_type);
 

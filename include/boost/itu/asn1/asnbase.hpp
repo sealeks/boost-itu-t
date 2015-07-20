@@ -667,13 +667,16 @@ namespace boost {
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        // base_time
+        // base_date_time
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-        typedef boost::posix_time::ptime base_time;
+        typedef boost::posix_time::ptime base_date_time;
+        typedef base_date_time::date_type base_date;       
+        typedef base_date_time::date_duration_type base_duration;  
+        typedef base_date_time::time_duration_type  base_time_duration; 
 
-        inline base_time now_generator() {
+        inline base_date_time now_generator() {
             return boost::posix_time::microsec_clock::universal_time();
         }
 
