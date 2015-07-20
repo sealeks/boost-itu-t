@@ -66,7 +66,7 @@ namespace boost {
 
             CENTURY_ENCODING(const uint8_t& arg__val);
 
-            CENTURY_ENCODING(ITU_T_SHARED(uint8_t) arg__val);
+            CENTURY_ENCODING(const std::string& val);
 
             ITU_T_HOLDERH_DECL(val, uint8_t); //   Ic(  [ 0  ...   99 ]   
 

@@ -1,4 +1,5 @@
 #include "DefinedTime.hpp"
+#include <boost/lexical_cast.hpp>
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -8,18 +9,41 @@
 
 namespace boost {
     namespace asn1 {
-
+        
+        template<typename T>
+        static const T& to_range(const T& val, const T& min, const T& max){
+            return val<min ? min : (val < max ? val : max);
+        }
+        
+        template<typename T>
+        std::string to_string(const T& val) {
+            try {
+                return boost::lexical_cast<std::string > (val);
+            } catch (boost::bad_lexical_cast) {
+            }
+            return "";
+        }    
+        
+        template<typename T>
+        T string_to_def(const std::string& val, const T& def  =  0) {
+            try {
+                return boost::lexical_cast<T > (val);
+            } catch (boost::bad_lexical_cast) {
+            }
+            return 0;
+        }
+        
         // sequence CENTURY-ENCODING
 
         CENTURY_ENCODING::CENTURY_ENCODING() : val_() {
         };
 
         CENTURY_ENCODING::CENTURY_ENCODING(const uint8_t& arg__val) :
-        val_(arg__val) {
+        val_(to_range(arg__val, (uint8_t)0 , (uint8_t)99)) {
         };
 
-        CENTURY_ENCODING::CENTURY_ENCODING(ITU_T_SHARED(uint8_t) arg__val) :
-        val_(arg__val) {
+        CENTURY_ENCODING::CENTURY_ENCODING(const std::string& val) :
+        val_(to_range<uint8_t>(string_to_def<int>(val), (uint8_t)0 , (uint8_t)99)) {
         };
 
 
@@ -1728,17 +1752,11 @@ namespace boost {
         // std::cout methods
 
         std::ostream& operator<<(std::ostream& stream, const CENTURY_ENCODING& vl) {
-            stream << "{ ";
-            stream << "val :  " << vl.val();
-            stream << " }";
-            return stream;
+            return stream << "century : " << static_cast<int>(vl.val());
         };
 
         std::ostream& operator<<(std::ostream& stream, const ANY_CENTURY_ENCODING& vl) {
-            stream << "{ ";
-            stream << "val :  " << vl.val();
-            stream << " }";
-            return stream;
+            return stream << "century : " << vl.val();
         };
 
         std::ostream& operator<<(std::ostream& stream, const YEAR_ENCODING& vl) {
