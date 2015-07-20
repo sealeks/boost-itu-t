@@ -160,7 +160,7 @@ namespace TestTm {
     template<typename T>
     inline void test(T& tsstr) {
         
-        CENTURY_ENCODING cetn_enc(19);
+        CENTURY_ENCODING cetn_enc("19");
         ANY_CENTURY_ENCODING acetn_enc(19);        
         
         DEBUG_VAL_ITU(cetn_enc)        
