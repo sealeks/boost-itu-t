@@ -160,10 +160,17 @@ namespace TestTm {
     template<typename T>
     inline void test(T& tsstr) {
         
-        CENTURY_ENCODING cetn_enc("19");
+        CENTURY_ENCODING cetn_enc=19;
+        CENTURY_ENCODING cetn_enc1=std::string("10");
+        CENTURY_ENCODING cetn_enc2="21";        
+        CENTURY_ENCODING cetn_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 1, 12));              
         ANY_CENTURY_ENCODING acetn_enc(19);        
         
-        DEBUG_VAL_ITU(cetn_enc)        
+        DEBUG_VAL_ITU(cetn_enc)      
+        DEBUG_VAL_ITU(cetn_enc1)  
+        std::cout << cetn_enc1.as_datetime() << std::endl;
+        DEBUG_VAL_ITU(cetn_enc2)                  
+        DEBUG_VAL_ITU(cetn_enc3)                       
         DEBUG_VAL_ITU(acetn_enc)                 
 
     }
