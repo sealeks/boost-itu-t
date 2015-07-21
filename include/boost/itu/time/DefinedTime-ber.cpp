@@ -10,26 +10,32 @@ namespace boost {
     namespace asn1 {
 
 
-
+        using namespace time_detail;  
 
         // sequence CENTURY-ENCODING
 
         template<> void CENTURY_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_BIND_IMPLICIT(val_, 0, CONTEXT_CLASS);
+            visible_string tmpval=to_visible_string(static_cast<int>(val()));
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
         }
 
         template<> void CENTURY_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_BIND_IMPLICIT(val_, 0, CONTEXT_CLASS);
+            visible_string tmpval;
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+            val(visible_string_to_def(tmpval, 0));
         }
 
         // sequence ANY-CENTURY-ENCODING
 
         template<> void ANY_CENTURY_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_BIND_IMPLICIT(val_, 0, CONTEXT_CLASS);
+            visible_string tmpval=to_visible_string(static_cast<int>(val()));
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
         }
 
         template<> void ANY_CENTURY_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_BIND_IMPLICIT(val_, 0, CONTEXT_CLASS);
+            visible_string tmpval;
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+            val(visible_string_to_def(tmpval, 0));
         }
 
         // choice YEAR-ENCODING

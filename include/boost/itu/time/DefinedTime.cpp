@@ -1,5 +1,4 @@
 #include "DefinedTime.hpp"
-#include <boost/lexical_cast.hpp>
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -10,33 +9,7 @@
 namespace boost {
     namespace asn1 {
         
-        template<typename T>
-        static const T& to_range(const T& val, const T& min, const T& max){
-            return val<min ? min : (val < max ? val : max);
-        }
-        
-        template<typename T>
-        std::string to_string(const T& val) {
-            try {
-                return boost::lexical_cast<std::string > (val);
-            } catch (boost::bad_lexical_cast) {
-            }
-            return "";
-        }    
-        
-        template<typename T>
-        T string_to_def(const std::string& val, const T& def  =  0) {
-            try {
-                return boost::lexical_cast<T > (val);
-            } catch (boost::bad_lexical_cast) {
-            }
-            return 0;
-        }
-        
-        
-        
-        
-        
+        using namespace time_detail;  
         
         // sequence CENTURY-ENCODING
 
