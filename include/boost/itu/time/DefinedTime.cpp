@@ -8,45 +8,45 @@
 
 namespace boost {
     namespace asn1 {
-        
-        using namespace time_detail;  
-        
+
+        using namespace time_detail;
+
         // sequence CENTURY-ENCODING
 
         CENTURY_ENCODING::CENTURY_ENCODING() : val_() {
         };
 
         CENTURY_ENCODING::CENTURY_ENCODING(const uint8_t& arg__val) :
-        val_(to_range(arg__val, (uint8_t)0 , (uint8_t)99)) {
+        val_(to_range(arg__val, (uint8_t) 0, (uint8_t) 99)) {
         };
 
         CENTURY_ENCODING::CENTURY_ENCODING(const std::string& vl) :
-        val_(to_range<uint8_t>(string_to_def<int>(vl), (uint8_t)0 , (uint8_t)99)) {
+        val_(to_range<uint8_t>(string_to_def<int>(vl), (uint8_t) 0, (uint8_t) 99)) {
         };
 
         CENTURY_ENCODING::CENTURY_ENCODING(const char* vl) :
         val_(to_range<uint8_t>(string_to_def<int>(std::string(vl)), (uint8_t) 0, (uint8_t) 99)) {
-        };       
-        
+        };
+
         CENTURY_ENCODING::CENTURY_ENCODING(const base_date_time& vl) :
-        val_(to_range<uint8_t>(vl.date().year() / 100, (uint8_t) 0, (uint8_t) 99)) {      
+        val_(to_range<uint8_t>(vl.date().year() / 100, (uint8_t) 0, (uint8_t) 99)) {
         }
 
         base_date_time CENTURY_ENCODING::as_datetime() const {
-            return base_date_time(base_date(static_cast<int>(val())*100,1,1));
-        }     
-        
+            return base_date_time(base_date(static_cast<int> (val())*100, 1, 1));
+        }
+
         base_date CENTURY_ENCODING::as_date() const {
-            return base_date(static_cast<int>(val())*100,1,1);
-        }           
+            return base_date(static_cast<int> (val())*100, 1, 1);
+        }
 
 
         ITU_T_HOLDERH_DEFN(CENTURY_ENCODING::val, val, uint8_t);
-        
-        
-        
-        
-        
+
+
+
+
+
 
         // sequence ANY-CENTURY-ENCODING
 
@@ -79,11 +79,11 @@ namespace boost {
 
 
         ITU_T_HOLDERH_DEFN(ANY_CENTURY_ENCODING::val, val, integer_type);
-        
-        
-        
-        
-        
+
+
+
+
+
 
         // choice YEAR-ENCODING
 
@@ -1772,7 +1772,7 @@ namespace boost {
         // std::cout methods
 
         std::ostream& operator<<(std::ostream& stream, const CENTURY_ENCODING& vl) {
-            return stream << "century : " << static_cast<int>(vl.val());
+            return stream << "century : " << static_cast<int> (vl.val());
         };
 
         std::ostream& operator<<(std::ostream& stream, const ANY_CENTURY_ENCODING& vl) {
@@ -2630,6 +2630,57 @@ namespace boost {
     }
 }
 
+#define ITU_T_DEFINE_TIME_TYPE(nm) void output_coder::operator&(const nm & vl) {\
+                direct_serialize(vl, *this);}\
+            void input_coder::operator&( nm & vl) {\
+                direct_serialize(vl, *this); }                
+
+namespace boost {
+    namespace asn1 {
+        namespace x690 {
+
+            ITU_T_DEFINE_TIME_TYPE(CENTURY_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(ANY_CENTURY_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(YEAR_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(ANY_YEAR_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(YEAR_MONTH_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(ANY_YEAR_MONTH_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(DATE_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(ANY_DATE_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(YEAR_DAY_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(ANY_YEAR_DAY_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(YEAR_WEEK_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(ANY_YEAR_WEEK_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(YEAR_WEEK_DAY_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(ANY_YEAR_WEEK_DAY_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(HOURS_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(HOURS_UTC_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(HOURS_AND_DIFF_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(TIME_DIFFERENCE);
+            ITU_T_DEFINE_TIME_TYPE(MINUTES_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(MINUTES_UTC_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(MINUTES_AND_DIFF_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(TIME_OF_DAY_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(TIME_OF_DAY_UTC_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(TIME_OF_DAY_AND_DIFF_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(HOURS_AND_FRACTION_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(HOURS_UTC_AND_FRACTION_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(HOURS_AND_DIFF_AND_FRACTION_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(MINUTES_AND_FRACTION_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(MINUTES_UTC_AND_FRACTION_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(MINUTES_AND_DIFF_AND_FRACTION_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(TIME_OF_DAY_AND_FRACTION_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(TIME_OF_DAY_UTC_AND_FRACTION_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(DURATION_INTERVAL_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(REC_DURATION_INTERVAL_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(MIXED_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(DATE_TYPE);
+            ITU_T_DEFINE_TIME_TYPE(TIME_TYPE);
+
+        }
+    }
+}
 
 #ifdef _MSC_VER
 #pragma warning(pop)

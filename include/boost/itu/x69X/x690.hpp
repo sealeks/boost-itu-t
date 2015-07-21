@@ -58,7 +58,59 @@ namespace boost {\
 
 namespace boost {
     namespace asn1 {
+
+        struct CENTURY_ENCODING;
+        struct ANY_CENTURY_ENCODING;
+        struct YEAR_ENCODING;
+        struct ANY_YEAR_ENCODING;
+        struct YEAR_MONTH_ENCODING;
+        struct ANY_YEAR_MONTH_ENCODING;
+        struct DATE_ENCODING;
+        struct ANY_DATE_ENCODING;
+        struct YEAR_DAY_ENCODING;
+        struct ANY_YEAR_DAY_ENCODING;
+        struct YEAR_WEEK_ENCODING;
+        struct ANY_YEAR_WEEK_ENCODING;
+        struct YEAR_WEEK_DAY_ENCODING;
+        struct ANY_YEAR_WEEK_DAY_ENCODING;
+        struct HOURS_ENCODING;
+        struct HOURS_UTC_ENCODING;
+        struct HOURS_AND_DIFF_ENCODING;
+        struct TIME_DIFFERENCE;
+        struct MINUTES_ENCODING;
+        struct MINUTES_UTC_ENCODING;
+        struct MINUTES_AND_DIFF_ENCODING;
+        struct TIME_OF_DAY_ENCODING;
+        struct TIME_OF_DAY_UTC_ENCODING;
+        struct TIME_OF_DAY_AND_DIFF_ENCODING;
+        struct HOURS_AND_FRACTION_ENCODING;
+        struct HOURS_UTC_AND_FRACTION_ENCODING;
+        struct HOURS_AND_DIFF_AND_FRACTION_ENCODING;
+        struct MINUTES_AND_FRACTION_ENCODING;
+        struct MINUTES_UTC_AND_FRACTION_ENCODING;
+        struct MINUTES_AND_DIFF_AND_FRACTION_ENCODING;
+        struct TIME_OF_DAY_AND_FRACTION_ENCODING;
+        struct TIME_OF_DAY_UTC_AND_FRACTION_ENCODING;
+        struct TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING;
+        struct DURATION_INTERVAL_ENCODING;
+        struct REC_DURATION_INTERVAL_ENCODING;
+        struct MIXED_ENCODING;
+        struct DATE_TYPE;
+        struct TIME_TYPE;
+
         namespace x690 {
+
+            template<typename T, typename U>
+            void direct_serialize(T& val, U& arch) {
+                val.serialize(arch);
+            }
+
+            template<typename T, typename U>
+            void direct_serialize(const T& val, U& arch) {
+                const_cast<T&> (val).serialize(arch);
+            }
+
+
 
             const std::size_t CER_STRING_MAX_SIZE = 1000;
             // const std::size_t CER_STRING_MAX_SIZE = 2;
@@ -202,6 +254,45 @@ namespace boost {
                 void operator&(const set_of<T >& vl) {
                     *this << vl;
                 }
+
+                void operator&(const CENTURY_ENCODING& vl);
+                void operator&(const ANY_CENTURY_ENCODING& vl);
+                void operator&(const YEAR_ENCODING& vl);
+                void operator&(const ANY_YEAR_ENCODING& vl);
+                void operator&(const YEAR_MONTH_ENCODING& vl);
+                void operator&(const ANY_YEAR_MONTH_ENCODING& vl);
+                void operator&(const DATE_ENCODING& vl);
+                void operator&(const ANY_DATE_ENCODING& vl);
+                void operator&(const YEAR_DAY_ENCODING& vl);
+                void operator&(const ANY_YEAR_DAY_ENCODING& vl);
+                void operator&(const YEAR_WEEK_ENCODING& vl);
+                void operator&(const ANY_YEAR_WEEK_ENCODING& vl);
+                void operator&(const YEAR_WEEK_DAY_ENCODING& vl);
+                void operator&(const ANY_YEAR_WEEK_DAY_ENCODING& vl);
+                void operator&(const HOURS_ENCODING& vl);
+                void operator&(const HOURS_UTC_ENCODING& vl);
+                void operator&(const HOURS_AND_DIFF_ENCODING& vl);
+                void operator&(const TIME_DIFFERENCE& vl);
+                void operator&(const MINUTES_ENCODING& vl);
+                void operator&(const MINUTES_UTC_ENCODING& vl);
+                void operator&(const MINUTES_AND_DIFF_ENCODING& vl);
+                void operator&(const TIME_OF_DAY_ENCODING& vl);
+                void operator&(const TIME_OF_DAY_UTC_ENCODING& vl);
+                void operator&(const TIME_OF_DAY_AND_DIFF_ENCODING& vl);
+                void operator&(const HOURS_AND_FRACTION_ENCODING& vl);
+                void operator&(const HOURS_UTC_AND_FRACTION_ENCODING& vl);
+                void operator&(const HOURS_AND_DIFF_AND_FRACTION_ENCODING& vl);
+                void operator&(const MINUTES_AND_FRACTION_ENCODING& vl);
+                void operator&(const MINUTES_UTC_AND_FRACTION_ENCODING& vl);
+                void operator&(const MINUTES_AND_DIFF_AND_FRACTION_ENCODING& vl);
+                void operator&(const TIME_OF_DAY_AND_FRACTION_ENCODING& vl);
+                void operator&(const TIME_OF_DAY_UTC_AND_FRACTION_ENCODING& vl);
+                void operator&(const TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING& vl);
+                void operator&(const DURATION_INTERVAL_ENCODING& vl);
+                void operator&(const REC_DURATION_INTERVAL_ENCODING& vl);
+                void operator&(const MIXED_ENCODING& vl);
+                void operator&(const DATE_TYPE& vl);
+                void operator&(const TIME_TYPE& vl);
 
                 iterator_type addtag(const tag& tg, bool settype);
 
@@ -417,19 +508,19 @@ namespace boost {
 
             template<>
             void x690_string_to_stream_cast(const bit_string& val, output_coder& stream, octet_type lentype);
-            
+
             template<>
-            void x690_string_to_stream_cast(const octet_string& val, output_coder& stream, octet_type lentype);            
-           
+            void x690_string_to_stream_cast(const octet_string& val, output_coder& stream, octet_type lentype);
+
             template<>
             void x690_string_to_stream_cast(const utf8_string& val, output_coder& stream, octet_type lentype);
-            
+
             template<>
-            void x690_string_to_stream_cast(const oid_iri_type& val, output_coder& stream, octet_type lentype);     
-            
+            void x690_string_to_stream_cast(const oid_iri_type& val, output_coder& stream, octet_type lentype);
+
             template<>
-            void x690_string_to_stream_cast(const reloid_iri_type& val, output_coder& stream, octet_type lentype);            
-            
+            void x690_string_to_stream_cast(const reloid_iri_type& val, output_coder& stream, octet_type lentype);
+
             template<>
             void x690_string_to_stream_cast(const bmp_string& val, output_coder& stream, octet_type lentype);
 
@@ -553,12 +644,12 @@ namespace boost {
 
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<utf8_string>& vl);
-            
+
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<oid_iri_type>& vl);
 
             template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<reloid_iri_type>& vl);            
+            output_coder& operator<<(output_coder& stream, const implicit_value<reloid_iri_type>& vl);
 
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<numeric_string>& vl);
@@ -709,6 +800,45 @@ namespace boost {
                 void operator&(set_of<T >& vl) {
                     *this >> vl;
                 }
+
+                void operator&(CENTURY_ENCODING& vl);
+                void operator&(ANY_CENTURY_ENCODING& vl);
+                void operator&(YEAR_ENCODING& vl);
+                void operator&(ANY_YEAR_ENCODING& vl);
+                void operator&(YEAR_MONTH_ENCODING& vl);
+                void operator&(ANY_YEAR_MONTH_ENCODING& vl);
+                void operator&(DATE_ENCODING& vl);
+                void operator&(ANY_DATE_ENCODING& vl);
+                void operator&(YEAR_DAY_ENCODING& vl);
+                void operator&(ANY_YEAR_DAY_ENCODING& vl);
+                void operator&(YEAR_WEEK_ENCODING& vl);
+                void operator&(ANY_YEAR_WEEK_ENCODING& vl);
+                void operator&(YEAR_WEEK_DAY_ENCODING& vl);
+                void operator&(ANY_YEAR_WEEK_DAY_ENCODING& vl);
+                void operator&(HOURS_ENCODING& vl);
+                void operator&(HOURS_UTC_ENCODING& vl);
+                void operator&(HOURS_AND_DIFF_ENCODING& vl);
+                void operator&(TIME_DIFFERENCE& vl);
+                void operator&(MINUTES_ENCODING& vl);
+                void operator&(MINUTES_UTC_ENCODING& vl);
+                void operator&(MINUTES_AND_DIFF_ENCODING& vl);
+                void operator&(TIME_OF_DAY_ENCODING& vl);
+                void operator&(TIME_OF_DAY_UTC_ENCODING& vl);
+                void operator&(TIME_OF_DAY_AND_DIFF_ENCODING& vl);
+                void operator&(HOURS_AND_FRACTION_ENCODING& vl);
+                void operator&(HOURS_UTC_AND_FRACTION_ENCODING& vl);
+                void operator&(HOURS_AND_DIFF_AND_FRACTION_ENCODING& vl);
+                void operator&(MINUTES_AND_FRACTION_ENCODING& vl);
+                void operator&(MINUTES_UTC_AND_FRACTION_ENCODING& vl);
+                void operator&(MINUTES_AND_DIFF_AND_FRACTION_ENCODING& vl);
+                void operator&(TIME_OF_DAY_AND_FRACTION_ENCODING& vl);
+                void operator&(TIME_OF_DAY_UTC_AND_FRACTION_ENCODING& vl);
+                void operator&(TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING& vl);
+                void operator&(DURATION_INTERVAL_ENCODING& vl);
+                void operator&(REC_DURATION_INTERVAL_ENCODING& vl);
+                void operator&(MIXED_ENCODING& vl);
+                void operator&(DATE_TYPE& vl);
+                void operator&(TIME_TYPE& vl);
 
                 tag test_tl(size_class& sz);
 
@@ -939,7 +1069,7 @@ namespace boost {
                     }
                 } else {
                     if (stream.parse_tl(tag(vl.helper().vect[nestlvl].first, from_cast(vl.helper().vect[nestlvl].second) | CONSTRUCTED_ENCODING), true)) {
-                        vl.value()=shared_ptr<T>(new T());
+                        vl.value() = shared_ptr<T>(new T());
                         prefixed_value<T> tmpvl(*(vl.value()), vl.helper());
                         read_prefixed(stream, tmpvl, nestlvl - 1);
                         stream.pop_stack();
@@ -1371,13 +1501,13 @@ namespace boost {
             vl.serialize(arch);
             return (arch.size() != tst);
         }
-        
+
         template<typename Archive, typename T>
         inline bool bind_choice(Archive & arch, const T& vl) {
             std::size_t tst = arch.size();
             vl.serialize(arch);
             return (arch.size() != tst);
-        }        
+        }
 
         template<typename Archive, typename T>
         inline bool bind_choice(Archive & arch, value_holder<T>& vl) {
@@ -1415,7 +1545,7 @@ namespace boost {
         inline bool bind_choice(boost::asn1::x690::input_coder & arch, default_holder<T, DT>& vl) {
             return bind_choice(arch, vl.get_shared());
         }
-        
+
 
 
 
