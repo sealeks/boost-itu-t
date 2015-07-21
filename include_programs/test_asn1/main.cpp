@@ -16,7 +16,7 @@ using namespace boost::asn1;
 
 int main(int argc, char* argv[]) {
 
-    boost::asn1::ioasn1_stream tststrm(/*boost::itu::BER_ENCODING*/boost::itu::PER_UNALIGNED_ENCODING, 4);
+    boost::asn1::ioasn1_stream tststrm(boost::itu::BER_ENCODING/*boost::itu::PER_UNALIGNED_ENCODING*/, 1);
 
     //boost::asn1::fasn1_stream tsstr(boost::itu::PER_UNALIGNED_ENCODING, work_dir + "test.ber");
 
