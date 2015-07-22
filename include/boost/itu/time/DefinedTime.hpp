@@ -157,6 +157,10 @@ namespace boost {
 
             ITU_T_ARCHIVE_FUNC;
         };
+        
+        
+        
+        
 
         // choice YEAR-ENCODING
 
@@ -185,9 +189,20 @@ namespace boost {
             ITU_T_CHOICES_DECL(near_future, uint16_t, YEAR_ENCODING_near_future); // primitive  //   Ic(  [ 2021  ...   2276 ]   
             ITU_T_CHOICES_DECL(near_past, uint16_t, YEAR_ENCODING_near_past); // primitive  //   Ic(  [ 1749  ...   2004 ]   
             ITU_T_CHOICES_DECL(remainder, integer_type, YEAR_ENCODING_remainder); // primitive  //   Ic(  [ ... ]   
+            
+            base_date_time as_datetime() const;
+
+            base_date as_date() const;            
+            
+            integer_type as_number() const;
+
+            void as_number(integer_type v);    
 
             ITU_T_ARCHIVE_FUNC;
         };
+        
+        
+        
 
         // sequence ANY-YEAR-ENCODING
 
@@ -211,17 +226,32 @@ namespace boost {
 
             ITU_T_ARCHIVE_FUNC;
         };
+        
+        
+        
+        
+        
+        
 
         // sequence YEAR-MONTH-ENCODING
 
         struct YEAR_MONTH_ENCODING {
+            
             YEAR_MONTH_ENCODING();
 
-            YEAR_MONTH_ENCODING(const YEAR_ENCODING& arg__year,
+            YEAR_MONTH_ENCODING(integer_type arg__year,
                     const uint8_t& arg__month);
+            
+            YEAR_MONTH_ENCODING(const std::string& vl);
 
-            YEAR_MONTH_ENCODING(ITU_T_SHARED(YEAR_ENCODING) arg__year,
-                    ITU_T_SHARED(uint8_t) arg__month);
+            YEAR_MONTH_ENCODING(const char* vl);
+
+            YEAR_MONTH_ENCODING(const base_date_time& vl);
+
+            base_date_time as_datetime() const;
+
+            base_date as_date() const;            
+
 
             ITU_T_HOLDERH_DECL(year, YEAR_ENCODING);
             ITU_T_HOLDERH_DECL(month, uint8_t); //   Ic(  [ 1  ...   12 ]   
@@ -229,16 +259,28 @@ namespace boost {
             ITU_T_ARCHIVE_FUNC;
         };
 
+        
+        
+        
+        
+        
         // sequence ANY-YEAR-MONTH-ENCODING
 
         struct ANY_YEAR_MONTH_ENCODING {
             ANY_YEAR_MONTH_ENCODING();
 
-            ANY_YEAR_MONTH_ENCODING(const ANY_YEAR_ENCODING& arg__year,
+            ANY_YEAR_MONTH_ENCODING(integer_type arg__year,
                     const uint8_t& arg__month);
 
-            ANY_YEAR_MONTH_ENCODING(ITU_T_SHARED(ANY_YEAR_ENCODING) arg__year,
-                    ITU_T_SHARED(uint8_t) arg__month);
+            ANY_YEAR_MONTH_ENCODING(const std::string& vl);
+
+            ANY_YEAR_MONTH_ENCODING(const char* vl);
+
+            ANY_YEAR_MONTH_ENCODING(const base_date_time& vl);
+
+            base_date_time as_datetime() const;
+
+            base_date as_date() const;  
 
             ITU_T_HOLDERH_DECL(year, ANY_YEAR_ENCODING);
             ITU_T_HOLDERH_DECL(month, uint8_t); //   Ic(  [ 1  ...   12 ]   
@@ -246,6 +288,9 @@ namespace boost {
             ITU_T_ARCHIVE_FUNC;
         };
 
+        
+        
+        
         // sequence DATE-ENCODING
 
         struct DATE_ENCODING {

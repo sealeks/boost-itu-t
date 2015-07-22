@@ -87,47 +87,27 @@ namespace boost {
 
         // choice YEAR-ENCODING
 
-        YEAR_ENCODING::YEAR_ENCODING(integer_type vl) {
-            if (vl < 1749 && vl > 2276)
-                remainder(vl);
-            else if (vl <= 2004)
-                near_past(static_cast<uint16_t> (vl));
-            else if (vl <= 2020)
-                immediate(static_cast<uint16_t> (vl));
-            near_future(static_cast<uint16_t> (vl));
+        YEAR_ENCODING::YEAR_ENCODING(integer_type vl) :
+        ITU_T_CHOICE_CTORS_INHERITED(YEAR_ENCODING) {
+            as_number(vl);
         }
 
-        YEAR_ENCODING::YEAR_ENCODING(const std::string& v) {
+        YEAR_ENCODING::YEAR_ENCODING(const std::string& v) :
+        ITU_T_CHOICE_CTORS_INHERITED(YEAR_ENCODING) {
             integer_type vl = string_to_def<integer_type>(v);
-            if (vl < 1749 && vl > 2276)
-                remainder(vl);
-            else if (vl <= 2004)
-                near_past(static_cast<uint16_t> (vl));
-            else if (vl <= 2020)
-                immediate(static_cast<uint16_t> (vl));
-            near_future(static_cast<uint16_t> (vl));
+            as_number(vl);
         }
 
-        YEAR_ENCODING::YEAR_ENCODING(const char* v) {
+        YEAR_ENCODING::YEAR_ENCODING(const char* v) :
+        ITU_T_CHOICE_CTORS_INHERITED(YEAR_ENCODING) {
             integer_type vl = string_to_def<integer_type>(std::string(v));
-            if (vl < 1749 && vl > 2276)
-                remainder(vl);
-            else if (vl <= 2004)
-                near_past(static_cast<uint16_t> (vl));
-            else if (vl <= 2020)
-                immediate(static_cast<uint16_t> (vl));
-            near_future(static_cast<uint16_t> (vl));
+            as_number(vl);
         }
 
-        YEAR_ENCODING::YEAR_ENCODING(const base_date_time& v) {
+        YEAR_ENCODING::YEAR_ENCODING(const base_date_time& v) :
+        ITU_T_CHOICE_CTORS_INHERITED(YEAR_ENCODING) {
             integer_type vl = v.date().year();
-            if (vl < 1749 && vl > 2276)
-                remainder(vl);
-            else if (vl <= 2004)
-                near_past(static_cast<uint16_t> (vl));
-            else if (vl <= 2020)
-                immediate(static_cast<uint16_t> (vl));
-            near_future(static_cast<uint16_t> (vl));
+            as_number(vl);
         }
 
 
@@ -136,6 +116,38 @@ namespace boost {
         ITU_T_CHOICES_DEFN(YEAR_ENCODING::near_future, near_future, uint16_t, YEAR_ENCODING_near_future);
         ITU_T_CHOICES_DEFN(YEAR_ENCODING::near_past, near_past, uint16_t, YEAR_ENCODING_near_past);
         ITU_T_CHOICES_DEFN(YEAR_ENCODING::remainder, remainder, integer_type, YEAR_ENCODING_remainder);
+
+        integer_type YEAR_ENCODING::as_number() const {
+            switch (type()) {
+                case YEAR_ENCODING_immediate: return static_cast<integer_type> (*(immediate()));
+                case YEAR_ENCODING_near_future: return static_cast<integer_type> (*(near_future()));
+                case YEAR_ENCODING_near_past: return static_cast<integer_type> (*(near_past()));
+                case YEAR_ENCODING_remainder: return static_cast<integer_type> (*(remainder()));
+                default:
+                {
+                }
+            }
+            return 0;
+        }
+
+        void YEAR_ENCODING::as_number(integer_type v) {
+            if (v < 1749 && v > 2276)
+                remainder(v);
+            else if (v <= 2004)
+                near_past(static_cast<uint16_t> (v));
+            else if (v <= 2020)
+                immediate(static_cast<uint16_t> (v));
+            near_future(static_cast<uint16_t> (v));
+        }
+
+        base_date_time YEAR_ENCODING::as_datetime() const {
+            return base_date_time(base_date(static_cast<int> (as_number()), 1, 1));
+        }
+
+        base_date YEAR_ENCODING::as_date() const {
+            return base_date(static_cast<int> (as_number()), 1, 1);
+        }
+
 
         // sequence ANY-YEAR-ENCODING
 
@@ -176,41 +188,77 @@ namespace boost {
 
         // sequence YEAR-MONTH-ENCODING
 
-        YEAR_MONTH_ENCODING::YEAR_MONTH_ENCODING() : year_(), month_() {
+        YEAR_MONTH_ENCODING::YEAR_MONTH_ENCODING() : year_(), month_(1) {
         };
 
-        YEAR_MONTH_ENCODING::YEAR_MONTH_ENCODING(const YEAR_ENCODING& arg__year,
+        YEAR_MONTH_ENCODING::YEAR_MONTH_ENCODING(integer_type arg__year,
                 const uint8_t& arg__month) :
-        year_(arg__year),
-        month_(arg__month) {
+        year_(arg__year), month_(to_range<uint8_t>(arg__month, (uint8_t) 1, (uint8_t) 12)) {
         };
 
-        YEAR_MONTH_ENCODING::YEAR_MONTH_ENCODING(ITU_T_SHARED(YEAR_ENCODING) arg__year,
-                ITU_T_SHARED(uint8_t) arg__month) :
-        year_(arg__year),
-        month_(arg__month) {
-        };
+        YEAR_MONTH_ENCODING::YEAR_MONTH_ENCODING(const std::string& vl) :
+        year_(vl.size() > 2 ? vl.substr(0, vl.size() - 2) : ""),
+        month_(to_range<uint8_t>(string_to_def<int>(vl.size() >= 2 ? vl.substr(vl.size() - 2) : ""), (uint8_t) 1, (uint8_t) 12)) {
+        }
+
+        YEAR_MONTH_ENCODING::YEAR_MONTH_ENCODING(const char* v) : year_(), month_(1) {
+            std::string vl = v;
+            year(vl.size() > 2 ? vl.substr(0, vl.size() - 2) : "");
+            month(to_range<uint8_t>(string_to_def<int>(vl.size() >= 2 ? vl.substr(vl.size() - 2) : ""), (uint8_t) 1, (uint8_t) 12));
+        }
+
+        YEAR_MONTH_ENCODING::YEAR_MONTH_ENCODING(const base_date_time& vl) :
+        year_((integer_type) vl.date().year()),
+        month_((uint8_t) vl.date().month()) {
+        }
+
+        base_date_time YEAR_MONTH_ENCODING::as_datetime() const {
+            return base_date_time(base_date(static_cast<int> (year().as_number()), (int) month(), 1));
+        }
+
+        base_date YEAR_MONTH_ENCODING::as_date() const {
+            return base_date(static_cast<int> (year().as_number()), (int) month(), 1);
+        }
 
 
         ITU_T_HOLDERH_DEFN(YEAR_MONTH_ENCODING::year, year, YEAR_ENCODING);
         ITU_T_HOLDERH_DEFN(YEAR_MONTH_ENCODING::month, month, uint8_t);
+
+
 
         // sequence ANY-YEAR-MONTH-ENCODING
 
         ANY_YEAR_MONTH_ENCODING::ANY_YEAR_MONTH_ENCODING() : year_(), month_() {
         };
 
-        ANY_YEAR_MONTH_ENCODING::ANY_YEAR_MONTH_ENCODING(const ANY_YEAR_ENCODING& arg__year,
+        ANY_YEAR_MONTH_ENCODING::ANY_YEAR_MONTH_ENCODING(integer_type arg__year,
                 const uint8_t& arg__month) :
-        year_(arg__year),
-        month_(arg__month) {
+        year_(arg__year), month_(to_range<uint8_t>(arg__month, (uint8_t) 1, (uint8_t) 12)) {
         };
 
-        ANY_YEAR_MONTH_ENCODING::ANY_YEAR_MONTH_ENCODING(ITU_T_SHARED(ANY_YEAR_ENCODING) arg__year,
-                ITU_T_SHARED(uint8_t) arg__month) :
-        year_(arg__year),
-        month_(arg__month) {
-        };
+        ANY_YEAR_MONTH_ENCODING::ANY_YEAR_MONTH_ENCODING(const std::string& vl) :
+        year_(vl.size() > 2 ? vl.substr(0, vl.size() - 2) : ""),
+        month_(to_range<uint8_t>(string_to_def<int>(vl.size() >= 2 ? vl.substr(vl.size() - 2) : ""), (uint8_t) 1, (uint8_t) 12)) {
+        }
+
+        ANY_YEAR_MONTH_ENCODING::ANY_YEAR_MONTH_ENCODING(const char* v) : year_(), month_(1) {
+            std::string vl = v;
+            year(vl.size() > 2 ? vl.substr(0, vl.size() - 2) : "");
+            month(to_range<uint8_t>(string_to_def<int>(vl.size() >= 2 ? vl.substr(vl.size() - 2) : ""), (uint8_t) 1, (uint8_t) 12));
+        }
+
+        ANY_YEAR_MONTH_ENCODING::ANY_YEAR_MONTH_ENCODING(const base_date_time& vl) :
+        year_((integer_type) vl.date().year()),
+        month_((uint8_t) vl.date().month()) {
+        }
+
+        base_date_time ANY_YEAR_MONTH_ENCODING::as_datetime() const {
+            return base_date_time(base_date(static_cast<int> (year().as_number()), (int) month(), 1));
+        }
+
+        base_date ANY_YEAR_MONTH_ENCODING::as_date() const {
+            return base_date(static_cast<int> (year().as_number()), (int) month(), 1);
+        }
 
 
         ITU_T_HOLDERH_DEFN(ANY_YEAR_MONTH_ENCODING::year, year, ANY_YEAR_ENCODING);
@@ -1838,54 +1886,27 @@ namespace boost {
         // std::cout methods
 
         std::ostream& operator<<(std::ostream& stream, const CENTURY_ENCODING& vl) {
-            return stream << "century : " << static_cast<int> (vl.as_number());
+            return stream << "CC : " << static_cast<int> (vl.as_number());
         };
 
         std::ostream& operator<<(std::ostream& stream, const ANY_CENTURY_ENCODING& vl) {
-            return stream << "century : " << vl.as_number();
+            return stream << "+CC : " << vl.as_number();
         };
 
         std::ostream& operator<<(std::ostream& stream, const YEAR_ENCODING& vl) {
-            stream << "{ ";
-            switch (vl.type()) {
-                case YEAR_ENCODING_immediate: stream << "immediate :  " << *(vl.immediate());
-                    break;
-                case YEAR_ENCODING_near_future: stream << "near_future :  " << *(vl.near_future());
-                    break;
-                case YEAR_ENCODING_near_past: stream << "near_past :  " << *(vl.near_past());
-                    break;
-                case YEAR_ENCODING_remainder: stream << "remainder :  " << *(vl.remainder());
-                    break;
-                default:
-                {
-                    stream << " null ";
-                }
-            };
-            stream << " }";
-            return stream;
+            return stream << "YYYY : " << vl.as_number();
         };
 
         std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_ENCODING& vl) {
-            stream << "{ ";
-            stream << "year :  " << vl.as_number();
-            stream << " }";
-            return stream;
+            return stream << "+YYYY : " << vl.as_number();
         };
 
         std::ostream& operator<<(std::ostream& stream, const YEAR_MONTH_ENCODING& vl) {
-            stream << "{ ";
-            stream << "year :  " << vl.year();
-            stream << ", month :  " << vl.month();
-            stream << " }";
-            return stream;
+            stream << "YYYYMM" << to_string(vl.year(),4,'0') << to_string((int)vl.month(),2,'0');
         };
 
         std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_MONTH_ENCODING& vl) {
-            stream << "{ ";
-            stream << "year :  " << vl.year();
-            stream << ", month :  " << vl.month();
-            stream << " }";
-            return stream;
+            stream << "+YYYYMM" << to_string(vl.year()) << to_string((int)vl.month(),2,'0');
         };
 
         std::ostream& operator<<(std::ostream& stream, const DATE_ENCODING& vl) {

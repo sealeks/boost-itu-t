@@ -41,106 +41,61 @@ namespace boost {
         // choice YEAR-ENCODING
 
         template<> void YEAR_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
-            switch (type()) {
-                case YEAR_ENCODING_immediate:
-                {
-                    ITU_T_BIND_IMPLICIT(value<uint16_t > (false, YEAR_ENCODING_immediate), 0, CONTEXT_CLASS);
-                    break;
-                }
-                case YEAR_ENCODING_near_future:
-                {
-                    ITU_T_BIND_IMPLICIT(value<uint16_t > (false, YEAR_ENCODING_near_future), 1, CONTEXT_CLASS);
-                    break;
-                }
-                case YEAR_ENCODING_near_past:
-                {
-                    ITU_T_BIND_IMPLICIT(value<uint16_t > (false, YEAR_ENCODING_near_past), 2, CONTEXT_CLASS);
-                    break;
-                }
-                case YEAR_ENCODING_remainder:
-                {
-                    ITU_T_BIND_IMPLICIT(value<integer_type > (false, YEAR_ENCODING_remainder), 3, CONTEXT_CLASS);
-                    break;
-                }
-                default:
-                {
-                }
-            }
+            visible_string tmpval=to_visible_string(static_cast<int>(as_number()));
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
         }
 
         template<> void YEAR_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
-            int __tag_id__ = arch.test_id();
-            switch (arch.test_class()) {
-                case 0x80:
-                {
-                    switch (__tag_id__) {
-                        case 0:
-                        {
-                            if (ITU_T_BIND_IMPLICIT(value<uint16_t > (true, YEAR_ENCODING_immediate), 0, CONTEXT_CLASS)) return;
-                            else free();
-                            break;
-                        }
-                        case 1:
-                        {
-                            if (ITU_T_BIND_IMPLICIT(value<uint16_t > (true, YEAR_ENCODING_near_future), 1, CONTEXT_CLASS)) return;
-                            else free();
-                            break;
-                        }
-                        case 2:
-                        {
-                            if (ITU_T_BIND_IMPLICIT(value<uint16_t > (true, YEAR_ENCODING_near_past), 2, CONTEXT_CLASS)) return;
-                            else free();
-                            break;
-                        }
-                        case 3:
-                        {
-                            if (ITU_T_BIND_IMPLICIT(value<integer_type > (true, YEAR_ENCODING_remainder), 3, CONTEXT_CLASS)) return;
-                            else free();
-                            break;
-                        }
-                        default:
-                        {
-                        }
-                    }
-                }
-                default:
-                {
-                }
-            }
+            visible_string tmpval;
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+            as_number(visible_string_to_def(tmpval, 0, "0"));
         }
 
         // sequence ANY-YEAR-ENCODING
 
         template<> void ANY_YEAR_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_BIND_IMPLICIT(as_number_, 0, CONTEXT_CLASS);
+            visible_string tmpval=to_visible_string(static_cast<int>(as_number()));
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
         }
 
         template<> void ANY_YEAR_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_BIND_IMPLICIT(as_number_, 0, CONTEXT_CLASS);
+            visible_string tmpval;
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+            as_number(visible_string_to_def(tmpval, 0, "0"));
         }
 
         // sequence YEAR-MONTH-ENCODING
 
         template<> void YEAR_MONTH_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_BIND_CHOICE_TAG(year_, 0, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(month_, 1, CONTEXT_CLASS);
+            visible_string tmpval=to_visible_string(static_cast<int>(year().as_number()), 4,'0') + 
+                    to_visible_string(static_cast<int>(month()), 2,'0');
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
         }
 
         template<> void YEAR_MONTH_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_BIND_CHOICE_TAG(year_, 0, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(month_, 1, CONTEXT_CLASS);
+            visible_string tmpval;
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+            std::string yr=tmpval.size()>2 ? tmpval.substr(0,tmpval.size()-2) : "";
+            std::string mth=tmpval.size()>=2 ? tmpval.substr(tmpval.size()-2) : "";  
+            year(string_to_def(yr, 0, "0"));
+            month(string_to_def(mth, 0, "0"));
         }
 
         // sequence ANY-YEAR-MONTH-ENCODING
 
         template<> void ANY_YEAR_MONTH_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_BIND_IMPLICIT(year_, 0, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(month_, 1, CONTEXT_CLASS);
+            visible_string tmpval=to_visible_string(static_cast<int>(year().as_number())) + 
+                    to_visible_string(static_cast<int>(month()), 2,'0');
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
         }
 
         template<> void ANY_YEAR_MONTH_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_BIND_IMPLICIT(year_, 0, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(month_, 1, CONTEXT_CLASS);
+            visible_string tmpval;
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+            std::string yr=tmpval.size()>2 ? tmpval.substr(0,tmpval.size()-2) : "";
+            std::string mth=tmpval.size()>=2 ? tmpval.substr(tmpval.size()-2) : "";  
+            year(string_to_def(yr, 0, "0"));
+            month(string_to_def(mth, 0, "0"));
         }
 
         // sequence DATE-ENCODING

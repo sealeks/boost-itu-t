@@ -203,7 +203,7 @@ namespace boost {\
                                                                               template<typename T > nm (shared_ptr< T> vl, nm ## _enum enm) :  boost::asn1::___asn__choice__base__< nm ## _enum > (vl, static_cast<int> (enm)) {};\
                                                                               template<typename T > nm (const T& vl, nm ## _enum enm) : boost::asn1::___asn__choice__base__< nm ## _enum > (new T(vl), static_cast<int> (enm)) {};
 
-
+#define ITU_T_CHOICE_CTORS_INHERITED(nm)           boost::asn1::___asn__choice__base__< nm ## _enum >()
 
 //boost::asn1::___asn__choice__base__< enm>
 
