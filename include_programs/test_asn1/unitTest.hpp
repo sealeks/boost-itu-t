@@ -168,7 +168,7 @@ namespace TestTm {
         
         DEBUG_VAL_ITU(cetn_enc)      
         DEBUG_VAL_ITU(cetn_enc1)  
-        std::cout << cetn_enc1.as_datetime() << std::endl;
+        //std::cout << cetn_enc1.as_datetime() << std::endl;
         DEBUG_VAL_ITU(cetn_enc2)                  
         DEBUG_VAL_ITU(cetn_enc3)                       
         DEBUG_VAL_ITU(acetn_enc)                 
