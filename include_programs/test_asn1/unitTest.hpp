@@ -27,6 +27,7 @@
 #include <boost/itu/time/DefinedTime.hpp>
 
 #define DEBUG_VAL_ITU(a)  std::cout << #a " = "  <<  a  << "    ===> ";   tsstr << a;
+#define DEBUG_VAL_ITU_READ(a)     tsstr >> a; std::cout << "read     " <<  #a " = "  <<  a << "\n";
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -160,19 +161,30 @@ namespace TestTm {
     template<typename T>
     inline void test(T& tsstr) {
         
-        CENTURY_ENCODING cetn_enc=19;
-        CENTURY_ENCODING cetn_enc1=std::string("16");
+        CENTURY_ENCODING cetn_enc=3;
+        CENTURY_ENCODING cetn_enc1=std::string("4");
         CENTURY_ENCODING cetn_enc2="21";        
         CENTURY_ENCODING cetn_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 1, 12));              
         ANY_CENTURY_ENCODING acetn_enc(19);        
         
-        DEBUG_VAL_ITU(cetn_enc)      
+        CENTURY_ENCODING cetn_enc_r;
+        CENTURY_ENCODING cetn_enc1_r;
+        CENTURY_ENCODING cetn_enc2_r;        
+        CENTURY_ENCODING cetn_enc3_r;              
+        ANY_CENTURY_ENCODING acetn_enc_r;             
+        
+        
+        DEBUG_VAL_ITU(cetn_enc)
+        DEBUG_VAL_ITU_READ(cetn_enc_r);
         DEBUG_VAL_ITU(cetn_enc1)  
-        //std::cout << cetn_enc1.as_datetime() << std::endl;
-        DEBUG_VAL_ITU(cetn_enc2)                  
-        DEBUG_VAL_ITU(cetn_enc3)                       
+        DEBUG_VAL_ITU_READ(cetn_enc1_r);                
+        DEBUG_VAL_ITU(cetn_enc2)   
+        DEBUG_VAL_ITU_READ(cetn_enc2_r);                
+        DEBUG_VAL_ITU(cetn_enc3) 
+        DEBUG_VAL_ITU_READ(cetn_enc3_r);                
         DEBUG_VAL_ITU(acetn_enc)                 
-
+        DEBUG_VAL_ITU_READ(acetn_enc_r);
+        
     }
 
 }
