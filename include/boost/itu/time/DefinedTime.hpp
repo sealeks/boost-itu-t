@@ -25,10 +25,10 @@ namespace boost {
             }
 
             template<typename T>
-            std::string to_string(const T& val, std::size_t sz = 0, std::string::const_pointer nlchar = 0) {
+            std::string to_string(const T& val, std::size_t sz = 0, std::string::value_type nlchar = 0) {
                 try {
                     std::string rslt = boost::lexical_cast<std::string > (val);
-                    return (sz && nlchar && (rslt.size() < sz)) ? (std::string(nlchar, sz - rslt.size())) : rslt;
+                    return (sz && nlchar && (rslt.size() < sz)) ? (std::string(sz - rslt.size(), nlchar)+rslt) : rslt;
                 }
                 catch (boost::bad_lexical_cast) {
                 }
@@ -36,7 +36,7 @@ namespace boost {
             }
 
             template<typename T>
-            visible_string to_visible_string(const T& val, std::size_t sz = 0, std::string::const_pointer nlchar = 0) {
+            visible_string to_visible_string(const T& val, std::size_t sz = 0, std::string::value_type nlchar = 0) {
                 return visible_string(to_string(val, sz, nlchar));
             }
 

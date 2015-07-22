@@ -15,14 +15,14 @@ namespace boost {
         // sequence CENTURY-ENCODING
 
         template<> void CENTURY_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
-            visible_string tmpval=to_visible_string(static_cast<int>(val()));
+            visible_string tmpval=to_visible_string(static_cast<int>(val()), 2, '0');
             ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
         }
 
         template<> void CENTURY_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
             visible_string tmpval;
             ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
-            val(visible_string_to_def(tmpval, 0));
+            val(visible_string_to_def(tmpval, 0, "0"));
         }
 
         // sequence ANY-CENTURY-ENCODING
