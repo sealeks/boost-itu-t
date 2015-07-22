@@ -43,16 +43,19 @@ namespace boost {
             template<typename T>
             T string_to_def(const std::string& val, const T& def = 0, const std::string& escchars = "") {
                 try {
-                    if (escchars.empty())
-                        return boost::lexical_cast<T > (val);
-                    else {
-                        std::string vl = boost::algorithm::erase_first_copy(val, escchars);
-                        if (vl.empty() && !val.empty())
-                            vl=val[val.size()-1];                 
-                        return boost::lexical_cast<T > (vl);
+                    if (!val.empty()) {
+                        if (escchars.empty())
+                            return boost::lexical_cast<T > (val);
+                        else {
+                            std::string::size_type it = val.find_first_not_of(escchars);
+                            if (it != 0) {
+                                std::string vl = val.substr(it != std::string::npos ? it : val.size()-1);
+                                return boost::lexical_cast<T > (vl);
+                            }
+                            return boost::lexical_cast<T > (val);
+                        }
                     }
-                }
-                catch (boost::bad_lexical_cast) {
+                } catch (boost::bad_lexical_cast) {
                 }
                 return def;
             }
