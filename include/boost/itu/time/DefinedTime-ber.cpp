@@ -15,27 +15,27 @@ namespace boost {
         // sequence CENTURY-ENCODING
 
         template<> void CENTURY_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
-            visible_string tmpval=to_visible_string(static_cast<int>(val()), 2, '0');
+            visible_string tmpval=to_visible_string(static_cast<int>(as_number()), 2, '0');
             ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
         }
 
         template<> void CENTURY_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
             visible_string tmpval;
             ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
-            val(visible_string_to_def(tmpval, 0, "0"));
+            as_number(visible_string_to_def(tmpval, 0, "0"));
         }
 
         // sequence ANY-CENTURY-ENCODING
 
         template<> void ANY_CENTURY_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
-            visible_string tmpval=to_visible_string(static_cast<int>(val()));
+            visible_string tmpval=to_visible_string(static_cast<int>(as_number()));
             ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
         }
 
         template<> void ANY_CENTURY_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
             visible_string tmpval;
             ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
-            val(visible_string_to_def(tmpval, 0));
+            as_number(visible_string_to_def(tmpval, 0));
         }
 
         // choice YEAR-ENCODING
@@ -112,11 +112,11 @@ namespace boost {
         // sequence ANY-YEAR-ENCODING
 
         template<> void ANY_YEAR_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_BIND_IMPLICIT(val_, 0, CONTEXT_CLASS);
+            ITU_T_BIND_IMPLICIT(as_number_, 0, CONTEXT_CLASS);
         }
 
         template<> void ANY_YEAR_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_BIND_IMPLICIT(val_, 0, CONTEXT_CLASS);
+            ITU_T_BIND_IMPLICIT(as_number_, 0, CONTEXT_CLASS);
         }
 
         // sequence YEAR-MONTH-ENCODING
@@ -250,21 +250,21 @@ namespace boost {
         // sequence HOURS-ENCODING
 
         template<> void HOURS_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_BIND_IMPLICIT(val_, 0, CONTEXT_CLASS);
+            ITU_T_BIND_IMPLICIT(as_number_, 0, CONTEXT_CLASS);
         }
 
         template<> void HOURS_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_BIND_IMPLICIT(val_, 0, CONTEXT_CLASS);
+            ITU_T_BIND_IMPLICIT(as_number_, 0, CONTEXT_CLASS);
         }
 
         // sequence HOURS-UTC-ENCODING
 
         template<> void HOURS_UTC_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_BIND_IMPLICIT(val_, 0, CONTEXT_CLASS);
+            ITU_T_BIND_IMPLICIT(as_number_, 0, CONTEXT_CLASS);
         }
 
         template<> void HOURS_UTC_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_BIND_IMPLICIT(val_, 0, CONTEXT_CLASS);
+            ITU_T_BIND_IMPLICIT(as_number_, 0, CONTEXT_CLASS);
         }
 
         // sequence HOURS-AND-DIFF-ENCODING

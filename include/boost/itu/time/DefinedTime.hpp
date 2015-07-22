@@ -127,7 +127,7 @@ namespace boost {
 
             base_date as_date() const;
 
-            ITU_T_HOLDERH_DECL(val, uint8_t); //   Ic(  [ 0  ...   99 ]   
+            ITU_T_HOLDERH_DECL(as_number, uint8_t); //   Ic(  [ 0  ...   99 ]   
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -153,7 +153,7 @@ namespace boost {
 
             base_date as_date() const;
 
-            ITU_T_HOLDERH_DECL(val, integer_type);
+            ITU_T_HOLDERH_DECL(as_number, integer_type);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -172,7 +172,15 @@ namespace boost {
 
 
             ITU_T_CHOICE_CTORS(YEAR_ENCODING);
+            
+            YEAR_ENCODING(integer_type vl);    
+            
+            YEAR_ENCODING(const std::string& v);
 
+            YEAR_ENCODING(const char* v);
+
+            YEAR_ENCODING(const base_date_time& v);            
+            
             ITU_T_CHOICES_DECL(immediate, uint16_t, YEAR_ENCODING_immediate); // primitive  //   Ic(  [ 2005  ...   2020 ]   
             ITU_T_CHOICES_DECL(near_future, uint16_t, YEAR_ENCODING_near_future); // primitive  //   Ic(  [ 2021  ...   2276 ]   
             ITU_T_CHOICES_DECL(near_past, uint16_t, YEAR_ENCODING_near_past); // primitive  //   Ic(  [ 1749  ...   2004 ]   
@@ -184,13 +192,22 @@ namespace boost {
         // sequence ANY-YEAR-ENCODING
 
         struct ANY_YEAR_ENCODING {
+            
             ANY_YEAR_ENCODING();
 
             ANY_YEAR_ENCODING(const integer_type& arg__val);
 
-            ANY_YEAR_ENCODING(ITU_T_SHARED(integer_type) arg__val);
+            ANY_YEAR_ENCODING(const std::string& vl);
 
-            ITU_T_HOLDERH_DECL(val, integer_type);
+            ANY_YEAR_ENCODING(const char* vl);
+
+            ANY_YEAR_ENCODING(const base_date_time& vl);
+
+            base_date_time as_datetime() const;
+
+            base_date as_date() const;
+
+            ITU_T_HOLDERH_DECL(as_number, integer_type);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -386,7 +403,7 @@ namespace boost {
 
             HOURS_ENCODING(ITU_T_SHARED(uint8_t) arg__val);
 
-            ITU_T_HOLDERH_DECL(val, uint8_t); //   Ic(  [ 0  ...   24 ]   
+            ITU_T_HOLDERH_DECL(as_number, uint8_t); //   Ic(  [ 0  ...   24 ]   
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -400,7 +417,7 @@ namespace boost {
 
             HOURS_UTC_ENCODING(ITU_T_SHARED(uint8_t) arg__val);
 
-            ITU_T_HOLDERH_DECL(val, uint8_t); //   Ic(  [ 0  ...   24 ]   
+            ITU_T_HOLDERH_DECL(as_number, uint8_t); //   Ic(  [ 0  ...   24 ]   
 
             ITU_T_ARCHIVE_FUNC;
         };

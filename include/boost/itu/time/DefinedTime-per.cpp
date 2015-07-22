@@ -19,21 +19,21 @@ namespace boost {
         // sequence CENTURY-ENCODING
 
         template<> void CENTURY_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(val_, static_cast<uint8_t> (0), static_cast<uint8_t> (99));
+            ITU_T_BIND_NUM_CONSTRAINT(as_number_, static_cast<uint8_t> (0), static_cast<uint8_t> (99));
         }
 
         template<> void CENTURY_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(val_, static_cast<uint8_t> (0), static_cast<uint8_t> (99));
+            ITU_T_BIND_NUM_CONSTRAINT(as_number_, static_cast<uint8_t> (0), static_cast<uint8_t> (99));
         }
 
         // sequence ANY-CENTURY-ENCODING
 
         template<> void ANY_CENTURY_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(val_);
+            ITU_T_BIND_PER(as_number_);
         }
 
         template<> void ANY_CENTURY_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(val_);
+            ITU_T_BIND_PER(as_number_);
         }
 
         // choice YEAR-ENCODING
@@ -104,11 +104,11 @@ namespace boost {
         // sequence ANY-YEAR-ENCODING
 
         template<> void ANY_YEAR_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(val_);
+            ITU_T_BIND_PER(as_number_);
         }
 
         template<> void ANY_YEAR_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(val_);
+            ITU_T_BIND_PER(as_number_);
         }
 
         // sequence YEAR-MONTH-ENCODING
@@ -242,21 +242,21 @@ namespace boost {
         // sequence HOURS-ENCODING
 
         template<> void HOURS_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(val_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
+            ITU_T_BIND_NUM_CONSTRAINT(as_number_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
         }
 
         template<> void HOURS_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(val_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
+            ITU_T_BIND_NUM_CONSTRAINT(as_number_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
         }
 
         // sequence HOURS-UTC-ENCODING
 
         template<> void HOURS_UTC_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(val_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
+            ITU_T_BIND_NUM_CONSTRAINT(as_number_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
         }
 
         template<> void HOURS_UTC_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(val_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
+            ITU_T_BIND_NUM_CONSTRAINT(as_number_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
         }
 
         // sequence HOURS-AND-DIFF-ENCODING

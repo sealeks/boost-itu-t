@@ -13,35 +13,35 @@ namespace boost {
 
         // sequence CENTURY-ENCODING
 
-        CENTURY_ENCODING::CENTURY_ENCODING() : val_() {
+        CENTURY_ENCODING::CENTURY_ENCODING() : as_number_() {
         };
 
         CENTURY_ENCODING::CENTURY_ENCODING(const uint8_t& arg__val) :
-        val_(to_range(arg__val, (uint8_t) 0, (uint8_t) 99)) {
+        as_number_(to_range(arg__val, (uint8_t) 0, (uint8_t) 99)) {
         };
 
         CENTURY_ENCODING::CENTURY_ENCODING(const std::string& vl) :
-        val_(to_range<uint8_t>(string_to_def<int>(vl), (uint8_t) 0, (uint8_t) 99)) {
+        as_number_(to_range<uint8_t>(string_to_def<int>(vl), (uint8_t) 0, (uint8_t) 99)) {
         };
 
         CENTURY_ENCODING::CENTURY_ENCODING(const char* vl) :
-        val_(to_range<uint8_t>(string_to_def<int>(std::string(vl)), (uint8_t) 0, (uint8_t) 99)) {
+        as_number_(to_range<uint8_t>(string_to_def<int>(std::string(vl)), (uint8_t) 0, (uint8_t) 99)) {
         };
 
         CENTURY_ENCODING::CENTURY_ENCODING(const base_date_time& vl) :
-        val_(to_range<uint8_t>(vl.date().year() / 100, (uint8_t) 0, (uint8_t) 99)) {
+        as_number_(to_range<uint8_t>(vl.date().year() / 100, (uint8_t) 0, (uint8_t) 99)) {
         }
 
         base_date_time CENTURY_ENCODING::as_datetime() const {
-            return base_date_time(base_date(static_cast<int> (val())*100, 1, 1));
+            return base_date_time(base_date(static_cast<int> (as_number())*100, 1, 1));
         }
 
         base_date CENTURY_ENCODING::as_date() const {
-            return base_date(static_cast<int> (val())*100, 1, 1);
+            return base_date(static_cast<int> (as_number())*100, 1, 1);
         }
 
 
-        ITU_T_HOLDERH_DEFN(CENTURY_ENCODING::val, val, uint8_t);
+        ITU_T_HOLDERH_DEFN(CENTURY_ENCODING::as_number, as_number, uint8_t);
 
 
 
@@ -50,35 +50,35 @@ namespace boost {
 
         // sequence ANY-CENTURY-ENCODING
 
-        ANY_CENTURY_ENCODING::ANY_CENTURY_ENCODING() : val_() {
+        ANY_CENTURY_ENCODING::ANY_CENTURY_ENCODING() : as_number_() {
         };
 
         ANY_CENTURY_ENCODING::ANY_CENTURY_ENCODING(const integer_type& arg__val) :
-        val_(arg__val) {
+        as_number_(arg__val) {
         };
 
         ANY_CENTURY_ENCODING::ANY_CENTURY_ENCODING(const std::string& vl) :
-        val_(string_to_def<integer_type>(vl)) {
+        as_number_(string_to_def<integer_type>(vl)) {
         };
 
         ANY_CENTURY_ENCODING::ANY_CENTURY_ENCODING(const char* vl) :
-        val_(string_to_def<integer_type>(std::string(vl))) {
+        as_number_(string_to_def<integer_type>(std::string(vl))) {
         };
 
         ANY_CENTURY_ENCODING::ANY_CENTURY_ENCODING(const base_date_time& vl) :
-        val_(vl.date().year() / 100) {
+        as_number_(vl.date().year() / 100) {
         }
 
         base_date_time ANY_CENTURY_ENCODING::as_datetime() const {
-            return base_date_time(base_date(static_cast<int> (val())*100, 1, 1));
+            return base_date_time(base_date(static_cast<int> (as_number())*100, 1, 1));
         }
 
         base_date ANY_CENTURY_ENCODING::as_date() const {
-            return base_date(static_cast<int> (val())*100, 1, 1);
+            return base_date(static_cast<int> (as_number())*100, 1, 1);
         }
 
 
-        ITU_T_HOLDERH_DEFN(ANY_CENTURY_ENCODING::val, val, integer_type);
+        ITU_T_HOLDERH_DEFN(ANY_CENTURY_ENCODING::as_number, as_number, integer_type);
 
 
 
@@ -87,6 +87,51 @@ namespace boost {
 
         // choice YEAR-ENCODING
 
+        YEAR_ENCODING::YEAR_ENCODING(integer_type vl) {
+            if (vl < 1749 && vl > 2276)
+                remainder(vl);
+            else if (vl <= 2004)
+                near_past(static_cast<uint16_t> (vl));
+            else if (vl <= 2020)
+                immediate(static_cast<uint16_t> (vl));
+            near_future(static_cast<uint16_t> (vl));
+        }
+
+        YEAR_ENCODING::YEAR_ENCODING(const std::string& v) {
+            integer_type vl = string_to_def<integer_type>(v);
+            if (vl < 1749 && vl > 2276)
+                remainder(vl);
+            else if (vl <= 2004)
+                near_past(static_cast<uint16_t> (vl));
+            else if (vl <= 2020)
+                immediate(static_cast<uint16_t> (vl));
+            near_future(static_cast<uint16_t> (vl));
+        }
+
+        YEAR_ENCODING::YEAR_ENCODING(const char* v) {
+            integer_type vl = string_to_def<integer_type>(std::string(v));
+            if (vl < 1749 && vl > 2276)
+                remainder(vl);
+            else if (vl <= 2004)
+                near_past(static_cast<uint16_t> (vl));
+            else if (vl <= 2020)
+                immediate(static_cast<uint16_t> (vl));
+            near_future(static_cast<uint16_t> (vl));
+        }
+
+        YEAR_ENCODING::YEAR_ENCODING(const base_date_time& v) {
+            integer_type vl = v.date().year();
+            if (vl < 1749 && vl > 2276)
+                remainder(vl);
+            else if (vl <= 2004)
+                near_past(static_cast<uint16_t> (vl));
+            else if (vl <= 2020)
+                immediate(static_cast<uint16_t> (vl));
+            near_future(static_cast<uint16_t> (vl));
+        }
+
+
+
         ITU_T_CHOICES_DEFN(YEAR_ENCODING::immediate, immediate, uint16_t, YEAR_ENCODING_immediate);
         ITU_T_CHOICES_DEFN(YEAR_ENCODING::near_future, near_future, uint16_t, YEAR_ENCODING_near_future);
         ITU_T_CHOICES_DEFN(YEAR_ENCODING::near_past, near_past, uint16_t, YEAR_ENCODING_near_past);
@@ -94,19 +139,40 @@ namespace boost {
 
         // sequence ANY-YEAR-ENCODING
 
-        ANY_YEAR_ENCODING::ANY_YEAR_ENCODING() : val_() {
+        ANY_YEAR_ENCODING::ANY_YEAR_ENCODING() : as_number_() {
         };
 
         ANY_YEAR_ENCODING::ANY_YEAR_ENCODING(const integer_type& arg__val) :
-        val_(arg__val) {
+        as_number_(arg__val) {
         };
 
-        ANY_YEAR_ENCODING::ANY_YEAR_ENCODING(ITU_T_SHARED(integer_type) arg__val) :
-        val_(arg__val) {
+        ANY_YEAR_ENCODING::ANY_YEAR_ENCODING(const std::string& vl) :
+        as_number_(string_to_def<integer_type>(vl)) {
         };
 
+        ANY_YEAR_ENCODING::ANY_YEAR_ENCODING(const char* vl) :
+        as_number_(string_to_def<integer_type>(std::string(vl))) {
+        };
 
-        ITU_T_HOLDERH_DEFN(ANY_YEAR_ENCODING::val, val, integer_type);
+        ANY_YEAR_ENCODING::ANY_YEAR_ENCODING(const base_date_time& vl) :
+        as_number_(vl.date().year()) {
+        }
+
+        base_date_time ANY_YEAR_ENCODING::as_datetime() const {
+            return base_date_time(base_date(static_cast<int> (as_number()), 1, 1));
+        }
+
+        base_date ANY_YEAR_ENCODING::as_date() const {
+            return base_date(static_cast<int> (as_number()), 1, 1);
+        }
+
+
+        ITU_T_HOLDERH_DEFN(ANY_YEAR_ENCODING::as_number, as_number, integer_type);
+
+
+
+
+
 
         // sequence YEAR-MONTH-ENCODING
 
@@ -340,35 +406,35 @@ namespace boost {
 
         // sequence HOURS-ENCODING
 
-        HOURS_ENCODING::HOURS_ENCODING() : val_() {
+        HOURS_ENCODING::HOURS_ENCODING() : as_number_() {
         };
 
         HOURS_ENCODING::HOURS_ENCODING(const uint8_t& arg__val) :
-        val_(arg__val) {
+        as_number_(arg__val) {
         };
 
         HOURS_ENCODING::HOURS_ENCODING(ITU_T_SHARED(uint8_t) arg__val) :
-        val_(arg__val) {
+        as_number_(arg__val) {
         };
 
 
-        ITU_T_HOLDERH_DEFN(HOURS_ENCODING::val, val, uint8_t);
+        ITU_T_HOLDERH_DEFN(HOURS_ENCODING::as_number, as_number, uint8_t);
 
         // sequence HOURS-UTC-ENCODING
 
-        HOURS_UTC_ENCODING::HOURS_UTC_ENCODING() : val_() {
+        HOURS_UTC_ENCODING::HOURS_UTC_ENCODING() : as_number_() {
         };
 
         HOURS_UTC_ENCODING::HOURS_UTC_ENCODING(const uint8_t& arg__val) :
-        val_(arg__val) {
+        as_number_(arg__val) {
         };
 
         HOURS_UTC_ENCODING::HOURS_UTC_ENCODING(ITU_T_SHARED(uint8_t) arg__val) :
-        val_(arg__val) {
+        as_number_(arg__val) {
         };
 
 
-        ITU_T_HOLDERH_DEFN(HOURS_UTC_ENCODING::val, val, uint8_t);
+        ITU_T_HOLDERH_DEFN(HOURS_UTC_ENCODING::as_number, as_number, uint8_t);
 
         // sequence HOURS-AND-DIFF-ENCODING
 
@@ -1772,11 +1838,11 @@ namespace boost {
         // std::cout methods
 
         std::ostream& operator<<(std::ostream& stream, const CENTURY_ENCODING& vl) {
-            return stream << "century : " << static_cast<int> (vl.val());
+            return stream << "century : " << static_cast<int> (vl.as_number());
         };
 
         std::ostream& operator<<(std::ostream& stream, const ANY_CENTURY_ENCODING& vl) {
-            return stream << "century : " << vl.val();
+            return stream << "century : " << vl.as_number();
         };
 
         std::ostream& operator<<(std::ostream& stream, const YEAR_ENCODING& vl) {
@@ -1801,7 +1867,7 @@ namespace boost {
 
         std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_ENCODING& vl) {
             stream << "{ ";
-            stream << "val :  " << vl.val();
+            stream << "year :  " << vl.as_number();
             stream << " }";
             return stream;
         };
@@ -1892,14 +1958,14 @@ namespace boost {
 
         std::ostream& operator<<(std::ostream& stream, const HOURS_ENCODING& vl) {
             stream << "{ ";
-            stream << "val :  " << vl.val();
+            stream << "hour :  " << vl.as_number();
             stream << " }";
             return stream;
         };
 
         std::ostream& operator<<(std::ostream& stream, const HOURS_UTC_ENCODING& vl) {
             stream << "{ ";
-            stream << "val :  " << vl.val();
+            stream << "hour :  " << vl.as_number();
             stream << " }";
             return stream;
         };
