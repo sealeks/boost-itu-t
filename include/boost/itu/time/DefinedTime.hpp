@@ -28,9 +28,8 @@ namespace boost {
             std::string to_string(const T& val, std::size_t sz = 0, std::string::value_type nlchar = 0) {
                 try {
                     std::string rslt = boost::lexical_cast<std::string > (val);
-                    return (sz && nlchar && (rslt.size() < sz)) ? (std::string(sz - rslt.size(), nlchar)+rslt) : rslt;
-                }
-                catch (boost::bad_lexical_cast) {
+                    return (sz && nlchar && (rslt.size() < sz)) ? (std::string(sz - rslt.size(), nlchar) + rslt) : rslt;
+                }                catch (boost::bad_lexical_cast) {
                 }
                 return (sz && nlchar) ? std::string(nlchar, sz) : "";
             }
@@ -49,7 +48,7 @@ namespace boost {
                         else {
                             std::string::size_type it = val.find_first_not_of(escchars);
                             if (it != 0) {
-                                std::string vl = val.substr(it != std::string::npos ? it : val.size()-1);
+                                std::string vl = val.substr(it != std::string::npos ? it : val.size() - 1);
                                 return boost::lexical_cast<T > (vl);
                             }
                             return boost::lexical_cast<T > (val);
@@ -116,6 +115,7 @@ namespace boost {
         // sequence CENTURY-ENCODING
 
         struct CENTURY_ENCODING {
+
             CENTURY_ENCODING();
 
             CENTURY_ENCODING(const uint8_t& arg__vl);
@@ -142,6 +142,7 @@ namespace boost {
         // sequence ANY-CENTURY-ENCODING
 
         struct ANY_CENTURY_ENCODING {
+
             ANY_CENTURY_ENCODING();
 
             ANY_CENTURY_ENCODING(const integer_type& arg__vl);
@@ -160,14 +161,15 @@ namespace boost {
 
             ITU_T_ARCHIVE_FUNC;
         };
-        
-        
-        
-        
+
+
+
+
 
         // choice YEAR-ENCODING
 
         enum YEAR_ENCODING_enum {
+
             YEAR_ENCODING_null = 0,
             YEAR_ENCODING_immediate,
             YEAR_ENCODING_near_future,
@@ -179,38 +181,38 @@ namespace boost {
 
 
             ITU_T_CHOICE_CTORS(YEAR_ENCODING);
-            
-            YEAR_ENCODING(integer_type vl);    
-            
-            YEAR_ENCODING(const std::string& v);
+
+            YEAR_ENCODING(integer_type vl);
+
+            YEAR_ENCODING(const std::string & v);
 
             YEAR_ENCODING(const char* v);
 
-            YEAR_ENCODING(const base_date_time& v);            
-            
+            YEAR_ENCODING(const base_date_time & v);
+
             ITU_T_CHOICES_DECL(immediate, uint16_t, YEAR_ENCODING_immediate); // primitive  //   Ic(  [ 2005  ...   2020 ]   
             ITU_T_CHOICES_DECL(near_future, uint16_t, YEAR_ENCODING_near_future); // primitive  //   Ic(  [ 2021  ...   2276 ]   
             ITU_T_CHOICES_DECL(near_past, uint16_t, YEAR_ENCODING_near_past); // primitive  //   Ic(  [ 1749  ...   2004 ]   
             ITU_T_CHOICES_DECL(remainder, integer_type, YEAR_ENCODING_remainder); // primitive  //   Ic(  [ ... ]   
-            
+
             base_date_time as_datetime() const;
 
-            base_date as_date() const;            
-            
+            base_date as_date() const;
+
             integer_type as_number() const;
 
-            void as_number(integer_type v);    
+            void as_number(integer_type v);
 
             ITU_T_ARCHIVE_FUNC;
         };
-        
-        
-        
+
+
+
 
         // sequence ANY-YEAR-ENCODING
 
         struct ANY_YEAR_ENCODING {
-            
+
             ANY_YEAR_ENCODING();
 
             ANY_YEAR_ENCODING(const integer_type& arg__val);
@@ -229,22 +231,22 @@ namespace boost {
 
             ITU_T_ARCHIVE_FUNC;
         };
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
 
         // sequence YEAR-MONTH-ENCODING
 
         struct YEAR_MONTH_ENCODING {
-            
+
             YEAR_MONTH_ENCODING();
 
             YEAR_MONTH_ENCODING(integer_type arg__year,
                     const uint8_t& arg__month);
-            
+
             YEAR_MONTH_ENCODING(const std::string& vl);
 
             YEAR_MONTH_ENCODING(const char* vl);
@@ -253,7 +255,7 @@ namespace boost {
 
             base_date_time as_datetime() const;
 
-            base_date as_date() const;            
+            base_date as_date() const;
 
 
             ITU_T_HOLDERH_DECL(year, YEAR_ENCODING);
@@ -262,14 +264,15 @@ namespace boost {
             ITU_T_ARCHIVE_FUNC;
         };
 
-        
-        
-        
-        
-        
+
+
+
+
+
         // sequence ANY-YEAR-MONTH-ENCODING
 
         struct ANY_YEAR_MONTH_ENCODING {
+
             ANY_YEAR_MONTH_ENCODING();
 
             ANY_YEAR_MONTH_ENCODING(integer_type arg__year,
@@ -283,7 +286,7 @@ namespace boost {
 
             base_date_time as_datetime() const;
 
-            base_date as_date() const;  
+            base_date as_date() const;
 
             ITU_T_HOLDERH_DECL(year, ANY_YEAR_ENCODING);
             ITU_T_HOLDERH_DECL(month, uint8_t); //   Ic(  [ 1  ...   12 ]   
@@ -291,21 +294,28 @@ namespace boost {
             ITU_T_ARCHIVE_FUNC;
         };
 
-        
-        
-        
+
+
+
         // sequence DATE-ENCODING
 
         struct DATE_ENCODING {
+
             DATE_ENCODING();
 
-            DATE_ENCODING(const YEAR_ENCODING& arg__year,
+            DATE_ENCODING(integer_type arg__year,
                     const uint8_t& arg__month,
                     const uint8_t& arg__day);
 
-            DATE_ENCODING(ITU_T_SHARED(YEAR_ENCODING) arg__year,
-                    ITU_T_SHARED(uint8_t) arg__month,
-                    ITU_T_SHARED(uint8_t) arg__day);
+            DATE_ENCODING(const std::string& vl);
+
+            DATE_ENCODING(const char* vl);
+
+            DATE_ENCODING(const base_date_time& vl);
+
+            base_date_time as_datetime() const;
+
+            base_date as_date() const;
 
             ITU_T_HOLDERH_DECL(year, YEAR_ENCODING);
             ITU_T_HOLDERH_DECL(month, uint8_t); //   Ic(  [ 1  ...   12 ]   
@@ -314,18 +324,30 @@ namespace boost {
             ITU_T_ARCHIVE_FUNC;
         };
 
+
+
+
+
+
         // sequence ANY-DATE-ENCODING
 
         struct ANY_DATE_ENCODING {
+
             ANY_DATE_ENCODING();
 
-            ANY_DATE_ENCODING(const ANY_YEAR_ENCODING& arg__year,
+            ANY_DATE_ENCODING(integer_type arg__year,
                     const uint8_t& arg__month,
                     const uint8_t& arg__day);
 
-            ANY_DATE_ENCODING(ITU_T_SHARED(ANY_YEAR_ENCODING) arg__year,
-                    ITU_T_SHARED(uint8_t) arg__month,
-                    ITU_T_SHARED(uint8_t) arg__day);
+            ANY_DATE_ENCODING(const std::string& vl);
+
+            ANY_DATE_ENCODING(const char* vl);
+
+            ANY_DATE_ENCODING(const base_date_time& vl);
+
+            base_date_time as_datetime() const;
+
+            base_date as_date() const;
 
             ITU_T_HOLDERH_DECL(year, ANY_YEAR_ENCODING);
             ITU_T_HOLDERH_DECL(month, uint8_t); //   Ic(  [ 1  ...   12 ]   
@@ -337,6 +359,7 @@ namespace boost {
         // sequence YEAR-DAY-ENCODING
 
         struct YEAR_DAY_ENCODING {
+
             YEAR_DAY_ENCODING();
 
             YEAR_DAY_ENCODING(const YEAR_ENCODING& arg__year,
@@ -354,6 +377,7 @@ namespace boost {
         // sequence ANY-YEAR-DAY-ENCODING
 
         struct ANY_YEAR_DAY_ENCODING {
+
             ANY_YEAR_DAY_ENCODING();
 
             ANY_YEAR_DAY_ENCODING(const ANY_YEAR_ENCODING& arg__year,
@@ -371,6 +395,7 @@ namespace boost {
         // sequence YEAR-WEEK-ENCODING
 
         struct YEAR_WEEK_ENCODING {
+
             YEAR_WEEK_ENCODING();
 
             YEAR_WEEK_ENCODING(const YEAR_ENCODING& arg__year,
@@ -388,6 +413,7 @@ namespace boost {
         // sequence ANY-YEAR-WEEK-ENCODING
 
         struct ANY_YEAR_WEEK_ENCODING {
+
             ANY_YEAR_WEEK_ENCODING();
 
             ANY_YEAR_WEEK_ENCODING(const ANY_YEAR_ENCODING& arg__year,
@@ -405,6 +431,7 @@ namespace boost {
         // sequence YEAR-WEEK-DAY-ENCODING
 
         struct YEAR_WEEK_DAY_ENCODING {
+
             YEAR_WEEK_DAY_ENCODING();
 
             YEAR_WEEK_DAY_ENCODING(const YEAR_ENCODING& arg__year,
@@ -425,6 +452,7 @@ namespace boost {
         // sequence ANY-YEAR-WEEK-DAY-ENCODING
 
         struct ANY_YEAR_WEEK_DAY_ENCODING {
+
             ANY_YEAR_WEEK_DAY_ENCODING();
 
             ANY_YEAR_WEEK_DAY_ENCODING(const ANY_YEAR_ENCODING& arg__year,
@@ -445,6 +473,7 @@ namespace boost {
         // sequence HOURS-ENCODING
 
         struct HOURS_ENCODING {
+
             HOURS_ENCODING();
 
             HOURS_ENCODING(const uint8_t& arg__val);
@@ -459,6 +488,7 @@ namespace boost {
         // sequence HOURS-UTC-ENCODING
 
         struct HOURS_UTC_ENCODING {
+
             HOURS_UTC_ENCODING();
 
             HOURS_UTC_ENCODING(const uint8_t& arg__val);
@@ -473,6 +503,7 @@ namespace boost {
         // sequence HOURS-AND-DIFF-ENCODING
 
         struct HOURS_AND_DIFF_ENCODING {
+
             HOURS_AND_DIFF_ENCODING();
 
             HOURS_AND_DIFF_ENCODING(const uint8_t& arg__local_hours,
@@ -490,6 +521,7 @@ namespace boost {
         // sequence TIME-DIFFERENCE
 
         struct TIME_DIFFERENCE {
+
             static const enumerated sign_positive;
             static const enumerated sign_negative;
 
@@ -513,6 +545,7 @@ namespace boost {
         // sequence MINUTES-ENCODING
 
         struct MINUTES_ENCODING {
+
             MINUTES_ENCODING();
 
             MINUTES_ENCODING(const uint8_t& arg__hours,
@@ -530,6 +563,7 @@ namespace boost {
         // sequence MINUTES-UTC-ENCODING
 
         struct MINUTES_UTC_ENCODING {
+
             MINUTES_UTC_ENCODING();
 
             MINUTES_UTC_ENCODING(const uint8_t& arg__hours,
@@ -547,9 +581,11 @@ namespace boost {
         // sequence MINUTES-AND-DIFF-ENCODING
 
         struct MINUTES_AND_DIFF_ENCODING {
+
             struct Local_time_type;
 
             struct Local_time_type {
+
                 Local_time_type();
 
                 Local_time_type(const uint8_t& arg__hours,
@@ -582,6 +618,7 @@ namespace boost {
         // sequence TIME-OF-DAY-ENCODING
 
         struct TIME_OF_DAY_ENCODING {
+
             TIME_OF_DAY_ENCODING();
 
             TIME_OF_DAY_ENCODING(const uint8_t& arg__hours,
@@ -602,6 +639,7 @@ namespace boost {
         // sequence TIME-OF-DAY-UTC-ENCODING
 
         struct TIME_OF_DAY_UTC_ENCODING {
+
             TIME_OF_DAY_UTC_ENCODING();
 
             TIME_OF_DAY_UTC_ENCODING(const uint8_t& arg__hours,
@@ -622,9 +660,11 @@ namespace boost {
         // sequence TIME-OF-DAY-AND-DIFF-ENCODING
 
         struct TIME_OF_DAY_AND_DIFF_ENCODING {
+
             struct Local_time_type;
 
             struct Local_time_type {
+
                 Local_time_type();
 
                 Local_time_type(const uint8_t& arg__hours,
@@ -660,6 +700,7 @@ namespace boost {
         // sequence HOURS-AND-FRACTION-ENCODING
 
         struct HOURS_AND_FRACTION_ENCODING {
+
             HOURS_AND_FRACTION_ENCODING();
 
             HOURS_AND_FRACTION_ENCODING(const uint8_t& arg__hours,
@@ -677,6 +718,7 @@ namespace boost {
         // sequence HOURS-UTC-AND-FRACTION-ENCODING
 
         struct HOURS_UTC_AND_FRACTION_ENCODING {
+
             HOURS_UTC_AND_FRACTION_ENCODING();
 
             HOURS_UTC_AND_FRACTION_ENCODING(const uint8_t& arg__hours,
@@ -694,6 +736,7 @@ namespace boost {
         // sequence HOURS-AND-DIFF-AND-FRACTION-ENCODING
 
         struct HOURS_AND_DIFF_AND_FRACTION_ENCODING {
+
             HOURS_AND_DIFF_AND_FRACTION_ENCODING();
 
             HOURS_AND_DIFF_AND_FRACTION_ENCODING(const uint8_t& arg__local_hours,
@@ -714,6 +757,7 @@ namespace boost {
         // sequence MINUTES-AND-FRACTION-ENCODING
 
         struct MINUTES_AND_FRACTION_ENCODING {
+
             MINUTES_AND_FRACTION_ENCODING();
 
             MINUTES_AND_FRACTION_ENCODING(const uint8_t& arg__hours,
@@ -734,6 +778,7 @@ namespace boost {
         // sequence MINUTES-UTC-AND-FRACTION-ENCODING
 
         struct MINUTES_UTC_AND_FRACTION_ENCODING {
+
             MINUTES_UTC_AND_FRACTION_ENCODING();
 
             MINUTES_UTC_AND_FRACTION_ENCODING(const uint8_t& arg__hours,
@@ -754,9 +799,11 @@ namespace boost {
         // sequence MINUTES-AND-DIFF-AND-FRACTION-ENCODING
 
         struct MINUTES_AND_DIFF_AND_FRACTION_ENCODING {
+
             struct Local_time_type;
 
             struct Local_time_type {
+
                 Local_time_type();
 
                 Local_time_type(const uint8_t& arg__hours,
@@ -792,6 +839,7 @@ namespace boost {
         // sequence TIME-OF-DAY-AND-FRACTION-ENCODING
 
         struct TIME_OF_DAY_AND_FRACTION_ENCODING {
+
             TIME_OF_DAY_AND_FRACTION_ENCODING();
 
             TIME_OF_DAY_AND_FRACTION_ENCODING(const uint8_t& arg__hours,
@@ -815,6 +863,7 @@ namespace boost {
         // sequence TIME-OF-DAY-UTC-AND-FRACTION-ENCODING
 
         struct TIME_OF_DAY_UTC_AND_FRACTION_ENCODING {
+
             TIME_OF_DAY_UTC_AND_FRACTION_ENCODING();
 
             TIME_OF_DAY_UTC_AND_FRACTION_ENCODING(const uint8_t& arg__hours,
@@ -838,9 +887,11 @@ namespace boost {
         // sequence TIME-OF-DAY-AND-DIFF-AND-FRACTION-ENCODING
 
         struct TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING {
+
             struct Local_time_type;
 
             struct Local_time_type {
+
                 Local_time_type();
 
                 Local_time_type(const uint8_t& arg__hours,
@@ -879,9 +930,11 @@ namespace boost {
         // sequence DURATION-INTERVAL-ENCODING
 
         struct DURATION_INTERVAL_ENCODING {
+
             struct Fractional_part_type;
 
             struct Fractional_part_type {
+
                 Fractional_part_type();
 
                 Fractional_part_type(const integer_type& arg__number_of_digits,
@@ -923,6 +976,7 @@ namespace boost {
         // sequence REC-DURATION-INTERVAL-ENCODING
 
         struct REC_DURATION_INTERVAL_ENCODING {
+
             REC_DURATION_INTERVAL_ENCODING();
 
             REC_DURATION_INTERVAL_ENCODING(const DURATION_INTERVAL_ENCODING& arg__duration);
@@ -939,6 +993,7 @@ namespace boost {
         // choice MIXED-ENCODING
 
         enum MIXED_ENCODING_enum {
+
             MIXED_ENCODING_null = 0,
             MIXED_ENCODING_date_C_Basic,
             MIXED_ENCODING_date_C_L,
@@ -1028,6 +1083,7 @@ namespace boost {
             struct Rec_Interval_DE_Date_Time_type;
 
             struct Time_HFn_L_type {
+
                 Time_HFn_L_type();
 
                 Time_HFn_L_type(const integer_type& arg__number_of_digits,
@@ -1043,6 +1099,7 @@ namespace boost {
             };
 
             struct Time_HFn_Z_type {
+
                 Time_HFn_Z_type();
 
                 Time_HFn_Z_type(const integer_type& arg__number_of_digits,
@@ -1058,6 +1115,7 @@ namespace boost {
             };
 
             struct Time_HFn_LD_type {
+
                 Time_HFn_LD_type();
 
                 Time_HFn_LD_type(const integer_type& arg__number_of_digits,
@@ -1073,6 +1131,7 @@ namespace boost {
             };
 
             struct Time_HMFn_L_type {
+
                 Time_HMFn_L_type();
 
                 Time_HMFn_L_type(const integer_type& arg__number_of_digits,
@@ -1088,6 +1147,7 @@ namespace boost {
             };
 
             struct Time_HMFn_Z_type {
+
                 Time_HMFn_Z_type();
 
                 Time_HMFn_Z_type(const integer_type& arg__number_of_digits,
@@ -1103,6 +1163,7 @@ namespace boost {
             };
 
             struct Time_HMFn_LD_type {
+
                 Time_HMFn_LD_type();
 
                 Time_HMFn_LD_type(const integer_type& arg__number_of_digits,
@@ -1118,6 +1179,7 @@ namespace boost {
             };
 
             struct Time_HMFSn_L_type {
+
                 Time_HMFSn_L_type();
 
                 Time_HMFSn_L_type(const integer_type& arg__number_of_digits,
@@ -1133,6 +1195,7 @@ namespace boost {
             };
 
             struct Time_HMFSn_Z_type {
+
                 Time_HMFSn_Z_type();
 
                 Time_HMFSn_Z_type(const integer_type& arg__number_of_digits,
@@ -1148,6 +1211,7 @@ namespace boost {
             };
 
             struct Time_HMFSn_LD_type {
+
                 Time_HMFSn_LD_type();
 
                 Time_HMFSn_LD_type(const integer_type& arg__number_of_digits,
@@ -1163,6 +1227,7 @@ namespace boost {
             };
 
             struct Date_time_type {
+
                 Date_time_type();
 
                 Date_time_type(const DATE_TYPE& arg__date,
@@ -1178,6 +1243,7 @@ namespace boost {
             };
 
             struct Iterval_SE_Date_type {
+
                 Iterval_SE_Date_type();
 
                 Iterval_SE_Date_type(const DATE_TYPE& arg__start,
@@ -1193,6 +1259,7 @@ namespace boost {
             };
 
             struct Iterval_SE_Time_type {
+
                 Iterval_SE_Time_type();
 
                 Iterval_SE_Time_type(const TIME_TYPE& arg__start,
@@ -1208,10 +1275,12 @@ namespace boost {
             };
 
             struct Iterval_SE_Date_Time_type {
+
                 struct Start_type;
                 struct End_type;
 
                 struct Start_type {
+
                     Start_type();
 
                     Start_type(const DATE_TYPE& arg__date,
@@ -1227,6 +1296,7 @@ namespace boost {
                 };
 
                 struct End_type {
+
                     End_type();
 
                     End_type(const DATE_TYPE& arg__date,
@@ -1257,6 +1327,7 @@ namespace boost {
             };
 
             struct Iterval_SD_Date_type {
+
                 Iterval_SD_Date_type();
 
                 Iterval_SD_Date_type(const DATE_TYPE& arg__start,
@@ -1272,6 +1343,7 @@ namespace boost {
             };
 
             struct Iterval_SD_Time_type {
+
                 Iterval_SD_Time_type();
 
                 Iterval_SD_Time_type(const TIME_TYPE& arg__start,
@@ -1287,9 +1359,11 @@ namespace boost {
             };
 
             struct Iterval_SD_Date_Time_type {
+
                 struct Start_type;
 
                 struct Start_type {
+
                     Start_type();
 
                     Start_type(const DATE_TYPE& arg__date,
@@ -1320,6 +1394,7 @@ namespace boost {
             };
 
             struct Iterval_DE_Date_type {
+
                 Iterval_DE_Date_type();
 
                 Iterval_DE_Date_type(const DURATION_INTERVAL_ENCODING& arg__duration,
@@ -1335,6 +1410,7 @@ namespace boost {
             };
 
             struct Iterval_DE_Time_type {
+
                 Iterval_DE_Time_type();
 
                 Iterval_DE_Time_type(const DURATION_INTERVAL_ENCODING& arg__duration,
@@ -1350,9 +1426,11 @@ namespace boost {
             };
 
             struct Iterval_DE_Date_Time_type {
+
                 struct End_type;
 
                 struct End_type {
+
                     End_type();
 
                     End_type(const DATE_TYPE& arg__date,
@@ -1383,6 +1461,7 @@ namespace boost {
             };
 
             struct Rec_Interval_SE_Date_type {
+
                 Rec_Interval_SE_Date_type();
 
                 Rec_Interval_SE_Date_type(const DATE_TYPE& arg__start,
@@ -1400,6 +1479,7 @@ namespace boost {
             };
 
             struct Rec_Interval_SE_Time_type {
+
                 Rec_Interval_SE_Time_type();
 
                 Rec_Interval_SE_Time_type(const TIME_TYPE& arg__start,
@@ -1417,10 +1497,12 @@ namespace boost {
             };
 
             struct Rec_Interval_SE_Date_Time_type {
+
                 struct Start_type;
                 struct End_type;
 
                 struct Start_type {
+
                     Start_type();
 
                     Start_type(const DATE_TYPE& arg__date,
@@ -1436,6 +1518,7 @@ namespace boost {
                 };
 
                 struct End_type {
+
                     End_type();
 
                     End_type(const DATE_TYPE& arg__date,
@@ -1468,6 +1551,7 @@ namespace boost {
             };
 
             struct Rec_Interval_SD_Date_type {
+
                 Rec_Interval_SD_Date_type();
 
                 Rec_Interval_SD_Date_type(const DATE_TYPE& arg__start,
@@ -1485,6 +1569,7 @@ namespace boost {
             };
 
             struct Rec_Interval_SD_Time_type {
+
                 Rec_Interval_SD_Time_type();
 
                 Rec_Interval_SD_Time_type(const TIME_TYPE& arg__start,
@@ -1502,9 +1587,11 @@ namespace boost {
             };
 
             struct Rec_Interval_SD_Date_Time_type {
+
                 struct Start_type;
 
                 struct Start_type {
+
                     Start_type();
 
                     Start_type(const DATE_TYPE& arg__date,
@@ -1537,6 +1624,7 @@ namespace boost {
             };
 
             struct Rec_Interval_DE_Date_type {
+
                 Rec_Interval_DE_Date_type();
 
                 Rec_Interval_DE_Date_type(const DURATION_INTERVAL_ENCODING& arg__duration,
@@ -1554,6 +1642,7 @@ namespace boost {
             };
 
             struct Rec_Interval_DE_Time_type {
+
                 Rec_Interval_DE_Time_type();
 
                 Rec_Interval_DE_Time_type(const DURATION_INTERVAL_ENCODING& arg__duration,
@@ -1571,9 +1660,11 @@ namespace boost {
             };
 
             struct Rec_Interval_DE_Date_Time_type {
+
                 struct End_type;
 
                 struct End_type {
+
                     End_type();
 
                     End_type(const DATE_TYPE& arg__date,
@@ -1668,6 +1759,7 @@ namespace boost {
         // choice DATE-TYPE
 
         enum DATE_TYPE_enum {
+
             DATE_TYPE_null = 0,
             DATE_TYPE_dt_C_Basic,
             DATE_TYPE_dt_C_L,
@@ -1711,9 +1803,11 @@ namespace boost {
         // sequence TIME-TYPE
 
         struct TIME_TYPE {
+
             struct Time_type_type;
 
             enum Time_type_type_enum {
+
                 Time_type_type_null = 0,
                 Time_type_type_tm_H_L,
                 Time_type_type_tm_H_Z,
