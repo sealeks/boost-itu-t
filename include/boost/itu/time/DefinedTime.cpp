@@ -29,15 +29,23 @@ namespace boost {
         };
 
         CENTURY_ENCODING::CENTURY_ENCODING(const base_date_time& vl) :
-        as_number_(to_range<uint8_t>(vl.date().year() / 100, (uint8_t) 0, (uint8_t) 99)) {
+        as_number_(to_range<uint8_t>(vl.is_special() ? 0 : (vl.date().year() / 100), (uint8_t) 0, (uint8_t) 99)) {
         }
 
         base_date_time CENTURY_ENCODING::as_datetime() const {
-            return base_date_time(base_date(static_cast<int> (as_number())*100, 1, 1));
+            try {
+                return base_date_time(base_date(static_cast<int> (as_number())*100, 1, 1));
+            } catch (...) {
+            }
+            return base_date_time();
         }
 
         base_date CENTURY_ENCODING::as_date() const {
-            return base_date(static_cast<int> (as_number())*100, 1, 1);
+            try {
+                return base_date(static_cast<int> (as_number())*100, 1, 1);
+            } catch (...) {
+            }
+            return base_date();
         }
 
 
@@ -66,15 +74,23 @@ namespace boost {
         };
 
         ANY_CENTURY_ENCODING::ANY_CENTURY_ENCODING(const base_date_time& vl) :
-        as_number_(vl.date().year() / 100) {
+        as_number_(vl.is_special() ? 0 : (vl.date().year() / 100)) {
         }
 
         base_date_time ANY_CENTURY_ENCODING::as_datetime() const {
-            return base_date_time(base_date(static_cast<int> (as_number())*100, 1, 1));
+            try {
+                return base_date_time(base_date(static_cast<int> (as_number())*100, 1, 1));
+            } catch (...) {
+            }
+            return base_date_time();
         }
 
         base_date ANY_CENTURY_ENCODING::as_date() const {
-            return base_date(static_cast<int> (as_number())*100, 1, 1);
+            try {
+                return base_date(static_cast<int> (as_number())*100, 1, 1);
+            } catch (...) {
+            }
+            return base_date();
         }
 
 
@@ -94,20 +110,17 @@ namespace boost {
 
         YEAR_ENCODING::YEAR_ENCODING(const std::string& v) :
         ITU_T_CHOICE_CTORS_INHERITED(YEAR_ENCODING) {
-            integer_type vl = string_to_def<integer_type>(v);
-            as_number(vl);
+            as_number(string_to_def<integer_type>(v));
         }
 
         YEAR_ENCODING::YEAR_ENCODING(const char* v) :
         ITU_T_CHOICE_CTORS_INHERITED(YEAR_ENCODING) {
-            integer_type vl = string_to_def<integer_type>(std::string(v));
-            as_number(vl);
+            as_number(string_to_def<integer_type>(std::string(v)));
         }
 
         YEAR_ENCODING::YEAR_ENCODING(const base_date_time& v) :
         ITU_T_CHOICE_CTORS_INHERITED(YEAR_ENCODING) {
-            integer_type vl = v.date().year();
-            as_number(vl);
+            as_number(v.is_special() ? 0 : (integer_type) v.date().year());
         }
 
 
@@ -142,11 +155,19 @@ namespace boost {
         }
 
         base_date_time YEAR_ENCODING::as_datetime() const {
-            return base_date_time(base_date(static_cast<int> (as_number()), 1, 1));
+            try {
+                return base_date_time(base_date(static_cast<int> (as_number()), 1, 1));
+            } catch (...) {
+            }
+            return base_date_time();
         }
 
         base_date YEAR_ENCODING::as_date() const {
-            return base_date(static_cast<int> (as_number()), 1, 1);
+            try {
+                return base_date(static_cast<int> (as_number()), 1, 1);
+            } catch (...) {
+            }
+            return base_date();
         }
 
 
@@ -168,15 +189,23 @@ namespace boost {
         };
 
         ANY_YEAR_ENCODING::ANY_YEAR_ENCODING(const base_date_time& vl) :
-        as_number_(vl.date().year()) {
+        as_number_(vl.is_special() ? 0 : (integer_type) vl.date().year()) {
         }
 
         base_date_time ANY_YEAR_ENCODING::as_datetime() const {
-            return base_date_time(base_date(static_cast<int> (as_number()), 1, 1));
+            try {
+                return base_date_time(base_date(static_cast<int> (as_number()), 1, 1));
+            } catch (...) {
+            }
+            return base_date_time();
         }
 
         base_date ANY_YEAR_ENCODING::as_date() const {
-            return base_date(static_cast<int> (as_number()), 1, 1);
+            try {
+                return base_date(static_cast<int> (as_number()), 1, 1);
+            } catch (...) {
+            }
+            return base_date();
         }
 
 
@@ -209,16 +238,24 @@ namespace boost {
         }
 
         YEAR_MONTH_ENCODING::YEAR_MONTH_ENCODING(const base_date_time& vl) :
-        year_((integer_type) vl.date().year()),
-        month_((uint8_t) vl.date().month()) {
+        year_(vl.is_special() ? 0 : (integer_type) vl.date().year()),
+        month_(vl.is_special() ? 1 : (uint8_t) vl.date().month()) {
         }
 
         base_date_time YEAR_MONTH_ENCODING::as_datetime() const {
-            return base_date_time(base_date(static_cast<int> (year().as_number()), (int) month(), 1));
+            try {
+                return base_date_time(base_date(static_cast<int> (year().as_number()), (int) month(), 1));
+            } catch (...) {
+            }
+            return base_date_time();
         }
 
         base_date YEAR_MONTH_ENCODING::as_date() const {
-            return base_date(static_cast<int> (year().as_number()), (int) month(), 1);
+            try {
+                return base_date(static_cast<int> (year().as_number()), (int) month(), 1);
+            } catch (...) {
+            }
+            return base_date();
         }
 
 
@@ -249,16 +286,24 @@ namespace boost {
         }
 
         ANY_YEAR_MONTH_ENCODING::ANY_YEAR_MONTH_ENCODING(const base_date_time& vl) :
-        year_((integer_type) vl.date().year()),
-        month_((uint8_t) vl.date().month()) {
+        year_(vl.is_special() ? 0 : (integer_type) vl.date().year()),
+        month_(vl.is_special() ? 1 : (uint8_t) vl.date().month()) {
         }
 
         base_date_time ANY_YEAR_MONTH_ENCODING::as_datetime() const {
-            return base_date_time(base_date(static_cast<int> (year().as_number()), (int) month(), 1));
+            try {
+                return base_date_time(base_date(static_cast<int> (year().as_number()), (int) month(), 1));
+            } catch (...) {
+            }
+            return base_date_time();
         }
 
         base_date ANY_YEAR_MONTH_ENCODING::as_date() const {
-            return base_date(static_cast<int> (year().as_number()), (int) month(), 1);
+            try {
+                return base_date(static_cast<int> (year().as_number()), (int) month(), 1);
+            } catch (...) {
+            }
+            return base_date();
         }
 
 
@@ -1903,11 +1948,11 @@ namespace boost {
         };
 
         std::ostream& operator<<(std::ostream& stream, const YEAR_MONTH_ENCODING& vl) {
-            return stream << "YYYYMM" << to_string(vl.year(),4,'0') << to_string((int)vl.month(),2,'0');
+            return stream << "YYYYMM" << to_string(vl.year(), 4, '0') << to_string((int) vl.month(), 2, '0');
         };
 
         std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_MONTH_ENCODING& vl) {
-            return stream << "+YYYYMM" << to_string(vl.year()) << to_string((int)vl.month(),2,'0');
+            return stream << "+YYYYMM" << to_string(vl.year()) << to_string((int) vl.month(), 2, '0');
         };
 
         std::ostream& operator<<(std::ostream& stream, const DATE_ENCODING& vl) {
