@@ -26,7 +26,7 @@
 
 #include <boost/itu/time/DefinedTime.hpp>
 
-#define DEBUG_VAL_ITU(a)  std::cout << #a " = "  <<  a  << "    ===> ";   tsstr << a;
+#define DEBUG_VAL_ITU(a)  tsstr.clear(); std::cout << #a " = "  <<  a  << "    ===> ";   tsstr << a;
 #define DEBUG_VAL_ITU_READ(a)     tsstr >> a; std::cout << "read     " <<  #a " = "  <<  a << "\n";
 
 #ifdef _MSC_VER
@@ -184,6 +184,30 @@ namespace TestTm {
         DEBUG_VAL_ITU_READ(cetn_enc3_r);                
         DEBUG_VAL_ITU(acetn_enc)                 
         DEBUG_VAL_ITU_READ(acetn_enc_r);
+        
+        YEAR_ENCODING year_enc=1943;
+        YEAR_ENCODING year_enc1=std::string("2004");
+        YEAR_ENCODING year_enc2="2125";        
+        YEAR_ENCODING year_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 1, 12));              
+        ANY_YEAR_ENCODING ayear_enc(1958);        
+        
+        YEAR_ENCODING year_enc_r;
+        YEAR_ENCODING year_enc1_r;
+        YEAR_ENCODING year_enc2_r;        
+        YEAR_ENCODING year_enc3_r;              
+        ANY_YEAR_ENCODING ayear_enc_r;             
+        
+        
+        DEBUG_VAL_ITU(year_enc)
+        DEBUG_VAL_ITU_READ(year_enc_r);
+        DEBUG_VAL_ITU(year_enc1)  
+        DEBUG_VAL_ITU_READ(year_enc1_r);                
+        DEBUG_VAL_ITU(year_enc2)   
+        DEBUG_VAL_ITU_READ(year_enc2_r);                
+        DEBUG_VAL_ITU(year_enc3) 
+        DEBUG_VAL_ITU_READ(year_enc3_r);                
+        DEBUG_VAL_ITU(ayear_enc)                 
+        DEBUG_VAL_ITU_READ(ayear_enc_r);        
         
     }
 
