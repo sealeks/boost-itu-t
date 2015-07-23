@@ -131,13 +131,14 @@ namespace boost {
         }
 
         void YEAR_ENCODING::as_number(integer_type v) {
-            if (v < 1749 && v > 2276)
+            if (v < 1749 || v > 2276)
                 remainder(v);
             else if (v <= 2004)
                 near_past(static_cast<uint16_t> (v));
             else if (v <= 2020)
                 immediate(static_cast<uint16_t> (v));
-            near_future(static_cast<uint16_t> (v));
+            else
+                near_future(static_cast<uint16_t> (v));
         }
 
         base_date_time YEAR_ENCODING::as_datetime() const {
@@ -1902,11 +1903,11 @@ namespace boost {
         };
 
         std::ostream& operator<<(std::ostream& stream, const YEAR_MONTH_ENCODING& vl) {
-            stream << "YYYYMM" << to_string(vl.year(),4,'0') << to_string((int)vl.month(),2,'0');
+            return stream << "YYYYMM" << to_string(vl.year(),4,'0') << to_string((int)vl.month(),2,'0');
         };
 
         std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_MONTH_ENCODING& vl) {
-            stream << "+YYYYMM" << to_string(vl.year()) << to_string((int)vl.month(),2,'0');
+            return stream << "+YYYYMM" << to_string(vl.year()) << to_string((int)vl.month(),2,'0');
         };
 
         std::ostream& operator<<(std::ostream& stream, const DATE_ENCODING& vl) {

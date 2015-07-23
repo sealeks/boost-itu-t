@@ -210,8 +210,13 @@ namespace boost {
             !!!not implement
 #else              
             endian_conv(val);
-            if (sizeof (T) > val.size())
-                val.resize(sizeof (T), octet_type((val.empty() || (val.back() & NEGATIVE_MARKER)) ? POSITIVE_START : 0));
+            if (sizeof (T) > val.size()) {
+                if (std::numeric_limits<T>::is_signed)
+                    val.resize(sizeof (T), octet_type((val.empty() || (val.back() & NEGATIVE_MARKER)) ?
+                        POSITIVE_START : 0));
+                else
+                    val.resize(sizeof (T), 0);
+            }
             vl = (*(T*) (&val[0]));
 #endif                  
             return true;
