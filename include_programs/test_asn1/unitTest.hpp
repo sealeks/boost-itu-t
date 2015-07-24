@@ -27,7 +27,7 @@
 #include <boost/itu/time/DefinedTime.hpp>
 
 #define DEBUG_VAL_ITU(a)  tsstr.clear(); std::cout << #a " = "  <<  a  << "    ===> ";   tsstr << a;
-#define DEBUG_VAL_ITU_READ(a)     tsstr >> a; std::cout << "read     " <<  #a " = "  <<  a << "\n";
+#define DEBUG_VAL_ITU_READ(a)     tsstr >> a; std::cout << "read     " <<  #a " = "  <<  a << " as_dt : "  << a.as_datetime() << "\n-----------------------------------------------------------------------------------\n";
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -63,9 +63,9 @@ namespace Test1b {
         DEBUG_VAL_ITU(os0)
         DEBUG_VAL_ITU(os1)
         DEBUG_VAL_ITU(os2)
+        DEBUG_VAL_ITU(oi1)
         DEBUG_VAL_ITU(nl1)
         DEBUG_VAL_ITU(nl2)
-        DEBUG_VAL_ITU(oi1)
         DEBUG_VAL_ITU(oi2)
         DEBUG_VAL_ITU(oi3)
         DEBUG_VAL_ITU(od1)
@@ -208,6 +208,80 @@ namespace TestTm {
         DEBUG_VAL_ITU_READ(year_enc3_r);                
         DEBUG_VAL_ITU(ayear_enc)                 
         DEBUG_VAL_ITU_READ(ayear_enc_r);        
+        
+        YEAR_MONTH_ENCODING year_month_enc(1941,6);
+        YEAR_MONTH_ENCODING year_month_enc1=std::string("200408");
+        YEAR_MONTH_ENCODING year_month_enc2="201507";        
+        YEAR_MONTH_ENCODING year_month_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 2, 12));              
+        ANY_YEAR_MONTH_ENCODING ayear_month_enc(1958, 7);        
+        
+        YEAR_MONTH_ENCODING year_month_enc_r;
+        YEAR_MONTH_ENCODING year_month_enc1_r;
+        YEAR_MONTH_ENCODING year_month_enc2_r;        
+        YEAR_MONTH_ENCODING year_month_enc3_r;              
+        ANY_YEAR_MONTH_ENCODING ayear_month_enc_r;             
+        
+        
+        DEBUG_VAL_ITU(year_month_enc)
+        DEBUG_VAL_ITU_READ(year_month_enc_r);
+        DEBUG_VAL_ITU(year_month_enc1)  
+        DEBUG_VAL_ITU_READ(year_month_enc1_r);                
+        DEBUG_VAL_ITU(year_month_enc2)   
+        DEBUG_VAL_ITU_READ(year_month_enc2_r);                
+        DEBUG_VAL_ITU(year_month_enc3) 
+        DEBUG_VAL_ITU_READ(year_month_enc3_r);                
+        DEBUG_VAL_ITU(ayear_month_enc)                 
+        DEBUG_VAL_ITU_READ(ayear_month_enc_r);         
+        
+        
+        DATE_ENCODING date_enc(1941,6,22);
+        DATE_ENCODING date_enc1=std::string("20040830");
+        DATE_ENCODING date_enc2="20150724";        
+        DATE_ENCODING date_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 2, 12));              
+        ANY_DATE_ENCODING adate_enc(1958, 7,6);        
+        
+        DATE_ENCODING date_enc_r;
+        DATE_ENCODING date_enc1_r;
+        DATE_ENCODING date_enc2_r;        
+        DATE_ENCODING date_enc3_r;              
+        ANY_DATE_ENCODING adate_enc_r;             
+        
+        
+        DEBUG_VAL_ITU(date_enc)
+        DEBUG_VAL_ITU_READ(date_enc_r);
+        DEBUG_VAL_ITU(date_enc1)  
+        DEBUG_VAL_ITU_READ(date_enc1_r);                
+        DEBUG_VAL_ITU(date_enc2)   
+        DEBUG_VAL_ITU_READ(date_enc2_r);                
+        DEBUG_VAL_ITU(date_enc3) 
+        DEBUG_VAL_ITU_READ(date_enc3_r);                
+        DEBUG_VAL_ITU(adate_enc)                 
+        DEBUG_VAL_ITU_READ(adate_enc_r);            
+        
+        
+        YEAR_DAY_ENCODING year_day_enc(1941,64);
+        YEAR_DAY_ENCODING year_day_enc1=std::string("2004085");
+        YEAR_DAY_ENCODING year_day_enc2="2015186";        
+        YEAR_DAY_ENCODING year_day_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 2, 12));              
+        ANY_YEAR_DAY_ENCODING ayear_day_enc(1958, 78);        
+        
+        YEAR_DAY_ENCODING year_day_enc_r;
+        YEAR_DAY_ENCODING year_day_enc1_r;
+        YEAR_DAY_ENCODING year_day_enc2_r;        
+        YEAR_DAY_ENCODING year_day_enc3_r;              
+        ANY_YEAR_DAY_ENCODING ayear_day_enc_r;             
+        
+        
+        DEBUG_VAL_ITU(year_day_enc)
+        DEBUG_VAL_ITU_READ(year_day_enc_r);
+        DEBUG_VAL_ITU(year_day_enc1)  
+        DEBUG_VAL_ITU_READ(year_day_enc1_r);                
+        DEBUG_VAL_ITU(year_day_enc2)   
+        DEBUG_VAL_ITU_READ(year_day_enc2_r);                
+        DEBUG_VAL_ITU(year_day_enc3) 
+        DEBUG_VAL_ITU_READ(year_day_enc3_r);                
+        DEBUG_VAL_ITU(ayear_day_enc)                 
+        DEBUG_VAL_ITU_READ(ayear_day_enc_r);        
         
     }
 
