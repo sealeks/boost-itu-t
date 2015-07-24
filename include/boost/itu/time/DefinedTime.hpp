@@ -355,6 +355,10 @@ namespace boost {
 
             ITU_T_ARCHIVE_FUNC;
         };
+        
+        
+        
+        
 
         // sequence YEAR-DAY-ENCODING
 
@@ -362,17 +366,28 @@ namespace boost {
 
             YEAR_DAY_ENCODING();
 
-            YEAR_DAY_ENCODING(const YEAR_ENCODING& arg__year,
+            YEAR_DAY_ENCODING(integer_type arg__year,
                     const uint16_t& arg__day);
 
-            YEAR_DAY_ENCODING(ITU_T_SHARED(YEAR_ENCODING) arg__year,
-                    ITU_T_SHARED(uint16_t) arg__day);
+            YEAR_DAY_ENCODING(const std::string& vl);
+
+            YEAR_DAY_ENCODING(const char* vl);
+
+            YEAR_DAY_ENCODING(const base_date_time& vl);
+
+            base_date_time as_datetime() const;
+
+            base_date as_date() const;
 
             ITU_T_HOLDERH_DECL(year, YEAR_ENCODING);
             ITU_T_HOLDERH_DECL(day, uint16_t); //   Ic(  [ 1  ...   366 ]   
 
             ITU_T_ARCHIVE_FUNC;
         };
+        
+        
+        
+        
 
         // sequence ANY-YEAR-DAY-ENCODING
 
@@ -380,11 +395,18 @@ namespace boost {
 
             ANY_YEAR_DAY_ENCODING();
 
-            ANY_YEAR_DAY_ENCODING(const ANY_YEAR_ENCODING& arg__year,
+            ANY_YEAR_DAY_ENCODING(integer_type arg__year,
                     const uint16_t& arg__day);
 
-            ANY_YEAR_DAY_ENCODING(ITU_T_SHARED(ANY_YEAR_ENCODING) arg__year,
-                    ITU_T_SHARED(uint16_t) arg__day);
+            ANY_YEAR_DAY_ENCODING(const std::string& vl);
+
+            ANY_YEAR_DAY_ENCODING(const char* vl);
+
+            ANY_YEAR_DAY_ENCODING(const base_date_time& vl);
+
+            base_date_time as_datetime() const;
+
+            base_date as_date() const;
 
             ITU_T_HOLDERH_DECL(year, ANY_YEAR_ENCODING);
             ITU_T_HOLDERH_DECL(day, uint16_t); //   Ic(  [ 1  ...   366 ]   

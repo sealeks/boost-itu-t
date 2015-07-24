@@ -113,8 +113,8 @@ namespace boost {
             std::string mth=tmpval.size()>=4 ? tmpval.substr(tmpval.size()-4,2) : "";  
             std::string dy=tmpval.size()>=2 ? tmpval.substr(tmpval.size()-2,2) : "";            
             year(string_to_def(yr, 0, "0"));
-            month(string_to_def(mth, 0, "0"));
-            day(string_to_def(dy, 0, "0"));
+            month(string_to_def(mth, 1, "0"));
+            day(string_to_def(dy, 1, "0"));
         }
 
         // sequence ANY-DATE-ENCODING
@@ -132,32 +132,42 @@ namespace boost {
             std::string mth=tmpval.size()>=4 ? tmpval.substr(tmpval.size()-4,2) : "";  
             std::string dy=tmpval.size()>=2 ? tmpval.substr(tmpval.size()-2,2) : "";            
             year(string_to_def(yr, 0, "0"));
-            month(string_to_def(mth, 0, "0"));
-            day(string_to_def(dy, 0, "0"));
+            month(string_to_def(mth, 1, "0"));
+            day(string_to_def(dy, 1, "0"));
         }
 
         // sequence YEAR-DAY-ENCODING
 
         template<> void YEAR_DAY_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_BIND_CHOICE_TAG(year_, 0, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(day_, 1, CONTEXT_CLASS);
+            visible_string tmpval=to_visible_string(static_cast<int>(year().as_number()), 4,'0') + 
+                    to_visible_string(static_cast<int>(day()), 3,'0');
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
         }
 
         template<> void YEAR_DAY_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_BIND_CHOICE_TAG(year_, 0, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(day_, 1, CONTEXT_CLASS);
+            visible_string tmpval;
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+            std::string yr=tmpval.size()>3 ? tmpval.substr(0,tmpval.size()-3) : "";
+            std::string mth=tmpval.size()>=3 ? tmpval.substr(tmpval.size()-3) : "";  
+            year(string_to_def(yr, 0, "0"));
+            day(string_to_def(mth, 1, "0"));
         }
 
         // sequence ANY-YEAR-DAY-ENCODING
 
         template<> void ANY_YEAR_DAY_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_BIND_IMPLICIT(year_, 0, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(day_, 1, CONTEXT_CLASS);
+            visible_string tmpval=to_visible_string(static_cast<int>(year().as_number())) + 
+                    to_visible_string(static_cast<int>(day()), 3,'0');
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
         }
 
         template<> void ANY_YEAR_DAY_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_BIND_IMPLICIT(year_, 0, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(day_, 1, CONTEXT_CLASS);
+            visible_string tmpval;
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+            std::string yr=tmpval.size()>3 ? tmpval.substr(0,tmpval.size()-3) : "";
+            std::string mth=tmpval.size()>=3 ? tmpval.substr(tmpval.size()-3) : "";  
+            year(string_to_def(yr, 0, "0"));
+            day(string_to_def(mth, 1, "0"));
         }
 
         // sequence YEAR-WEEK-ENCODING

@@ -413,9 +413,19 @@ namespace boost {
                                 static_cast<octet_sequnce::value_type*> ((void*) &val) + octsz));
 #ifdef BIG_ENDIAN_ARCHITECTURE  
                         ?
-#else                    
-                        if (bssz % 8)
-                            tmp.back() <<= (8 - bssz % 8);
+#else                  
+                        if (bssz % 8) {
+                            if (tmp.size() > 1) {
+                                octet_sequnce::size_type it = 0;
+                                while ((it + 1) < tmp.size()) {
+                                    tmp[it] |= (0x7F & (tmp[it + 1]>>(bssz % 8)));
+                                    tmp[it + 1] <<= (8 - bssz % 8);
+                                    it++;
+                                }
+                            } else
+                                tmp.back() <<= (8 - bssz % 8);
+                        }
+
 #endif                    
                         return bit_string(tmp, (bssz % 8) ? (8 - bssz % 8) : 0);
                     }
@@ -1210,14 +1220,14 @@ namespace boost {
             output_coder& operator<<(output_coder& stream, const utf8_string& vl);
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<utf8_string>& vl);
-            
+
             output_coder& operator<<(output_coder& stream, const oid_iri_type& vl);
 
-            output_coder& operator<<(output_coder& stream, const size_constrainter<oid_iri_type>& vl);    
-            
+            output_coder& operator<<(output_coder& stream, const size_constrainter<oid_iri_type>& vl);
+
             output_coder& operator<<(output_coder& stream, const reloid_iri_type& vl);
 
-            output_coder& operator<<(output_coder& stream, const size_constrainter<reloid_iri_type>& vl);              
+            output_coder& operator<<(output_coder& stream, const size_constrainter<reloid_iri_type>& vl);
 
             output_coder& operator<<(output_coder& stream, const numeric_string& vl);
 
@@ -1882,14 +1892,14 @@ namespace boost {
             input_coder& operator>>(input_coder& stream, utf8_string& vl);
 
             input_coder& operator>>(input_coder& stream, size_constrainter<utf8_string>& vl);
-            
+
             input_coder& operator>>(input_coder& stream, oid_iri_type& vl);
 
-            input_coder& operator>>(input_coder& stream, size_constrainter<oid_iri_type>& vl);            
-            
+            input_coder& operator>>(input_coder& stream, size_constrainter<oid_iri_type>& vl);
+
             input_coder& operator>>(input_coder& stream, reloid_iri_type& vl);
 
-            input_coder& operator>>(input_coder& stream, size_constrainter<reloid_iri_type>& vl);                   
+            input_coder& operator>>(input_coder& stream, size_constrainter<reloid_iri_type>& vl);
 
 
             input_coder& operator>>(input_coder& stream, numeric_string& vl);
