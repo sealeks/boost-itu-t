@@ -29,7 +29,7 @@ namespace boost {
                 try {
                     std::string rslt = boost::lexical_cast<std::string > (val);
                     return (sz && nlchar && (rslt.size() < sz)) ? (std::string(sz - rslt.size(), nlchar) + rslt) : rslt;
-                }                catch (boost::bad_lexical_cast) {
+                } catch (boost::bad_lexical_cast) {
                 }
                 return (sz && nlchar) ? std::string(nlchar, sz) : "";
             }
@@ -62,6 +62,26 @@ namespace boost {
             template<typename T>
             T visible_string_to_def(const visible_string& val, const T& def = 0, const std::string& escchars = "") {
                 return string_to_def(std::string(val.c_str()), def, escchars);
+            }
+
+            // reverse substring |sssssssss|sssssss|sssssssssssss|
+            //                                beg         bgs       eps                 end        
+            // endps=end-eps, sz=eps-bgs,    if sz=0, full size from beg    
+
+            inline std::string revrs_substr(const std::string& vl, std::string::size_type endps = 0, std::string::size_type sz = 0) {
+                std::string::size_type size = vl.size();
+                if (endps < size) {
+                    if (sz)
+                        return vl.substr((((size - endps) > sz) ? (size - endps - sz) : 0),
+                            ((size - endps) > sz) ? sz : (size - endps));
+                    else
+                        return vl.substr(0, size - endps);
+                }
+                return "";
+            }
+
+            inline std::string revrs_substr(const visible_string& vl, std::string::size_type endps = 0, std::string::size_type sz = 0) {
+                return revrs_substr(visible_string(vl), endps, sz);
             }
 
         }
@@ -130,6 +150,10 @@ namespace boost {
 
             base_date as_date() const;
 
+            std::string as_string() const;
+
+            void as_string(const std::string& vl);
+
             ITU_T_HOLDERH_DECL(as_number, uint8_t); //   Ic(  [ 0  ...   99 ]   
 
             ITU_T_ARCHIVE_FUNC;
@@ -156,6 +180,10 @@ namespace boost {
             base_date_time as_datetime() const;
 
             base_date as_date() const;
+
+            std::string as_string() const;
+
+            void as_string(const std::string& vl);
 
             ITU_T_HOLDERH_DECL(as_number, integer_type);
 
@@ -203,6 +231,10 @@ namespace boost {
 
             void as_number(integer_type v);
 
+            std::string as_string() const;
+
+            void as_string(const std::string & vl);
+
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -226,6 +258,10 @@ namespace boost {
             base_date_time as_datetime() const;
 
             base_date as_date() const;
+
+            std::string as_string() const;
+
+            void as_string(const std::string& vl);
 
             ITU_T_HOLDERH_DECL(as_number, integer_type);
 
@@ -256,6 +292,10 @@ namespace boost {
             base_date_time as_datetime() const;
 
             base_date as_date() const;
+
+            std::string as_string() const;
+
+            void as_string(const std::string& vl);
 
 
             ITU_T_HOLDERH_DECL(year, YEAR_ENCODING);
@@ -288,6 +328,10 @@ namespace boost {
 
             base_date as_date() const;
 
+            std::string as_string() const;
+
+            void as_string(const std::string& vl);
+
             ITU_T_HOLDERH_DECL(year, ANY_YEAR_ENCODING);
             ITU_T_HOLDERH_DECL(month, uint8_t); //   Ic(  [ 1  ...   12 ]   
 
@@ -316,6 +360,10 @@ namespace boost {
             base_date_time as_datetime() const;
 
             base_date as_date() const;
+
+            std::string as_string() const;
+
+            void as_string(const std::string& vl);
 
             ITU_T_HOLDERH_DECL(year, YEAR_ENCODING);
             ITU_T_HOLDERH_DECL(month, uint8_t); //   Ic(  [ 1  ...   12 ]   
@@ -349,16 +397,20 @@ namespace boost {
 
             base_date as_date() const;
 
+            std::string as_string() const;
+
+            void as_string(const std::string& vl);
+
             ITU_T_HOLDERH_DECL(year, ANY_YEAR_ENCODING);
             ITU_T_HOLDERH_DECL(month, uint8_t); //   Ic(  [ 1  ...   12 ]   
             ITU_T_HOLDERH_DECL(day, uint8_t); //   Ic(  [ 1  ...   31 ]   
 
             ITU_T_ARCHIVE_FUNC;
         };
-        
-        
-        
-        
+
+
+
+
 
         // sequence YEAR-DAY-ENCODING
 
@@ -379,15 +431,19 @@ namespace boost {
 
             base_date as_date() const;
 
+            std::string as_string() const;
+
+            void as_string(const std::string& vl);
+
             ITU_T_HOLDERH_DECL(year, YEAR_ENCODING);
             ITU_T_HOLDERH_DECL(day, uint16_t); //   Ic(  [ 1  ...   366 ]   
 
             ITU_T_ARCHIVE_FUNC;
         };
-        
-        
-        
-        
+
+
+
+
 
         // sequence ANY-YEAR-DAY-ENCODING
 
@@ -408,11 +464,18 @@ namespace boost {
 
             base_date as_date() const;
 
+            std::string as_string() const;
+
+            void as_string(const std::string& vl);
+
             ITU_T_HOLDERH_DECL(year, ANY_YEAR_ENCODING);
             ITU_T_HOLDERH_DECL(day, uint16_t); //   Ic(  [ 1  ...   366 ]   
 
             ITU_T_ARCHIVE_FUNC;
         };
+
+
+
 
         // sequence YEAR-WEEK-ENCODING
 
@@ -423,14 +486,29 @@ namespace boost {
             YEAR_WEEK_ENCODING(const YEAR_ENCODING& arg__year,
                     const uint8_t& arg__week);
 
-            YEAR_WEEK_ENCODING(ITU_T_SHARED(YEAR_ENCODING) arg__year,
-                    ITU_T_SHARED(uint8_t) arg__week);
+            YEAR_WEEK_ENCODING(const std::string& vl);
+
+            YEAR_WEEK_ENCODING(const char* vl);
+
+            YEAR_WEEK_ENCODING(const base_date_time& vl);
+
+            base_date_time as_datetime() const;
+
+            base_date as_date() const;
+
+            std::string as_string() const;
+
+            void as_string(const std::string& vl);
 
             ITU_T_HOLDERH_DECL(year, YEAR_ENCODING);
             ITU_T_HOLDERH_DECL(week, uint8_t); //   Ic(  [ 1  ...   53 ]   
 
             ITU_T_ARCHIVE_FUNC;
         };
+
+
+
+
 
         // sequence ANY-YEAR-WEEK-ENCODING
 
@@ -441,14 +519,29 @@ namespace boost {
             ANY_YEAR_WEEK_ENCODING(const ANY_YEAR_ENCODING& arg__year,
                     const uint8_t& arg__week);
 
-            ANY_YEAR_WEEK_ENCODING(ITU_T_SHARED(ANY_YEAR_ENCODING) arg__year,
-                    ITU_T_SHARED(uint8_t) arg__week);
+            ANY_YEAR_WEEK_ENCODING(const std::string& vl);
+
+            ANY_YEAR_WEEK_ENCODING(const char* vl);
+
+            ANY_YEAR_WEEK_ENCODING(const base_date_time& vl);
+
+            base_date_time as_datetime() const;
+
+            base_date as_date() const;
+
+            std::string as_string() const;
+
+            void as_string(const std::string& vl);
 
             ITU_T_HOLDERH_DECL(year, ANY_YEAR_ENCODING);
             ITU_T_HOLDERH_DECL(week, uint8_t); //   Ic(  [ 1  ...   53 ]   
 
             ITU_T_ARCHIVE_FUNC;
         };
+
+
+
+
 
         // sequence YEAR-WEEK-DAY-ENCODING
 
@@ -460,9 +553,19 @@ namespace boost {
                     const uint8_t& arg__week,
                     const uint8_t& arg__day);
 
-            YEAR_WEEK_DAY_ENCODING(ITU_T_SHARED(YEAR_ENCODING) arg__year,
-                    ITU_T_SHARED(uint8_t) arg__week,
-                    ITU_T_SHARED(uint8_t) arg__day);
+            YEAR_WEEK_DAY_ENCODING(const std::string& vl);
+
+            YEAR_WEEK_DAY_ENCODING(const char* vl);
+
+            YEAR_WEEK_DAY_ENCODING(const base_date_time& vl);
+
+            base_date_time as_datetime() const;
+
+            base_date as_date() const;
+
+            std::string as_string() const;
+
+            void as_string(const std::string& vl);
 
             ITU_T_HOLDERH_DECL(year, YEAR_ENCODING);
             ITU_T_HOLDERH_DECL(week, uint8_t); //   Ic(  [ 1  ...   53 ]   
@@ -481,9 +584,19 @@ namespace boost {
                     const uint8_t& arg__week,
                     const uint8_t& arg__day);
 
-            ANY_YEAR_WEEK_DAY_ENCODING(ITU_T_SHARED(ANY_YEAR_ENCODING) arg__year,
-                    ITU_T_SHARED(uint8_t) arg__week,
-                    ITU_T_SHARED(uint8_t) arg__day);
+            ANY_YEAR_WEEK_DAY_ENCODING(const std::string& vl);
+
+            ANY_YEAR_WEEK_DAY_ENCODING(const char* vl);
+
+            ANY_YEAR_WEEK_DAY_ENCODING(const base_date_time& vl);
+
+            base_date_time as_datetime() const;
+
+            base_date as_date() const;
+
+            std::string as_string() const;
+
+            void as_string(const std::string& vl);
 
             ITU_T_HOLDERH_DECL(year, ANY_YEAR_ENCODING);
             ITU_T_HOLDERH_DECL(week, uint8_t); //   Ic(  [ 1  ...   53 ]   
