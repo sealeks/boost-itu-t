@@ -473,6 +473,7 @@ namespace boost {
 
             ITU_T_ARCHIVE_FUNC;
         };
+        
 
 
 
@@ -629,6 +630,8 @@ namespace boost {
         };
         
         
+        
+        
 
         // sequence HOURS-UTC-ENCODING
 
@@ -648,6 +651,7 @@ namespace boost {
         
         
 
+        
         // sequence HOURS-AND-DIFF-ENCODING
 
         struct HOURS_AND_DIFF_ENCODING {
