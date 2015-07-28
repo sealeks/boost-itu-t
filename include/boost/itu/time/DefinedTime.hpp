@@ -573,6 +573,10 @@ namespace boost {
 
             ITU_T_ARCHIVE_FUNC;
         };
+        
+        
+        
+        
 
         // sequence ANY-YEAR-WEEK-DAY-ENCODING
 
@@ -604,6 +608,10 @@ namespace boost {
 
             ITU_T_ARCHIVE_FUNC;
         };
+        
+        
+        
+        
 
         // sequence HOURS-ENCODING
 
@@ -619,6 +627,8 @@ namespace boost {
 
             ITU_T_ARCHIVE_FUNC;
         };
+        
+        
 
         // sequence HOURS-UTC-ENCODING
 
@@ -634,6 +644,9 @@ namespace boost {
 
             ITU_T_ARCHIVE_FUNC;
         };
+        
+        
+        
 
         // sequence HOURS-AND-DIFF-ENCODING
 
@@ -652,6 +665,10 @@ namespace boost {
 
             ITU_T_ARCHIVE_FUNC;
         };
+        
+        
+        
+        
 
         // sequence TIME-DIFFERENCE
 
