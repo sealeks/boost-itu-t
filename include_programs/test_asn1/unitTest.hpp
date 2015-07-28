@@ -27,7 +27,7 @@
 #include <boost/itu/time/DefinedTime.hpp>
 
 #define DEBUG_VAL_ITU(a)  tsstr.clear(); std::cout << #a " = "  <<  a  << "    ===> ";   tsstr << a;
-#define DEBUG_VAL_ITU_READ(a)     tsstr >> a; std::cout << "read     " <<  #a " = "  <<  a << " as_dt : "  << a.as_datetime() << "\n-----------------------------------------------------------------------------------\n";
+#define DEBUG_VAL_ITU_READ(a)     tsstr >> a; std::cout << "read     " <<  #a " = "  <<  a << " as_dt : "  << a.as_datetime() <<  " wd:" << ((a.as_datetime().is_special()) ? 0 : (int)(a.as_datetime().date().day_of_week())) << "\n-----------------------------------------------------------------------------------\n";
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -282,6 +282,58 @@ namespace TestTm {
         DEBUG_VAL_ITU_READ(year_day_enc3_r);                
         DEBUG_VAL_ITU(ayear_day_enc)                 
         DEBUG_VAL_ITU_READ(ayear_day_enc_r);        
+        
+        YEAR_WEEK_ENCODING year_week_enc(1941,12);
+        YEAR_WEEK_ENCODING year_week_enc1=std::string("2004W40");
+        YEAR_WEEK_ENCODING year_week_enc2="2015W18";        
+        YEAR_WEEK_ENCODING year_week_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 2, 12));              
+        ANY_YEAR_WEEK_ENCODING ayear_week_enc(1958, 43);        
+        
+        YEAR_WEEK_ENCODING year_week_enc_r;
+        YEAR_WEEK_ENCODING year_week_enc1_r;
+        YEAR_WEEK_ENCODING year_week_enc2_r;        
+        YEAR_WEEK_ENCODING year_week_enc3_r;              
+        ANY_YEAR_WEEK_ENCODING ayear_week_enc_r;             
+        
+        
+        DEBUG_VAL_ITU(year_week_enc)
+        DEBUG_VAL_ITU_READ(year_week_enc_r);
+        DEBUG_VAL_ITU(year_week_enc1)  
+        DEBUG_VAL_ITU_READ(year_week_enc1_r);                
+        DEBUG_VAL_ITU(year_week_enc2)   
+        DEBUG_VAL_ITU_READ(year_week_enc2_r);                
+        DEBUG_VAL_ITU(year_week_enc3) 
+        DEBUG_VAL_ITU_READ(year_week_enc3_r);                
+        DEBUG_VAL_ITU(ayear_week_enc)                 
+        DEBUG_VAL_ITU_READ(ayear_week_enc_r);         
+        
+        
+        
+        
+        YEAR_WEEK_DAY_ENCODING year_week_day_enc(1941,12, 4);
+        YEAR_WEEK_DAY_ENCODING year_week_day_enc1=std::string("2004W402");
+        YEAR_WEEK_DAY_ENCODING year_week_day_enc2="2015W184";        
+        YEAR_WEEK_DAY_ENCODING year_week_day_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 2, 12));              
+        ANY_YEAR_WEEK_DAY_ENCODING ayear_week_day_enc(1958, 43,5);        
+        
+        YEAR_WEEK_DAY_ENCODING year_week_day_enc_r;
+        YEAR_WEEK_DAY_ENCODING year_week_day_enc1_r;
+        YEAR_WEEK_DAY_ENCODING year_week_day_enc2_r;        
+        YEAR_WEEK_DAY_ENCODING year_week_day_enc3_r;              
+        ANY_YEAR_WEEK_DAY_ENCODING ayear_week_day_enc_r;             
+        
+        
+        DEBUG_VAL_ITU(year_week_day_enc)
+        DEBUG_VAL_ITU_READ(year_week_day_enc_r);
+        DEBUG_VAL_ITU(year_week_day_enc1)  
+        DEBUG_VAL_ITU_READ(year_week_day_enc1_r);                
+        DEBUG_VAL_ITU(year_week_day_enc2)   
+        DEBUG_VAL_ITU_READ(year_week_day_enc2_r);                
+        DEBUG_VAL_ITU(year_week_day_enc3) 
+        DEBUG_VAL_ITU_READ(year_week_day_enc3_r);                
+        DEBUG_VAL_ITU(ayear_week_day_enc)                 
+        DEBUG_VAL_ITU_READ(ayear_week_day_enc_r);              
+        
         
     }
 
