@@ -639,9 +639,9 @@ namespace boost {
         base_date_time YEAR_WEEK_ENCODING::as_datetime() const {
             try {
                 base_date tmp(static_cast<int> (year().as_number()), 1, 1);
-                std::size_t dwst=(std::size_t)tmp.day_of_week();
-                return base_date_time(tmp) +
-                        base_date_time::date_duration_type( (week()>1) ? (( dwst - 1)+7*(week()-2)) : 0);
+                std::size_t dwst = (std::size_t)tmp.day_of_week();
+                return base_date_time(tmp) + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
+                        base_date_time::date_duration_type((week() > 1) ? (7 * (week() - 1)) : 0);
             } catch (...) {
             }
             return base_date_time();
@@ -650,9 +650,9 @@ namespace boost {
         base_date YEAR_WEEK_ENCODING::as_date() const {
             try {
                 base_date tmp(static_cast<int> (year().as_number()), 1, 1);
-                std::size_t dwst=(std::size_t)tmp.day_of_week();                
-                return tmp +
-                        base_date_time::date_duration_type( (week()>1) ? (( dwst - 1)+7*(week()-2)) : 0);
+                std::size_t dwst = (std::size_t)tmp.day_of_week();
+                return tmp + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
+                        base_date_time::date_duration_type((week() > 1) ? (7 * (week() - 1)) : 0);
             } catch (...) {
             }
             return base_date();
@@ -703,9 +703,9 @@ namespace boost {
         base_date_time ANY_YEAR_WEEK_ENCODING::as_datetime() const {
             try {
                 base_date tmp(static_cast<int> (year().as_number()), 1, 1);
-                std::size_t dwst=(std::size_t)tmp.day_of_week();
-                return base_date_time(tmp) +
-                        base_date_time::date_duration_type( (week()>1) ? (( dwst - 1)+7*(week()-2)) : 0);
+                std::size_t dwst = (std::size_t)tmp.day_of_week();
+                return base_date_time(tmp) + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
+                        base_date_time::date_duration_type((week() > 1) ? (7 * (week() - 1)) : 0);
             } catch (...) {
             }
             return base_date_time();
@@ -714,9 +714,9 @@ namespace boost {
         base_date ANY_YEAR_WEEK_ENCODING::as_date() const {
             try {
                 base_date tmp(static_cast<int> (year().as_number()), 1, 1);
-                std::size_t dwst=(std::size_t)tmp.day_of_week();                
-                return tmp +
-                        base_date_time::date_duration_type( (week()>1) ? (( dwst - 1)+7*(week()-2)) : 0);
+                std::size_t dwst = (std::size_t)tmp.day_of_week();
+                return tmp + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
+                        base_date_time::date_duration_type((week() > 1) ? (7 * (week() - 1)) : 0);
             } catch (...) {
             }
             return base_date();
@@ -769,9 +769,9 @@ namespace boost {
         base_date_time YEAR_WEEK_DAY_ENCODING::as_datetime() const {
             try {
                 base_date tmp(static_cast<int> (year().as_number()), 1, 1);
-                std::size_t dwst=(std::size_t)tmp.day_of_week();
-                return base_date_time(tmp) +
-                        base_date_time::date_duration_type( (week()>1) ? (( dwst - 1)+7*(week()-2) + day()) : day());                
+                std::size_t dwst = (std::size_t)tmp.day_of_week();
+                return base_date_time(tmp) + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
+                        base_date_time::date_duration_type(((week() > 1) ? (7 * (week() - 1)) : 0) + ((day() > 1) ? (day() - 1) : 0));
             } catch (...) {
             }
             return base_date_time();
@@ -780,9 +780,9 @@ namespace boost {
         base_date YEAR_WEEK_DAY_ENCODING::as_date() const {
             try {
                 base_date tmp(static_cast<int> (year().as_number()), 1, 1);
-                std::size_t dwst=(std::size_t)tmp.day_of_week();
-                return tmp +
-                        base_date_time::date_duration_type( (week()>1) ? (( dwst - 1)+7*(week()-2) + day()) : day());  
+                std::size_t dwst = (std::size_t)tmp.day_of_week();
+                return tmp + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
+                        base_date_time::date_duration_type(((week() > 1) ? (7 * (week() - 1)) : 0) + ((day() > 1) ? (day() - 1) : 0));
             } catch (...) {
             }
             return base_date();
@@ -833,9 +833,9 @@ namespace boost {
         base_date_time ANY_YEAR_WEEK_DAY_ENCODING::as_datetime() const {
             try {
                 base_date tmp(static_cast<int> (year().as_number()), 1, 1);
-                std::size_t dwst=(std::size_t)tmp.day_of_week();
-                return base_date_time(tmp) +
-                        base_date_time::date_duration_type( (week()>1) ? (( dwst - 1)+7*(week()-2) + day()) : day());        
+                std::size_t dwst = (std::size_t)tmp.day_of_week();
+                return base_date_time(tmp) + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
+                        base_date_time::date_duration_type(((week() > 1) ? (7 * (week() - 1)) : 0) + ((day() > 1) ? (day() - 1) : 0));
             } catch (...) {
             }
             return base_date_time();
@@ -844,9 +844,9 @@ namespace boost {
         base_date ANY_YEAR_WEEK_DAY_ENCODING::as_date() const {
             try {
                 base_date tmp(static_cast<int> (year().as_number()), 1, 1);
-                std::size_t dwst=(std::size_t)tmp.day_of_week();
-                return tmp +
-                        base_date_time::date_duration_type( (week()>1) ? (( dwst - 1)+7*(week()-2) + day()) : day());  
+                std::size_t dwst = (std::size_t)tmp.day_of_week();
+                return tmp + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
+                        base_date_time::date_duration_type(((week() > 1) ? (7 * (week() - 1)) : 0) + ((day() > 1) ? (day() - 1) : 0));
             } catch (...) {
             }
             return base_date();
@@ -2342,37 +2342,19 @@ namespace boost {
         };
 
         std::ostream& operator<<(std::ostream& stream, const YEAR_WEEK_ENCODING& vl) {
-            stream << "{ ";
-            stream << "year :  " << vl.year();
-            stream << ", week :  " << vl.week();
-            stream << " }";
-            return stream;
+            return stream << "YYYYWww : " << vl.as_string();
         };
 
         std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_WEEK_ENCODING& vl) {
-            stream << "{ ";
-            stream << "year :  " << vl.year();
-            stream << ", week :  " << vl.week();
-            stream << " }";
-            return stream;
+            return stream << "++YYYYWww : " << vl.as_string();
         };
 
         std::ostream& operator<<(std::ostream& stream, const YEAR_WEEK_DAY_ENCODING& vl) {
-            stream << "{ ";
-            stream << "year :  " << vl.year();
-            stream << ", week :  " << vl.week();
-            stream << ", day :  " << vl.day();
-            stream << " }";
-            return stream;
+            return stream << "YYYYWwwDD : " << vl.as_string();
         };
 
         std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_WEEK_DAY_ENCODING& vl) {
-            stream << "{ ";
-            stream << "year :  " << vl.year();
-            stream << ", week :  " << vl.week();
-            stream << ", day :  " << vl.day();
-            stream << " }";
-            return stream;
+            return stream << "+YYYYWwwDD : " << vl.as_string();
         };
 
         std::ostream& operator<<(std::ostream& stream, const HOURS_ENCODING& vl) {
