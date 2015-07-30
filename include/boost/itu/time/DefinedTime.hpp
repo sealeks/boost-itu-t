@@ -622,7 +622,17 @@ namespace boost {
 
             HOURS_ENCODING(const uint8_t& arg__val);
 
-            HOURS_ENCODING(ITU_T_SHARED(uint8_t) arg__val);
+            HOURS_ENCODING(const std::string& vl);
+
+            HOURS_ENCODING(const char* vl);
+
+            HOURS_ENCODING(const base_time_duration& vl);
+
+            base_time_duration as_time() const;
+
+            std::string as_string() const;
+
+            void as_string(const std::string& vl);
 
             ITU_T_HOLDERH_DECL(as_number, uint8_t); //   Ic(  [ 0  ...   24 ]   
 
@@ -641,7 +651,17 @@ namespace boost {
 
             HOURS_UTC_ENCODING(const uint8_t& arg__val);
 
-            HOURS_UTC_ENCODING(ITU_T_SHARED(uint8_t) arg__val);
+            HOURS_UTC_ENCODING(const std::string& vl);
+
+            HOURS_UTC_ENCODING(const char* vl);
+
+            HOURS_UTC_ENCODING(const base_time_duration& vl);
+
+            base_time_duration as_time() const;
+
+            std::string as_string() const;
+
+            void as_string(const std::string& vl);
 
             ITU_T_HOLDERH_DECL(as_number, uint8_t); //   Ic(  [ 0  ...   24 ]   
 
@@ -684,12 +704,8 @@ namespace boost {
 
             TIME_DIFFERENCE();
 
-            TIME_DIFFERENCE(const enumerated& arg__sign,
-                    const uint8_t& arg__hours);
-
-            TIME_DIFFERENCE(ITU_T_SHARED(enumerated) arg__sign,
-                    ITU_T_SHARED(uint8_t) arg__hours,
-                    ITU_T_SHARED(uint8_t) arg__minutes);
+            TIME_DIFFERENCE(const int8_t& arg__hours, 
+            const uint8_t& arg__minutes = 0);
 
             ITU_T_HOLDERH_DECL(sign, enumerated);
             ITU_T_HOLDERH_DECL(hours, uint8_t); //   Ic(  [ 0  ...   15 ]   

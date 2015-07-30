@@ -867,6 +867,9 @@ namespace boost {
         ITU_T_HOLDERH_DEFN(ANY_YEAR_WEEK_DAY_ENCODING::year, year, ANY_YEAR_ENCODING);
         ITU_T_HOLDERH_DEFN(ANY_YEAR_WEEK_DAY_ENCODING::week, week, uint8_t);
         ITU_T_HOLDERH_DEFN(ANY_YEAR_WEEK_DAY_ENCODING::day, day, uint8_t);
+        
+        
+        
 
         // sequence HOURS-ENCODING
 
@@ -874,15 +877,46 @@ namespace boost {
         };
 
         HOURS_ENCODING::HOURS_ENCODING(const uint8_t& arg__val) :
-        as_number_(arg__val) {
+        as_number_(to_range(arg__val, (uint8_t) 0, (uint8_t) 24)) {
         };
 
-        HOURS_ENCODING::HOURS_ENCODING(ITU_T_SHARED(uint8_t) arg__val) :
-        as_number_(arg__val) {
+        HOURS_ENCODING::HOURS_ENCODING(const std::string& vl) :
+        as_number_(0) {
+            as_string(vl);
         };
+
+        HOURS_ENCODING::HOURS_ENCODING(const char* vl) :
+        as_number_(0) {
+            as_string(vl);
+        };
+
+        HOURS_ENCODING::HOURS_ENCODING(const base_time_duration& vl) :
+        as_number_(to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)) {
+        };
+
+
+        base_time_duration HOURS_ENCODING::as_time() const {
+            try {
+                return base_time_duration(static_cast<int> (as_number()),0,0);
+            } catch (...) {
+            }
+            return base_time_duration();
+        }
+
+        std::string HOURS_ENCODING::as_string() const {
+            return to_string(static_cast<int> (as_number()), 2, '0');
+        }
+
+        void HOURS_ENCODING::as_string(const std::string& vl) {
+            as_number(to_range<uint8_t>(string_to_def<int>(vl, 0, "0"), (uint8_t) 0, (uint8_t) 24));
+        }
 
 
         ITU_T_HOLDERH_DEFN(HOURS_ENCODING::as_number, as_number, uint8_t);
+        
+        
+        
+        
 
         // sequence HOURS-UTC-ENCODING
 
@@ -890,15 +924,47 @@ namespace boost {
         };
 
         HOURS_UTC_ENCODING::HOURS_UTC_ENCODING(const uint8_t& arg__val) :
-        as_number_(arg__val) {
+        as_number_(to_range(arg__val, (uint8_t) 0, (uint8_t) 24)) {
         };
 
-        HOURS_UTC_ENCODING::HOURS_UTC_ENCODING(ITU_T_SHARED(uint8_t) arg__val) :
-        as_number_(arg__val) {
+        HOURS_UTC_ENCODING::HOURS_UTC_ENCODING(const std::string& vl) :
+        as_number_(0) {
+            as_string(vl);
+        };
+
+        HOURS_UTC_ENCODING::HOURS_UTC_ENCODING(const char* vl) :
+        as_number_(0) {
+            as_string(vl);
+        };
+
+        HOURS_UTC_ENCODING::HOURS_UTC_ENCODING(const base_time_duration& vl) :
+        as_number_(to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)) {
         };
 
 
+        base_time_duration HOURS_UTC_ENCODING::as_time() const {
+            try {
+                return base_time_duration(static_cast<int> (as_number()),0,0);
+            } catch (...) {
+            }
+            return base_time_duration();
+        }
+
+        std::string HOURS_UTC_ENCODING::as_string() const {
+            return to_string(static_cast<int> (as_number()), 2, '0');
+        }
+
+        void HOURS_UTC_ENCODING::as_string(const std::string& vl) {
+            as_number(to_range<uint8_t>(string_to_def<int>(vl, 0, "0"), (uint8_t) 0, (uint8_t) 24));
+        }
+
+        
+        
         ITU_T_HOLDERH_DEFN(HOURS_UTC_ENCODING::as_number, as_number, uint8_t);
+        
+        
+        
+        
 
         // sequence HOURS-AND-DIFF-ENCODING
 
@@ -920,6 +986,11 @@ namespace boost {
 
         ITU_T_HOLDERH_DEFN(HOURS_AND_DIFF_ENCODING::local_hours, local_hours, uint8_t);
         ITU_T_HOLDERH_DEFN(HOURS_AND_DIFF_ENCODING::time_difference, time_difference, TIME_DIFFERENCE);
+        
+        
+        
+        
+        
 
         // sequence TIME-DIFFERENCE
         const enumerated TIME_DIFFERENCE::sign_positive = 0;
@@ -928,24 +999,25 @@ namespace boost {
         TIME_DIFFERENCE::TIME_DIFFERENCE() : sign_(), hours_() {
         };
 
-        TIME_DIFFERENCE::TIME_DIFFERENCE(const enumerated& arg__sign,
-                const uint8_t& arg__hours) :
-        sign_(arg__sign),
-        hours_(arg__hours) {
-        };
-
-        TIME_DIFFERENCE::TIME_DIFFERENCE(ITU_T_SHARED(enumerated) arg__sign,
-                ITU_T_SHARED(uint8_t) arg__hours,
-                ITU_T_SHARED(uint8_t) arg__minutes) :
-        sign_(arg__sign),
-        hours_(arg__hours),
-        minutes_(arg__minutes) {
+        TIME_DIFFERENCE::TIME_DIFFERENCE(const int8_t& arg__hours, 
+            const uint8_t& arg__minutes) :
+        sign_(arg__hours < 0 ? sign_negative : sign_positive),
+        hours_(static_cast<uint8_t>(std::abs(to_range<int8_t>(arg__minutes, (int8_t) (-15) , (int8_t) 15)))) {
+            if (arg__minutes)
+                minutes(to_range<uint8_t>(arg__minutes, (uint8_t) 1, (uint8_t) 59));
         };
 
 
         ITU_T_HOLDERH_DEFN(TIME_DIFFERENCE::sign, sign, enumerated);
         ITU_T_HOLDERH_DEFN(TIME_DIFFERENCE::hours, hours, uint8_t);
         ITU_T_OPTIONAL_DEFN(TIME_DIFFERENCE::minutes, minutes, uint8_t);
+        
+        
+        
+        
+        
+        
+        
 
         // sequence MINUTES-ENCODING
 
