@@ -394,7 +394,75 @@ namespace TestTm {
         DEBUG_VAL_ITU_TREAD(hors_diff_enc2_r);
         DEBUG_VAL_ITU(hors_diff_enc3)
         DEBUG_VAL_ITU_TREAD(hors_diff_enc3_r)
+                
+                
+                
+                
+                
+                
+                
+                
+        MINUTES_ENCODING minuts_enc (3, 25);
+        MINUTES_ENCODING minuts_enc1 = std::string("0412");
+        MINUTES_ENCODING minuts_enc2 = "2105";
+        MINUTES_ENCODING minuts_enc3 = boost::asn1::base_time_duration(4, 23, 40);
 
+        MINUTES_ENCODING minuts_enc_r;
+        MINUTES_ENCODING minuts_enc1_r;
+        MINUTES_ENCODING minuts_enc2_r;
+        MINUTES_ENCODING minuts_enc3_r;
+
+
+        DEBUG_VAL_ITU(minuts_enc)
+        DEBUG_VAL_ITU_TREAD(minuts_enc_r);
+        DEBUG_VAL_ITU(minuts_enc1)
+        DEBUG_VAL_ITU_TREAD(minuts_enc1_r);
+        DEBUG_VAL_ITU(minuts_enc2)
+        DEBUG_VAL_ITU_TREAD(minuts_enc2_r);
+        DEBUG_VAL_ITU(minuts_enc3)
+        DEBUG_VAL_ITU_TREAD(minuts_enc3_r);
+
+        MINUTES_UTC_ENCODING minuts_utc_enc(3, 45);
+        MINUTES_UTC_ENCODING minuts_utc_enc1 = std::string("0445");
+        MINUTES_UTC_ENCODING minuts_utc_enc2 = "2155";
+        MINUTES_UTC_ENCODING minuts_utc_enc3 = boost::asn1::base_time_duration(4, 23, 40);
+
+        MINUTES_UTC_ENCODING minuts_utc_enc_r;
+        MINUTES_UTC_ENCODING minuts_utc_enc1_r;
+        MINUTES_UTC_ENCODING minuts_utc_enc2_r;
+        MINUTES_UTC_ENCODING minuts_utc_enc3_r;
+
+
+        DEBUG_VAL_ITU(minuts_utc_enc)
+        DEBUG_VAL_ITU_TREAD(minuts_utc_enc_r);
+        DEBUG_VAL_ITU(minuts_utc_enc1)
+        DEBUG_VAL_ITU_TREAD(minuts_utc_enc1_r);
+        DEBUG_VAL_ITU(minuts_utc_enc2)
+        DEBUG_VAL_ITU_TREAD(minuts_utc_enc2_r);
+        DEBUG_VAL_ITU(minuts_utc_enc3)
+        DEBUG_VAL_ITU_TREAD(minuts_utc_enc3_r);
+
+        MINUTES_AND_DIFF_ENCODING minuts_diff_enc (3, 45);
+        MINUTES_AND_DIFF_ENCODING minuts_diff_enc1 = std::string("0456+04");
+        MINUTES_AND_DIFF_ENCODING minuts_diff_enc2 = "2112-0330";
+        MINUTES_AND_DIFF_ENCODING minuts_diff_enc3 = boost::asn1::base_time_duration(4, 23, 40);
+
+        MINUTES_AND_DIFF_ENCODING minuts_diff_enc_r;
+        MINUTES_AND_DIFF_ENCODING minuts_diff_enc1_r;
+        MINUTES_AND_DIFF_ENCODING minuts_diff_enc2_r;
+        MINUTES_AND_DIFF_ENCODING minuts_diff_enc3_r;
+
+
+        DEBUG_VAL_ITU(minuts_diff_enc)
+        DEBUG_VAL_ITU_TREAD(minuts_diff_enc_r);
+        DEBUG_VAL_ITU(minuts_diff_enc1)
+        DEBUG_VAL_ITU_TREAD(minuts_diff_enc1_r);
+        DEBUG_VAL_ITU(minuts_diff_enc2)
+        DEBUG_VAL_ITU_TREAD(minuts_diff_enc2_r);
+        DEBUG_VAL_ITU(minuts_diff_enc3)
+        DEBUG_VAL_ITU_TREAD(minuts_diff_enc3_r);
+        
+        
     }
 
 }
