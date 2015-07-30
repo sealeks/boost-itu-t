@@ -239,55 +239,31 @@ namespace boost {
         // sequence TIME-OF-DAY-ENCODING
 
         template<> void TIME_OF_DAY_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_BIND_IMPLICIT(hours_, 0, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(minutes_, 1, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(seconds_, 2, CONTEXT_CLASS);
+            time_serialize(*this, arch);
         }
 
         template<> void TIME_OF_DAY_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_BIND_IMPLICIT(hours_, 0, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(minutes_, 1, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(seconds_, 2, CONTEXT_CLASS);
+            time_serialize(*this, arch);
         }
 
         // sequence TIME-OF-DAY-UTC-ENCODING
 
         template<> void TIME_OF_DAY_UTC_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_BIND_IMPLICIT(hours_, 0, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(minutes_, 1, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(seconds_, 2, CONTEXT_CLASS);
+            time_serialize(*this, arch);
         }
 
         template<> void TIME_OF_DAY_UTC_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_BIND_IMPLICIT(hours_, 0, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(minutes_, 1, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(seconds_, 2, CONTEXT_CLASS);
+            time_serialize(*this, arch);
         }
 
         // sequence TIME-OF-DAY-AND-DIFF-ENCODING
 
         template<> void TIME_OF_DAY_AND_DIFF_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_BIND_IMPLICIT(local_time_, 0, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(time_difference_, 1, CONTEXT_CLASS);
+            time_serialize(*this, arch);
         }
 
         template<> void TIME_OF_DAY_AND_DIFF_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_BIND_IMPLICIT(local_time_, 0, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(time_difference_, 1, CONTEXT_CLASS);
-        }
-
-        // sequence local-time
-
-        template<> void TIME_OF_DAY_AND_DIFF_ENCODING::Local_time_type::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_BIND_IMPLICIT(hours_, 0, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(minutes_, 1, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(seconds_, 2, CONTEXT_CLASS);
-        }
-
-        template<> void TIME_OF_DAY_AND_DIFF_ENCODING::Local_time_type::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_BIND_IMPLICIT(hours_, 0, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(minutes_, 1, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(seconds_, 2, CONTEXT_CLASS);
+            time_serialize(*this, arch);
         }
 
         // sequence HOURS-AND-FRACTION-ENCODING

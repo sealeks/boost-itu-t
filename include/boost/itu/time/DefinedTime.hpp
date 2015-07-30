@@ -840,7 +840,6 @@ namespace boost {
 
 
 
-
         // sequence TIME-OF-DAY-ENCODING
 
         struct TIME_OF_DAY_ENCODING {
@@ -849,10 +848,18 @@ namespace boost {
             TIME_OF_DAY_ENCODING(const uint8_t& arg__hours,
                     const uint8_t& arg__minutes,
                     const uint8_t& arg__seconds);
+            
+            TIME_OF_DAY_ENCODING(const std::string& vl);
 
-            TIME_OF_DAY_ENCODING(ITU_T_SHARED(uint8_t) arg__hours,
-                    ITU_T_SHARED(uint8_t) arg__minutes,
-                    ITU_T_SHARED(uint8_t) arg__seconds);
+            TIME_OF_DAY_ENCODING(const char* vl);
+
+            TIME_OF_DAY_ENCODING(const base_time_duration& vl);
+
+            base_time_duration as_time() const;
+
+            std::string as_string() const;
+
+            void as_string(const std::string& vl);            
 
             ITU_T_HOLDERH_DECL(hours, uint8_t); //   Ic(  [ 0  ...   24 ]   
             ITU_T_HOLDERH_DECL(minutes, uint8_t); //   Ic(  [ 0  ...   59 ]   
@@ -860,6 +867,9 @@ namespace boost {
 
             ITU_T_ARCHIVE_FUNC;
         };
+        
+        
+        
 
         // sequence TIME-OF-DAY-UTC-ENCODING
 
@@ -869,10 +879,18 @@ namespace boost {
             TIME_OF_DAY_UTC_ENCODING(const uint8_t& arg__hours,
                     const uint8_t& arg__minutes,
                     const uint8_t& arg__seconds);
+            
+            TIME_OF_DAY_UTC_ENCODING(const std::string& vl);
 
-            TIME_OF_DAY_UTC_ENCODING(ITU_T_SHARED(uint8_t) arg__hours,
-                    ITU_T_SHARED(uint8_t) arg__minutes,
-                    ITU_T_SHARED(uint8_t) arg__seconds);
+            TIME_OF_DAY_UTC_ENCODING(const char* vl);
+
+            TIME_OF_DAY_UTC_ENCODING(const base_time_duration& vl);
+
+            base_time_duration as_time() const;
+
+            std::string as_string() const;
+
+            void as_string(const std::string& vl);            
 
             ITU_T_HOLDERH_DECL(hours, uint8_t); //   Ic(  [ 0  ...   24 ]   
             ITU_T_HOLDERH_DECL(minutes, uint8_t); //   Ic(  [ 0  ...   59 ]   
@@ -880,44 +898,46 @@ namespace boost {
 
             ITU_T_ARCHIVE_FUNC;
         };
+        
+        
+        
+        
 
         // sequence TIME-OF-DAY-AND-DIFF-ENCODING
 
         struct TIME_OF_DAY_AND_DIFF_ENCODING {
-            struct Local_time_type;
-
-            struct Local_time_type {
-                Local_time_type();
-
-                Local_time_type(const uint8_t& arg__hours,
-                        const uint8_t& arg__minutes,
-                        const uint8_t& arg__seconds);
-
-                Local_time_type(ITU_T_SHARED(uint8_t) arg__hours,
-                        ITU_T_SHARED(uint8_t) arg__minutes,
-                        ITU_T_SHARED(uint8_t) arg__seconds);
-
-                ITU_T_HOLDERH_DECL(hours, uint8_t); //   Ic(  [ 0  ...   24 ]   
-                ITU_T_HOLDERH_DECL(minutes, uint8_t); //   Ic(  [ 0  ...   59 ]   
-                ITU_T_HOLDERH_DECL(seconds, uint8_t); //   Ic(  [ 0  ...   60 ]   
-
-                ITU_T_ARCHIVE_FUNC;
-            };
-
 
             TIME_OF_DAY_AND_DIFF_ENCODING();
 
-            TIME_OF_DAY_AND_DIFF_ENCODING(const Local_time_type& arg__local_time,
-                    const TIME_DIFFERENCE& arg__time_difference);
+            TIME_OF_DAY_AND_DIFF_ENCODING(const TIME_OF_DAY_ENCODING& arg__local_time,
+                    const TIME_DIFFERENCE& arg__time_difference = TIME_DIFFERENCE());
+            
+            TIME_OF_DAY_AND_DIFF_ENCODING(const uint8_t& arg__hours,
+                    const uint8_t& arg__minutes,
+                    const uint8_t& arg__seconds,
+                    const TIME_DIFFERENCE& arg__time_difference = TIME_DIFFERENCE());        
 
-            TIME_OF_DAY_AND_DIFF_ENCODING(ITU_T_SHARED(Local_time_type) arg__local_time,
-                    ITU_T_SHARED(TIME_DIFFERENCE) arg__time_difference);
+            TIME_OF_DAY_AND_DIFF_ENCODING(const std::string& vl);
 
-            ITU_T_HOLDERH_DECL(local_time, Local_time_type);
+            TIME_OF_DAY_AND_DIFF_ENCODING(const char* vl);
+
+            TIME_OF_DAY_AND_DIFF_ENCODING(const base_time_duration& vl);
+
+            base_time_duration as_time() const;
+
+            std::string as_string() const;
+
+            void as_string(const std::string& vl);            
+
+            ITU_T_HOLDERH_DECL(local_time, TIME_OF_DAY_ENCODING);
             ITU_T_HOLDERH_DECL(time_difference, TIME_DIFFERENCE);
 
             ITU_T_ARCHIVE_FUNC;
         };
+        
+        
+        
+        
 
         // sequence HOURS-AND-FRACTION-ENCODING
 
@@ -2068,7 +2088,6 @@ namespace boost {
         std::ostream& operator<<(std::ostream& stream, const TIME_OF_DAY_ENCODING& vl);
         std::ostream& operator<<(std::ostream& stream, const TIME_OF_DAY_UTC_ENCODING& vl);
         std::ostream& operator<<(std::ostream& stream, const TIME_OF_DAY_AND_DIFF_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const TIME_OF_DAY_AND_DIFF_ENCODING::Local_time_type& vl);
         std::ostream& operator<<(std::ostream& stream, const HOURS_AND_FRACTION_ENCODING& vl);
         std::ostream& operator<<(std::ostream& stream, const HOURS_UTC_AND_FRACTION_ENCODING& vl);
         std::ostream& operator<<(std::ostream& stream, const HOURS_AND_DIFF_AND_FRACTION_ENCODING& vl);
@@ -2148,7 +2167,6 @@ namespace boost {
         ITU_T_ARCHIVE_X690_DECL(TIME_OF_DAY_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(TIME_OF_DAY_UTC_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(TIME_OF_DAY_AND_DIFF_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(TIME_OF_DAY_AND_DIFF_ENCODING::Local_time_type);
         ITU_T_ARCHIVE_X690_DECL(HOURS_AND_FRACTION_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(HOURS_UTC_AND_FRACTION_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(HOURS_AND_DIFF_AND_FRACTION_ENCODING);
@@ -2228,7 +2246,6 @@ namespace boost {
         ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY_UTC_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY_AND_DIFF_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY_AND_DIFF_ENCODING::Local_time_type);
         ITU_T_ARCHIVE_X691_DECL(HOURS_AND_FRACTION_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(HOURS_UTC_AND_FRACTION_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(HOURS_AND_DIFF_AND_FRACTION_ENCODING);

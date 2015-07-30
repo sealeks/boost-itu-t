@@ -371,19 +371,6 @@ namespace boost {
             ITU_T_BIND_PER(time_difference_);
         }
 
-        // sequence local-time
-
-        template<> void TIME_OF_DAY_AND_DIFF_ENCODING::Local_time_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
-            ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (0), static_cast<uint8_t> (59));
-            ITU_T_BIND_NUM_CONSTRAINT(seconds_, static_cast<uint8_t> (0), static_cast<uint8_t> (60));
-        }
-
-        template<> void TIME_OF_DAY_AND_DIFF_ENCODING::Local_time_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
-            ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (0), static_cast<uint8_t> (59));
-            ITU_T_BIND_NUM_CONSTRAINT(seconds_, static_cast<uint8_t> (0), static_cast<uint8_t> (60));
-        }
 
         // sequence HOURS-AND-FRACTION-ENCODING
 

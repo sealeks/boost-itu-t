@@ -1264,7 +1264,7 @@ namespace boost {
 
         void MINUTES_AND_DIFF_ENCODING::as_string(const std::string& vl) {
             local_time(MINUTES_ENCODING(drct_substr(vl, 0, 4)));
-            time_difference(TIME_DIFFERENCE(drct_substr(vl, 5)));
+            time_difference(TIME_DIFFERENCE(drct_substr(vl, 4)));
         }
 
 
@@ -1284,23 +1284,56 @@ namespace boost {
         TIME_OF_DAY_ENCODING::TIME_OF_DAY_ENCODING(const uint8_t& arg__hours,
                 const uint8_t& arg__minutes,
                 const uint8_t& arg__seconds) :
-        hours_(arg__hours),
-        minutes_(arg__minutes),
-        seconds_(arg__seconds) {
+        hours_(to_range(arg__hours, (uint8_t) 0, (uint8_t) 24)),
+        minutes_(to_range(arg__minutes, (uint8_t) 0, (uint8_t) 59)),
+        seconds_(to_range(arg__seconds, (uint8_t) 0, (uint8_t) 60)) {
         };
 
-        TIME_OF_DAY_ENCODING::TIME_OF_DAY_ENCODING(ITU_T_SHARED(uint8_t) arg__hours,
-                ITU_T_SHARED(uint8_t) arg__minutes,
-                ITU_T_SHARED(uint8_t) arg__seconds) :
-        hours_(arg__hours),
-        minutes_(arg__minutes),
-        seconds_(arg__seconds) {
+        TIME_OF_DAY_ENCODING::TIME_OF_DAY_ENCODING(const std::string& vl) :
+        hours_(), minutes_(), seconds_() {
+            as_string(vl);
         };
 
+        TIME_OF_DAY_ENCODING::TIME_OF_DAY_ENCODING(const char* vl) :
+        hours_(), minutes_(), seconds_() {
+            as_string(vl);
+        };
+
+        TIME_OF_DAY_ENCODING::TIME_OF_DAY_ENCODING(const base_time_duration& vl) :
+        hours_(to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)),
+        minutes_(to_range<uint8_t>(vl.is_special() ? 0 : vl.minutes(), (uint8_t) 0, (uint8_t) 59)),
+        seconds_(to_range<uint8_t>(vl.is_special() ? 0 : vl.minutes(), (uint8_t) 0, (uint8_t) 60)) {
+        };
+
+        base_time_duration TIME_OF_DAY_ENCODING::as_time() const {
+            try {
+                return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()), static_cast<int> (seconds()));
+            }
+            catch (...) {
+            }
+            return base_time_duration();
+        }
+
+        std::string TIME_OF_DAY_ENCODING::as_string() const {
+            return to_string(static_cast<int> (hours()), 2, '0') +
+                    to_string(static_cast<int> (minutes()), 2, '0') +
+                    to_string(static_cast<int> (seconds()), 2, '0');
+        }
+
+        void TIME_OF_DAY_ENCODING::as_string(const std::string& vl) {
+            hours(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 0, 2), 0, "0"), (uint8_t) 0, (uint8_t) 24));
+            minutes(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 2, 2), 0, "0"), (uint8_t) 0, (uint8_t) 59));
+            seconds(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 4, 2), 0, "0"), (uint8_t) 0, (uint8_t) 60));
+        }
 
         ITU_T_HOLDERH_DEFN(TIME_OF_DAY_ENCODING::hours, hours, uint8_t);
         ITU_T_HOLDERH_DEFN(TIME_OF_DAY_ENCODING::minutes, minutes, uint8_t);
         ITU_T_HOLDERH_DEFN(TIME_OF_DAY_ENCODING::seconds, seconds, uint8_t);
+
+
+
+
+
 
         // sequence TIME-OF-DAY-UTC-ENCODING
 
@@ -1310,68 +1343,116 @@ namespace boost {
         TIME_OF_DAY_UTC_ENCODING::TIME_OF_DAY_UTC_ENCODING(const uint8_t& arg__hours,
                 const uint8_t& arg__minutes,
                 const uint8_t& arg__seconds) :
-        hours_(arg__hours),
-        minutes_(arg__minutes),
-        seconds_(arg__seconds) {
+        hours_(to_range(arg__hours, (uint8_t) 0, (uint8_t) 24)),
+        minutes_(to_range(arg__minutes, (uint8_t) 0, (uint8_t) 59)),
+        seconds_(to_range(arg__seconds, (uint8_t) 0, (uint8_t) 60)) {
         };
 
-        TIME_OF_DAY_UTC_ENCODING::TIME_OF_DAY_UTC_ENCODING(ITU_T_SHARED(uint8_t) arg__hours,
-                ITU_T_SHARED(uint8_t) arg__minutes,
-                ITU_T_SHARED(uint8_t) arg__seconds) :
-        hours_(arg__hours),
-        minutes_(arg__minutes),
-        seconds_(arg__seconds) {
+        TIME_OF_DAY_UTC_ENCODING::TIME_OF_DAY_UTC_ENCODING(const std::string& vl) :
+        hours_(), minutes_(), seconds_() {
+            as_string(vl);
         };
+
+        TIME_OF_DAY_UTC_ENCODING::TIME_OF_DAY_UTC_ENCODING(const char* vl) :
+        hours_(), minutes_(), seconds_() {
+            as_string(vl);
+        };
+
+        TIME_OF_DAY_UTC_ENCODING::TIME_OF_DAY_UTC_ENCODING(const base_time_duration& vl) :
+        hours_(to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)),
+        minutes_(to_range<uint8_t>(vl.is_special() ? 0 : vl.minutes(), (uint8_t) 0, (uint8_t) 59)),
+        seconds_(to_range<uint8_t>(vl.is_special() ? 0 : vl.minutes(), (uint8_t) 0, (uint8_t) 60)) {
+        };
+
+        base_time_duration TIME_OF_DAY_UTC_ENCODING::as_time() const {
+            try {
+                return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()), static_cast<int> (seconds()));
+            }
+            catch (...) {
+            }
+            return base_time_duration();
+        }
+
+        std::string TIME_OF_DAY_UTC_ENCODING::as_string() const {
+            return to_string(static_cast<int> (hours()), 2, '0') +
+                    to_string(static_cast<int> (minutes()), 2, '0') +
+                    to_string(static_cast<int> (seconds()), 2, '0') + "Z";
+        }
+
+        void TIME_OF_DAY_UTC_ENCODING::as_string(const std::string& vl) {
+            hours(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 0, 2), 0, "0"), (uint8_t) 0, (uint8_t) 24));
+            minutes(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 2, 2), 0, "0"), (uint8_t) 0, (uint8_t) 59));
+            seconds(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 4, 2), 0, "0"), (uint8_t) 0, (uint8_t) 60));
+        }
 
 
         ITU_T_HOLDERH_DEFN(TIME_OF_DAY_UTC_ENCODING::hours, hours, uint8_t);
         ITU_T_HOLDERH_DEFN(TIME_OF_DAY_UTC_ENCODING::minutes, minutes, uint8_t);
         ITU_T_HOLDERH_DEFN(TIME_OF_DAY_UTC_ENCODING::seconds, seconds, uint8_t);
 
+
+
+
+
         // sequence TIME-OF-DAY-AND-DIFF-ENCODING
 
         TIME_OF_DAY_AND_DIFF_ENCODING::TIME_OF_DAY_AND_DIFF_ENCODING() : local_time_(), time_difference_() {
         };
 
-        TIME_OF_DAY_AND_DIFF_ENCODING::TIME_OF_DAY_AND_DIFF_ENCODING(const Local_time_type& arg__local_time,
+        TIME_OF_DAY_AND_DIFF_ENCODING::TIME_OF_DAY_AND_DIFF_ENCODING(const TIME_OF_DAY_ENCODING& arg__local_time,
                 const TIME_DIFFERENCE& arg__time_difference) :
         local_time_(arg__local_time),
         time_difference_(arg__time_difference) {
         };
 
-        TIME_OF_DAY_AND_DIFF_ENCODING::TIME_OF_DAY_AND_DIFF_ENCODING(ITU_T_SHARED(Local_time_type) arg__local_time,
-                ITU_T_SHARED(TIME_DIFFERENCE) arg__time_difference) :
-        local_time_(arg__local_time),
+        TIME_OF_DAY_AND_DIFF_ENCODING::TIME_OF_DAY_AND_DIFF_ENCODING(const uint8_t& arg__hours,
+                const uint8_t& arg__minutes,
+                const uint8_t& arg__seconds,
+                const TIME_DIFFERENCE& arg__time_difference) :
+        local_time_(TIME_OF_DAY_ENCODING(arg__hours, arg__minutes, arg__seconds)),
         time_difference_(arg__time_difference) {
         };
 
-        TIME_OF_DAY_AND_DIFF_ENCODING::Local_time_type::Local_time_type() : hours_(), minutes_(), seconds_() {
+        TIME_OF_DAY_AND_DIFF_ENCODING::TIME_OF_DAY_AND_DIFF_ENCODING(const std::string& vl) :
+        local_time_(), time_difference_() {
+            as_string(vl);
         };
 
-        TIME_OF_DAY_AND_DIFF_ENCODING::Local_time_type::Local_time_type(const uint8_t& arg__hours,
-                const uint8_t& arg__minutes,
-                const uint8_t& arg__seconds) :
-        hours_(arg__hours),
-        minutes_(arg__minutes),
-        seconds_(arg__seconds) {
+        TIME_OF_DAY_AND_DIFF_ENCODING::TIME_OF_DAY_AND_DIFF_ENCODING(const char* vl) :
+        local_time_(), time_difference_() {
+            as_string(vl);
         };
 
-        TIME_OF_DAY_AND_DIFF_ENCODING::Local_time_type::Local_time_type(ITU_T_SHARED(uint8_t) arg__hours,
-                ITU_T_SHARED(uint8_t) arg__minutes,
-                ITU_T_SHARED(uint8_t) arg__seconds) :
-        hours_(arg__hours),
-        minutes_(arg__minutes),
-        seconds_(arg__seconds) {
+        TIME_OF_DAY_AND_DIFF_ENCODING::TIME_OF_DAY_AND_DIFF_ENCODING(const base_time_duration& vl) :
+        local_time_(vl), time_difference_() {
         };
 
+        base_time_duration TIME_OF_DAY_AND_DIFF_ENCODING::as_time() const {
+            try {
+                return local_time().as_time();
+            }
+            catch (...) {
+            }
+            return base_time_duration();
+        }
 
-        ITU_T_HOLDERH_DEFN(TIME_OF_DAY_AND_DIFF_ENCODING::Local_time_type::hours, hours, uint8_t);
-        ITU_T_HOLDERH_DEFN(TIME_OF_DAY_AND_DIFF_ENCODING::Local_time_type::minutes, minutes, uint8_t);
-        ITU_T_HOLDERH_DEFN(TIME_OF_DAY_AND_DIFF_ENCODING::Local_time_type::seconds, seconds, uint8_t);
+        std::string TIME_OF_DAY_AND_DIFF_ENCODING::as_string() const {
+            return local_time().as_string() + time_difference().as_string();
+        }
+
+        void TIME_OF_DAY_AND_DIFF_ENCODING::as_string(const std::string& vl) {
+            local_time(TIME_OF_DAY_ENCODING(drct_substr(vl, 0, 6)));
+            time_difference(TIME_DIFFERENCE(drct_substr(vl, 6)));
+        }
 
 
-        ITU_T_HOLDERH_DEFN(TIME_OF_DAY_AND_DIFF_ENCODING::local_time, local_time, TIME_OF_DAY_AND_DIFF_ENCODING::Local_time_type);
+
+        ITU_T_HOLDERH_DEFN(TIME_OF_DAY_AND_DIFF_ENCODING::local_time, local_time, TIME_OF_DAY_ENCODING);
         ITU_T_HOLDERH_DEFN(TIME_OF_DAY_AND_DIFF_ENCODING::time_difference, time_difference, TIME_DIFFERENCE);
+
+
+
+
 
         // sequence HOURS-AND-FRACTION-ENCODING
 
@@ -2621,63 +2702,29 @@ namespace boost {
         };
 
         std::ostream& operator<<(std::ostream& stream, const MINUTES_ENCODING& vl) {
-            stream << "{ ";
-            stream << "hours :  " << vl.hours();
-            stream << ", minutes :  " << vl.minutes();
-            stream << " }";
-            return stream;
+            return stream << "hhmm: " << vl.as_string();
         };
 
         std::ostream& operator<<(std::ostream& stream, const MINUTES_UTC_ENCODING& vl) {
-            stream << "{ ";
-            stream << "hours :  " << vl.hours();
-            stream << ", minutes :  " << vl.minutes();
-            stream << " }";
-            return stream;
+            return stream << "hhmmZ: " << vl.as_string();
         };
 
         std::ostream& operator<<(std::ostream& stream, const MINUTES_AND_DIFF_ENCODING& vl) {
-            stream << "{ ";
-            stream << "local_time :  " << vl.local_time();
-            stream << ", time_difference :  " << vl.time_difference();
-            stream << " }";
-            return stream;
+            return stream << "hhmm: " << vl.as_string();
         };
 
         std::ostream& operator<<(std::ostream& stream, const TIME_OF_DAY_ENCODING& vl) {
-            stream << "{ ";
-            stream << "hours :  " << vl.hours();
-            stream << ", minutes :  " << vl.minutes();
-            stream << ", seconds :  " << vl.seconds();
-            stream << " }";
-            return stream;
+            return stream << "hhmmss: " << vl.as_string();
         };
 
         std::ostream& operator<<(std::ostream& stream, const TIME_OF_DAY_UTC_ENCODING& vl) {
-            stream << "{ ";
-            stream << "hours :  " << vl.hours();
-            stream << ", minutes :  " << vl.minutes();
-            stream << ", seconds :  " << vl.seconds();
-            stream << " }";
-            return stream;
+            return stream << "hhmmssZ: " << vl.as_string();
         };
 
         std::ostream& operator<<(std::ostream& stream, const TIME_OF_DAY_AND_DIFF_ENCODING& vl) {
-            stream << "{ ";
-            stream << "local_time :  " << vl.local_time();
-            stream << ", time_difference :  " << vl.time_difference();
-            stream << " }";
-            return stream;
+            return stream << "hhmmss: " << vl.as_string();
         };
 
-        std::ostream& operator<<(std::ostream& stream, const TIME_OF_DAY_AND_DIFF_ENCODING::Local_time_type& vl) {
-            stream << "{ ";
-            stream << "hours :  " << vl.hours();
-            stream << ", minutes :  " << vl.minutes();
-            stream << ", seconds :  " << vl.seconds();
-            stream << " }";
-            return stream;
-        };
 
         std::ostream& operator<<(std::ostream& stream, const HOURS_AND_FRACTION_ENCODING& vl) {
             stream << "{ ";
