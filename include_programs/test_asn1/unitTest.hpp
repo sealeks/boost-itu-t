@@ -463,6 +463,70 @@ namespace TestTm {
         DEBUG_VAL_ITU_TREAD(minuts_diff_enc3_r);
         
         
+        
+        
+        
+        TIME_OF_DAY_ENCODING time_of_day_enc (3, 25, 43);
+        TIME_OF_DAY_ENCODING time_of_day_enc1 = std::string("041256");
+        TIME_OF_DAY_ENCODING time_of_day_enc2 = "210534";
+        TIME_OF_DAY_ENCODING time_of_day_enc3 = boost::asn1::base_time_duration(4, 23, 40);
+
+        TIME_OF_DAY_ENCODING time_of_day_enc_r;
+        TIME_OF_DAY_ENCODING time_of_day_enc1_r;
+        TIME_OF_DAY_ENCODING time_of_day_enc2_r;
+        TIME_OF_DAY_ENCODING time_of_day_enc3_r;
+
+
+        DEBUG_VAL_ITU(time_of_day_enc)
+        DEBUG_VAL_ITU_TREAD(time_of_day_enc_r);
+        DEBUG_VAL_ITU(time_of_day_enc1)
+        DEBUG_VAL_ITU_TREAD(time_of_day_enc1_r);
+        DEBUG_VAL_ITU(time_of_day_enc2)
+        DEBUG_VAL_ITU_TREAD(time_of_day_enc2_r);
+        DEBUG_VAL_ITU(time_of_day_enc3)
+        DEBUG_VAL_ITU_TREAD(time_of_day_enc3_r);
+
+        TIME_OF_DAY_UTC_ENCODING time_of_day_utc_enc(3, 45, 10);
+        TIME_OF_DAY_UTC_ENCODING time_of_day_utc_enc1 = std::string("044534");
+        TIME_OF_DAY_UTC_ENCODING time_of_day_utc_enc2 = "215512";
+        TIME_OF_DAY_UTC_ENCODING time_of_day_utc_enc3 = boost::asn1::base_time_duration(4, 23, 40);
+
+        TIME_OF_DAY_UTC_ENCODING time_of_day_utc_enc_r;
+        TIME_OF_DAY_UTC_ENCODING time_of_day_utc_enc1_r;
+        TIME_OF_DAY_UTC_ENCODING time_of_day_utc_enc2_r;
+        TIME_OF_DAY_UTC_ENCODING time_of_day_utc_enc3_r;
+
+
+        DEBUG_VAL_ITU(time_of_day_utc_enc)
+        DEBUG_VAL_ITU_TREAD(time_of_day_utc_enc_r);
+        DEBUG_VAL_ITU(time_of_day_utc_enc1)
+        DEBUG_VAL_ITU_TREAD(time_of_day_utc_enc1_r);
+        DEBUG_VAL_ITU(time_of_day_utc_enc2)
+        DEBUG_VAL_ITU_TREAD(time_of_day_utc_enc2_r);
+        DEBUG_VAL_ITU(time_of_day_utc_enc3)
+        DEBUG_VAL_ITU_TREAD(time_of_day_utc_enc3_r);
+
+        TIME_OF_DAY_AND_DIFF_ENCODING time_of_day_diff_enc (3, 45, 05);
+        TIME_OF_DAY_AND_DIFF_ENCODING time_of_day_diff_enc1 = std::string("045620+0420");
+        TIME_OF_DAY_AND_DIFF_ENCODING time_of_day_diff_enc2 = "211245-0330";
+        TIME_OF_DAY_AND_DIFF_ENCODING time_of_day_diff_enc3 = boost::asn1::base_time_duration(4, 23, 40);
+
+        TIME_OF_DAY_AND_DIFF_ENCODING time_of_day_diff_enc_r;
+        TIME_OF_DAY_AND_DIFF_ENCODING time_of_day_diff_enc1_r;
+        TIME_OF_DAY_AND_DIFF_ENCODING time_of_day_diff_enc2_r;
+        TIME_OF_DAY_AND_DIFF_ENCODING time_of_day_diff_enc3_r;
+
+
+        DEBUG_VAL_ITU(time_of_day_diff_enc)
+        DEBUG_VAL_ITU_TREAD(time_of_day_diff_enc_r);
+        DEBUG_VAL_ITU(time_of_day_diff_enc1)
+        DEBUG_VAL_ITU_TREAD(time_of_day_diff_enc1_r);
+        DEBUG_VAL_ITU(time_of_day_diff_enc2)
+        DEBUG_VAL_ITU_TREAD(time_of_day_diff_enc2_r);
+        DEBUG_VAL_ITU(time_of_day_diff_enc3)
+        DEBUG_VAL_ITU_TREAD(time_of_day_diff_enc3_r)        
+        
+        
     }
 
 }
