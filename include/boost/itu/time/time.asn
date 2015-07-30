@@ -7,12 +7,12 @@ EXPORTS ALL;
 
 -- 32.2.1 The CENTURY-ENCODING type is:
 CENTURY-ENCODING  ::= SEQUENCE {
- as_number INTEGER(0..99) -- 7 bits -- }
+ as-number INTEGER(0..99) -- 7 bits -- }
 
 
 -- 32.2.2 The ANY-CENTURY-ENCODING type is:
 ANY-CENTURY-ENCODING  ::= SEQUENCE {
- as_number INTEGER(MIN..MAX)}
+ as-number INTEGER(MIN..MAX)}
 
 -- 32.2.3 The YEAR-ENCODING type is:
 YEAR-ENCODING ::= CHOICE { -- 2 bits for choice determinant
@@ -23,7 +23,7 @@ remainder INTEGER (MIN..1748 | 2277..MAX)}
 
 -- 32.2.4 The ANY-YEAR-ENCODING type is:
 ANY-YEAR-ENCODING  ::= SEQUENCE {
-as_number INTEGER(MIN..MAX) }
+as-number INTEGER(MIN..MAX) }
 
 -- 32.2.5 The YEAR-MONTH-ENCODING type is:
 YEAR-MONTH-ENCODING ::= SEQUENCE {
@@ -84,11 +84,11 @@ day INTEGER (1..7)}
 -- 32.3.1 The HOURS-ENCODING type is:
 
 HOURS-ENCODING ::= SEQUENCE {
-as_number INTEGER(0..24) -- 5 bits -- }
+as-number INTEGER(0..24) -- 5 bits -- }
 
 --32.3.2 The HOURS-UTC-ENCODING type is:
 HOURS-UTC-ENCODING  ::= SEQUENCE {
- as_number INTEGER(0..24) -- 5 bits -- }
+ as-number INTEGER(0..24) -- 5 bits -- }
 
 --32.3.3 The HOURS-AND-DIFF-ENCODING type is:
 HOURS-AND-DIFF-ENCODING ::= SEQUENCE {
