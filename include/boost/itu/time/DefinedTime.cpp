@@ -1302,7 +1302,7 @@ namespace boost {
         TIME_OF_DAY_ENCODING::TIME_OF_DAY_ENCODING(const base_time_duration& vl) :
         hours_(to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)),
         minutes_(to_range<uint8_t>(vl.is_special() ? 0 : vl.minutes(), (uint8_t) 0, (uint8_t) 59)),
-        seconds_(to_range<uint8_t>(vl.is_special() ? 0 : vl.minutes(), (uint8_t) 0, (uint8_t) 60)) {
+        seconds_(to_range<uint8_t>(vl.is_special() ? 0 : vl.seconds(), (uint8_t) 0, (uint8_t) 60)) {
         };
 
         base_time_duration TIME_OF_DAY_ENCODING::as_time() const {
@@ -1361,7 +1361,7 @@ namespace boost {
         TIME_OF_DAY_UTC_ENCODING::TIME_OF_DAY_UTC_ENCODING(const base_time_duration& vl) :
         hours_(to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)),
         minutes_(to_range<uint8_t>(vl.is_special() ? 0 : vl.minutes(), (uint8_t) 0, (uint8_t) 59)),
-        seconds_(to_range<uint8_t>(vl.is_special() ? 0 : vl.minutes(), (uint8_t) 0, (uint8_t) 60)) {
+        seconds_(to_range<uint8_t>(vl.is_special() ? 0 : vl.seconds(), (uint8_t) 0, (uint8_t) 60)) {
         };
 
         base_time_duration TIME_OF_DAY_UTC_ENCODING::as_time() const {
