@@ -1456,24 +1456,6 @@ namespace boost {
 
         // sequence HOURS-AND-FRACTION-ENCODING
 
-        HOURS_AND_FRACTION_ENCODING::HOURS_AND_FRACTION_ENCODING() : hours_(), fraction_() {
-        };
-
-        HOURS_AND_FRACTION_ENCODING::HOURS_AND_FRACTION_ENCODING(const uint8_t& arg__hours,
-                const integer_type& arg__fraction) :
-        hours_(arg__hours),
-        fraction_(arg__fraction) {
-        };
-
-        HOURS_AND_FRACTION_ENCODING::HOURS_AND_FRACTION_ENCODING(ITU_T_SHARED(uint8_t) arg__hours,
-                ITU_T_SHARED(integer_type) arg__fraction) :
-        hours_(arg__hours),
-        fraction_(arg__fraction) {
-        };
-
-
-        ITU_T_HOLDERH_DEFN(HOURS_AND_FRACTION_ENCODING::hours, hours, uint8_t);
-        ITU_T_HOLDERH_DEFN(HOURS_AND_FRACTION_ENCODING::fraction, fraction, integer_type);
 
         // sequence HOURS-UTC-AND-FRACTION-ENCODING
 

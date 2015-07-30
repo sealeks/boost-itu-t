@@ -12,18 +12,7 @@ namespace boost {
 
         using namespace time_detail;
 
-        template<typename T>
-        static void time_serialize(const T& vl, boost::asn1::x690::output_coder& arch) {
-            visible_string tmpval = vl.as_string();
-            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
-        }
 
-        template<typename T>
-        static void time_serialize(T& vl, boost::asn1::x690::input_coder& arch) {
-            visible_string tmpval;
-            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
-            vl.as_string(std::string(tmpval.c_str()));
-        }
 
         // sequence CENTURY-ENCODING
 
@@ -268,15 +257,7 @@ namespace boost {
 
         // sequence HOURS-AND-FRACTION-ENCODING
 
-        template<> void HOURS_AND_FRACTION_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_BIND_IMPLICIT(hours_, 0, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(fraction_, 1, CONTEXT_CLASS);
-        }
 
-        template<> void HOURS_AND_FRACTION_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_BIND_IMPLICIT(hours_, 0, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(fraction_, 1, CONTEXT_CLASS);
-        }
 
         // sequence HOURS-UTC-AND-FRACTION-ENCODING
 

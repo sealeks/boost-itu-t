@@ -109,6 +109,19 @@ namespace boost {
 
         }
 
+        template<typename T>
+        inline void time_serialize(const T& vl, boost::asn1::x690::output_coder& arch) {
+            visible_string tmpval = vl.as_string();
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+        }
+
+        template<typename T>
+        inline void time_serialize(T& vl, boost::asn1::x690::input_coder& arch) {
+            visible_string tmpval;
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+            vl.as_string(std::string(tmpval.c_str()));
+        }
+
 
         struct CENTURY_ENCODING;
         struct ANY_CENTURY_ENCODING;
@@ -934,27 +947,81 @@ namespace boost {
 
             ITU_T_ARCHIVE_FUNC;
         };
-        
-        
-        
-        
+
+
+
+
 
         // sequence HOURS-AND-FRACTION-ENCODING
 
+         template<std::size_t N = 3 >
         struct HOURS_AND_FRACTION_ENCODING {
-            HOURS_AND_FRACTION_ENCODING();
+             
+            static std::size_t NF(){
+                return N;
+            }  
+
+            HOURS_AND_FRACTION_ENCODING() : hours_(), fraction_() {
+            };
 
             HOURS_AND_FRACTION_ENCODING(const uint8_t& arg__hours,
-                    const integer_type& arg__fraction);
+                    const integer_type& arg__fraction) :
+            hours_(to_range(arg__hours, (uint8_t) 0, (uint8_t) 24)),
+            fraction_(arg__fraction / N) {
+            };
 
-            HOURS_AND_FRACTION_ENCODING(ITU_T_SHARED(uint8_t) arg__hours,
-                    ITU_T_SHARED(integer_type) arg__fraction);
+            HOURS_AND_FRACTION_ENCODING(const std::string& vl) : hours_(), fraction_() {
+                as_string(vl);
+            };
 
-            ITU_T_HOLDERH_DECL(hours, uint8_t); //   Ic(  [ 0  ...   24 ]   
-            ITU_T_HOLDERH_DECL(fraction, integer_type); //   Ic(  [ 0  ...   999 ]   ...ext...) 
+            HOURS_AND_FRACTION_ENCODING(const char* vl) : hours_(), fraction_() {
+                as_string(vl);
+            };
 
-            ITU_T_ARCHIVE_FUNC;
+            HOURS_AND_FRACTION_ENCODING(const base_time_duration& vl) :
+            hours_(to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)),
+            fraction_() {
+            };
+
+            base_time_duration as_time() const {
+                try {
+                    return base_time_duration(static_cast<int> (hours()), 0, 0);
+                } catch (...) {
+                }
+                return base_time_duration();
+            }
+
+            std::string as_string() const {
+                return to_string(static_cast<int> (hours()), 2, '0');
+            }
+
+            void as_string(const std::string& vl) {
+                hours(to_range<uint8_t>(string_to_def<int>(vl, 0, "0"), (uint8_t) 0, (uint8_t) 24));
+            }
+
+            ITU_T_HOLDERH_T_DECL(hours, uint8_t); //   Ic(  [ 0  ...   24 ]   
+            ITU_T_HOLDERH_T_DECL(fraction, integer_type); //   Ic(  [ 0  ...   999 ]   ...ext...) 
+
+            void serialize(boost::asn1::x690::output_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x690::input_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x691::output_coder& arch) {
+                ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
+                ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
+            }
+
+            void serialize(boost::asn1::x691::input_coder& arch) {
+                ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
+                ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
+            }
         };
+        
+   
 
         // sequence HOURS-UTC-AND-FRACTION-ENCODING
 
@@ -2167,7 +2234,7 @@ namespace boost {
         ITU_T_ARCHIVE_X690_DECL(TIME_OF_DAY_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(TIME_OF_DAY_UTC_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(TIME_OF_DAY_AND_DIFF_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(HOURS_AND_FRACTION_ENCODING);
+        //ITU_T_ARCHIVE_X690_DECL(HOURS_AND_FRACTION_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(HOURS_UTC_AND_FRACTION_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(HOURS_AND_DIFF_AND_FRACTION_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(MINUTES_AND_FRACTION_ENCODING);
@@ -2246,7 +2313,7 @@ namespace boost {
         ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY_UTC_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY_AND_DIFF_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(HOURS_AND_FRACTION_ENCODING);
+        //ITU_T_ARCHIVE_X691_DECL(HOURS_AND_FRACTION_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(HOURS_UTC_AND_FRACTION_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(HOURS_AND_DIFF_AND_FRACTION_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(MINUTES_AND_FRACTION_ENCODING);
