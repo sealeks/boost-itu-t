@@ -37,7 +37,8 @@ namespace boost {
         base_date_time CENTURY_ENCODING::as_datetime() const {
             try {
                 return base_date_time(base_date(static_cast<int> (as_number())*100, 1, 1));
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date_time();
         }
@@ -45,7 +46,8 @@ namespace boost {
         base_date CENTURY_ENCODING::as_date() const {
             try {
                 return base_date(static_cast<int> (as_number())*100, 1, 1);
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date();
         }
@@ -92,7 +94,8 @@ namespace boost {
         base_date_time ANY_CENTURY_ENCODING::as_datetime() const {
             try {
                 return base_date_time(base_date(static_cast<int> (as_number())*100, 1, 1));
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date_time();
         }
@@ -100,7 +103,8 @@ namespace boost {
         base_date ANY_CENTURY_ENCODING::as_date() const {
             try {
                 return base_date(static_cast<int> (as_number())*100, 1, 1);
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date();
         }
@@ -177,7 +181,8 @@ namespace boost {
         base_date_time YEAR_ENCODING::as_datetime() const {
             try {
                 return base_date_time(base_date(static_cast<int> (as_number()), 1, 1));
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date_time();
         }
@@ -185,7 +190,8 @@ namespace boost {
         base_date YEAR_ENCODING::as_date() const {
             try {
                 return base_date(static_cast<int> (as_number()), 1, 1);
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date();
         }
@@ -228,7 +234,8 @@ namespace boost {
         base_date_time ANY_YEAR_ENCODING::as_datetime() const {
             try {
                 return base_date_time(base_date(static_cast<int> (as_number()), 1, 1));
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date_time();
         }
@@ -236,7 +243,8 @@ namespace boost {
         base_date ANY_YEAR_ENCODING::as_date() const {
             try {
                 return base_date(static_cast<int> (as_number()), 1, 1);
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date();
         }
@@ -283,7 +291,8 @@ namespace boost {
         base_date_time YEAR_MONTH_ENCODING::as_datetime() const {
             try {
                 return base_date_time(base_date(static_cast<int> (year().as_number()), (int) month(), 1));
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date_time();
         }
@@ -291,7 +300,8 @@ namespace boost {
         base_date YEAR_MONTH_ENCODING::as_date() const {
             try {
                 return base_date(static_cast<int> (year().as_number()), (int) month(), 1);
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date();
         }
@@ -339,7 +349,8 @@ namespace boost {
         base_date_time ANY_YEAR_MONTH_ENCODING::as_datetime() const {
             try {
                 return base_date_time(base_date(static_cast<int> (year().as_number()), (int) month(), 1));
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date_time();
         }
@@ -347,7 +358,8 @@ namespace boost {
         base_date ANY_YEAR_MONTH_ENCODING::as_date() const {
             try {
                 return base_date(static_cast<int> (year().as_number()), (int) month(), 1);
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date();
         }
@@ -400,7 +412,8 @@ namespace boost {
         base_date_time DATE_ENCODING::as_datetime() const {
             try {
                 return base_date_time(base_date(static_cast<int> (year().as_number()), (int) month(), (int) day()));
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date_time();
         }
@@ -408,7 +421,8 @@ namespace boost {
         base_date DATE_ENCODING::as_date() const {
             try {
                 return base_date(static_cast<int> (year().as_number()), (int) month(), (int) day());
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date();
         }
@@ -462,7 +476,8 @@ namespace boost {
         base_date_time ANY_DATE_ENCODING::as_datetime() const {
             try {
                 return base_date_time(base_date(static_cast<int> (year().as_number()), (int) month(), (int) day()));
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date_time();
         }
@@ -470,7 +485,8 @@ namespace boost {
         base_date ANY_DATE_ENCODING::as_date() const {
             try {
                 return base_date(static_cast<int> (year().as_number()), (int) month(), (int) day());
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date();
         }
@@ -522,7 +538,8 @@ namespace boost {
             try {
                 return base_date_time(base_date(static_cast<int> (year().as_number()), 1, 1)) +
                         base_date_time::date_duration_type(day() ? day() - 1 : 0);
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date_time();
         }
@@ -531,7 +548,8 @@ namespace boost {
             try {
                 return base_date(static_cast<int> (year().as_number()), 1, 1) +
                         base_date_time::date_duration_type(day() ? day() - 1 : 0);
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date();
         }
@@ -581,7 +599,8 @@ namespace boost {
             try {
                 return base_date_time(base_date(static_cast<int> (year().as_number()), 1, 1)) +
                         base_date_time::date_duration_type(day() ? day() - 1 : 0);
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date_time();
         }
@@ -590,7 +609,8 @@ namespace boost {
             try {
                 return base_date(static_cast<int> (year().as_number()), 1, 1) +
                         base_date_time::date_duration_type(day() ? day() - 1 : 0);
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date();
         }
@@ -642,7 +662,8 @@ namespace boost {
                 std::size_t dwst = (std::size_t)tmp.day_of_week();
                 return base_date_time(tmp) + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
                         base_date_time::date_duration_type((week() > 1) ? (7 * (week() - 1)) : 0);
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date_time();
         }
@@ -653,7 +674,8 @@ namespace boost {
                 std::size_t dwst = (std::size_t)tmp.day_of_week();
                 return tmp + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
                         base_date_time::date_duration_type((week() > 1) ? (7 * (week() - 1)) : 0);
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date();
         }
@@ -706,7 +728,8 @@ namespace boost {
                 std::size_t dwst = (std::size_t)tmp.day_of_week();
                 return base_date_time(tmp) + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
                         base_date_time::date_duration_type((week() > 1) ? (7 * (week() - 1)) : 0);
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date_time();
         }
@@ -717,7 +740,8 @@ namespace boost {
                 std::size_t dwst = (std::size_t)tmp.day_of_week();
                 return tmp + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
                         base_date_time::date_duration_type((week() > 1) ? (7 * (week() - 1)) : 0);
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date();
         }
@@ -772,7 +796,8 @@ namespace boost {
                 std::size_t dwst = (std::size_t)tmp.day_of_week();
                 return base_date_time(tmp) + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
                         base_date_time::date_duration_type(((week() > 1) ? (7 * (week() - 1)) : 0) + ((day() > 1) ? (day() - 1) : 0));
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date_time();
         }
@@ -783,7 +808,8 @@ namespace boost {
                 std::size_t dwst = (std::size_t)tmp.day_of_week();
                 return tmp + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
                         base_date_time::date_duration_type(((week() > 1) ? (7 * (week() - 1)) : 0) + ((day() > 1) ? (day() - 1) : 0));
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date();
         }
@@ -836,7 +862,8 @@ namespace boost {
                 std::size_t dwst = (std::size_t)tmp.day_of_week();
                 return base_date_time(tmp) + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
                         base_date_time::date_duration_type(((week() > 1) ? (7 * (week() - 1)) : 0) + ((day() > 1) ? (day() - 1) : 0));
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date_time();
         }
@@ -847,7 +874,8 @@ namespace boost {
                 std::size_t dwst = (std::size_t)tmp.day_of_week();
                 return tmp + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
                         base_date_time::date_duration_type(((week() > 1) ? (7 * (week() - 1)) : 0) + ((day() > 1) ? (day() - 1) : 0));
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date();
         }
@@ -867,9 +895,9 @@ namespace boost {
         ITU_T_HOLDERH_DEFN(ANY_YEAR_WEEK_DAY_ENCODING::year, year, ANY_YEAR_ENCODING);
         ITU_T_HOLDERH_DEFN(ANY_YEAR_WEEK_DAY_ENCODING::week, week, uint8_t);
         ITU_T_HOLDERH_DEFN(ANY_YEAR_WEEK_DAY_ENCODING::day, day, uint8_t);
-        
-        
-        
+
+
+
 
         // sequence HOURS-ENCODING
 
@@ -894,11 +922,11 @@ namespace boost {
         as_number_(to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)) {
         };
 
-
         base_time_duration HOURS_ENCODING::as_time() const {
             try {
-                return base_time_duration(static_cast<int> (as_number()),0,0);
-            } catch (...) {
+                return base_time_duration(static_cast<int> (as_number()), 0, 0);
+            }
+            catch (...) {
             }
             return base_time_duration();
         }
@@ -913,10 +941,10 @@ namespace boost {
 
 
         ITU_T_HOLDERH_DEFN(HOURS_ENCODING::as_number, as_number, uint8_t);
-        
-        
-        
-        
+
+
+
+
 
         // sequence HOURS-UTC-ENCODING
 
@@ -941,56 +969,31 @@ namespace boost {
         as_number_(to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)) {
         };
 
-
         base_time_duration HOURS_UTC_ENCODING::as_time() const {
             try {
-                return base_time_duration(static_cast<int> (as_number()),0,0);
-            } catch (...) {
+                return base_time_duration(static_cast<int> (as_number()), 0, 0);
+            }
+            catch (...) {
             }
             return base_time_duration();
         }
 
         std::string HOURS_UTC_ENCODING::as_string() const {
-            return to_string(static_cast<int> (as_number()), 2, '0');
+            return to_string(static_cast<int> (as_number()), 2, '0') + "Z";
         }
 
         void HOURS_UTC_ENCODING::as_string(const std::string& vl) {
-            as_number(to_range<uint8_t>(string_to_def<int>(vl, 0, "0"), (uint8_t) 0, (uint8_t) 24));
+            as_number(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 0, 2), 0, "0"), (uint8_t) 0, (uint8_t) 24));
         }
 
-        
-        
+
+
         ITU_T_HOLDERH_DEFN(HOURS_UTC_ENCODING::as_number, as_number, uint8_t);
-        
-        
-        
-        
-
-        // sequence HOURS-AND-DIFF-ENCODING
-
-        HOURS_AND_DIFF_ENCODING::HOURS_AND_DIFF_ENCODING() : local_hours_(), time_difference_() {
-        };
-
-        HOURS_AND_DIFF_ENCODING::HOURS_AND_DIFF_ENCODING(const uint8_t& arg__local_hours,
-                const TIME_DIFFERENCE& arg__time_difference) :
-        local_hours_(arg__local_hours),
-        time_difference_(arg__time_difference) {
-        };
-
-        HOURS_AND_DIFF_ENCODING::HOURS_AND_DIFF_ENCODING(ITU_T_SHARED(uint8_t) arg__local_hours,
-                ITU_T_SHARED(TIME_DIFFERENCE) arg__time_difference) :
-        local_hours_(arg__local_hours),
-        time_difference_(arg__time_difference) {
-        };
 
 
-        ITU_T_HOLDERH_DEFN(HOURS_AND_DIFF_ENCODING::local_hours, local_hours, uint8_t);
-        ITU_T_HOLDERH_DEFN(HOURS_AND_DIFF_ENCODING::time_difference, time_difference, TIME_DIFFERENCE);
-        
-        
-        
-        
-        
+
+
+
 
         // sequence TIME-DIFFERENCE
         const enumerated TIME_DIFFERENCE::sign_positive = 0;
@@ -999,25 +1002,110 @@ namespace boost {
         TIME_DIFFERENCE::TIME_DIFFERENCE() : sign_(), hours_() {
         };
 
-        TIME_DIFFERENCE::TIME_DIFFERENCE(const int8_t& arg__hours, 
-            const uint8_t& arg__minutes) :
+        TIME_DIFFERENCE::TIME_DIFFERENCE(const int8_t& arg__hours,
+                const uint8_t& arg__minutes) :
         sign_(arg__hours < 0 ? sign_negative : sign_positive),
-        hours_(static_cast<uint8_t>(std::abs(to_range<int8_t>(arg__minutes, (int8_t) (-15) , (int8_t) 15)))) {
+        hours_(static_cast<uint8_t> (std::abs(to_range<int8_t>(arg__minutes, (int8_t) (-15), (int8_t) 15)))) {
             if (arg__minutes)
                 minutes(to_range<uint8_t>(arg__minutes, (uint8_t) 1, (uint8_t) 59));
         };
+
+        TIME_DIFFERENCE::TIME_DIFFERENCE(const std::string& vl) : sign_(), hours_() {
+            as_string(vl);
+        };
+
+        TIME_DIFFERENCE::TIME_DIFFERENCE(const char* vl) : sign_(), hours_() {
+            as_string(vl);
+        };
+
+        /*TIME_DIFFERENCE::TIME_DIFFERENCE(const base_time_duration& vl) :
+        as_number_(to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)) {
+        };
+
+
+        base_time_duration TIME_DIFFERENCE::as_time() const {
+            try {
+                return base_time_duration(static_cast<int> (as_number()),0,0);
+            } catch (...) {
+            }
+            return base_time_duration();
+        }*/
+
+        std::string TIME_DIFFERENCE::as_string() const {
+            std::string rslt(sign() == sign_positive ? "+" : "-");
+            rslt += to_string(static_cast<int> (hours()), 2, '0');
+            if (minutes())
+                rslt += to_string(static_cast<int> (*minutes()), 2, '0');
+            return rslt;
+        }
+
+        void TIME_DIFFERENCE::as_string(const std::string& vl) {
+            sign((!vl.empty() && vl[0] == '-') ? sign_negative : sign_positive);
+            hours(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 1, 2), 0, "0"), (uint8_t) 0, (uint8_t) 15));
+            if (vl.size() > 3)
+                minutes(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 3, 2), 0, "0"), (uint8_t) 0, (uint8_t) 59));
+        }
 
 
         ITU_T_HOLDERH_DEFN(TIME_DIFFERENCE::sign, sign, enumerated);
         ITU_T_HOLDERH_DEFN(TIME_DIFFERENCE::hours, hours, uint8_t);
         ITU_T_OPTIONAL_DEFN(TIME_DIFFERENCE::minutes, minutes, uint8_t);
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+        // sequence HOURS-AND-DIFF-ENCODING
+
+        HOURS_AND_DIFF_ENCODING::HOURS_AND_DIFF_ENCODING() : local_hours_(), time_difference_() {
+        };
+
+        HOURS_AND_DIFF_ENCODING::HOURS_AND_DIFF_ENCODING(const uint8_t& arg__local_hours,
+                const TIME_DIFFERENCE& arg__time_difference) :
+        local_hours_(to_range(arg__local_hours, (uint8_t) 0, (uint8_t) 24)),
+        time_difference_(arg__time_difference) {
+        };
+
+        HOURS_AND_DIFF_ENCODING::HOURS_AND_DIFF_ENCODING(const std::string& vl)
+        : local_hours_(), time_difference_() {
+            as_string(vl);
+        };
+
+        HOURS_AND_DIFF_ENCODING::HOURS_AND_DIFF_ENCODING(const char* vl)
+        : local_hours_(), time_difference_() {
+            as_string(vl);
+        };
+
+        HOURS_AND_DIFF_ENCODING::HOURS_AND_DIFF_ENCODING(const base_time_duration& vl)
+        : local_hours_(to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)),
+        time_difference_() {
+        };
+
+        base_time_duration HOURS_AND_DIFF_ENCODING::as_time() const {
+            try {
+                return base_time_duration(static_cast<int> (local_hours()), 0, 0);
+            }
+            catch (...) {
+            }
+            return base_time_duration();
+        }
+
+        std::string HOURS_AND_DIFF_ENCODING::as_string() const {
+            return to_string(static_cast<int> (local_hours()), 2, '0') + time_difference().as_string();
+        }
+
+        void HOURS_AND_DIFF_ENCODING::as_string(const std::string& vl) {
+            local_hours(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 0, 2), 0, "0"), (uint8_t) 0, (uint8_t) 24));
+            time_difference(drct_substr(vl, 2));
+        }
+
+
+        ITU_T_HOLDERH_DEFN(HOURS_AND_DIFF_ENCODING::local_hours, local_hours, uint8_t);
+        ITU_T_HOLDERH_DEFN(HOURS_AND_DIFF_ENCODING::time_difference, time_difference, TIME_DIFFERENCE);
+
+
+
+
+
 
         // sequence MINUTES-ENCODING
 
@@ -1026,19 +1114,53 @@ namespace boost {
 
         MINUTES_ENCODING::MINUTES_ENCODING(const uint8_t& arg__hours,
                 const uint8_t& arg__minutes) :
-        hours_(arg__hours),
-        minutes_(arg__minutes) {
+        hours_(to_range(arg__hours, (uint8_t) 0, (uint8_t) 24)),
+        minutes_(to_range(arg__minutes, (uint8_t) 0, (uint8_t) 59)) {
         };
 
-        MINUTES_ENCODING::MINUTES_ENCODING(ITU_T_SHARED(uint8_t) arg__hours,
-                ITU_T_SHARED(uint8_t) arg__minutes) :
-        hours_(arg__hours),
-        minutes_(arg__minutes) {
+        MINUTES_ENCODING::MINUTES_ENCODING(const std::string& vl) :
+        hours_(), minutes_() {
+            as_string(vl);
         };
+
+        MINUTES_ENCODING::MINUTES_ENCODING(const char* vl) :
+        hours_(), minutes_() {
+            as_string(vl);
+        };
+
+        MINUTES_ENCODING::MINUTES_ENCODING(const base_time_duration& vl) :
+        hours_(to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)),
+        minutes_(to_range<uint8_t>(vl.is_special() ? 0 : vl.minutes(), (uint8_t) 0, (uint8_t) 59)) {
+        };
+
+        base_time_duration MINUTES_ENCODING::as_time() const {
+            try {
+                return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()), 0);
+            }
+            catch (...) {
+            }
+            return base_time_duration();
+        }
+
+        std::string MINUTES_ENCODING::as_string() const {
+            return to_string(static_cast<int> (hours()), 2, '0') +
+                    to_string(static_cast<int> (minutes()), 2, '0');
+        }
+
+        void MINUTES_ENCODING::as_string(const std::string& vl) {
+            hours(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 0, 2), 0, "0"), (uint8_t) 0, (uint8_t) 24));
+            minutes(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 2, 2), 0, "0"), (uint8_t) 0, (uint8_t) 59));
+        }
 
 
         ITU_T_HOLDERH_DEFN(MINUTES_ENCODING::hours, hours, uint8_t);
         ITU_T_HOLDERH_DEFN(MINUTES_ENCODING::minutes, minutes, uint8_t);
+
+
+
+
+
+
 
         // sequence MINUTES-UTC-ENCODING
 
@@ -1047,59 +1169,112 @@ namespace boost {
 
         MINUTES_UTC_ENCODING::MINUTES_UTC_ENCODING(const uint8_t& arg__hours,
                 const uint8_t& arg__minutes) :
-        hours_(arg__hours),
-        minutes_(arg__minutes) {
+        hours_(to_range(arg__hours, (uint8_t) 0, (uint8_t) 24)),
+        minutes_(to_range(arg__minutes, (uint8_t) 0, (uint8_t) 59)) {
         };
 
-        MINUTES_UTC_ENCODING::MINUTES_UTC_ENCODING(ITU_T_SHARED(uint8_t) arg__hours,
-                ITU_T_SHARED(uint8_t) arg__minutes) :
-        hours_(arg__hours),
-        minutes_(arg__minutes) {
+        MINUTES_UTC_ENCODING::MINUTES_UTC_ENCODING(const std::string& vl) :
+        hours_(), minutes_() {
+            as_string(vl);
         };
+
+        MINUTES_UTC_ENCODING::MINUTES_UTC_ENCODING(const char* vl) :
+        hours_(), minutes_() {
+            as_string(vl);
+        };
+
+        MINUTES_UTC_ENCODING::MINUTES_UTC_ENCODING(const base_time_duration& vl) :
+        hours_(to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)),
+        minutes_(to_range<uint8_t>(vl.is_special() ? 0 : vl.minutes(), (uint8_t) 0, (uint8_t) 59)) {
+        };
+
+        base_time_duration MINUTES_UTC_ENCODING::as_time() const {
+            try {
+                return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()), 0);
+            }
+            catch (...) {
+            }
+            return base_time_duration();
+        }
+
+        std::string MINUTES_UTC_ENCODING::as_string() const {
+            return to_string(static_cast<int> (hours()), 2, '0') +
+                    to_string(static_cast<int> (minutes()), 2, '0') + "Z";
+        }
+
+        void MINUTES_UTC_ENCODING::as_string(const std::string& vl) {
+            hours(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 0, 2), 0, "0"), (uint8_t) 0, (uint8_t) 24));
+            minutes(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 2, 2), 0, "0"), (uint8_t) 0, (uint8_t) 59));
+        }
 
 
         ITU_T_HOLDERH_DEFN(MINUTES_UTC_ENCODING::hours, hours, uint8_t);
         ITU_T_HOLDERH_DEFN(MINUTES_UTC_ENCODING::minutes, minutes, uint8_t);
+
+
+
+
+
+
 
         // sequence MINUTES-AND-DIFF-ENCODING
 
         MINUTES_AND_DIFF_ENCODING::MINUTES_AND_DIFF_ENCODING() : local_time_(), time_difference_() {
         };
 
-        MINUTES_AND_DIFF_ENCODING::MINUTES_AND_DIFF_ENCODING(const Local_time_type& arg__local_time,
+        MINUTES_AND_DIFF_ENCODING::MINUTES_AND_DIFF_ENCODING(const MINUTES_ENCODING& arg__time,
                 const TIME_DIFFERENCE& arg__time_difference) :
-        local_time_(arg__local_time),
+        local_time_(arg__time),
         time_difference_(arg__time_difference) {
         };
 
-        MINUTES_AND_DIFF_ENCODING::MINUTES_AND_DIFF_ENCODING(ITU_T_SHARED(Local_time_type) arg__local_time,
-                ITU_T_SHARED(TIME_DIFFERENCE) arg__time_difference) :
-        local_time_(arg__local_time),
+        MINUTES_AND_DIFF_ENCODING::MINUTES_AND_DIFF_ENCODING(const uint8_t& arg__hours,
+                const uint8_t& arg__minutes,
+                const TIME_DIFFERENCE& arg__time_difference) :
+        local_time_(MINUTES_ENCODING(arg__hours, arg__minutes)),
         time_difference_(arg__time_difference) {
         };
 
-        MINUTES_AND_DIFF_ENCODING::Local_time_type::Local_time_type() : hours_(), minutes_() {
+        MINUTES_AND_DIFF_ENCODING::MINUTES_AND_DIFF_ENCODING(const std::string& vl) :
+        local_time_(), time_difference_() {
+            as_string(vl);
         };
 
-        MINUTES_AND_DIFF_ENCODING::Local_time_type::Local_time_type(const uint8_t& arg__hours,
-                const uint8_t& arg__minutes) :
-        hours_(arg__hours),
-        minutes_(arg__minutes) {
+        MINUTES_AND_DIFF_ENCODING::MINUTES_AND_DIFF_ENCODING(const char* vl) :
+        local_time_(), time_difference_() {
+            as_string(vl);
         };
 
-        MINUTES_AND_DIFF_ENCODING::Local_time_type::Local_time_type(ITU_T_SHARED(uint8_t) arg__hours,
-                ITU_T_SHARED(uint8_t) arg__minutes) :
-        hours_(arg__hours),
-        minutes_(arg__minutes) {
+        MINUTES_AND_DIFF_ENCODING::MINUTES_AND_DIFF_ENCODING(const base_time_duration& vl) :
+        local_time_(vl), time_difference_() {
         };
 
+        base_time_duration MINUTES_AND_DIFF_ENCODING::as_time() const {
+            try {
+                return local_time().as_time();
+            }
+            catch (...) {
+            }
+            return base_time_duration();
+        }
 
-        ITU_T_HOLDERH_DEFN(MINUTES_AND_DIFF_ENCODING::Local_time_type::hours, hours, uint8_t);
-        ITU_T_HOLDERH_DEFN(MINUTES_AND_DIFF_ENCODING::Local_time_type::minutes, minutes, uint8_t);
+        std::string MINUTES_AND_DIFF_ENCODING::as_string() const {
+            return local_time().as_string() + time_difference().as_string();
+        }
+
+        void MINUTES_AND_DIFF_ENCODING::as_string(const std::string& vl) {
+            local_time(MINUTES_ENCODING(drct_substr(vl, 0, 4)));
+            time_difference(TIME_DIFFERENCE(drct_substr(vl, 5)));
+        }
 
 
-        ITU_T_HOLDERH_DEFN(MINUTES_AND_DIFF_ENCODING::local_time, local_time, MINUTES_AND_DIFF_ENCODING::Local_time_type);
+        ITU_T_HOLDERH_DEFN(MINUTES_AND_DIFF_ENCODING::local_time, local_time, MINUTES_ENCODING);
         ITU_T_HOLDERH_DEFN(MINUTES_AND_DIFF_ENCODING::time_difference, time_difference, TIME_DIFFERENCE);
+
+
+
+
+
 
         // sequence TIME-OF-DAY-ENCODING
 
@@ -2430,34 +2605,19 @@ namespace boost {
         };
 
         std::ostream& operator<<(std::ostream& stream, const HOURS_ENCODING& vl) {
-            stream << "{ ";
-            stream << "hour :  " << vl.as_number();
-            stream << " }";
-            return stream;
+            return stream << "hh: " << vl.as_string();
         };
 
         std::ostream& operator<<(std::ostream& stream, const HOURS_UTC_ENCODING& vl) {
-            stream << "{ ";
-            stream << "hour :  " << vl.as_number();
-            stream << " }";
-            return stream;
+            return stream << "hhZ: " << vl.as_string();
         };
 
         std::ostream& operator<<(std::ostream& stream, const HOURS_AND_DIFF_ENCODING& vl) {
-            stream << "{ ";
-            stream << "local_hours :  " << vl.local_hours();
-            stream << ", time_difference :  " << vl.time_difference();
-            stream << " }";
-            return stream;
+            return stream << "hh: " << vl.as_string();
         };
 
         std::ostream& operator<<(std::ostream& stream, const TIME_DIFFERENCE& vl) {
-            stream << "{ ";
-            stream << "sign :  " << vl.sign();
-            stream << ", hours :  " << vl.hours();
-            if (vl.minutes()) stream << ", minutes :  " << *(vl.minutes());
-            stream << " }";
-            return stream;
+            return stream << "hh: " << vl.as_string();
         };
 
         std::ostream& operator<<(std::ostream& stream, const MINUTES_ENCODING& vl) {
@@ -2480,14 +2640,6 @@ namespace boost {
             stream << "{ ";
             stream << "local_time :  " << vl.local_time();
             stream << ", time_difference :  " << vl.time_difference();
-            stream << " }";
-            return stream;
-        };
-
-        std::ostream& operator<<(std::ostream& stream, const MINUTES_AND_DIFF_ENCODING::Local_time_type& vl) {
-            stream << "{ ";
-            stream << "hours :  " << vl.hours();
-            stream << ", minutes :  " << vl.minutes();
             stream << " }";
             return stream;
         };
