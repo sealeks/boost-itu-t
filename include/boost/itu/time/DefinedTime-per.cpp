@@ -374,7 +374,15 @@ namespace boost {
 
         // sequence HOURS-AND-FRACTION-ENCODING
 
+        template<> void HOURS_AND_FRACTION_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
+            ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
+            ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
+        }
 
+        template<> void HOURS_AND_FRACTION_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
+            ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
+            ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
+        }
 
         // sequence HOURS-UTC-AND-FRACTION-ENCODING
 
