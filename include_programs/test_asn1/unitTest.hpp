@@ -39,7 +39,7 @@ using namespace boost::asn1;
 
 namespace Test1b {
 
- template<typename T>
+    template<typename T>
     inline void test(T& tsstr) {
         DEBUG_VAL_ITU(b1)
         DEBUG_VAL_ITU(b2)
@@ -134,34 +134,32 @@ namespace Test1b {
         DEBUG_VAL_ITU(roidir1)
         DEBUG_VAL_ITU(roidir2)
         DEBUG_VAL_ITU(roidir3)
-    }   
+    }
 
 }
 
 
 namespace Test1 {
-    
-    static PersonnelRecord_s iPRt;    
+
+    static PersonnelRecord_s iPRt;
 
     template<typename T>
     inline void test(T& tsstr) {
-        
 
-    DEBUG_VAL_ITU(valAx)
-    DEBUG_VAL_ITU(valT)
+
+        DEBUG_VAL_ITU(valAx)
+        DEBUG_VAL_ITU(valT)
     }
-    
+
 }
 
 namespace TestTm {
-    
+
     using namespace boost::asn1;
-    
-    
 
     template<typename T>
     inline void test(T& tsstr) {
-        
+
         /*CENTURY_ENCODING cetn_enc=3;
         CENTURY_ENCODING cetn_enc1=std::string("4");
         CENTURY_ENCODING cetn_enc2="21";        
@@ -282,68 +280,9 @@ namespace TestTm {
         DEBUG_VAL_ITU(year_day_enc3) 
         DEBUG_VAL_ITU_READ(year_day_enc3_r);                
         DEBUG_VAL_ITU(ayear_day_enc)                 
-        DEBUG_VAL_ITU_READ(ayear_day_enc_r);*/
+        DEBUG_VAL_ITU_READ(ayear_day_enc_r);
 
-        HOURS_ENCODING hors_enc = 3;
-        HOURS_ENCODING hors_enc1 = std::string("04");
-        HOURS_ENCODING hors_enc2 = "21";
-        HOURS_ENCODING hors_enc3 = boost::asn1::base_time_duration(4,23,40);
-
-        HOURS_ENCODING hors_enc_r;
-        HOURS_ENCODING hors_enc1_r;
-        HOURS_ENCODING hors_enc2_r;
-        HOURS_ENCODING hors_enc3_r;
-
-
-        DEBUG_VAL_ITU(hors_enc)
-        DEBUG_VAL_ITU_TREAD(hors_enc_r);
-        DEBUG_VAL_ITU(hors_enc1)
-        DEBUG_VAL_ITU_TREAD(hors_enc1_r);
-        DEBUG_VAL_ITU(hors_enc2)
-        DEBUG_VAL_ITU_TREAD(hors_enc2_r);
-        DEBUG_VAL_ITU(hors_enc3)
-        DEBUG_VAL_ITU_TREAD(hors_enc3_r);
-        
-        HOURS_UTC_ENCODING hors_utc_enc = 3;
-        HOURS_UTC_ENCODING hors_utc_enc1 = std::string("04");
-        HOURS_UTC_ENCODING hors_utc_enc2 = "21";
-        HOURS_UTC_ENCODING hors_utc_enc3 = boost::asn1::base_time_duration(4,23,40);
-
-        HOURS_UTC_ENCODING hors_utc_enc_r;
-        HOURS_UTC_ENCODING hors_utc_enc1_r;
-        HOURS_UTC_ENCODING hors_utc_enc2_r;
-        HOURS_UTC_ENCODING hors_utc_enc3_r;
-
-
-        DEBUG_VAL_ITU(hors_utc_enc)
-        DEBUG_VAL_ITU_TREAD(hors_utc_enc_r);
-        DEBUG_VAL_ITU(hors_utc_enc1)
-        DEBUG_VAL_ITU_TREAD(hors_utc_enc1_r);
-        DEBUG_VAL_ITU(hors_utc_enc2)
-        DEBUG_VAL_ITU_TREAD(hors_utc_enc2_r);
-        DEBUG_VAL_ITU(hors_utc_enc3)
-        DEBUG_VAL_ITU_TREAD(hors_utc_enc3_r);      
-        
-        HOURS_AND_DIFF_ENCODING  hors_diff_enc = 3;
-        HOURS_AND_DIFF_ENCODING  hors_diff_enc1 = std::string("04+04");
-        HOURS_AND_DIFF_ENCODING  hors_diff_enc2 = "21+0345";
-        HOURS_AND_DIFF_ENCODING  hors_diff_enc3 = boost::asn1::base_time_duration(4,23,40);
-
-        HOURS_AND_DIFF_ENCODING  hors_diff_enc_r;
-        HOURS_AND_DIFF_ENCODING  hors_diff_enc1_r;
-        HOURS_AND_DIFF_ENCODING  hors_diff_enc2_r;
-        HOURS_AND_DIFF_ENCODING  hors_diff_enc3_r;
-
-
-        DEBUG_VAL_ITU(hors_diff_enc)
-        DEBUG_VAL_ITU_TREAD(hors_diff_enc_r);
-        DEBUG_VAL_ITU(hors_diff_enc1)
-        DEBUG_VAL_ITU_TREAD(hors_diff_enc1_r);
-        DEBUG_VAL_ITU(hors_diff_enc2)
-        DEBUG_VAL_ITU_TREAD(hors_diff_enc2_r);
-        DEBUG_VAL_ITU(hors_diff_enc3)
-        DEBUG_VAL_ITU_TREAD(hors_diff_enc3_r)        
-        
+      
         
         YEAR_WEEK_ENCODING year_week_enc(1941,12);
         YEAR_WEEK_ENCODING year_week_enc1=std::string("2004W40");
@@ -394,9 +333,68 @@ namespace TestTm {
         DEBUG_VAL_ITU(year_week_day_enc3) 
         DEBUG_VAL_ITU_READ(year_week_day_enc3_r);                
         DEBUG_VAL_ITU(ayear_week_day_enc)                 
-        DEBUG_VAL_ITU_READ(ayear_week_day_enc_r);              
-        
-        
+        DEBUG_VAL_ITU_READ(ayear_week_day_enc_r);              */
+
+        HOURS_ENCODING hors_enc = 3;
+        HOURS_ENCODING hors_enc1 = std::string("04");
+        HOURS_ENCODING hors_enc2 = "21";
+        HOURS_ENCODING hors_enc3 = boost::asn1::base_time_duration(4, 23, 40);
+
+        HOURS_ENCODING hors_enc_r;
+        HOURS_ENCODING hors_enc1_r;
+        HOURS_ENCODING hors_enc2_r;
+        HOURS_ENCODING hors_enc3_r;
+
+
+        DEBUG_VAL_ITU(hors_enc)
+        DEBUG_VAL_ITU_TREAD(hors_enc_r);
+        DEBUG_VAL_ITU(hors_enc1)
+        DEBUG_VAL_ITU_TREAD(hors_enc1_r);
+        DEBUG_VAL_ITU(hors_enc2)
+        DEBUG_VAL_ITU_TREAD(hors_enc2_r);
+        DEBUG_VAL_ITU(hors_enc3)
+        DEBUG_VAL_ITU_TREAD(hors_enc3_r);
+
+        HOURS_UTC_ENCODING hors_utc_enc = 3;
+        HOURS_UTC_ENCODING hors_utc_enc1 = std::string("04");
+        HOURS_UTC_ENCODING hors_utc_enc2 = "21";
+        HOURS_UTC_ENCODING hors_utc_enc3 = boost::asn1::base_time_duration(4, 23, 40);
+
+        HOURS_UTC_ENCODING hors_utc_enc_r;
+        HOURS_UTC_ENCODING hors_utc_enc1_r;
+        HOURS_UTC_ENCODING hors_utc_enc2_r;
+        HOURS_UTC_ENCODING hors_utc_enc3_r;
+
+
+        DEBUG_VAL_ITU(hors_utc_enc)
+        DEBUG_VAL_ITU_TREAD(hors_utc_enc_r);
+        DEBUG_VAL_ITU(hors_utc_enc1)
+        DEBUG_VAL_ITU_TREAD(hors_utc_enc1_r);
+        DEBUG_VAL_ITU(hors_utc_enc2)
+        DEBUG_VAL_ITU_TREAD(hors_utc_enc2_r);
+        DEBUG_VAL_ITU(hors_utc_enc3)
+        DEBUG_VAL_ITU_TREAD(hors_utc_enc3_r);
+
+        HOURS_AND_DIFF_ENCODING hors_diff_enc = 3;
+        HOURS_AND_DIFF_ENCODING hors_diff_enc1 = std::string("04+04");
+        HOURS_AND_DIFF_ENCODING hors_diff_enc2 = "21+0345";
+        HOURS_AND_DIFF_ENCODING hors_diff_enc3 = boost::asn1::base_time_duration(4, 23, 40);
+
+        HOURS_AND_DIFF_ENCODING hors_diff_enc_r;
+        HOURS_AND_DIFF_ENCODING hors_diff_enc1_r;
+        HOURS_AND_DIFF_ENCODING hors_diff_enc2_r;
+        HOURS_AND_DIFF_ENCODING hors_diff_enc3_r;
+
+
+        DEBUG_VAL_ITU(hors_diff_enc)
+        DEBUG_VAL_ITU_TREAD(hors_diff_enc_r);
+        DEBUG_VAL_ITU(hors_diff_enc1)
+        DEBUG_VAL_ITU_TREAD(hors_diff_enc1_r);
+        DEBUG_VAL_ITU(hors_diff_enc2)
+        DEBUG_VAL_ITU_TREAD(hors_diff_enc2_r);
+        DEBUG_VAL_ITU(hors_diff_enc3)
+        DEBUG_VAL_ITU_TREAD(hors_diff_enc3_r)
+
     }
 
 }
