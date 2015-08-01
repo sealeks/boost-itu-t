@@ -12,7 +12,7 @@ namespace boost {
 
         using namespace time_detail;
 
-        template<typename T>
+        /*template<typename T>
         static void time_serialize(const T& vl, boost::asn1::x690::output_coder& arch) {
             visible_string tmpval = vl.as_string();
             ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
@@ -23,7 +23,7 @@ namespace boost {
             visible_string tmpval;
             ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
             vl.as_string(std::string(tmpval.c_str()));
-        }
+        }*/
 
         // sequence CENTURY-ENCODING
 
@@ -268,7 +268,7 @@ namespace boost {
 
         // sequence HOURS-AND-FRACTION-ENCODING
 
-        template<> void HOURS_AND_FRACTION_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
+        /*template<> void HOURS_AND_FRACTION_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
             ITU_T_BIND_IMPLICIT(hours_, 0, CONTEXT_CLASS);
             ITU_T_BIND_IMPLICIT(fraction_, 1, CONTEXT_CLASS);
         }
@@ -276,7 +276,7 @@ namespace boost {
         template<> void HOURS_AND_FRACTION_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
             ITU_T_BIND_IMPLICIT(hours_, 0, CONTEXT_CLASS);
             ITU_T_BIND_IMPLICIT(fraction_, 1, CONTEXT_CLASS);
-        }
+        }*/
 
         // sequence HOURS-UTC-AND-FRACTION-ENCODING
 
@@ -468,7 +468,7 @@ namespace boost {
 
         // choice MIXED-ENCODING
 
-        template<> void MIXED_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
+        /*template<> void MIXED_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
             switch (type()) {
                 case MIXED_ENCODING_date_C_Basic:
                 {
@@ -1942,7 +1942,7 @@ namespace boost {
                 {
                 }
             }
-        }
+        }*/
 
     }
 }

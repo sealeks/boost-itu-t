@@ -17,6 +17,9 @@
 namespace boost {
     namespace asn1 {
 
+        const std::size_t DEFAULT_TM_FRACTION = 3;
+        const std::size_t MAX_TM_FRACTION = 9;
+
         namespace time_detail {
 
             template<typename T>
@@ -29,8 +32,7 @@ namespace boost {
                 try {
                     std::string rslt = boost::lexical_cast<std::string > (val);
                     return (sz && nlchar && (rslt.size() < sz)) ? (std::string(sz - rslt.size(), nlchar) + rslt) : rslt;
-                }
-                catch (boost::bad_lexical_cast) {
+                } catch (boost::bad_lexical_cast) {
                 }
                 return (sz && nlchar) ? std::string(nlchar, sz) : "";
             }
@@ -55,8 +57,7 @@ namespace boost {
                             return boost::lexical_cast<T > (val);
                         }
                     }
-                }
-                catch (boost::bad_lexical_cast) {
+                } catch (boost::bad_lexical_cast) {
                 }
                 return def;
             }
@@ -71,42 +72,61 @@ namespace boost {
             //                                  bg                 beg    sz                                  end        
             // ,    if sz=0, full size from beg    
 
-            inline std::string drct_substr(const std::string& vl, std::string::size_type beg = 0, std::string::size_type sz = 0) {
-                std::string::size_type size = vl.size();
-                if (beg < size) {
-                    if (sz)
-                        return vl.substr(beg, ((beg + sz) < size) ? sz : (size - beg));
-                    else
-                        return vl.substr(beg);
-                }
-                return "";
-            }
+            std::string drct_substr(const std::string& vl, std::string::size_type beg = 0, std::string::size_type sz = 0);
 
-            inline std::string drct_substr(const visible_string& vl, std::string::size_type beg = 0, std::string::size_type sz = 0) {
-                return drct_substr(visible_string(vl), beg, sz);
-            }
+            std::string drct_substr(const visible_string& vl, std::string::size_type beg = 0, std::string::size_type sz = 0);
 
 
             // reverse substring |sssssssss|sssssss|sssssssssssss|
             //                                beg                 bgs       eps                 end        
             // endps=end-eps, sz=eps-bgs,    if sz=0, full size from beg    
 
-            inline std::string revrs_substr(const std::string& vl, std::string::size_type endps = 0, std::string::size_type sz = 0) {
-                std::string::size_type size = vl.size();
-                if (endps < size) {
-                    if (sz)
-                        return vl.substr((((size - endps) > sz) ? (size - endps - sz) : 0),
-                            ((size - endps) > sz) ? sz : (size - endps));
-                    else
-                        return vl.substr(0, size - endps);
-                }
-                return "";
-            }
+            std::string revrs_substr(const std::string& vl, std::string::size_type endps = 0, std::string::size_type sz = 0);
 
-            inline std::string revrs_substr(const visible_string& vl, std::string::size_type endps = 0, std::string::size_type sz = 0) {
-                return revrs_substr(visible_string(vl), endps, sz);
-            }
+            std::string normalize_str_size(const std::string& vl, std::string::size_type sz);
 
+            uint64_t pow10(std::size_t n);
+
+            std::string revrs_substr(const visible_string& vl, std::string::size_type endps = 0, std::string::size_type sz = 0);
+
+            std::size_t minute_fraction_HF(integer_type f, std::size_t n);
+
+            std::size_t second_fraction_HF(integer_type f, std::size_t n);
+
+            std::size_t microsecond_fraction_HF(integer_type f, std::size_t n);
+
+            std::size_t nanosecond_fraction_HF(integer_type f, std::size_t n);
+
+            std::size_t second_fraction_HMF(integer_type f, std::size_t n);
+
+            std::size_t microsecond_fraction_HMF(integer_type f, std::size_t n);
+
+            std::size_t nanosecond_fraction_HMF(integer_type f, std::size_t n);
+
+            std::size_t microsecond_fraction_HMSF(integer_type f, std::size_t n);
+
+            std::size_t nanosecond_fraction_HMSF(integer_type f, std::size_t n);
+
+
+            integer_type HF_to_fraction(base_time_duration dtd, std::size_t n);
+
+            integer_type HFM_to_fraction(base_time_duration dtd, std::size_t n);
+
+            integer_type HFMS_to_fraction(base_time_duration dtd, std::size_t n);
+
+        }
+
+        template<typename T>
+        inline void time_serialize(const T& vl, boost::asn1::x690::output_coder& arch) {
+            visible_string tmpval = vl.as_string();
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+        }
+
+        template<typename T>
+        inline void time_serialize(T& vl, boost::asn1::x690::input_coder& arch) {
+            visible_string tmpval;
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+            vl.as_string(std::string(tmpval.c_str()));
         }
 
 
@@ -134,7 +154,7 @@ namespace boost {
         struct TIME_OF_DAY_ENCODING;
         struct TIME_OF_DAY_UTC_ENCODING;
         struct TIME_OF_DAY_AND_DIFF_ENCODING;
-        struct HOURS_AND_FRACTION_ENCODING;
+        template<std::size_t N> struct HOURS_AND_FRACTION_ENCODING;
         struct HOURS_UTC_AND_FRACTION_ENCODING;
         struct HOURS_AND_DIFF_AND_FRACTION_ENCODING;
         struct MINUTES_AND_FRACTION_ENCODING;
@@ -158,6 +178,7 @@ namespace boost {
         // sequence CENTURY-ENCODING
 
         struct CENTURY_ENCODING {
+
             CENTURY_ENCODING();
 
             CENTURY_ENCODING(const uint8_t& arg__vl);
@@ -188,6 +209,7 @@ namespace boost {
         // sequence ANY-CENTURY-ENCODING
 
         struct ANY_CENTURY_ENCODING {
+
             ANY_CENTURY_ENCODING();
 
             ANY_CENTURY_ENCODING(const integer_type& arg__vl);
@@ -218,6 +240,7 @@ namespace boost {
         // choice YEAR-ENCODING
 
         enum YEAR_ENCODING_enum {
+
             YEAR_ENCODING_null = 0,
             YEAR_ENCODING_immediate,
             YEAR_ENCODING_near_future,
@@ -264,6 +287,7 @@ namespace boost {
         // sequence ANY-YEAR-ENCODING
 
         struct ANY_YEAR_ENCODING {
+
             ANY_YEAR_ENCODING();
 
             ANY_YEAR_ENCODING(const integer_type& arg__val);
@@ -296,6 +320,7 @@ namespace boost {
         // sequence YEAR-MONTH-ENCODING
 
         struct YEAR_MONTH_ENCODING {
+
             YEAR_MONTH_ENCODING();
 
             YEAR_MONTH_ENCODING(integer_type arg__year,
@@ -330,6 +355,7 @@ namespace boost {
         // sequence ANY-YEAR-MONTH-ENCODING
 
         struct ANY_YEAR_MONTH_ENCODING {
+
             ANY_YEAR_MONTH_ENCODING();
 
             ANY_YEAR_MONTH_ENCODING(integer_type arg__year,
@@ -361,6 +387,7 @@ namespace boost {
         // sequence DATE-ENCODING
 
         struct DATE_ENCODING {
+
             DATE_ENCODING();
 
             DATE_ENCODING(integer_type arg__year,
@@ -396,6 +423,7 @@ namespace boost {
         // sequence ANY-DATE-ENCODING
 
         struct ANY_DATE_ENCODING {
+
             ANY_DATE_ENCODING();
 
             ANY_DATE_ENCODING(integer_type arg__year,
@@ -430,6 +458,7 @@ namespace boost {
         // sequence YEAR-DAY-ENCODING
 
         struct YEAR_DAY_ENCODING {
+
             YEAR_DAY_ENCODING();
 
             YEAR_DAY_ENCODING(integer_type arg__year,
@@ -462,6 +491,7 @@ namespace boost {
         // sequence ANY-YEAR-DAY-ENCODING
 
         struct ANY_YEAR_DAY_ENCODING {
+
             ANY_YEAR_DAY_ENCODING();
 
             ANY_YEAR_DAY_ENCODING(integer_type arg__year,
@@ -494,6 +524,7 @@ namespace boost {
         // sequence YEAR-WEEK-ENCODING
 
         struct YEAR_WEEK_ENCODING {
+
             YEAR_WEEK_ENCODING();
 
             YEAR_WEEK_ENCODING(const YEAR_ENCODING& arg__year,
@@ -526,6 +557,7 @@ namespace boost {
         // sequence ANY-YEAR-WEEK-ENCODING
 
         struct ANY_YEAR_WEEK_ENCODING {
+
             ANY_YEAR_WEEK_ENCODING();
 
             ANY_YEAR_WEEK_ENCODING(const ANY_YEAR_ENCODING& arg__year,
@@ -558,6 +590,7 @@ namespace boost {
         // sequence YEAR-WEEK-DAY-ENCODING
 
         struct YEAR_WEEK_DAY_ENCODING {
+
             YEAR_WEEK_DAY_ENCODING();
 
             YEAR_WEEK_DAY_ENCODING(const YEAR_ENCODING& arg__year,
@@ -592,6 +625,7 @@ namespace boost {
         // sequence ANY-YEAR-WEEK-DAY-ENCODING
 
         struct ANY_YEAR_WEEK_DAY_ENCODING {
+
             ANY_YEAR_WEEK_DAY_ENCODING();
 
             ANY_YEAR_WEEK_DAY_ENCODING(const ANY_YEAR_ENCODING& arg__year,
@@ -626,6 +660,7 @@ namespace boost {
         // sequence HOURS-ENCODING
 
         struct HOURS_ENCODING {
+
             HOURS_ENCODING();
 
             HOURS_ENCODING(const uint8_t& arg__val);
@@ -654,6 +689,7 @@ namespace boost {
         // sequence HOURS-UTC-ENCODING
 
         struct HOURS_UTC_ENCODING {
+
             HOURS_UTC_ENCODING();
 
             HOURS_UTC_ENCODING(const uint8_t& arg__val);
@@ -682,6 +718,7 @@ namespace boost {
         // sequence TIME-DIFFERENCE
 
         struct TIME_DIFFERENCE {
+
             static const enumerated sign_positive;
             static const enumerated sign_negative;
 
@@ -716,6 +753,7 @@ namespace boost {
         // sequence HOURS-AND-DIFF-ENCODING
 
         struct HOURS_AND_DIFF_ENCODING {
+
             HOURS_AND_DIFF_ENCODING();
 
             HOURS_AND_DIFF_ENCODING(const uint8_t& arg__local_hours,
@@ -745,6 +783,7 @@ namespace boost {
         // sequence MINUTES-ENCODING
 
         struct MINUTES_ENCODING {
+
             MINUTES_ENCODING();
 
             MINUTES_ENCODING(const uint8_t& arg__hours,
@@ -777,6 +816,7 @@ namespace boost {
         // sequence MINUTES-UTC-ENCODING
 
         struct MINUTES_UTC_ENCODING {
+
             MINUTES_UTC_ENCODING();
 
             MINUTES_UTC_ENCODING(const uint8_t& arg__hours,
@@ -809,6 +849,7 @@ namespace boost {
         // sequence MINUTES-AND-DIFF-ENCODING
 
         struct MINUTES_AND_DIFF_ENCODING {
+
             MINUTES_AND_DIFF_ENCODING();
 
             MINUTES_AND_DIFF_ENCODING(const MINUTES_ENCODING& arg__time,
@@ -843,12 +884,13 @@ namespace boost {
         // sequence TIME-OF-DAY-ENCODING
 
         struct TIME_OF_DAY_ENCODING {
+
             TIME_OF_DAY_ENCODING();
 
             TIME_OF_DAY_ENCODING(const uint8_t& arg__hours,
                     const uint8_t& arg__minutes,
                     const uint8_t& arg__seconds);
-            
+
             TIME_OF_DAY_ENCODING(const std::string& vl);
 
             TIME_OF_DAY_ENCODING(const char* vl);
@@ -859,7 +901,7 @@ namespace boost {
 
             std::string as_string() const;
 
-            void as_string(const std::string& vl);            
+            void as_string(const std::string& vl);
 
             ITU_T_HOLDERH_DECL(hours, uint8_t); //   Ic(  [ 0  ...   24 ]   
             ITU_T_HOLDERH_DECL(minutes, uint8_t); //   Ic(  [ 0  ...   59 ]   
@@ -867,19 +909,20 @@ namespace boost {
 
             ITU_T_ARCHIVE_FUNC;
         };
-        
-        
-        
+
+
+
 
         // sequence TIME-OF-DAY-UTC-ENCODING
 
         struct TIME_OF_DAY_UTC_ENCODING {
+
             TIME_OF_DAY_UTC_ENCODING();
 
             TIME_OF_DAY_UTC_ENCODING(const uint8_t& arg__hours,
                     const uint8_t& arg__minutes,
                     const uint8_t& arg__seconds);
-            
+
             TIME_OF_DAY_UTC_ENCODING(const std::string& vl);
 
             TIME_OF_DAY_UTC_ENCODING(const char* vl);
@@ -890,7 +933,7 @@ namespace boost {
 
             std::string as_string() const;
 
-            void as_string(const std::string& vl);            
+            void as_string(const std::string& vl);
 
             ITU_T_HOLDERH_DECL(hours, uint8_t); //   Ic(  [ 0  ...   24 ]   
             ITU_T_HOLDERH_DECL(minutes, uint8_t); //   Ic(  [ 0  ...   59 ]   
@@ -898,10 +941,10 @@ namespace boost {
 
             ITU_T_ARCHIVE_FUNC;
         };
-        
-        
-        
-        
+
+
+
+
 
         // sequence TIME-OF-DAY-AND-DIFF-ENCODING
 
@@ -911,11 +954,11 @@ namespace boost {
 
             TIME_OF_DAY_AND_DIFF_ENCODING(const TIME_OF_DAY_ENCODING& arg__local_time,
                     const TIME_DIFFERENCE& arg__time_difference = TIME_DIFFERENCE());
-            
+
             TIME_OF_DAY_AND_DIFF_ENCODING(const uint8_t& arg__hours,
                     const uint8_t& arg__minutes,
                     const uint8_t& arg__seconds,
-                    const TIME_DIFFERENCE& arg__time_difference = TIME_DIFFERENCE());        
+                    const TIME_DIFFERENCE& arg__time_difference = TIME_DIFFERENCE());
 
             TIME_OF_DAY_AND_DIFF_ENCODING(const std::string& vl);
 
@@ -927,38 +970,103 @@ namespace boost {
 
             std::string as_string() const;
 
-            void as_string(const std::string& vl);            
+            void as_string(const std::string& vl);
 
             ITU_T_HOLDERH_DECL(local_time, TIME_OF_DAY_ENCODING);
             ITU_T_HOLDERH_DECL(time_difference, TIME_DIFFERENCE);
 
             ITU_T_ARCHIVE_FUNC;
         };
-        
-        
-        
-        
+
+
+
+
 
         // sequence HOURS-AND-FRACTION-ENCODING
 
+        template<std::size_t N = DEFAULT_TM_FRACTION >
         struct HOURS_AND_FRACTION_ENCODING {
-            HOURS_AND_FRACTION_ENCODING();
+
+            static std::size_t NF() {
+                return (N > MAX_TM_FRACTION) ? MAX_TM_FRACTION : N;
+            }
+
+            HOURS_AND_FRACTION_ENCODING() : hours_(), fraction_() {
+            };
 
             HOURS_AND_FRACTION_ENCODING(const uint8_t& arg__hours,
-                    const integer_type& arg__fraction);
+                    const integer_type& arg__fraction) :
+            hours_(time_detail::to_range(arg__hours, (uint8_t) 0, (uint8_t) 24)),
+            fraction_(arg__fraction) {
+            };
 
-            HOURS_AND_FRACTION_ENCODING(ITU_T_SHARED(uint8_t) arg__hours,
-                    ITU_T_SHARED(integer_type) arg__fraction);
+            HOURS_AND_FRACTION_ENCODING(const std::string& vl) : hours_(), fraction_() {
+                as_string(vl);
+            };
 
-            ITU_T_HOLDERH_DECL(hours, uint8_t); //   Ic(  [ 0  ...   24 ]   
-            ITU_T_HOLDERH_DECL(fraction, integer_type); //   Ic(  [ 0  ...   999 ]   ...ext...) 
+            HOURS_AND_FRACTION_ENCODING(const char* vl) : hours_(), fraction_() {
+                as_string(vl);
+            };
 
-            ITU_T_ARCHIVE_FUNC;
+            HOURS_AND_FRACTION_ENCODING(const base_time_duration& vl) :
+            hours_(time_detail::to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)),
+            fraction_(time_detail::HF_to_fraction(vl, NF())) {
+            };
+
+            base_time_duration as_time() const {
+                try {
+                    return base_time_duration(static_cast<int> (hours()),
+                            time_detail::minute_fraction_HF(fraction(), NF()),
+                            time_detail::second_fraction_HF(fraction(), NF()));
+                } catch (...) {
+                }
+                return base_time_duration();
+            }
+
+            std::string as_string() const {
+                return time_detail::to_string(static_cast<integer_type> (hours()), 2, '0') + "," +
+                        time_detail::to_string(static_cast<integer_type> (fraction()), NF(), '0');
+            }
+
+            void as_string(const std::string& vl) {
+                hours(time_detail::to_range<uint8_t>(time_detail::string_to_def<int>(
+                        time_detail::drct_substr(vl, 0, 2), 0, "0"), (uint8_t) 0, (uint8_t) 24));
+                fraction(time_detail::string_to_def<int>(time_detail::normalize_str_size(time_detail::drct_substr(vl, 3), NF()), 0));
+            }
+
+            ITU_T_HOLDERH_T_DECL(hours, uint8_t); //   Ic(  [ 0  ...   24 ]   
+            ITU_T_HOLDERH_T_DECL(fraction, integer_type); //   Ic(  [ 0  ...   999 ]   ...ext...) 
+
+            void serialize(boost::asn1::x690::output_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x690::input_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x691::output_coder& arch) {
+                ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
+                ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
+            }
+
+            void serialize(boost::asn1::x691::input_coder& arch) {
+                ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
+                ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
+            }
+
+            friend std::ostream& operator<<(std::ostream& stream, const HOURS_AND_FRACTION_ENCODING& vl) {
+                return stream << "hh,nn: " << vl.as_string();
+            };
+
         };
+
+
 
         // sequence HOURS-UTC-AND-FRACTION-ENCODING
 
         struct HOURS_UTC_AND_FRACTION_ENCODING {
+
             HOURS_UTC_AND_FRACTION_ENCODING();
 
             HOURS_UTC_AND_FRACTION_ENCODING(const uint8_t& arg__hours,
@@ -976,6 +1084,7 @@ namespace boost {
         // sequence HOURS-AND-DIFF-AND-FRACTION-ENCODING
 
         struct HOURS_AND_DIFF_AND_FRACTION_ENCODING {
+
             HOURS_AND_DIFF_AND_FRACTION_ENCODING();
 
             HOURS_AND_DIFF_AND_FRACTION_ENCODING(const uint8_t& arg__local_hours,
@@ -996,6 +1105,7 @@ namespace boost {
         // sequence MINUTES-AND-FRACTION-ENCODING
 
         struct MINUTES_AND_FRACTION_ENCODING {
+
             MINUTES_AND_FRACTION_ENCODING();
 
             MINUTES_AND_FRACTION_ENCODING(const uint8_t& arg__hours,
@@ -1016,6 +1126,7 @@ namespace boost {
         // sequence MINUTES-UTC-AND-FRACTION-ENCODING
 
         struct MINUTES_UTC_AND_FRACTION_ENCODING {
+
             MINUTES_UTC_AND_FRACTION_ENCODING();
 
             MINUTES_UTC_AND_FRACTION_ENCODING(const uint8_t& arg__hours,
@@ -1036,9 +1147,11 @@ namespace boost {
         // sequence MINUTES-AND-DIFF-AND-FRACTION-ENCODING
 
         struct MINUTES_AND_DIFF_AND_FRACTION_ENCODING {
+
             struct Local_time_type;
 
             struct Local_time_type {
+
                 Local_time_type();
 
                 Local_time_type(const uint8_t& arg__hours,
@@ -1074,6 +1187,7 @@ namespace boost {
         // sequence TIME-OF-DAY-AND-FRACTION-ENCODING
 
         struct TIME_OF_DAY_AND_FRACTION_ENCODING {
+
             TIME_OF_DAY_AND_FRACTION_ENCODING();
 
             TIME_OF_DAY_AND_FRACTION_ENCODING(const uint8_t& arg__hours,
@@ -1097,6 +1211,7 @@ namespace boost {
         // sequence TIME-OF-DAY-UTC-AND-FRACTION-ENCODING
 
         struct TIME_OF_DAY_UTC_AND_FRACTION_ENCODING {
+
             TIME_OF_DAY_UTC_AND_FRACTION_ENCODING();
 
             TIME_OF_DAY_UTC_AND_FRACTION_ENCODING(const uint8_t& arg__hours,
@@ -1120,9 +1235,11 @@ namespace boost {
         // sequence TIME-OF-DAY-AND-DIFF-AND-FRACTION-ENCODING
 
         struct TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING {
+
             struct Local_time_type;
 
             struct Local_time_type {
+
                 Local_time_type();
 
                 Local_time_type(const uint8_t& arg__hours,
@@ -1161,9 +1278,11 @@ namespace boost {
         // sequence DURATION-INTERVAL-ENCODING
 
         struct DURATION_INTERVAL_ENCODING {
+
             struct Fractional_part_type;
 
             struct Fractional_part_type {
+
                 Fractional_part_type();
 
                 Fractional_part_type(const integer_type& arg__number_of_digits,
@@ -1205,6 +1324,7 @@ namespace boost {
         // sequence REC-DURATION-INTERVAL-ENCODING
 
         struct REC_DURATION_INTERVAL_ENCODING {
+
             REC_DURATION_INTERVAL_ENCODING();
 
             REC_DURATION_INTERVAL_ENCODING(const DURATION_INTERVAL_ENCODING& arg__duration);
@@ -1220,7 +1340,7 @@ namespace boost {
 
         // choice MIXED-ENCODING
 
-        enum MIXED_ENCODING_enum {
+        /*enum MIXED_ENCODING_enum {
             MIXED_ENCODING_null = 0,
             MIXED_ENCODING_date_C_Basic,
             MIXED_ENCODING_date_C_L,
@@ -2056,7 +2176,7 @@ namespace boost {
             ITU_T_HOLDERH_DECL(time_type, Time_type_type);
 
             ITU_T_ARCHIVE_FUNC;
-        };
+        };*/
 
         // struct var
 
@@ -2088,7 +2208,7 @@ namespace boost {
         std::ostream& operator<<(std::ostream& stream, const TIME_OF_DAY_ENCODING& vl);
         std::ostream& operator<<(std::ostream& stream, const TIME_OF_DAY_UTC_ENCODING& vl);
         std::ostream& operator<<(std::ostream& stream, const TIME_OF_DAY_AND_DIFF_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const HOURS_AND_FRACTION_ENCODING& vl);
+        //std::ostream& operator<<(std::ostream& stream, const HOURS_AND_FRACTION_ENCODING& vl);
         std::ostream& operator<<(std::ostream& stream, const HOURS_UTC_AND_FRACTION_ENCODING& vl);
         std::ostream& operator<<(std::ostream& stream, const HOURS_AND_DIFF_AND_FRACTION_ENCODING& vl);
         std::ostream& operator<<(std::ostream& stream, const MINUTES_AND_FRACTION_ENCODING& vl);
@@ -2102,7 +2222,7 @@ namespace boost {
         std::ostream& operator<<(std::ostream& stream, const DURATION_INTERVAL_ENCODING& vl);
         std::ostream& operator<<(std::ostream& stream, const DURATION_INTERVAL_ENCODING::Fractional_part_type& vl);
         std::ostream& operator<<(std::ostream& stream, const REC_DURATION_INTERVAL_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING& vl);
+        /*std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING& vl);
         std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Time_HFn_L_type& vl);
         std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Time_HFn_Z_type& vl);
         std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Time_HFn_LD_type& vl);
@@ -2141,7 +2261,7 @@ namespace boost {
         std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_DE_Date_Time_type::End_type& vl);
         std::ostream& operator<<(std::ostream& stream, const DATE_TYPE& vl);
         std::ostream& operator<<(std::ostream& stream, const TIME_TYPE& vl);
-        std::ostream& operator<<(std::ostream& stream, const TIME_TYPE::Time_type_type& vl);
+        std::ostream& operator<<(std::ostream& stream, const TIME_TYPE::Time_type_type& vl);*/
 
         ITU_T_ARCHIVE_X690_DECL(CENTURY_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(ANY_CENTURY_ENCODING);
@@ -2167,7 +2287,7 @@ namespace boost {
         ITU_T_ARCHIVE_X690_DECL(TIME_OF_DAY_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(TIME_OF_DAY_UTC_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(TIME_OF_DAY_AND_DIFF_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(HOURS_AND_FRACTION_ENCODING);
+        //ITU_T_ARCHIVE_X690_DECL(HOURS_AND_FRACTION_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(HOURS_UTC_AND_FRACTION_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(HOURS_AND_DIFF_AND_FRACTION_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(MINUTES_AND_FRACTION_ENCODING);
@@ -2181,7 +2301,7 @@ namespace boost {
         ITU_T_ARCHIVE_X690_DECL(DURATION_INTERVAL_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(DURATION_INTERVAL_ENCODING::Fractional_part_type);
         ITU_T_ARCHIVE_X690_DECL(REC_DURATION_INTERVAL_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING);
+        /*ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Time_HFn_L_type);
         ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Time_HFn_Z_type);
         ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Time_HFn_LD_type);
@@ -2220,7 +2340,7 @@ namespace boost {
         ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_DE_Date_Time_type::End_type);
         ITU_T_ARCHIVE_X690_DECL(DATE_TYPE);
         ITU_T_ARCHIVE_X690_DECL(TIME_TYPE);
-        ITU_T_ARCHIVE_X690_DECL(TIME_TYPE::Time_type_type);
+        ITU_T_ARCHIVE_X690_DECL(TIME_TYPE::Time_type_type);*/
 
         ITU_T_ARCHIVE_X691_DECL(CENTURY_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(ANY_CENTURY_ENCODING);
@@ -2246,7 +2366,7 @@ namespace boost {
         ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY_UTC_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY_AND_DIFF_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(HOURS_AND_FRACTION_ENCODING);
+        //ITU_T_ARCHIVE_X691_DECL(HOURS_AND_FRACTION_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(HOURS_UTC_AND_FRACTION_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(HOURS_AND_DIFF_AND_FRACTION_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(MINUTES_AND_FRACTION_ENCODING);
@@ -2260,7 +2380,7 @@ namespace boost {
         ITU_T_ARCHIVE_X691_DECL(DURATION_INTERVAL_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(DURATION_INTERVAL_ENCODING::Fractional_part_type);
         ITU_T_ARCHIVE_X691_DECL(REC_DURATION_INTERVAL_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING);
+        /*ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Time_HFn_L_type);
         ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Time_HFn_Z_type);
         ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Time_HFn_LD_type);
@@ -2299,7 +2419,7 @@ namespace boost {
         ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_DE_Date_Time_type::End_type);
         ITU_T_ARCHIVE_X691_DECL(DATE_TYPE);
         ITU_T_ARCHIVE_X691_DECL(TIME_TYPE);
-        ITU_T_ARCHIVE_X691_DECL(TIME_TYPE::Time_type_type);
+        ITU_T_ARCHIVE_X691_DECL(TIME_TYPE::Time_type_type);*/
 
 
 
@@ -2327,7 +2447,7 @@ namespace boost {
         ITU_T_INTERNAL_REGESTRATE(TIME_OF_DAY_ENCODING, TYPE_TIME);
         ITU_T_INTERNAL_REGESTRATE(TIME_OF_DAY_UTC_ENCODING, TYPE_TIME);
         ITU_T_INTERNAL_REGESTRATE(TIME_OF_DAY_AND_DIFF_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(HOURS_AND_FRACTION_ENCODING, TYPE_TIME);
+        //ITU_T_INTERNAL_REGESTRATE(HOURS_AND_FRACTION_ENCODING, TYPE_TIME);
         ITU_T_INTERNAL_REGESTRATE(HOURS_UTC_AND_FRACTION_ENCODING, TYPE_TIME);
         ITU_T_INTERNAL_REGESTRATE(HOURS_AND_DIFF_AND_FRACTION_ENCODING, TYPE_TIME);
         ITU_T_INTERNAL_REGESTRATE(MINUTES_AND_FRACTION_ENCODING, TYPE_TIME);
@@ -2338,18 +2458,18 @@ namespace boost {
         ITU_T_INTERNAL_REGESTRATE(TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING, TYPE_TIME);
         ITU_T_INTERNAL_REGESTRATE(DURATION_INTERVAL_ENCODING, TYPE_TIME);
         ITU_T_INTERNAL_REGESTRATE(REC_DURATION_INTERVAL_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(MIXED_ENCODING, TYPE_TIME);
+        /*ITU_T_INTERNAL_REGESTRATE(MIXED_ENCODING, TYPE_TIME);
         ITU_T_INTERNAL_REGESTRATE(DATE_TYPE, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(TIME_TYPE, TYPE_TIME);
+        ITU_T_INTERNAL_REGESTRATE(TIME_TYPE, TYPE_TIME);*/
 
 
     }
 }
 
 ITU_T_CHOICE_REGESTRATE(boost::asn1::YEAR_ENCODING)
-ITU_T_CHOICE_REGESTRATE(boost::asn1::MIXED_ENCODING)
+/*ITU_T_CHOICE_REGESTRATE(boost::asn1::MIXED_ENCODING)
 ITU_T_CHOICE_REGESTRATE(boost::asn1::DATE_TYPE)
-ITU_T_CHOICE_REGESTRATE(boost::asn1::TIME_TYPE::Time_type_type)
+ITU_T_CHOICE_REGESTRATE(boost::asn1::TIME_TYPE::Time_type_type)*/
 
 #ifdef _MSC_VER
 #pragma warning(pop)
