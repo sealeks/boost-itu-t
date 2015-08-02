@@ -161,8 +161,8 @@ namespace TestTm {
     inline void test(T& tsstr) {
 
         /*CENTURY_ENCODING cetn_enc=3;
-        CENTURY_ENCODING cetn_enc1=std::string("4");
-        CENTURY_ENCODING cetn_enc2="21";        
+        CENTURY_ENCODING cetn_enc1=std::string("04C");
+        CENTURY_ENCODING cetn_enc2="21C";        
         CENTURY_ENCODING cetn_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 1, 12));              
         ANY_CENTURY_ENCODING acetn_enc(19);        
         
@@ -209,8 +209,8 @@ namespace TestTm {
         DEBUG_VAL_ITU_READ(ayear_enc_r);        
         
         YEAR_MONTH_ENCODING year_month_enc(1941,6);
-        YEAR_MONTH_ENCODING year_month_enc1=std::string("200408");
-        YEAR_MONTH_ENCODING year_month_enc2="201507";        
+        YEAR_MONTH_ENCODING year_month_enc1=std::string("2004-08");
+        YEAR_MONTH_ENCODING year_month_enc2="2015-07";        
         YEAR_MONTH_ENCODING year_month_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 2, 12));              
         ANY_YEAR_MONTH_ENCODING ayear_month_enc(1958, 7);        
         
@@ -234,8 +234,8 @@ namespace TestTm {
         
         
         DATE_ENCODING date_enc(1941,6,22);
-        DATE_ENCODING date_enc1=std::string("20040830");
-        DATE_ENCODING date_enc2="20150724";        
+        DATE_ENCODING date_enc1=std::string("2004-08-30");
+        DATE_ENCODING date_enc2="2015-07-24";        
         DATE_ENCODING date_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 2, 12));              
         ANY_DATE_ENCODING adate_enc(1958, 7,6);        
         
@@ -259,8 +259,8 @@ namespace TestTm {
         
         
         YEAR_DAY_ENCODING year_day_enc(1941,64);
-        YEAR_DAY_ENCODING year_day_enc1=std::string("2004085");
-        YEAR_DAY_ENCODING year_day_enc2="2015186";        
+        YEAR_DAY_ENCODING year_day_enc1=std::string("2004-085");
+        YEAR_DAY_ENCODING year_day_enc2="2015-186";        
         YEAR_DAY_ENCODING year_day_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 2, 12));              
         ANY_YEAR_DAY_ENCODING ayear_day_enc(1958, 78);        
         
@@ -285,8 +285,8 @@ namespace TestTm {
       
         
         YEAR_WEEK_ENCODING year_week_enc(1941,12);
-        YEAR_WEEK_ENCODING year_week_enc1=std::string("2004W40");
-        YEAR_WEEK_ENCODING year_week_enc2="2015W18";        
+        YEAR_WEEK_ENCODING year_week_enc1=std::string("2004-W40");
+        YEAR_WEEK_ENCODING year_week_enc2="2015-W18";        
         YEAR_WEEK_ENCODING year_week_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 2, 12));              
         ANY_YEAR_WEEK_ENCODING ayear_week_enc(1958, 43);        
         
@@ -312,8 +312,8 @@ namespace TestTm {
         
         
         YEAR_WEEK_DAY_ENCODING year_week_day_enc(1941,12, 4);
-        YEAR_WEEK_DAY_ENCODING year_week_day_enc1=std::string("2004W402");
-        YEAR_WEEK_DAY_ENCODING year_week_day_enc2="2015W184";        
+        YEAR_WEEK_DAY_ENCODING year_week_day_enc1=std::string("2004-W40-2");
+        YEAR_WEEK_DAY_ENCODING year_week_day_enc2="2015-W18-4";        
         YEAR_WEEK_DAY_ENCODING year_week_day_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 2, 12));              
         ANY_YEAR_WEEK_DAY_ENCODING ayear_week_day_enc(1958, 43,5);        
         
@@ -333,7 +333,7 @@ namespace TestTm {
         DEBUG_VAL_ITU(year_week_day_enc3) 
         DEBUG_VAL_ITU_READ(year_week_day_enc3_r);                
         DEBUG_VAL_ITU(ayear_week_day_enc)                 
-        DEBUG_VAL_ITU_READ(ayear_week_day_enc_r);              */
+        DEBUG_VAL_ITU_READ(ayear_week_day_enc_r);              
 
         HOURS_ENCODING hors_enc = 3;
         HOURS_ENCODING hors_enc1 = std::string("04");
@@ -393,7 +393,7 @@ namespace TestTm {
         DEBUG_VAL_ITU(hors_diff_enc2)
         DEBUG_VAL_ITU_TREAD(hors_diff_enc2_r);
         DEBUG_VAL_ITU(hors_diff_enc3)
-        DEBUG_VAL_ITU_TREAD(hors_diff_enc3_r)
+        DEBUG_VAL_ITU_TREAD(hors_diff_enc3_r)*/
                 
                 
                 
@@ -528,25 +528,47 @@ namespace TestTm {
                 
         typedef HOURS_AND_FRACTION_ENCODING<4> HOURS_AND_FRACTION;
         
-        HOURS_AND_FRACTION horse_and_fract_enc (3,3450);
-        HOURS_AND_FRACTION horse_and_fract_enc1 = std::string("08,45");
-        HOURS_AND_FRACTION horse_and_fract_enc2 = "23,6";
-        HOURS_AND_FRACTION horse_and_fract_enc3 = boost::asn1::base_time_duration(4, 23, 40);
+        HOURS_AND_FRACTION hours_and_fract_enc (3,3450);
+        HOURS_AND_FRACTION hours_and_fract_enc1 = std::string("08,45");
+        HOURS_AND_FRACTION hours_and_fract_enc2 = "23,6";
+        HOURS_AND_FRACTION hours_and_fract_enc3 = boost::asn1::base_time_duration(4, 23, 40);
 
-        HOURS_AND_FRACTION horse_and_fract_enc_r;
-        HOURS_AND_FRACTION horse_and_fract_enc1_r;
-        HOURS_AND_FRACTION horse_and_fract_enc2_r;
-        HOURS_AND_FRACTION horse_and_fract_enc3_r;
+        HOURS_AND_FRACTION hours_and_fract_enc_r;
+        HOURS_AND_FRACTION hours_and_fract_enc1_r;
+        HOURS_AND_FRACTION hours_and_fract_enc2_r;
+        HOURS_AND_FRACTION hours_and_fract_enc3_r;
 
 
-        DEBUG_VAL_ITU(horse_and_fract_enc)
-        DEBUG_VAL_ITU_TREAD(horse_and_fract_enc_r);
-        DEBUG_VAL_ITU(horse_and_fract_enc1)
-        DEBUG_VAL_ITU_TREAD(horse_and_fract_enc1_r);
-        DEBUG_VAL_ITU(horse_and_fract_enc2)
-        DEBUG_VAL_ITU_TREAD(horse_and_fract_enc2_r);
-        DEBUG_VAL_ITU(horse_and_fract_enc3)
-        DEBUG_VAL_ITU_TREAD(horse_and_fract_enc3_r) 
+        DEBUG_VAL_ITU(hours_and_fract_enc)
+        DEBUG_VAL_ITU_TREAD(hours_and_fract_enc_r);
+        DEBUG_VAL_ITU(hours_and_fract_enc1)
+        DEBUG_VAL_ITU_TREAD(hours_and_fract_enc1_r);
+        DEBUG_VAL_ITU(hours_and_fract_enc2)
+        DEBUG_VAL_ITU_TREAD(hours_and_fract_enc2_r);
+        DEBUG_VAL_ITU(hours_and_fract_enc3)
+        DEBUG_VAL_ITU_TREAD(hours_and_fract_enc3_r);
+        
+        typedef HOURS_UTC_AND_FRACTION_ENCODING<4> HOURS_UTC_AND_FRACTION;
+        
+        HOURS_UTC_AND_FRACTION hours_utc_and_fract_enc (3,3450);
+        HOURS_UTC_AND_FRACTION hours_utc_and_fract_enc1 = std::string("08,45Z");
+        HOURS_UTC_AND_FRACTION hours_utc_and_fract_enc2 = "23,6Z";
+        HOURS_UTC_AND_FRACTION hours_utc_and_fract_enc3 = boost::asn1::base_time_duration(4, 23, 40);
+
+        HOURS_UTC_AND_FRACTION hours_utc_and_fract_enc_r;
+        HOURS_UTC_AND_FRACTION hours_utc_and_fract_enc1_r;
+        HOURS_UTC_AND_FRACTION hours_utc_and_fract_enc2_r;
+        HOURS_UTC_AND_FRACTION hours_utc_and_fract_enc3_r;
+
+
+        DEBUG_VAL_ITU(hours_utc_and_fract_enc)
+        DEBUG_VAL_ITU_TREAD(hours_utc_and_fract_enc_r);
+        DEBUG_VAL_ITU(hours_utc_and_fract_enc1)
+        DEBUG_VAL_ITU_TREAD(hours_utc_and_fract_enc1_r);
+        DEBUG_VAL_ITU(hours_utc_and_fract_enc2)
+        DEBUG_VAL_ITU_TREAD(hours_utc_and_fract_enc2_r);
+        DEBUG_VAL_ITU(hours_utc_and_fract_enc3)
+        DEBUG_VAL_ITU_TREAD(hours_utc_and_fract_enc3_r);        
                 
   
         
@@ -598,6 +620,8 @@ namespace TestTm {
         std::cout << boost::asn1::time_detail::nanosecond_fraction_HMSF(9999999, 7) << std::endl;
         std::cout << boost::asn1::time_detail::nanosecond_fraction_HMSF(99999999, 8) << std::endl;
         std::cout << boost::asn1::time_detail::nanosecond_fraction_HMSF(999999999, 9) << std::endl; */
+                
+        //std::cout << boost::asn1::time_detail::normalize_time_str("\"yy-yy-y:y")  << std::endl;
         
     }
 
