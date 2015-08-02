@@ -1190,6 +1190,7 @@ namespace boost {
                 return base_time_duration();
             }
 
+            
             std::string as_string() const {
                 return time_detail::to_string(static_cast<integer_type> (hours()), 2, '0') + "," +
                         time_detail::to_string(static_cast<integer_type> (fraction()), NF(), '0') + 
@@ -1207,11 +1208,12 @@ namespace boost {
                         time_detail::drct_substr(vll, 0, 2), 0, "0"), (uint8_t) 0, (uint8_t) 24));
                 fraction(time_detail::string_to_def<int>(time_detail::normalize_str_size(time_detail::drct_substr(vll, 3), NF()), 0));
                 time_difference(TIME_DIFFERENCE(vlr));                
-            }
+            }                       
 
             ITU_T_HOLDERH_T_DECL(hours, uint8_t); //   Ic(  [ 0  ...   24 ]   
             ITU_T_HOLDERH_T_DECL(fraction, integer_type); //   Ic(  [ 0  ...   999 ]   ...ext...) 
-            ITU_T_HOLDERH_DECL(time_difference, TIME_DIFFERENCE);            
+            ITU_T_HOLDERH_T_DECL(time_difference, TIME_DIFFERENCE);        
+ 
 
             void serialize(boost::asn1::x690::output_coder& arch) {
                 time_serialize(*this, arch);
@@ -1239,6 +1241,7 @@ namespace boost {
 
         };        
 
+        
 
         // sequence MINUTES-AND-FRACTION-ENCODING
 
