@@ -394,8 +394,7 @@ namespace boost {
         template<> void HOURS_UTC_AND_FRACTION_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
             ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
             ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
-        }*/
-
+        }
         // sequence HOURS-AND-DIFF-AND-FRACTION-ENCODING
 
         template<> void HOURS_AND_DIFF_AND_FRACTION_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
@@ -408,7 +407,8 @@ namespace boost {
             ITU_T_BIND_NUM_CONSTRAINT(local_hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
             ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
             ITU_T_BIND_PER(time_difference_);
-        }
+        }*/
+
 
         // sequence MINUTES-AND-FRACTION-ENCODING
 

@@ -90,7 +90,7 @@ namespace boost {
         struct TIME_OF_DAY_AND_DIFF_ENCODING;
         template<std::size_t N> struct HOURS_AND_FRACTION_ENCODING;
         template<std::size_t N> struct HOURS_UTC_AND_FRACTION_ENCODING;
-        struct HOURS_AND_DIFF_AND_FRACTION_ENCODING;
+        template<std::size_t N> struct HOURS_AND_DIFF_AND_FRACTION_ENCODING;
         struct MINUTES_AND_FRACTION_ENCODING;
         struct MINUTES_UTC_AND_FRACTION_ENCODING;
         struct MINUTES_AND_DIFF_AND_FRACTION_ENCODING;
@@ -286,7 +286,7 @@ namespace boost {
                 void operator&(const TIME_OF_DAY_AND_DIFF_ENCODING& vl);
                 ITU_T_DEFINE_OUT_TIME_NTYPE(HOURS_AND_FRACTION_ENCODING);            
                 ITU_T_DEFINE_OUT_TIME_NTYPE(HOURS_UTC_AND_FRACTION_ENCODING);
-                void operator&(const HOURS_AND_DIFF_AND_FRACTION_ENCODING& vl);
+                ITU_T_DEFINE_OUT_TIME_NTYPE(HOURS_AND_DIFF_AND_FRACTION_ENCODING);
                 void operator&(const MINUTES_AND_FRACTION_ENCODING& vl);
                 void operator&(const MINUTES_UTC_AND_FRACTION_ENCODING& vl);
                 void operator&(const MINUTES_AND_DIFF_AND_FRACTION_ENCODING& vl);
@@ -832,7 +832,7 @@ namespace boost {
                 void operator&(TIME_OF_DAY_AND_DIFF_ENCODING& vl);
                 ITU_T_DEFINE_IN_TIME_NTYPE(HOURS_AND_FRACTION_ENCODING);
                 ITU_T_DEFINE_IN_TIME_NTYPE(HOURS_UTC_AND_FRACTION_ENCODING);
-                void operator&(HOURS_AND_DIFF_AND_FRACTION_ENCODING& vl);
+                ITU_T_DEFINE_IN_TIME_NTYPE(HOURS_AND_DIFF_AND_FRACTION_ENCODING);
                 void operator&(MINUTES_AND_FRACTION_ENCODING& vl);
                 void operator&(MINUTES_UTC_AND_FRACTION_ENCODING& vl);
                 void operator&(MINUTES_AND_DIFF_AND_FRACTION_ENCODING& vl);
