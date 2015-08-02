@@ -276,7 +276,7 @@ namespace boost {
         template<> void HOURS_AND_FRACTION_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
             ITU_T_BIND_IMPLICIT(hours_, 0, CONTEXT_CLASS);
             ITU_T_BIND_IMPLICIT(fraction_, 1, CONTEXT_CLASS);
-        }*/
+        }
 
         // sequence HOURS-UTC-AND-FRACTION-ENCODING
 
@@ -288,7 +288,7 @@ namespace boost {
         template<> void HOURS_UTC_AND_FRACTION_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
             ITU_T_BIND_IMPLICIT(hours_, 0, CONTEXT_CLASS);
             ITU_T_BIND_IMPLICIT(fraction_, 1, CONTEXT_CLASS);
-        }
+        }*/
 
         // sequence HOURS-AND-DIFF-AND-FRACTION-ENCODING
 

@@ -1,3 +1,6 @@
+
+#include <string>
+
 #include "DefinedTime.hpp"
 
 #ifdef _MSC_VER
@@ -30,7 +33,7 @@ namespace boost {
             }
 
             std::string drct_substr(const visible_string& vl, std::string::size_type beg, std::string::size_type sz) {
-                return drct_substr(visible_string(vl), beg, sz);
+                return drct_substr(std::string(vl.c_str()), beg, sz);
             }
 
 
@@ -49,6 +52,10 @@ namespace boost {
                 }
                 return "";
             }
+            
+            std::string revrs_substr(const visible_string& vl, std::string::size_type endps, std::string::size_type sz) {
+                return revrs_substr(std::string(vl.c_str()), endps, sz);
+            }            
 
             std::string normalize_str_size(const std::string& vl, std::string::size_type sz) {
                 if (vl.size() == sz)
@@ -57,6 +64,15 @@ namespace boost {
                     return vl.substr(0, sz);
                 else
                     return vl + std::string(sz - vl.size(), '0');
+            }
+
+            std::string normalize_time_str(std::string vl) {
+                boost::algorithm::erase_last(vl,  "\"");
+                boost::algorithm::erase_first(vl,  "\"");
+                boost::algorithm::erase_all(vl,  "-");
+                boost::algorithm::erase_all(vl,  ":");   
+                boost::algorithm::replace_all(vl,".", ",");
+                return vl;
             }
 
             uint64_t pow10(std::size_t n) {
@@ -74,9 +90,6 @@ namespace boost {
                 return 1;
             }
 
-            std::string revrs_substr(const visible_string& vl, std::string::size_type endps, std::string::size_type sz) {
-                return revrs_substr(visible_string(vl), endps, sz);
-            }
 
             std::size_t minute_fraction_HF(integer_type f, std::size_t n) {
                 if (n > 0)
@@ -241,11 +254,12 @@ namespace boost {
         }
 
         std::string CENTURY_ENCODING::as_string() const {
-            return to_string(static_cast<int> (as_number()), 2, '0');
+            return to_string(static_cast<int> (as_number()), 2, '0')+"C";
         }
 
         void CENTURY_ENCODING::as_string(const std::string& vl) {
-            as_number(to_range<uint8_t>(string_to_def<int>(vl, 0, "0"), (uint8_t) 0, (uint8_t) 99));
+            as_number(to_range<uint8_t>(string_to_def<int>(revrs_substr(vl, 1), 0, "0"),
+                    (uint8_t) 0, (uint8_t) 99));
         }
 
 
@@ -296,11 +310,11 @@ namespace boost {
         }
 
         std::string ANY_CENTURY_ENCODING::as_string() const {
-            return to_string(static_cast<int> (as_number()));
+            return to_string(static_cast<int> (as_number()))+"C";
         }
 
         void ANY_CENTURY_ENCODING::as_string(const std::string& vl) {
-            as_number(string_to_def(vl, 0, "0"));
+            as_number(string_to_def(revrs_substr(vl,1), 0, "0"));
         }
 
 
@@ -385,7 +399,8 @@ namespace boost {
         }
 
         void YEAR_ENCODING::as_string(const std::string& vl) {
-            as_number(to_range<integer_type>(string_to_def<int>(vl, 0, "0"), (integer_type) 0, (integer_type) 9999));
+            as_number(to_range<integer_type>(string_to_def<int>(vl, 0, "0"), 
+                    (integer_type) 0, (integer_type) 9999));
         }
 
 
@@ -487,10 +502,11 @@ namespace boost {
         }
 
         std::string YEAR_MONTH_ENCODING::as_string() const {
-            return year().as_string() + to_string(static_cast<int> (month()), 2, '0');
+            return year().as_string() + "-" + to_string(static_cast<int> (month()), 2, '0');
         }
 
-        void YEAR_MONTH_ENCODING::as_string(const std::string& vl) {
+        void YEAR_MONTH_ENCODING::as_string(const std::string& vlr) {
+            std::string vl=normalize_time_str(vlr);
             year(revrs_substr(vl, 2));
             month(to_range<uint8_t>(string_to_def<int>(revrs_substr(vl, 0, 2)), (uint8_t) 1, (uint8_t) 12));
         }
@@ -543,10 +559,11 @@ namespace boost {
         }
 
         std::string ANY_YEAR_MONTH_ENCODING::as_string() const {
-            return year().as_string() + to_string(static_cast<int> (month()), 2, '0');
+            return year().as_string() +"-" + to_string(static_cast<int> (month()), 2, '0');
         }
 
-        void ANY_YEAR_MONTH_ENCODING::as_string(const std::string& vl) {
+        void ANY_YEAR_MONTH_ENCODING::as_string(const std::string& vlr) {
+            std::string vl=normalize_time_str(vlr);            
             year(revrs_substr(vl, 2));
             month(to_range<uint8_t>(string_to_def<int>(revrs_substr(vl, 0, 2)), (uint8_t) 1, (uint8_t) 12));
         }
@@ -604,11 +621,12 @@ namespace boost {
         }
 
         std::string DATE_ENCODING::as_string() const {
-            return year().as_string() + to_string(static_cast<int> (month()), 2, '0') +
-                    to_string(static_cast<int> (day()), 2, '0');
+            return year().as_string() + "-" + to_string(static_cast<int> (month()), 2, '0') +
+                    "-" + to_string(static_cast<int> (day()), 2, '0');
         }
 
-        void DATE_ENCODING::as_string(const std::string& vl) {
+        void DATE_ENCODING::as_string(const std::string& vlr) {
+            std::string vl = normalize_time_str(vlr);
             year(revrs_substr(vl, 4));
             month(to_range<uint8_t>(string_to_def<int>(revrs_substr(vl, 2, 2)), (uint8_t) 1, (uint8_t) 12));
             day(to_range<uint8_t>(string_to_def<int>(revrs_substr(vl, 0, 2)), (uint8_t) 1, (uint8_t) 31));
@@ -666,11 +684,12 @@ namespace boost {
         }
 
         std::string ANY_DATE_ENCODING::as_string() const {
-            return year().as_string() + to_string(static_cast<int> (month()), 2, '0') +
-                    to_string(static_cast<int> (day()), 2, '0');
+            return year().as_string() + "-" + to_string(static_cast<int> (month()), 2, '0') +
+                    "-" + to_string(static_cast<int> (day()), 2, '0');
         }
 
-        void ANY_DATE_ENCODING::as_string(const std::string& vl) {
+        void ANY_DATE_ENCODING::as_string(const std::string& vlr) {
+            std::string vl = normalize_time_str(vlr);
             year(revrs_substr(vl, 4));
             month(to_range<uint8_t>(string_to_def<int>(revrs_substr(vl, 2, 2)), (uint8_t) 1, (uint8_t) 12));
             day(to_range<uint8_t>(string_to_def<int>(revrs_substr(vl, 0, 2)), (uint8_t) 1, (uint8_t) 31));
@@ -727,10 +746,11 @@ namespace boost {
         }
 
         std::string YEAR_DAY_ENCODING::as_string() const {
-            return year().as_string() + to_string(static_cast<int> (day()), 3, '0');
+            return year().as_string() + "-" + to_string(static_cast<int> (day()), 3, '0');
         }
 
-        void YEAR_DAY_ENCODING::as_string(const std::string& vl) {
+        void YEAR_DAY_ENCODING::as_string(const std::string& vlr) {
+            std::string vl = normalize_time_str(vlr);
             year(revrs_substr(vl, 3));
             day(to_range<uint16_t>(string_to_def<int>(revrs_substr(vl, 0, 3)), (uint16_t) 1, (uint16_t) 366));
         }
@@ -786,10 +806,11 @@ namespace boost {
         }
 
         std::string ANY_YEAR_DAY_ENCODING::as_string() const {
-            return year().as_string() + to_string(static_cast<int> (day()), 3, '0');
+            return year().as_string() + "-" + to_string(static_cast<int> (day()), 3, '0');
         }
 
-        void ANY_YEAR_DAY_ENCODING::as_string(const std::string& vl) {
+        void ANY_YEAR_DAY_ENCODING::as_string(const std::string& vlr) {
+            std::string vl=normalize_time_str(vlr);            
             year(revrs_substr(vl, 3));
             day(to_range<uint16_t>(string_to_def<int>(revrs_substr(vl, 0, 3)), (uint16_t) 1, (uint16_t) 366));
         }
@@ -849,10 +870,11 @@ namespace boost {
         }
 
         std::string YEAR_WEEK_ENCODING::as_string() const {
-            return year().as_string() + "W" + to_string(static_cast<int> (week()), 2, '0');
+            return year().as_string() + "-W" + to_string(static_cast<int> (week()), 2, '0');
         }
 
-        void YEAR_WEEK_ENCODING::as_string(const std::string& vl) {
+        void YEAR_WEEK_ENCODING::as_string(const std::string& vlr) {
+            std::string vl = normalize_time_str(vlr);
             year(revrs_substr(vl, 3));
             week(to_range<uint8_t>(string_to_def<int>(revrs_substr(vl, 0, 2)), (uint8_t) 1, (uint8_t) 53));
         }
@@ -913,10 +935,11 @@ namespace boost {
         }
 
         std::string ANY_YEAR_WEEK_ENCODING::as_string() const {
-            return year().as_string() + "W" + to_string(static_cast<int> (week()), 2, '0');
+            return year().as_string() + "-W" + to_string(static_cast<int> (week()), 2, '0');
         }
 
-        void ANY_YEAR_WEEK_ENCODING::as_string(const std::string& vl) {
+        void ANY_YEAR_WEEK_ENCODING::as_string(const std::string& vlr) {
+            std::string vl = normalize_time_str(vlr);
             year(revrs_substr(vl, 3));
             week(to_range<uint8_t>(string_to_def<int>(revrs_substr(vl, 0, 2)), (uint8_t) 1, (uint8_t) 53));
         }
@@ -979,10 +1002,12 @@ namespace boost {
         }
 
         std::string YEAR_WEEK_DAY_ENCODING::as_string() const {
-            return year().as_string() + "W" + to_string(static_cast<int> (week()), 2, '0') + to_string(static_cast<int> (day()), 1);
+            return year().as_string() + "-W" + to_string(static_cast<int> (week()), 2, '0') +
+                    "-" + to_string(static_cast<int> (day()), 1);
         }
 
-        void YEAR_WEEK_DAY_ENCODING::as_string(const std::string& vl) {
+        void YEAR_WEEK_DAY_ENCODING::as_string(const std::string& vlr) {
+            std::string vl = normalize_time_str(vlr);
             year(revrs_substr(vl, 4));
             week(to_range<uint8_t>(string_to_def<int>(revrs_substr(vl, 1, 2)), (uint8_t) 1, (uint8_t) 53));
             day(to_range<uint8_t>(string_to_def<int>(revrs_substr(vl, 0, 1)), (uint8_t) 1, (uint8_t) 7));
@@ -1043,10 +1068,12 @@ namespace boost {
         }
 
         std::string ANY_YEAR_WEEK_DAY_ENCODING::as_string() const {
-            return year().as_string() + "W" + to_string(static_cast<int> (week()), 2, '0') + to_string(static_cast<int> (day()), 1);
+            return year().as_string() + "-W" + to_string(static_cast<int> (week()), 2, '0') + 
+                    "-" + to_string(static_cast<int> (day()), 1);
         }
 
-        void ANY_YEAR_WEEK_DAY_ENCODING::as_string(const std::string& vl) {
+        void ANY_YEAR_WEEK_DAY_ENCODING::as_string(const std::string& vlr) {
+            std::string vl = normalize_time_str(vlr);
             year(revrs_substr(vl, 4));
             week(to_range<uint8_t>(string_to_def<int>(revrs_substr(vl, 1, 2)), (uint8_t) 1, (uint8_t) 53));
             day(to_range<uint8_t>(string_to_def<int>(revrs_substr(vl, 0, 1)), (uint8_t) 1, (uint8_t) 7));
@@ -1195,11 +1222,12 @@ namespace boost {
             std::string rslt(sign() == sign_positive ? "+" : "-");
             rslt += to_string(static_cast<int> (hours()), 2, '0');
             if (minutes())
-                rslt += to_string(static_cast<int> (*minutes()), 2, '0');
+                rslt += (":"+to_string(static_cast<int> (*minutes()), 2, '0'));
             return rslt;
         }
 
-        void TIME_DIFFERENCE::as_string(const std::string& vl) {
+        void TIME_DIFFERENCE::as_string(const std::string& vlr) {
+            std::string vl = normalize_time_str(vlr);
             sign((!vl.empty() && vl[0] == '-') ? sign_negative : sign_positive);
             hours(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 1, 2), 0, "0"), (uint8_t) 0, (uint8_t) 15));
             if (vl.size() > 3)
@@ -1301,11 +1329,12 @@ namespace boost {
         }
 
         std::string MINUTES_ENCODING::as_string() const {
-            return to_string(static_cast<int> (hours()), 2, '0') +
+            return to_string(static_cast<int> (hours()), 2, '0') + ":" +
                     to_string(static_cast<int> (minutes()), 2, '0');
         }
 
-        void MINUTES_ENCODING::as_string(const std::string& vl) {
+        void MINUTES_ENCODING::as_string(const std::string& vlr) {
+            std::string vl = normalize_time_str(vlr);
             hours(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 0, 2), 0, "0"), (uint8_t) 0, (uint8_t) 24));
             minutes(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 2, 2), 0, "0"), (uint8_t) 0, (uint8_t) 59));
         }
@@ -1355,11 +1384,12 @@ namespace boost {
         }
 
         std::string MINUTES_UTC_ENCODING::as_string() const {
-            return to_string(static_cast<int> (hours()), 2, '0') +
+            return to_string(static_cast<int> (hours()), 2, '0') + ":" +
                     to_string(static_cast<int> (minutes()), 2, '0') + "Z";
         }
 
-        void MINUTES_UTC_ENCODING::as_string(const std::string& vl) {
+        void MINUTES_UTC_ENCODING::as_string(const std::string& vlr) {
+            std::string vl = normalize_time_str(vlr);
             hours(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 0, 2), 0, "0"), (uint8_t) 0, (uint8_t) 24));
             minutes(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 2, 2), 0, "0"), (uint8_t) 0, (uint8_t) 59));
         }
@@ -1418,7 +1448,8 @@ namespace boost {
             return local_time().as_string() + time_difference().as_string();
         }
 
-        void MINUTES_AND_DIFF_ENCODING::as_string(const std::string& vl) {
+        void MINUTES_AND_DIFF_ENCODING::as_string(const std::string& vlr) {
+            std::string vl = normalize_time_str(vlr);
             local_time(MINUTES_ENCODING(drct_substr(vl, 0, 4)));
             time_difference(TIME_DIFFERENCE(drct_substr(vl, 4)));
         }
@@ -1470,12 +1501,13 @@ namespace boost {
         }
 
         std::string TIME_OF_DAY_ENCODING::as_string() const {
-            return to_string(static_cast<int> (hours()), 2, '0') +
-                    to_string(static_cast<int> (minutes()), 2, '0') +
+            return to_string(static_cast<int> (hours()), 2, '0') + ":" +
+                    to_string(static_cast<int> (minutes()), 2, '0') + ":" +
                     to_string(static_cast<int> (seconds()), 2, '0');
         }
 
-        void TIME_OF_DAY_ENCODING::as_string(const std::string& vl) {
+        void TIME_OF_DAY_ENCODING::as_string(const std::string& vlr) {
+            std::string vl = normalize_time_str(vlr);            
             hours(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 0, 2), 0, "0"), (uint8_t) 0, (uint8_t) 24));
             minutes(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 2, 2), 0, "0"), (uint8_t) 0, (uint8_t) 59));
             seconds(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 4, 2), 0, "0"), (uint8_t) 0, (uint8_t) 60));
@@ -1528,12 +1560,13 @@ namespace boost {
         }
 
         std::string TIME_OF_DAY_UTC_ENCODING::as_string() const {
-            return to_string(static_cast<int> (hours()), 2, '0') +
-                    to_string(static_cast<int> (minutes()), 2, '0') +
+            return to_string(static_cast<int> (hours()), 2, '0') + ":" +
+                    to_string(static_cast<int> (minutes()), 2, '0') + ":" +
                     to_string(static_cast<int> (seconds()), 2, '0') + "Z";
         }
 
-        void TIME_OF_DAY_UTC_ENCODING::as_string(const std::string& vl) {
+        void TIME_OF_DAY_UTC_ENCODING::as_string(const std::string& vlr) {
+            std::string vl=normalize_time_str(vlr);            
             hours(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 0, 2), 0, "0"), (uint8_t) 0, (uint8_t) 24));
             minutes(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 2, 2), 0, "0"), (uint8_t) 0, (uint8_t) 59));
             seconds(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 4, 2), 0, "0"), (uint8_t) 0, (uint8_t) 60));
@@ -1593,7 +1626,8 @@ namespace boost {
             return local_time().as_string() + time_difference().as_string();
         }
 
-        void TIME_OF_DAY_AND_DIFF_ENCODING::as_string(const std::string& vl) {
+        void TIME_OF_DAY_AND_DIFF_ENCODING::as_string(const std::string& vlr) {
+            std::string vl = normalize_time_str(vlr);
             local_time(TIME_OF_DAY_ENCODING(drct_substr(vl, 0, 6)));
             time_difference(TIME_DIFFERENCE(drct_substr(vl, 6)));
         }
@@ -1630,7 +1664,7 @@ namespace boost {
 
         // sequence HOURS-UTC-AND-FRACTION-ENCODING
 
-        HOURS_UTC_AND_FRACTION_ENCODING::HOURS_UTC_AND_FRACTION_ENCODING() : hours_(), fraction_() {
+        /*HOURS_UTC_AND_FRACTION_ENCODING::HOURS_UTC_AND_FRACTION_ENCODING() : hours_(), fraction_() {
         };
 
         HOURS_UTC_AND_FRACTION_ENCODING::HOURS_UTC_AND_FRACTION_ENCODING(const uint8_t& arg__hours,
@@ -1647,7 +1681,7 @@ namespace boost {
 
 
         ITU_T_HOLDERH_DEFN(HOURS_UTC_AND_FRACTION_ENCODING::hours, hours, uint8_t);
-        ITU_T_HOLDERH_DEFN(HOURS_UTC_AND_FRACTION_ENCODING::fraction, fraction, integer_type);
+        ITU_T_HOLDERH_DEFN(HOURS_UTC_AND_FRACTION_ENCODING::fraction, fraction, integer_type);*/
 
         // sequence HOURS-AND-DIFF-AND-FRACTION-ENCODING
 
@@ -2884,7 +2918,7 @@ namespace boost {
             stream << ", fraction :  " << vl.fraction();
             stream << " }";
             return stream;
-        };*/
+        };
 
         std::ostream& operator<<(std::ostream& stream, const HOURS_UTC_AND_FRACTION_ENCODING& vl) {
             stream << "{ ";
@@ -2892,7 +2926,7 @@ namespace boost {
             stream << ", fraction :  " << vl.fraction();
             stream << " }";
             return stream;
-        };
+        };*/
 
         std::ostream& operator<<(std::ostream& stream, const HOURS_AND_DIFF_AND_FRACTION_ENCODING& vl) {
             stream << "{ ";
@@ -3554,7 +3588,7 @@ namespace boost {
             ITU_T_DEFINE_TIME_TYPE(TIME_OF_DAY_UTC_ENCODING);
             ITU_T_DEFINE_TIME_TYPE(TIME_OF_DAY_AND_DIFF_ENCODING);
             //ITU_T_DEFINE_TIME_TYPE(HOURS_AND_FRACTION_ENCODING);
-            ITU_T_DEFINE_TIME_TYPE(HOURS_UTC_AND_FRACTION_ENCODING);
+            //ITU_T_DEFINE_TIME_TYPE(HOURS_UTC_AND_FRACTION_ENCODING);
             ITU_T_DEFINE_TIME_TYPE(HOURS_AND_DIFF_AND_FRACTION_ENCODING);
             ITU_T_DEFINE_TIME_TYPE(MINUTES_AND_FRACTION_ENCODING);
             ITU_T_DEFINE_TIME_TYPE(MINUTES_UTC_AND_FRACTION_ENCODING);
