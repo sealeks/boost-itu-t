@@ -1714,7 +1714,7 @@ namespace boost {
 
         ITU_T_HOLDERH_DEFN(HOURS_AND_DIFF_AND_FRACTION_ENCODING::local_hours, local_hours, uint8_t);
         ITU_T_HOLDERH_DEFN(HOURS_AND_DIFF_AND_FRACTION_ENCODING::fraction, fraction, integer_type);
-        ITU_T_HOLDERH_DEFN(HOURS_AND_DIFF_AND_FRACTION_ENCODING::time_difference, time_difference, TIME_DIFFERENCE);*/
+        ITU_T_HOLDERH_DEFN(HOURS_AND_DIFF_AND_FRACTION_ENCODING::time_difference, time_difference, TIME_DIFFERENCE);
 
         // sequence MINUTES-AND-FRACTION-ENCODING
 
@@ -1923,7 +1923,7 @@ namespace boost {
 
 
         ITU_T_HOLDERH_DEFN(TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING::local_time, local_time, TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING::Local_time_type);
-        ITU_T_HOLDERH_DEFN(TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING::time_difference, time_difference, TIME_DIFFERENCE);
+        ITU_T_HOLDERH_DEFN(TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING::time_difference, time_difference, TIME_DIFFERENCE);*/
 
         // sequence DURATION-INTERVAL-ENCODING
 
@@ -2942,7 +2942,7 @@ namespace boost {
             stream << ", time_difference :  " << vl.time_difference();
             stream << " }";
             return stream;
-        };*/
+        };
 
         std::ostream& operator<<(std::ostream& stream, const MINUTES_AND_FRACTION_ENCODING& vl) {
             stream << "{ ";
@@ -3015,7 +3015,7 @@ namespace boost {
             stream << ", fraction :  " << vl.fraction();
             stream << " }";
             return stream;
-        };
+        };*/
 
         std::ostream& operator<<(std::ostream& stream, const DURATION_INTERVAL_ENCODING& vl) {
             stream << "{ ";
@@ -3597,9 +3597,9 @@ namespace boost {
             //ITU_T_DEFINE_TIME_TYPE(HOURS_AND_FRACTION_ENCODING);
             //ITU_T_DEFINE_TIME_TYPE(HOURS_UTC_AND_FRACTION_ENCODING);
             //ITU_T_DEFINE_TIME_TYPE(HOURS_AND_DIFF_AND_FRACTION_ENCODING);
-            ITU_T_DEFINE_TIME_TYPE(MINUTES_AND_FRACTION_ENCODING);
-            ITU_T_DEFINE_TIME_TYPE(MINUTES_UTC_AND_FRACTION_ENCODING);
-            ITU_T_DEFINE_TIME_TYPE(MINUTES_AND_DIFF_AND_FRACTION_ENCODING);
+            //ITU_T_DEFINE_TIME_TYPE(MINUTES_AND_FRACTION_ENCODING);
+            //ITU_T_DEFINE_TIME_TYPE(MINUTES_UTC_AND_FRACTION_ENCODING);
+            //ITU_T_DEFINE_TIME_TYPE(MINUTES_AND_DIFF_AND_FRACTION_ENCODING);
             ITU_T_DEFINE_TIME_TYPE(TIME_OF_DAY_AND_FRACTION_ENCODING);
             ITU_T_DEFINE_TIME_TYPE(TIME_OF_DAY_UTC_AND_FRACTION_ENCODING);
             ITU_T_DEFINE_TIME_TYPE(TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING);

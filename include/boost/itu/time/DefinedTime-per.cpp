@@ -407,7 +407,7 @@ namespace boost {
             ITU_T_BIND_NUM_CONSTRAINT(local_hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
             ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
             ITU_T_BIND_PER(time_difference_);
-        }*/
+        }
 
 
         // sequence MINUTES-AND-FRACTION-ENCODING
@@ -522,7 +522,7 @@ namespace boost {
             ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (0), static_cast<uint8_t> (59));
             ITU_T_BIND_NUM_CONSTRAINT(seconds_, static_cast<uint8_t> (0), static_cast<uint8_t> (60));
             ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
-        }
+        }*/
 
         // sequence DURATION-INTERVAL-ENCODING
 

@@ -302,7 +302,7 @@ namespace boost {
             ITU_T_BIND_IMPLICIT(local_hours_, 0, CONTEXT_CLASS);
             ITU_T_BIND_IMPLICIT(fraction_, 1, CONTEXT_CLASS);
             ITU_T_BIND_IMPLICIT(time_difference_, 2, CONTEXT_CLASS);
-        }*/
+        }
 
         // sequence MINUTES-AND-FRACTION-ENCODING
 
@@ -357,7 +357,6 @@ namespace boost {
             ITU_T_BIND_IMPLICIT(minutes_, 1, CONTEXT_CLASS);
             ITU_T_BIND_IMPLICIT(fraction_, 2, CONTEXT_CLASS);
         }
-
         // sequence TIME-OF-DAY-AND-FRACTION-ENCODING
 
         template<> void TIME_OF_DAY_AND_FRACTION_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
@@ -416,7 +415,8 @@ namespace boost {
             ITU_T_BIND_IMPLICIT(minutes_, 1, CONTEXT_CLASS);
             ITU_T_BIND_IMPLICIT(seconds_, 2, CONTEXT_CLASS);
             ITU_T_BIND_IMPLICIT(fraction_, 3, CONTEXT_CLASS);
-        }
+        }*/
+
 
         // sequence DURATION-INTERVAL-ENCODING
 
