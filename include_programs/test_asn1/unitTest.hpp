@@ -569,6 +569,28 @@ namespace TestTm {
         DEBUG_VAL_ITU_TREAD(hours_utc_and_fract_enc2_r);
         DEBUG_VAL_ITU(hours_utc_and_fract_enc3)
         DEBUG_VAL_ITU_TREAD(hours_utc_and_fract_enc3_r);        
+        
+        typedef HOURS_AND_DIFF_AND_FRACTION_ENCODING<4> HOURS_AND_DIFF_AND_FRACTION;
+        
+        HOURS_AND_DIFF_AND_FRACTION hours_d_and_fract_enc (3,3450,"+05");
+        HOURS_AND_DIFF_AND_FRACTION hours_d_and_fract_enc1 = std::string("08,45+05:30");
+        HOURS_AND_DIFF_AND_FRACTION hours_d_and_fract_enc2 = "23,68+04:00";
+        HOURS_AND_DIFF_AND_FRACTION hours_d_and_fract_enc3 = boost::asn1::base_time_duration(4, 23, 40);
+
+        HOURS_AND_DIFF_AND_FRACTION hours_d_and_fract_enc_r;
+        HOURS_AND_DIFF_AND_FRACTION hours_d_and_fract_enc1_r;
+        HOURS_AND_DIFF_AND_FRACTION hours_d_and_fract_enc2_r;
+        HOURS_AND_DIFF_AND_FRACTION hours_d_and_fract_enc3_r;
+
+
+        DEBUG_VAL_ITU(hours_d_and_fract_enc)
+        DEBUG_VAL_ITU_TREAD(hours_d_and_fract_enc_r);
+        DEBUG_VAL_ITU(hours_d_and_fract_enc1)
+        DEBUG_VAL_ITU_TREAD(hours_d_and_fract_enc1_r);
+        DEBUG_VAL_ITU(hours_d_and_fract_enc2)
+        DEBUG_VAL_ITU_TREAD(hours_d_and_fract_enc2_r);
+        DEBUG_VAL_ITU(hours_d_and_fract_enc3)
+        DEBUG_VAL_ITU_TREAD(hours_d_and_fract_enc3_r);             
                 
   
         
