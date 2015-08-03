@@ -111,9 +111,9 @@ namespace boost {
 
             integer_type HF_to_fraction(base_time_duration dtd, std::size_t n);
 
-            integer_type HFM_to_fraction(base_time_duration dtd, std::size_t n);
+            integer_type HMF_to_fraction(base_time_duration dtd, std::size_t n);
 
-            integer_type HFMS_to_fraction(base_time_duration dtd, std::size_t n);
+            integer_type HMSF_to_fraction(base_time_duration dtd, std::size_t n);
 
         }
 
@@ -1281,7 +1281,7 @@ namespace boost {
             MINUTES_AND_FRACTION_ENCODING(const base_time_duration& vl) :
             hours_(time_detail::to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)),
             minutes_(time_detail::to_range<uint8_t>(vl.is_special() ? 0 : vl.minutes(), (uint8_t) 0, (uint8_t) 59)),
-            fraction_(time_detail::HFM_to_fraction(vl, NF())) {
+            fraction_(time_detail::HMF_to_fraction(vl, NF())) {
             };
 
             base_time_duration as_time() const {
@@ -1374,7 +1374,7 @@ namespace boost {
             MINUTES_UTC_AND_FRACTION_ENCODING(const base_time_duration& vl) :
             hours_(time_detail::to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)),
             minutes_(time_detail::to_range<uint8_t>(vl.is_special() ? 0 : vl.minutes(), (uint8_t) 0, (uint8_t) 59)),
-            fraction_(time_detail::HFM_to_fraction(vl, NF())) {
+            fraction_(time_detail::HMF_to_fraction(vl, NF())) {
             };
 
             base_time_duration as_time() const {
@@ -1520,96 +1520,291 @@ namespace boost {
 
 
 
+
+
         // sequence TIME-OF-DAY-AND-FRACTION-ENCODING
 
+        template<std::size_t N = DEFAULT_TM_FRACTION >
         struct TIME_OF_DAY_AND_FRACTION_ENCODING {
 
-            TIME_OF_DAY_AND_FRACTION_ENCODING();
+            static std::size_t NF() {
+                return (N > MAX_TM_FRACTION) ? MAX_TM_FRACTION : N;
+            }
+
+            TIME_OF_DAY_AND_FRACTION_ENCODING() : hours_(), minutes_(), seconds_(), fraction_() {
+            };
 
             TIME_OF_DAY_AND_FRACTION_ENCODING(const uint8_t& arg__hours,
                     const uint8_t& arg__minutes,
                     const uint8_t& arg__seconds,
-                    const integer_type& arg__fraction);
+                    const integer_type& arg__fraction) :
+            hours_(time_detail::to_range(arg__hours, (uint8_t) 0, (uint8_t) 24)),
+            minutes_(time_detail::to_range(arg__minutes, (uint8_t) 0, (uint8_t) 59)),
+            seconds_(time_detail::to_range(arg__seconds, (uint8_t) 0, (uint8_t) 60)),    
+            fraction_(arg__fraction) {
+            };
 
-            TIME_OF_DAY_AND_FRACTION_ENCODING(ITU_T_SHARED(uint8_t) arg__hours,
-                    ITU_T_SHARED(uint8_t) arg__minutes,
-                    ITU_T_SHARED(uint8_t) arg__seconds,
-                    ITU_T_SHARED(integer_type) arg__fraction);
+            TIME_OF_DAY_AND_FRACTION_ENCODING(const std::string& vl) : hours_(), minutes_(), seconds_(), fraction_() {
+                as_string(vl);
+            };
 
-            ITU_T_HOLDERH_DECL(hours, uint8_t); //   Ic(  [ 0  ...   24 ]   
-            ITU_T_HOLDERH_DECL(minutes, uint8_t); //   Ic(  [ 0  ...   59 ]   
-            ITU_T_HOLDERH_DECL(seconds, uint8_t); //   Ic(  [ 0  ...   60 ]   
-            ITU_T_HOLDERH_DECL(fraction, integer_type); //   Ic(  [ 0  ...   999 ]   ...ext...) 
+            TIME_OF_DAY_AND_FRACTION_ENCODING(const char* vl) : hours_(), minutes_(), seconds_(), fraction_() {
+                as_string(vl);
+            };
 
-            ITU_T_ARCHIVE_FUNC;
+            TIME_OF_DAY_AND_FRACTION_ENCODING(const base_time_duration& vl) :
+            hours_(time_detail::to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)),
+            minutes_(time_detail::to_range<uint8_t>(vl.is_special() ? 0 : vl.minutes(), (uint8_t) 0, (uint8_t) 59)),
+            seconds_(time_detail::to_range<uint8_t>(vl.is_special() ? 0 : vl.seconds(), (uint8_t) 0, (uint8_t) 60)),
+            fraction_(time_detail::HMSF_to_fraction(vl, NF())) {
+            };
+
+            base_time_duration as_time() const {
+                try {
+                    return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()),
+                           static_cast<int> (seconds()));// + base_time_duration::time_detail::second_fraction_HMSF(fraction(), NF()));
+                } catch (...) {
+                }
+                return base_time_duration();
+            }
+
+            std::string as_string() const {
+                return time_detail::to_string(static_cast<integer_type> (hours()), 2, '0') + ":" +
+                        time_detail::to_string(static_cast<integer_type> (minutes()), 2, '0') + ":" +
+                        time_detail::to_string(static_cast<integer_type> (seconds()), 2, '0') + "," +                        
+                        time_detail::to_string(static_cast<integer_type> (fraction()), NF(), '0');
+            }
+
+            void as_string(const std::string& v) {
+                std::string vl = time_detail::normalize_time_str(v);
+                hours(time_detail::to_range<uint8_t>(time_detail::string_to_def<int>(
+                        time_detail::drct_substr(vl, 0, 2), 0, "0"), (uint8_t) 0, (uint8_t) 24));
+                minutes(time_detail::to_range<uint8_t>(time_detail::string_to_def<int>(
+                        time_detail::drct_substr(vl, 2, 2), 0, "0"), (uint8_t) 0, (uint8_t) 59));
+                seconds(time_detail::to_range<uint8_t>(time_detail::string_to_def<int>(
+                        time_detail::drct_substr(vl, 4, 2), 0, "0"), (uint8_t) 0, (uint8_t) 60));               
+                fraction(time_detail::string_to_def<int>(time_detail::normalize_str_size(time_detail::drct_substr(vl, 7), NF()), 0));
+            }
+
+            ITU_T_HOLDERH_T_DECL(hours, uint8_t); //   Ic(  [ 0  ...   24 ]   
+            ITU_T_HOLDERH_T_DECL(minutes, uint8_t); //   Ic(  [ 0  ...   59 ]             
+            ITU_T_HOLDERH_T_DECL(seconds, uint8_t); //   Ic(  [ 0  ...   60 ]               
+            ITU_T_HOLDERH_T_DECL(fraction, integer_type); //   Ic(  [ 0  ...   999 ]   ...ext...) 
+
+            void serialize(boost::asn1::x690::output_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x690::input_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x691::output_coder& arch) {
+                ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
+                ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (0), static_cast<uint8_t> (59));
+                ITU_T_BIND_NUM_CONSTRAINT(seconds_, static_cast<uint8_t> (0), static_cast<uint8_t> (60));
+                ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
+            }
+
+            void serialize(boost::asn1::x691::input_coder& arch) {
+                ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
+                ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (0), static_cast<uint8_t> (59));
+                ITU_T_BIND_NUM_CONSTRAINT(seconds_, static_cast<uint8_t> (0), static_cast<uint8_t> (60));                
+                ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
+            }
+
+            friend std::ostream& operator<<(std::ostream& stream, const TIME_OF_DAY_AND_FRACTION_ENCODING& vl) {
+                return stream << "hh:mm:ss," << (std::string(NF(), 'n')) << ": " << vl.as_string();
+            };
+
         };
+
+
+
+
 
         // sequence TIME-OF-DAY-UTC-AND-FRACTION-ENCODING
 
+        template<std::size_t N = DEFAULT_TM_FRACTION >
         struct TIME_OF_DAY_UTC_AND_FRACTION_ENCODING {
 
-            TIME_OF_DAY_UTC_AND_FRACTION_ENCODING();
+            static std::size_t NF() {
+                return (N > MAX_TM_FRACTION) ? MAX_TM_FRACTION : N;
+            }
+
+            TIME_OF_DAY_UTC_AND_FRACTION_ENCODING() : hours_(), minutes_(), seconds_(), fraction_() {
+            };
 
             TIME_OF_DAY_UTC_AND_FRACTION_ENCODING(const uint8_t& arg__hours,
                     const uint8_t& arg__minutes,
                     const uint8_t& arg__seconds,
-                    const integer_type& arg__fraction);
+                    const integer_type& arg__fraction) :
+            hours_(time_detail::to_range(arg__hours, (uint8_t) 0, (uint8_t) 24)),
+            minutes_(time_detail::to_range(arg__minutes, (uint8_t) 0, (uint8_t) 59)),
+            seconds_(time_detail::to_range(arg__seconds, (uint8_t) 0, (uint8_t) 60)),
+            fraction_(arg__fraction) {
+            };
 
-            TIME_OF_DAY_UTC_AND_FRACTION_ENCODING(ITU_T_SHARED(uint8_t) arg__hours,
-                    ITU_T_SHARED(uint8_t) arg__minutes,
-                    ITU_T_SHARED(uint8_t) arg__seconds,
-                    ITU_T_SHARED(integer_type) arg__fraction);
+            TIME_OF_DAY_UTC_AND_FRACTION_ENCODING(const std::string& vl) : hours_(), minutes_(), seconds_(), fraction_() {
+                as_string(vl);
+            };
 
-            ITU_T_HOLDERH_DECL(hours, uint8_t); //   Ic(  [ 0  ...   24 ]   
-            ITU_T_HOLDERH_DECL(minutes, uint8_t); //   Ic(  [ 0  ...   59 ]   
-            ITU_T_HOLDERH_DECL(seconds, uint8_t); //   Ic(  [ 0  ...   60 ]   
-            ITU_T_HOLDERH_DECL(fraction, integer_type); //   Ic(  [ 0  ...   999 ]   ...ext...) 
+            TIME_OF_DAY_UTC_AND_FRACTION_ENCODING(const char* vl) : hours_(), minutes_(), seconds_(), fraction_() {
+                as_string(vl);
+            };
 
-            ITU_T_ARCHIVE_FUNC;
+            TIME_OF_DAY_UTC_AND_FRACTION_ENCODING(const base_time_duration& vl) :
+            hours_(time_detail::to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)),
+            minutes_(time_detail::to_range<uint8_t>(vl.is_special() ? 0 : vl.minutes(), (uint8_t) 0, (uint8_t) 59)),
+            seconds_(time_detail::to_range<uint8_t>(vl.is_special() ? 0 : vl.seconds(), (uint8_t) 0, (uint8_t) 60)),
+            fraction_(time_detail::HMSF_to_fraction(vl, NF())) {
+            };
+
+            base_time_duration as_time() const {
+                try {
+                    return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()),
+                            static_cast<int> (seconds()));//, time_detail::second_fraction_HMSF(fraction(), NF()));
+                } catch (...) {
+                }
+                return base_time_duration();
+            }
+
+            std::string as_string() const {
+                return time_detail::to_string(static_cast<integer_type> (hours()), 2, '0') + ":" +
+                        time_detail::to_string(static_cast<integer_type> (minutes()), 2, '0') + ":" +
+                        time_detail::to_string(static_cast<integer_type> (seconds()), 2, '0') + "," +                        
+                        time_detail::to_string(static_cast<integer_type> (fraction()), NF(), '0') + "Z";
+            }
+
+            void as_string(const std::string& v) {
+                std::string vl = time_detail::revrs_substr(time_detail::normalize_time_str(v), 1);
+                hours(time_detail::to_range<uint8_t>(time_detail::string_to_def<int>(
+                        time_detail::drct_substr(vl, 0, 2), 0, "0"), (uint8_t) 0, (uint8_t) 24));
+                minutes(time_detail::to_range<uint8_t>(time_detail::string_to_def<int>(
+                        time_detail::drct_substr(vl, 2, 2), 0, "0"), (uint8_t) 0, (uint8_t) 59));
+                seconds(time_detail::to_range<uint8_t>(time_detail::string_to_def<int>(
+                        time_detail::drct_substr(vl, 4, 2), 0, "0"), (uint8_t) 0, (uint8_t) 60));               
+                fraction(time_detail::string_to_def<int>(time_detail::normalize_str_size(time_detail::drct_substr(vl, 7), NF()), 0));
+            }
+
+            ITU_T_HOLDERH_T_DECL(hours, uint8_t); //   Ic(  [ 0  ...   24 ]   
+            ITU_T_HOLDERH_T_DECL(minutes, uint8_t); //   Ic(  [ 0  ...   59 ]      
+            ITU_T_HOLDERH_T_DECL(seconds, uint8_t); //   Ic(  [ 0  ...   60 ]   
+            ITU_T_HOLDERH_T_DECL(fraction, integer_type); //   Ic(  [ 0  ...   999 ]   ...ext...) 
+
+            void serialize(boost::asn1::x690::output_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x690::input_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x691::output_coder& arch) {
+                ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
+                ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (0), static_cast<uint8_t> (59));
+                ITU_T_BIND_NUM_CONSTRAINT(seconds_, static_cast<uint8_t> (0), static_cast<uint8_t> (60));                
+                ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
+            }
+
+            void serialize(boost::asn1::x691::input_coder& arch) {
+                ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
+                ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (0), static_cast<uint8_t> (59));
+                ITU_T_BIND_NUM_CONSTRAINT(seconds_, static_cast<uint8_t> (0), static_cast<uint8_t> (60));                
+                ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
+            }
+
+            friend std::ostream& operator<<(std::ostream& stream, const TIME_OF_DAY_UTC_AND_FRACTION_ENCODING& vl) {
+                return stream << "hh:mm:ss," << (std::string(NF(), 'n')) << ": " << vl.as_string();
+            };
+
         };
+
+
 
         // sequence TIME-OF-DAY-AND-DIFF-AND-FRACTION-ENCODING
 
+        template<std::size_t N = DEFAULT_TM_FRACTION >
         struct TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING {
 
-            struct Local_time_type;
+            typedef TIME_OF_DAY_AND_FRACTION_ENCODING<N> TIME_OF_DAY_AND_FRACTION;
 
-            struct Local_time_type {
+            static std::size_t NF() {
+                return (N > MAX_TM_FRACTION) ? MAX_TM_FRACTION : N;
+            }
 
-                Local_time_type();
-
-                Local_time_type(const uint8_t& arg__hours,
-                        const uint8_t& arg__minutes,
-                        const uint8_t& arg__seconds,
-                        const integer_type& arg__fraction);
-
-                Local_time_type(ITU_T_SHARED(uint8_t) arg__hours,
-                        ITU_T_SHARED(uint8_t) arg__minutes,
-                        ITU_T_SHARED(uint8_t) arg__seconds,
-                        ITU_T_SHARED(integer_type) arg__fraction);
-
-                ITU_T_HOLDERH_DECL(hours, uint8_t); //   Ic(  [ 0  ...   24 ]   
-                ITU_T_HOLDERH_DECL(minutes, uint8_t); //   Ic(  [ 0  ...   59 ]   
-                ITU_T_HOLDERH_DECL(seconds, uint8_t); //   Ic(  [ 0  ...   60 ]   
-                ITU_T_HOLDERH_DECL(fraction, integer_type); //   Ic(  [ 0  ...   999 ]   ...ext...) 
-
-                ITU_T_ARCHIVE_FUNC;
+            TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING() : local_time_(), time_difference_() {
             };
 
+            TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING(const uint8_t& arg__hours,
+                    const uint8_t& arg__minutes,
+                    const uint8_t& arg__seconds,
+                    const integer_type& arg__fraction,
+                    const TIME_DIFFERENCE& arg__time_difference = TIME_DIFFERENCE()) :
+            local_time_(TIME_OF_DAY_AND_FRACTION(arg__hours, arg__minutes, arg__seconds, arg__fraction)),
+            time_difference_(arg__time_difference) {
+            };
 
-            TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING();
+            TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING(const std::string& vl) : local_time_(), time_difference_() {
+                as_string(vl);
+            };
 
-            TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING(const Local_time_type& arg__local_time,
-                    const TIME_DIFFERENCE& arg__time_difference);
+            TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING(const char* vl) : local_time_(), time_difference_() {
+                as_string(vl);
+            };
 
-            TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING(ITU_T_SHARED(Local_time_type) arg__local_time,
-                    ITU_T_SHARED(TIME_DIFFERENCE) arg__time_difference);
+            TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING(const base_time_duration& vl) :
+            local_time_(vl), time_difference_() {
+            };
 
-            ITU_T_HOLDERH_DECL(local_time, Local_time_type);
-            ITU_T_HOLDERH_DECL(time_difference, TIME_DIFFERENCE);
+            base_time_duration as_time() const {
+                return local_time().as_time();
+            }
+
+            std::string as_string() const {
+                return local_time().as_string() + time_difference().as_string();
+            }
+
+            void as_string(const std::string& v) {
+                std::string vl = time_detail::normalize_time_str(v);
+                std::string::size_type it = vl.find_first_of('-');
+                if (it == std::string::npos)
+                    it = vl.find_first_of('+');
+                std::string vll = (it == std::string::npos) ? vl : vl.substr(0, it);
+                std::string vlr = (it == std::string::npos) ? "" : vl.substr(it);
+                local_time(TIME_OF_DAY_AND_FRACTION(vll));
+                time_difference(TIME_DIFFERENCE(vlr));
+            }
+
+            ITU_T_HOLDERH_T_DECL(local_time, TIME_OF_DAY_AND_FRACTION);
+            ITU_T_HOLDERH_T_DECL(time_difference, TIME_DIFFERENCE);
+
+            void serialize(boost::asn1::x690::output_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x690::input_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x691::output_coder& arch) {
+                ITU_T_BIND_PER(local_time_);
+                ITU_T_BIND_PER(time_difference_);
+            }
+
+            void serialize(boost::asn1::x691::input_coder& arch) {
+                ITU_T_BIND_PER(local_time_);
+                ITU_T_BIND_PER(time_difference_);
+            }
+
+            friend std::ostream& operator<<(std::ostream& stream, const TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING& vl) {
+                return stream << "hh:mm:ss," << (std::string(NF(), 'n')) << ": " << vl.as_string();
+            };
 
             ITU_T_ARCHIVE_FUNC;
         };
+        
+        
 
         // sequence DURATION-INTERVAL-ENCODING
 

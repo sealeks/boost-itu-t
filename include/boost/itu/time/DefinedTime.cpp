@@ -186,7 +186,7 @@ namespace boost {
                 return 0;
             }
 
-            integer_type HFM_to_fraction(base_time_duration dtd, std::size_t n) {
+            integer_type HMF_to_fraction(base_time_duration dtd, std::size_t n) {
                 if (!dtd.is_special() && n) {
                     if (dtd.minutes() || dtd.hours())
                         dtd = dtd - base_time_duration(dtd.hours(), dtd.minutes(), 0);
@@ -198,7 +198,7 @@ namespace boost {
                 return 0;
             }
 
-            integer_type HFMS_to_fraction(base_time_duration dtd, std::size_t n) {
+            integer_type HMSF_to_fraction(base_time_duration dtd, std::size_t n) {
                 if (!dtd.is_special() && n) {
                     if (dtd.minutes() || dtd.hours() || dtd.seconds())
                         dtd = dtd - base_time_duration(dtd.hours(), dtd.minutes(), dtd.seconds());
@@ -3600,9 +3600,9 @@ namespace boost {
             //ITU_T_DEFINE_TIME_TYPE(MINUTES_AND_FRACTION_ENCODING);
             //ITU_T_DEFINE_TIME_TYPE(MINUTES_UTC_AND_FRACTION_ENCODING);
             //ITU_T_DEFINE_TIME_TYPE(MINUTES_AND_DIFF_AND_FRACTION_ENCODING);
-            ITU_T_DEFINE_TIME_TYPE(TIME_OF_DAY_AND_FRACTION_ENCODING);
-            ITU_T_DEFINE_TIME_TYPE(TIME_OF_DAY_UTC_AND_FRACTION_ENCODING);
-            ITU_T_DEFINE_TIME_TYPE(TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING);
+            //ITU_T_DEFINE_TIME_TYPE(TIME_OF_DAY_AND_FRACTION_ENCODING);
+            //ITU_T_DEFINE_TIME_TYPE(TIME_OF_DAY_UTC_AND_FRACTION_ENCODING);
+            //ITU_T_DEFINE_TIME_TYPE(TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING);
             ITU_T_DEFINE_TIME_TYPE(DURATION_INTERVAL_ENCODING);
             ITU_T_DEFINE_TIME_TYPE(REC_DURATION_INTERVAL_ENCODING);
             /*ITU_T_DEFINE_TIME_TYPE(MIXED_ENCODING);
