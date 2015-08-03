@@ -592,7 +592,140 @@ namespace TestTm {
         DEBUG_VAL_ITU(hours_d_and_fract_enc3)
         DEBUG_VAL_ITU_TREAD(hours_d_and_fract_enc3_r);             
                 
-  
+          typedef MINUTES_AND_FRACTION_ENCODING<4> MINUTES_AND_FRACTION;
+        
+        MINUTES_AND_FRACTION minutes_and_fract_enc (3,30,3450);
+        MINUTES_AND_FRACTION minutes_and_fract_enc1 = std::string("08:20,45");
+        MINUTES_AND_FRACTION minutes_and_fract_enc2 = "23:59,6";
+        MINUTES_AND_FRACTION minutes_and_fract_enc3 = boost::asn1::base_time_duration(4, 23, 40);
+
+        MINUTES_AND_FRACTION minutes_and_fract_enc_r;
+        MINUTES_AND_FRACTION minutes_and_fract_enc1_r;
+        MINUTES_AND_FRACTION minutes_and_fract_enc2_r;
+        MINUTES_AND_FRACTION minutes_and_fract_enc3_r;
+
+
+        DEBUG_VAL_ITU(minutes_and_fract_enc)
+        DEBUG_VAL_ITU_TREAD(minutes_and_fract_enc_r);
+        DEBUG_VAL_ITU(minutes_and_fract_enc1)
+        DEBUG_VAL_ITU_TREAD(minutes_and_fract_enc1_r);
+        DEBUG_VAL_ITU(minutes_and_fract_enc2)
+        DEBUG_VAL_ITU_TREAD(minutes_and_fract_enc2_r);
+        DEBUG_VAL_ITU(minutes_and_fract_enc3)
+        DEBUG_VAL_ITU_TREAD(minutes_and_fract_enc3_r);
+        
+        typedef MINUTES_UTC_AND_FRACTION_ENCODING<4> MINUTES_UTC_AND_FRACTION;
+        
+        MINUTES_UTC_AND_FRACTION minutes_utc_and_fract_enc (3,40,3450);
+        MINUTES_UTC_AND_FRACTION minutes_utc_and_fract_enc1 = std::string("08:45,45Z");
+        MINUTES_UTC_AND_FRACTION minutes_utc_and_fract_enc2 = "23:46,6Z";
+        MINUTES_UTC_AND_FRACTION minutes_utc_and_fract_enc3 = boost::asn1::base_time_duration(4, 23, 40);
+
+        MINUTES_UTC_AND_FRACTION minutes_utc_and_fract_enc_r;
+        MINUTES_UTC_AND_FRACTION minutes_utc_and_fract_enc1_r;
+        MINUTES_UTC_AND_FRACTION minutes_utc_and_fract_enc2_r;
+        MINUTES_UTC_AND_FRACTION minutes_utc_and_fract_enc3_r;
+
+
+        DEBUG_VAL_ITU(minutes_utc_and_fract_enc)
+        DEBUG_VAL_ITU_TREAD(minutes_utc_and_fract_enc_r);
+        DEBUG_VAL_ITU(minutes_utc_and_fract_enc1)
+        DEBUG_VAL_ITU_TREAD(minutes_utc_and_fract_enc1_r);
+        DEBUG_VAL_ITU(minutes_utc_and_fract_enc2)
+        DEBUG_VAL_ITU_TREAD(minutes_utc_and_fract_enc2_r);
+        DEBUG_VAL_ITU(minutes_utc_and_fract_enc3)
+        DEBUG_VAL_ITU_TREAD(minutes_utc_and_fract_enc3_r);        
+        
+        typedef MINUTES_AND_DIFF_AND_FRACTION_ENCODING<4> MINUTES_AND_DIFF_AND_FRACTION;
+        
+        MINUTES_AND_DIFF_AND_FRACTION minutes_d_and_fract_enc (3, 45 ,3450,"+05");
+        MINUTES_AND_DIFF_AND_FRACTION minutes_d_and_fract_enc1 = std::string("08:01,45+05:30");
+        MINUTES_AND_DIFF_AND_FRACTION minutes_d_and_fract_enc2 = "23:50,68+04:00";
+        MINUTES_AND_DIFF_AND_FRACTION minutes_d_and_fract_enc3 = boost::asn1::base_time_duration(4, 23, 40);
+
+        MINUTES_AND_DIFF_AND_FRACTION minutes_d_and_fract_enc_r;
+        MINUTES_AND_DIFF_AND_FRACTION minutes_d_and_fract_enc1_r;
+        MINUTES_AND_DIFF_AND_FRACTION minutes_d_and_fract_enc2_r;
+        MINUTES_AND_DIFF_AND_FRACTION minutes_d_and_fract_enc3_r;
+
+
+        DEBUG_VAL_ITU(minutes_d_and_fract_enc)
+        DEBUG_VAL_ITU_TREAD(minutes_d_and_fract_enc_r);
+        DEBUG_VAL_ITU(minutes_d_and_fract_enc1)
+        DEBUG_VAL_ITU_TREAD(minutes_d_and_fract_enc1_r);
+        DEBUG_VAL_ITU(minutes_d_and_fract_enc2)
+        DEBUG_VAL_ITU_TREAD(minutes_d_and_fract_enc2_r);
+        DEBUG_VAL_ITU(minutes_d_and_fract_enc3)
+        DEBUG_VAL_ITU_TREAD(minutes_d_and_fract_enc3_r);
+        
+        
+        
+        
+         typedef TIME_OF_DAY_AND_FRACTION_ENCODING<4> TIME_OF_DAY_AND_FRACTION;
+        
+        TIME_OF_DAY_AND_FRACTION time_of_day_and_fract_enc (3,30,20, 3450);
+        TIME_OF_DAY_AND_FRACTION time_of_day_and_fract_enc1 = std::string("08:20:46,45");
+        TIME_OF_DAY_AND_FRACTION time_of_day_and_fract_enc2 = "23:59:12,6";
+        TIME_OF_DAY_AND_FRACTION time_of_day_and_fract_enc3 = boost::asn1::base_time_duration(4, 23, 40);
+
+        TIME_OF_DAY_AND_FRACTION time_of_day_and_fract_enc_r;
+        TIME_OF_DAY_AND_FRACTION time_of_day_and_fract_enc1_r;
+        TIME_OF_DAY_AND_FRACTION time_of_day_and_fract_enc2_r;
+        TIME_OF_DAY_AND_FRACTION time_of_day_and_fract_enc3_r;
+
+
+        DEBUG_VAL_ITU(time_of_day_and_fract_enc)
+        DEBUG_VAL_ITU_TREAD(time_of_day_and_fract_enc_r);
+        DEBUG_VAL_ITU(time_of_day_and_fract_enc1)
+        DEBUG_VAL_ITU_TREAD(time_of_day_and_fract_enc1_r);
+        DEBUG_VAL_ITU(time_of_day_and_fract_enc2)
+        DEBUG_VAL_ITU_TREAD(time_of_day_and_fract_enc2_r);
+        DEBUG_VAL_ITU(time_of_day_and_fract_enc3)
+        DEBUG_VAL_ITU_TREAD(time_of_day_and_fract_enc3_r);
+        
+        typedef TIME_OF_DAY_UTC_AND_FRACTION_ENCODING<4> TIME_OF_DAY_UTC_AND_FRACTION;
+        
+        TIME_OF_DAY_UTC_AND_FRACTION time_of_day_utc_and_fract_enc (3,40,56, 3450);
+        TIME_OF_DAY_UTC_AND_FRACTION time_of_day_utc_and_fract_enc1 = std::string("08:45:44,45Z");
+        TIME_OF_DAY_UTC_AND_FRACTION time_of_day_utc_and_fract_enc2 = "23:46:23,6Z";
+        TIME_OF_DAY_UTC_AND_FRACTION time_of_day_utc_and_fract_enc3 = boost::asn1::base_time_duration(4, 23, 40);
+
+        TIME_OF_DAY_UTC_AND_FRACTION time_of_day_utc_and_fract_enc_r;
+        TIME_OF_DAY_UTC_AND_FRACTION time_of_day_utc_and_fract_enc1_r;
+        TIME_OF_DAY_UTC_AND_FRACTION time_of_day_utc_and_fract_enc2_r;
+        TIME_OF_DAY_UTC_AND_FRACTION time_of_day_utc_and_fract_enc3_r;
+
+
+        DEBUG_VAL_ITU(time_of_day_utc_and_fract_enc)
+        DEBUG_VAL_ITU_TREAD(time_of_day_utc_and_fract_enc_r);
+        DEBUG_VAL_ITU(time_of_day_utc_and_fract_enc1)
+        DEBUG_VAL_ITU_TREAD(time_of_day_utc_and_fract_enc1_r);
+        DEBUG_VAL_ITU(time_of_day_utc_and_fract_enc2)
+        DEBUG_VAL_ITU_TREAD(time_of_day_utc_and_fract_enc2_r);
+        DEBUG_VAL_ITU(time_of_day_utc_and_fract_enc3)
+        DEBUG_VAL_ITU_TREAD(time_of_day_utc_and_fract_enc3_r);        
+        
+        typedef TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING<4> TIME_OF_DAY_AND_DIFF_AND_FRACTION;
+        
+        TIME_OF_DAY_AND_DIFF_AND_FRACTION time_of_day_d_and_fract_enc (3, 45, 44 ,3450,"+05");
+        TIME_OF_DAY_AND_DIFF_AND_FRACTION time_of_day_d_and_fract_enc1 = std::string("08:01:44,45+05:30");
+        TIME_OF_DAY_AND_DIFF_AND_FRACTION time_of_day_d_and_fract_enc2 = "23:50:45,68+04:00";
+        TIME_OF_DAY_AND_DIFF_AND_FRACTION time_of_day_d_and_fract_enc3 = boost::asn1::base_time_duration(4, 23, 40);
+
+        TIME_OF_DAY_AND_DIFF_AND_FRACTION time_of_day_d_and_fract_enc_r;
+        TIME_OF_DAY_AND_DIFF_AND_FRACTION time_of_day_d_and_fract_enc1_r;
+        TIME_OF_DAY_AND_DIFF_AND_FRACTION time_of_day_d_and_fract_enc2_r;
+        TIME_OF_DAY_AND_DIFF_AND_FRACTION time_of_day_d_and_fract_enc3_r;
+
+
+        DEBUG_VAL_ITU(time_of_day_d_and_fract_enc)
+        DEBUG_VAL_ITU_TREAD(time_of_day_d_and_fract_enc_r);
+        DEBUG_VAL_ITU(time_of_day_d_and_fract_enc1)
+        DEBUG_VAL_ITU_TREAD(time_of_day_d_and_fract_enc1_r);
+        DEBUG_VAL_ITU(time_of_day_d_and_fract_enc2)
+        DEBUG_VAL_ITU_TREAD(time_of_day_d_and_fract_enc2_r);
+        DEBUG_VAL_ITU(time_of_day_d_and_fract_enc3)
+        DEBUG_VAL_ITU_TREAD(time_of_day_d_and_fract_enc3_r);        
         
         /*std::cout << boost::asn1::time_detail::minute_fraction_HF(499,3)  << std::endl;
         std::cout << boost::asn1::time_detail::second_fraction_HF(2, 2)  << std::endl;     
