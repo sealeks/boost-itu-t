@@ -22,11 +22,13 @@
 #include <boost/make_shared.hpp>
 
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/date_time/local_time/local_time.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/iso_format.hpp>
 #include <boost/date_time/date_format_simple.hpp>
 #include <boost/date_time/date_facet.hpp>
+
 
 #include <boost/itu/coder/base_coder.hpp>
 #include <boost/itu/asn1/utf8.hpp>
@@ -696,14 +698,25 @@ namespace boost {
 
 
         typedef boost::posix_time::ptime base_date_time;
+        typedef boost::posix_time::microseconds base_microseconds;    
         typedef base_date_time::date_type base_date;       
         typedef base_date_time::date_duration_type base_duration;  
         typedef base_date_time::time_duration_type  base_time_duration; 
+        
+        typedef boost::local_time::local_date_time   local_date_time;    
+        typedef local_date_time::date_type local_date;       
+        typedef local_date_time::date_duration_type local_duration;  
+        typedef local_date_time::time_duration_type  local_time_duration;         
 
         inline base_date_time now_generator() {
             return boost::posix_time::microsec_clock::universal_time();
         }
+        
+        /*inline local_date_time now_local_generator() {
+            return boost::posix_time::local_microsec_clock();
+        }*/        
 
+        
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
