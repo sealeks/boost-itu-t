@@ -160,17 +160,17 @@ namespace TestTm {
     template<typename T>
     inline void test(T& tsstr) {
 
-        /*CENTURY_ENCODING cetn_enc=3;
+        CENTURY_ENCODING cetn_enc=3;
         CENTURY_ENCODING cetn_enc1=std::string("04C");
         CENTURY_ENCODING cetn_enc2="21C";        
         CENTURY_ENCODING cetn_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 1, 12));              
-        ANY_CENTURY_ENCODING acetn_enc(19);        
+        ANY_CENTURY_ENCODING<3> acetn_enc(19);        
         
         CENTURY_ENCODING cetn_enc_r;
         CENTURY_ENCODING cetn_enc1_r;
         CENTURY_ENCODING cetn_enc2_r;        
         CENTURY_ENCODING cetn_enc3_r;              
-        ANY_CENTURY_ENCODING acetn_enc_r;             
+        ANY_CENTURY_ENCODING<3> acetn_enc_r;             
         
         
         DEBUG_VAL_ITU(cetn_enc)
@@ -188,13 +188,13 @@ namespace TestTm {
         YEAR_ENCODING year_enc1=std::string("2004");
         YEAR_ENCODING year_enc2="2125";        
         YEAR_ENCODING year_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 1, 12));              
-        ANY_YEAR_ENCODING ayear_enc(1958);        
+        ANY_YEAR_ENCODING<5> ayear_enc(1958);        
         
         YEAR_ENCODING year_enc_r;
         YEAR_ENCODING year_enc1_r;
         YEAR_ENCODING year_enc2_r;        
         YEAR_ENCODING year_enc3_r;              
-        ANY_YEAR_ENCODING ayear_enc_r;             
+        ANY_YEAR_ENCODING<5> ayear_enc_r;             
         
         
         DEBUG_VAL_ITU(year_enc)
@@ -212,13 +212,13 @@ namespace TestTm {
         YEAR_MONTH_ENCODING year_month_enc1=std::string("2004-08");
         YEAR_MONTH_ENCODING year_month_enc2="2015-07";        
         YEAR_MONTH_ENCODING year_month_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 2, 12));              
-        ANY_YEAR_MONTH_ENCODING ayear_month_enc(1958, 7);        
+        ANY_YEAR_MONTH_ENCODING<5> ayear_month_enc(1958, 7);        
         
         YEAR_MONTH_ENCODING year_month_enc_r;
         YEAR_MONTH_ENCODING year_month_enc1_r;
         YEAR_MONTH_ENCODING year_month_enc2_r;        
         YEAR_MONTH_ENCODING year_month_enc3_r;              
-        ANY_YEAR_MONTH_ENCODING ayear_month_enc_r;             
+        ANY_YEAR_MONTH_ENCODING<5> ayear_month_enc_r;             
         
         
         DEBUG_VAL_ITU(year_month_enc)
@@ -237,13 +237,13 @@ namespace TestTm {
         DATE_ENCODING date_enc1=std::string("2004-08-30");
         DATE_ENCODING date_enc2="2015-07-24";        
         DATE_ENCODING date_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 2, 12));              
-        ANY_DATE_ENCODING adate_enc(1958, 7,6);        
+        ANY_DATE_ENCODING<5> adate_enc(1958, 7,6);        
         
         DATE_ENCODING date_enc_r;
         DATE_ENCODING date_enc1_r;
         DATE_ENCODING date_enc2_r;        
         DATE_ENCODING date_enc3_r;              
-        ANY_DATE_ENCODING adate_enc_r;             
+        ANY_DATE_ENCODING<5> adate_enc_r;             
         
         
         DEBUG_VAL_ITU(date_enc)
@@ -262,13 +262,13 @@ namespace TestTm {
         YEAR_DAY_ENCODING year_day_enc1=std::string("2004-085");
         YEAR_DAY_ENCODING year_day_enc2="2015-186";        
         YEAR_DAY_ENCODING year_day_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 2, 12));              
-        ANY_YEAR_DAY_ENCODING ayear_day_enc(1958, 78);        
+        ANY_YEAR_DAY_ENCODING<5> ayear_day_enc(1958, 78);        
         
         YEAR_DAY_ENCODING year_day_enc_r;
         YEAR_DAY_ENCODING year_day_enc1_r;
         YEAR_DAY_ENCODING year_day_enc2_r;        
         YEAR_DAY_ENCODING year_day_enc3_r;              
-        ANY_YEAR_DAY_ENCODING ayear_day_enc_r;             
+        ANY_YEAR_DAY_ENCODING<5> ayear_day_enc_r;             
         
         
         DEBUG_VAL_ITU(year_day_enc)
@@ -288,13 +288,13 @@ namespace TestTm {
         YEAR_WEEK_ENCODING year_week_enc1=std::string("2004-W40");
         YEAR_WEEK_ENCODING year_week_enc2="2015-W18";        
         YEAR_WEEK_ENCODING year_week_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 2, 12));              
-        ANY_YEAR_WEEK_ENCODING ayear_week_enc(1958, 43);        
+        ANY_YEAR_WEEK_ENCODING<5> ayear_week_enc(1958, 43);        
         
         YEAR_WEEK_ENCODING year_week_enc_r;
         YEAR_WEEK_ENCODING year_week_enc1_r;
         YEAR_WEEK_ENCODING year_week_enc2_r;        
         YEAR_WEEK_ENCODING year_week_enc3_r;              
-        ANY_YEAR_WEEK_ENCODING ayear_week_enc_r;             
+        ANY_YEAR_WEEK_ENCODING<5> ayear_week_enc_r;             
         
         
         DEBUG_VAL_ITU(year_week_enc)
@@ -315,13 +315,13 @@ namespace TestTm {
         YEAR_WEEK_DAY_ENCODING year_week_day_enc1=std::string("2004-W40-2");
         YEAR_WEEK_DAY_ENCODING year_week_day_enc2="2015-W18-4";        
         YEAR_WEEK_DAY_ENCODING year_week_day_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 2, 12));              
-        ANY_YEAR_WEEK_DAY_ENCODING ayear_week_day_enc(1958, 43,5);        
+        ANY_YEAR_WEEK_DAY_ENCODING<5> ayear_week_day_enc(1958, 43,5);        
         
         YEAR_WEEK_DAY_ENCODING year_week_day_enc_r;
         YEAR_WEEK_DAY_ENCODING year_week_day_enc1_r;
         YEAR_WEEK_DAY_ENCODING year_week_day_enc2_r;        
         YEAR_WEEK_DAY_ENCODING year_week_day_enc3_r;              
-        ANY_YEAR_WEEK_DAY_ENCODING ayear_week_day_enc_r;             
+        ANY_YEAR_WEEK_DAY_ENCODING<5> ayear_week_day_enc_r;             
         
         
         DEBUG_VAL_ITU(year_week_day_enc)
@@ -335,7 +335,7 @@ namespace TestTm {
         DEBUG_VAL_ITU(ayear_week_day_enc)                 
         DEBUG_VAL_ITU_READ(ayear_week_day_enc_r);              
 
-        HOURS_ENCODING hors_enc = 3;
+        /*HOURS_ENCODING hors_enc = 3;
         HOURS_ENCODING hors_enc1 = std::string("04");
         HOURS_ENCODING hors_enc2 = "21";
         HOURS_ENCODING hors_enc3 = boost::asn1::base_time_duration(4, 23, 40);
