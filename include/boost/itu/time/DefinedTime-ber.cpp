@@ -37,13 +37,13 @@ namespace boost {
 
         // sequence ANY-CENTURY-ENCODING
 
-        template<> void ANY_CENTURY_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
+        /*template<> void ANY_CENTURY_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
             time_serialize(*this, arch);
         }
 
         template<> void ANY_CENTURY_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
             time_serialize(*this, arch);
-        }
+        }*/
 
         // choice YEAR-ENCODING
 
@@ -57,13 +57,13 @@ namespace boost {
 
         // sequence ANY-YEAR-ENCODING
 
-        template<> void ANY_YEAR_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
+        /*template<> void ANY_YEAR_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
             time_serialize(*this, arch);
         }
 
         template<> void ANY_YEAR_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
             time_serialize(*this, arch);
-        }
+        }*/
 
         // sequence YEAR-MONTH-ENCODING
 
@@ -77,13 +77,13 @@ namespace boost {
 
         // sequence ANY-YEAR-MONTH-ENCODING
 
-        template<> void ANY_YEAR_MONTH_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
+        /*template<> void ANY_YEAR_MONTH_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
             time_serialize(*this, arch);
         }
 
         template<> void ANY_YEAR_MONTH_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
             time_serialize(*this, arch);
-        }
+        }*/
 
         // sequence DATE-ENCODING
 
@@ -97,13 +97,13 @@ namespace boost {
 
         // sequence ANY-DATE-ENCODING
 
-        template<> void ANY_DATE_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
+        /*template<> void ANY_DATE_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
             time_serialize(*this, arch);
         }
 
         template<> void ANY_DATE_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
             time_serialize(*this, arch);
-        }
+        }*/
 
         // sequence YEAR-DAY-ENCODING
 
@@ -117,13 +117,13 @@ namespace boost {
 
         // sequence ANY-YEAR-DAY-ENCODING
 
-        template<> void ANY_YEAR_DAY_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
+        /*template<> void ANY_YEAR_DAY_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
             time_serialize(*this, arch);
         }
 
         template<> void ANY_YEAR_DAY_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
             time_serialize(*this, arch);
-        }
+        }*/
 
         // sequence YEAR-WEEK-ENCODING
 
@@ -137,13 +137,13 @@ namespace boost {
 
         // sequence ANY-YEAR-WEEK-ENCODING
 
-        template<> void ANY_YEAR_WEEK_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
+        /*template<> void ANY_YEAR_WEEK_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
             time_serialize(*this, arch);
         }
 
         template<> void ANY_YEAR_WEEK_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
             time_serialize(*this, arch);
-        }
+        }*/
 
         // sequence YEAR-WEEK-DAY-ENCODING
 
@@ -157,13 +157,13 @@ namespace boost {
 
         // sequence ANY-YEAR-WEEK-DAY-ENCODING
 
-        template<> void ANY_YEAR_WEEK_DAY_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
+        /*template<> void ANY_YEAR_WEEK_DAY_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
             time_serialize(*this, arch);
         }
 
         template<> void ANY_YEAR_WEEK_DAY_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
             time_serialize(*this, arch);
-        }
+        }*/
 
         // sequence HOURS-ENCODING
 

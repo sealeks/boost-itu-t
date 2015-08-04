@@ -28,13 +28,13 @@ namespace boost {
 
         // sequence ANY-CENTURY-ENCODING
 
-        template<> void ANY_CENTURY_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
+        /*template<> void ANY_CENTURY_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
             ITU_T_BIND_PER(as_number_);
         }
 
         template<> void ANY_CENTURY_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
             ITU_T_BIND_PER(as_number_);
-        }
+        }*/
 
         // choice YEAR-ENCODING
 
@@ -103,13 +103,13 @@ namespace boost {
 
         // sequence ANY-YEAR-ENCODING
 
-        template<> void ANY_YEAR_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
+        /*template<> void ANY_YEAR_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
             ITU_T_BIND_PER(as_number_);
         }
 
         template<> void ANY_YEAR_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
             ITU_T_BIND_PER(as_number_);
-        }
+        }*/
 
         // sequence YEAR-MONTH-ENCODING
 
@@ -125,7 +125,7 @@ namespace boost {
 
         // sequence ANY-YEAR-MONTH-ENCODING
 
-        template<> void ANY_YEAR_MONTH_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
+        /*template<> void ANY_YEAR_MONTH_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
             ITU_T_BIND_PER(year_);
             ITU_T_BIND_NUM_CONSTRAINT(month_, static_cast<uint8_t> (1), static_cast<uint8_t> (12));
         }
@@ -133,7 +133,7 @@ namespace boost {
         template<> void ANY_YEAR_MONTH_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
             ITU_T_BIND_PER(year_);
             ITU_T_BIND_NUM_CONSTRAINT(month_, static_cast<uint8_t> (1), static_cast<uint8_t> (12));
-        }
+        }*/
 
         // sequence DATE-ENCODING
 
@@ -151,7 +151,7 @@ namespace boost {
 
         // sequence ANY-DATE-ENCODING
 
-        template<> void ANY_DATE_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
+        /*template<> void ANY_DATE_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
             ITU_T_BIND_PER(year_);
             ITU_T_BIND_NUM_CONSTRAINT(month_, static_cast<uint8_t> (1), static_cast<uint8_t> (12));
             ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint8_t> (1), static_cast<uint8_t> (31));
@@ -161,7 +161,7 @@ namespace boost {
             ITU_T_BIND_PER(year_);
             ITU_T_BIND_NUM_CONSTRAINT(month_, static_cast<uint8_t> (1), static_cast<uint8_t> (12));
             ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint8_t> (1), static_cast<uint8_t> (31));
-        }
+        }*/
 
         // sequence YEAR-DAY-ENCODING
 
@@ -177,7 +177,7 @@ namespace boost {
 
         // sequence ANY-YEAR-DAY-ENCODING
 
-        template<> void ANY_YEAR_DAY_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
+        /*template<> void ANY_YEAR_DAY_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
             ITU_T_BIND_PER(year_);
             ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint16_t> (1), static_cast<uint16_t> (366));
         }
@@ -185,7 +185,7 @@ namespace boost {
         template<> void ANY_YEAR_DAY_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
             ITU_T_BIND_PER(year_);
             ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint16_t> (1), static_cast<uint16_t> (366));
-        }
+        }*/
 
         // sequence YEAR-WEEK-ENCODING
 
@@ -201,7 +201,7 @@ namespace boost {
 
         // sequence ANY-YEAR-WEEK-ENCODING
 
-        template<> void ANY_YEAR_WEEK_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
+        /*template<> void ANY_YEAR_WEEK_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
             ITU_T_BIND_PER(year_);
             ITU_T_BIND_NUM_CONSTRAINT(week_, static_cast<uint8_t> (1), static_cast<uint8_t> (53));
         }
@@ -209,7 +209,7 @@ namespace boost {
         template<> void ANY_YEAR_WEEK_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
             ITU_T_BIND_PER(year_);
             ITU_T_BIND_NUM_CONSTRAINT(week_, static_cast<uint8_t> (1), static_cast<uint8_t> (53));
-        }
+        }*/
 
         // sequence YEAR-WEEK-DAY-ENCODING
 
@@ -227,7 +227,7 @@ namespace boost {
 
         // sequence ANY-YEAR-WEEK-DAY-ENCODING
 
-        template<> void ANY_YEAR_WEEK_DAY_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
+        /*template<> void ANY_YEAR_WEEK_DAY_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
             ITU_T_BIND_PER(year_);
             ITU_T_BIND_NUM_CONSTRAINT(week_, static_cast<uint8_t> (1), static_cast<uint8_t> (53));
             ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint8_t> (1), static_cast<uint8_t> (7));
@@ -237,7 +237,7 @@ namespace boost {
             ITU_T_BIND_PER(year_);
             ITU_T_BIND_NUM_CONSTRAINT(week_, static_cast<uint8_t> (1), static_cast<uint8_t> (53));
             ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint8_t> (1), static_cast<uint8_t> (7));
-        }
+        }*/
 
         // sequence HOURS-ENCODING
 

@@ -20,6 +20,12 @@ namespace boost {
         const std::size_t DEFAULT_TM_FRACTION = 3;
         const std::size_t MAX_TM_FRACTION = 9;
 
+        const std::size_t DEFAULT_CENTUTY_FRACTION = 2;
+        const std::size_t MAX_CENTURY_FRACTION = 12;
+
+        const std::size_t DEFAULT_YEAR_FRACTION = 4;
+        const std::size_t MAX_YEAR_FRACTION = 12;
+
         namespace time_detail {
 
             template<typename T>
@@ -32,7 +38,8 @@ namespace boost {
                 try {
                     std::string rslt = boost::lexical_cast<std::string > (val);
                     return (sz && nlchar && (rslt.size() < sz)) ? (std::string(sz - rslt.size(), nlchar) + rslt) : rslt;
-                } catch (boost::bad_lexical_cast) {
+                }
+                catch (boost::bad_lexical_cast) {
                 }
                 return (sz && nlchar) ? std::string(nlchar, sz) : "";
             }
@@ -57,7 +64,8 @@ namespace boost {
                             return boost::lexical_cast<T > (val);
                         }
                     }
-                } catch (boost::bad_lexical_cast) {
+                }
+                catch (boost::bad_lexical_cast) {
                 }
                 return def;
             }
@@ -132,19 +140,19 @@ namespace boost {
 
 
         struct CENTURY_ENCODING;
-        struct ANY_CENTURY_ENCODING;
+        template<std::size_t N> struct ANY_CENTURY_ENCODING;
         struct YEAR_ENCODING;
-        struct ANY_YEAR_ENCODING;
+        template<std::size_t N> struct ANY_YEAR_ENCODING;
         struct YEAR_MONTH_ENCODING;
-        struct ANY_YEAR_MONTH_ENCODING;
+        template<std::size_t N> struct ANY_YEAR_MONTH_ENCODING;
         struct DATE_ENCODING;
-        struct ANY_DATE_ENCODING;
+        template<std::size_t N> struct ANY_DATE_ENCODING;
         struct YEAR_DAY_ENCODING;
-        struct ANY_YEAR_DAY_ENCODING;
+        template<std::size_t N> struct ANY_YEAR_DAY_ENCODING;
         struct YEAR_WEEK_ENCODING;
-        struct ANY_YEAR_WEEK_ENCODING;
+        template<std::size_t N> struct ANY_YEAR_WEEK_ENCODING;
         struct YEAR_WEEK_DAY_ENCODING;
-        struct ANY_YEAR_WEEK_DAY_ENCODING;
+        template<std::size_t N> struct ANY_YEAR_WEEK_DAY_ENCODING;
         struct HOURS_ENCODING;
         struct HOURS_UTC_ENCODING;
         struct HOURS_AND_DIFF_ENCODING;
@@ -179,7 +187,6 @@ namespace boost {
         // sequence CENTURY-ENCODING
 
         struct CENTURY_ENCODING {
-
             CENTURY_ENCODING();
 
             CENTURY_ENCODING(const uint8_t& arg__vl);
@@ -209,27 +216,83 @@ namespace boost {
 
         // sequence ANY-CENTURY-ENCODING
 
+        template<std::size_t N = DEFAULT_CENTUTY_FRACTION >
         struct ANY_CENTURY_ENCODING {
 
-            ANY_CENTURY_ENCODING();
+            static std::size_t NF() {
+                return (N > MAX_CENTURY_FRACTION) ? MAX_CENTURY_FRACTION : N;
+            }
 
-            ANY_CENTURY_ENCODING(const integer_type& arg__vl);
+            ANY_CENTURY_ENCODING() : as_number_() {
+            };
 
-            ANY_CENTURY_ENCODING(const std::string& vl);
+            ANY_CENTURY_ENCODING(const integer_type& arg__val) :
+            as_number_(arg__val) {
+            };
 
-            ANY_CENTURY_ENCODING(const char* vl);
+            ANY_CENTURY_ENCODING(const std::string& vl) :
+            as_number_(0) {
+                as_string(vl);
+            };
 
-            ANY_CENTURY_ENCODING(const base_date_time& vl);
+            ANY_CENTURY_ENCODING(const char* vl) :
+            as_number_(0) {
+                as_string(vl);
+            };
 
-            base_date_time as_datetime() const;
+            ANY_CENTURY_ENCODING(const base_date_time& vl) :
+            as_number_(vl.is_special() ? 0 : (vl.date().year() / 100)) {
+            }
 
-            base_date as_date() const;
+            base_date_time as_datetime() const {
+                try {
+                    return base_date_time(base_date(static_cast<int> (as_number())*100, 1, 1));
+                }
+                catch (...) {
+                }
+                return base_date_time();
+            }
 
-            std::string as_string() const;
+            base_date as_date() const {
+                try {
+                    return base_date(static_cast<int> (as_number())*100, 1, 1);
+                }
+                catch (...) {
+                }
+                return base_date();
+            }
 
-            void as_string(const std::string& vl);
+            std::string as_string() const {
+                return std::string((as_number() < 0) ? "-" : "") +
+                        time_detail::to_string(static_cast<int> (std::abs(as_number())), NF(), '0') + "C";
+            }
 
-            ITU_T_HOLDERH_DECL(as_number, integer_type);
+            void as_string(const std::string& v) {
+                std::string vl = time_detail::revrs_substr(time_detail::normalize_time_str(v), 1);
+                as_number(time_detail::string_to_def(vl, 0, "0"));
+            }
+
+            ITU_T_HOLDERH_T_DECL(as_number, integer_type);
+
+            void serialize(boost::asn1::x690::output_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x690::input_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x691::output_coder& arch) {
+                ITU_T_BIND_PER(as_number_);
+            }
+
+            void serialize(boost::asn1::x691::input_coder& arch) {
+                ITU_T_BIND_PER(as_number_);
+            }
+
+            friend std::ostream& operator<<(std::ostream& stream, const ANY_CENTURY_ENCODING& vl) {
+                return stream << "+CC : " << vl.as_string();
+            };
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -241,7 +304,6 @@ namespace boost {
         // choice YEAR-ENCODING
 
         enum YEAR_ENCODING_enum {
-
             YEAR_ENCODING_null = 0,
             YEAR_ENCODING_immediate,
             YEAR_ENCODING_near_future,
@@ -287,27 +349,83 @@ namespace boost {
 
         // sequence ANY-YEAR-ENCODING
 
+        template<std::size_t N = DEFAULT_YEAR_FRACTION >
         struct ANY_YEAR_ENCODING {
 
-            ANY_YEAR_ENCODING();
+            static std::size_t NF() {
+                return (N > MAX_YEAR_FRACTION) ? MAX_YEAR_FRACTION : N;
+            }
 
-            ANY_YEAR_ENCODING(const integer_type& arg__val);
+            ANY_YEAR_ENCODING() : as_number_() {
+            };
 
-            ANY_YEAR_ENCODING(const std::string& vl);
+            ANY_YEAR_ENCODING(const integer_type& arg__val) :
+            as_number_(arg__val) {
+            };
 
-            ANY_YEAR_ENCODING(const char* vl);
+            ANY_YEAR_ENCODING(const std::string& vl) :
+            as_number_(0) {
+                as_string(vl);
+            };
 
-            ANY_YEAR_ENCODING(const base_date_time& vl);
+            ANY_YEAR_ENCODING(const char* vl) :
+            as_number_(0) {
+                as_string(vl);
+            };
 
-            base_date_time as_datetime() const;
+            ANY_YEAR_ENCODING(const base_date_time& vl) :
+            as_number_(vl.is_special() ? 0 : (integer_type) vl.date().year()) {
+            }
 
-            base_date as_date() const;
+            base_date_time as_datetime() const {
+                try {
+                    return base_date_time(base_date(static_cast<int> (as_number()), 1, 1));
+                }
+                catch (...) {
+                }
+                return base_date_time();
+            }
 
-            std::string as_string() const;
+            base_date as_date() const {
+                try {
+                    return base_date(static_cast<int> (as_number()), 1, 1);
+                }
+                catch (...) {
+                }
+                return base_date();
+            }
 
-            void as_string(const std::string& vl);
+            std::string as_string() const {
+                return std::string((as_number() < 0) ? "-" : "") +
+                        time_detail::to_string(static_cast<int> (std::abs(as_number())), NF(), '0');
+            }
 
-            ITU_T_HOLDERH_DECL(as_number, integer_type);
+            void as_string(const std::string& v) {
+                std::string vl = time_detail::normalize_time_str(v);
+                as_number(time_detail::string_to_def(vl, 0, "0"));
+            }
+
+            ITU_T_HOLDERH_T_DECL(as_number, integer_type);
+
+            void serialize(boost::asn1::x690::output_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x690::input_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x691::output_coder& arch) {
+                ITU_T_BIND_PER(as_number_);
+            }
+
+            void serialize(boost::asn1::x691::input_coder& arch) {
+                ITU_T_BIND_PER(as_number_);
+            }
+
+            friend std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_ENCODING& vl) {
+                return stream << "+YYYY : " << vl.as_string();
+            };
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -321,7 +439,6 @@ namespace boost {
         // sequence YEAR-MONTH-ENCODING
 
         struct YEAR_MONTH_ENCODING {
-
             YEAR_MONTH_ENCODING();
 
             YEAR_MONTH_ENCODING(integer_type arg__year,
@@ -355,29 +472,89 @@ namespace boost {
 
         // sequence ANY-YEAR-MONTH-ENCODING
 
+        template<std::size_t N = DEFAULT_YEAR_FRACTION >
         struct ANY_YEAR_MONTH_ENCODING {
+            typedef ANY_YEAR_ENCODING<N> ANY_YEAR_TYPE;
 
-            ANY_YEAR_MONTH_ENCODING();
+            static std::size_t NF() {
+                return (N > MAX_YEAR_FRACTION) ? MAX_YEAR_FRACTION : N;
+            }
+
+            ANY_YEAR_MONTH_ENCODING() : year_(), month_() {
+            };
 
             ANY_YEAR_MONTH_ENCODING(integer_type arg__year,
-                    const uint8_t& arg__month);
+                    const uint8_t& arg__month) :
+            year_(arg__year),
+            month_(time_detail::to_range<uint8_t>(arg__month, (uint8_t) 1, (uint8_t) 12)) {
+            };
 
-            ANY_YEAR_MONTH_ENCODING(const std::string& vl);
+            ANY_YEAR_MONTH_ENCODING(const std::string& vl) : year_(), month_(1) {
+                as_string(vl);
+            }
 
-            ANY_YEAR_MONTH_ENCODING(const char* vl);
+            ANY_YEAR_MONTH_ENCODING(const char* vl) : year_(), month_(1) {
+                as_string(vl);
+            }
 
-            ANY_YEAR_MONTH_ENCODING(const base_date_time& vl);
+            ANY_YEAR_MONTH_ENCODING(const base_date_time& vl) :
+            year_(vl.is_special() ? 0 : (integer_type) vl.date().year()),
+            month_(vl.is_special() ? 1 : (uint8_t) vl.date().month()) {
+            }
 
-            base_date_time as_datetime() const;
+            base_date_time as_datetime() const {
+                try {
+                    return base_date_time(base_date(static_cast<int> (year().as_number()), (int) month(), 1));
+                }
+                catch (...) {
+                }
+                return base_date_time();
+            }
 
-            base_date as_date() const;
+            base_date as_date() const {
+                try {
+                    return base_date(static_cast<int> (year().as_number()), (int) month(), 1);
+                }
+                catch (...) {
+                }
+                return base_date();
+            }
 
-            std::string as_string() const;
+            std::string as_string() const {
+                return year().as_string() + "-" + time_detail::to_string(static_cast<int> (month()), 2, '0');
+            }
 
-            void as_string(const std::string& vl);
+            void as_string(const std::string& v) {
+                std::string vl = time_detail::normalize_time_str(v);
+                year(time_detail::revrs_substr(vl, 2));
+                month(time_detail::to_range<uint8_t>(time_detail::string_to_def<int>(time_detail::revrs_substr(vl, 0, 2)), (uint8_t) 1, (uint8_t) 12));
+            }
 
-            ITU_T_HOLDERH_DECL(year, ANY_YEAR_ENCODING);
-            ITU_T_HOLDERH_DECL(month, uint8_t); //   Ic(  [ 1  ...   12 ]   
+
+            ITU_T_HOLDERH_T_DECL(year, ANY_YEAR_TYPE);
+            ITU_T_HOLDERH_T_DECL(month, uint8_t); //   Ic(  [ 1  ...   12 ]   
+
+            void serialize(boost::asn1::x690::output_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x690::input_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x691::output_coder& arch) {
+                ITU_T_BIND_PER(year_);
+                ITU_T_BIND_NUM_CONSTRAINT(month_, static_cast<uint8_t> (1), static_cast<uint8_t> (12));
+            }
+
+            void serialize(boost::asn1::x691::input_coder& arch) {
+                ITU_T_BIND_PER(year_);
+                ITU_T_BIND_NUM_CONSTRAINT(month_, static_cast<uint8_t> (1), static_cast<uint8_t> (12));
+            }
+
+            friend std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_MONTH_ENCODING& vl) {
+                return stream << "+YYYYMM : " << vl.as_string();
+            };
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -388,7 +565,6 @@ namespace boost {
         // sequence DATE-ENCODING
 
         struct DATE_ENCODING {
-
             DATE_ENCODING();
 
             DATE_ENCODING(integer_type arg__year,
@@ -423,31 +599,97 @@ namespace boost {
 
         // sequence ANY-DATE-ENCODING
 
+        template<std::size_t N = DEFAULT_YEAR_FRACTION >
         struct ANY_DATE_ENCODING {
+            typedef ANY_YEAR_ENCODING<N> ANY_YEAR_TYPE;
 
-            ANY_DATE_ENCODING();
+            static std::size_t NF() {
+                return (N > MAX_YEAR_FRACTION) ? MAX_YEAR_FRACTION : N;
+            }
+
+            ANY_DATE_ENCODING() : year_(), month_(1), day_(1) {
+            };
 
             ANY_DATE_ENCODING(integer_type arg__year,
                     const uint8_t& arg__month,
-                    const uint8_t& arg__day);
+                    const uint8_t& arg__day) :
+            year_(arg__year),
+            month_(time_detail::to_range<uint8_t>(arg__month, (uint8_t) 1, (uint8_t) 12)),
+            day_(time_detail::to_range<uint8_t>(arg__day, (uint8_t) 1, (uint8_t) 31)) {
+            };
 
-            ANY_DATE_ENCODING(const std::string& vl);
+            ANY_DATE_ENCODING(const std::string& vl) : year_(), month_(1), day_(1) {
+                as_string(vl);
+            }
 
-            ANY_DATE_ENCODING(const char* vl);
+            ANY_DATE_ENCODING(const char* vl) : year_(), month_(1), day_(1) {
+                as_string(vl);
+            }
 
-            ANY_DATE_ENCODING(const base_date_time& vl);
+            ANY_DATE_ENCODING(const base_date_time& vl) :
+            year_(vl.is_special() ? 0 : (integer_type) vl.date().year()),
+            month_(vl.is_special() ? 1 : (uint8_t) vl.date().month()),
+            day_(vl.is_special() ? 1 : (uint8_t) vl.date().day()) {
+            }
 
-            base_date_time as_datetime() const;
+            base_date_time as_datetime() const {
+                try {
+                    return base_date_time(base_date(static_cast<int> (year().as_number()), (int) month(), (int) day()));
+                }
+                catch (...) {
+                }
+                return base_date_time();
+            }
 
-            base_date as_date() const;
+            base_date as_date() const {
+                try {
+                    return base_date(static_cast<int> (year().as_number()), (int) month(), (int) day());
+                }
+                catch (...) {
+                }
+                return base_date();
+            }
 
-            std::string as_string() const;
+            std::string as_string() const {
+                return year().as_string() + "-" + time_detail::to_string(static_cast<int> (month()), 2, '0') +
+                        "-" + time_detail::to_string(static_cast<int> (day()), 2, '0');
+            }
 
-            void as_string(const std::string& vl);
+            void as_string(const std::string& v) {
+                std::string vl = time_detail::normalize_time_str(v);
+                year(time_detail::revrs_substr(vl, 4));
+                month(time_detail::to_range<uint8_t>(time_detail::string_to_def<int>(time_detail::revrs_substr(vl, 2, 2)), (uint8_t) 1, (uint8_t) 12));
+                day(time_detail::to_range<uint8_t>(time_detail::string_to_def<int>(time_detail::revrs_substr(vl, 0, 2)), (uint8_t) 1, (uint8_t) 31));
+            }
 
-            ITU_T_HOLDERH_DECL(year, ANY_YEAR_ENCODING);
-            ITU_T_HOLDERH_DECL(month, uint8_t); //   Ic(  [ 1  ...   12 ]   
-            ITU_T_HOLDERH_DECL(day, uint8_t); //   Ic(  [ 1  ...   31 ]   
+
+            ITU_T_HOLDERH_T_DECL(year, ANY_YEAR_TYPE);
+            ITU_T_HOLDERH_T_DECL(month, uint8_t); //   Ic(  [ 1  ...   12 ]   
+            ITU_T_HOLDERH_T_DECL(day, uint8_t); //   Ic(  [ 1  ...   31 ]   
+
+            void serialize(boost::asn1::x690::output_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x690::input_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x691::output_coder& arch) {
+                ITU_T_BIND_PER(year_);
+                ITU_T_BIND_NUM_CONSTRAINT(month_, static_cast<uint8_t> (1), static_cast<uint8_t> (12));
+                ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint8_t> (1), static_cast<uint8_t> (31));
+            }
+
+            void serialize(boost::asn1::x691::input_coder& arch) {
+                ITU_T_BIND_PER(year_);
+                ITU_T_BIND_NUM_CONSTRAINT(month_, static_cast<uint8_t> (1), static_cast<uint8_t> (12));
+                ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint8_t> (1), static_cast<uint8_t> (31));
+            }
+
+            friend std::ostream& operator<<(std::ostream& stream, const ANY_DATE_ENCODING& vl) {
+                return stream << "+YYYYMMDD : " << vl.as_string();
+            };
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -459,7 +701,6 @@ namespace boost {
         // sequence YEAR-DAY-ENCODING
 
         struct YEAR_DAY_ENCODING {
-
             YEAR_DAY_ENCODING();
 
             YEAR_DAY_ENCODING(integer_type arg__year,
@@ -491,29 +732,92 @@ namespace boost {
 
         // sequence ANY-YEAR-DAY-ENCODING
 
+        template<std::size_t N = DEFAULT_YEAR_FRACTION >
         struct ANY_YEAR_DAY_ENCODING {
+            typedef ANY_YEAR_ENCODING<N> ANY_YEAR_TYPE;
 
-            ANY_YEAR_DAY_ENCODING();
+            static std::size_t NF() {
+                return (N > MAX_YEAR_FRACTION) ? MAX_YEAR_FRACTION : N;
+            }
+
+            ANY_YEAR_DAY_ENCODING() : year_(), day_(1) {
+            };
 
             ANY_YEAR_DAY_ENCODING(integer_type arg__year,
-                    const uint16_t& arg__day);
+                    const uint16_t& arg__day) :
+            year_(arg__year),
+            day_(time_detail::to_range<uint16_t>(arg__day, (uint16_t) 1, (uint16_t) 366)) {
+            };
 
-            ANY_YEAR_DAY_ENCODING(const std::string& vl);
+            ANY_YEAR_DAY_ENCODING(const std::string& vl) : year_(), day_(1) {
+                as_string(vl);
+            }
 
-            ANY_YEAR_DAY_ENCODING(const char* vl);
+            ANY_YEAR_DAY_ENCODING(const char* vl) : year_(), day_(1) {
+                as_string(vl);
+            }
 
-            ANY_YEAR_DAY_ENCODING(const base_date_time& vl);
+            ANY_YEAR_DAY_ENCODING(const base_date_time& vl) :
+            year_(vl.is_special() ? 0 : (integer_type) vl.date().year()),
+            day_(vl.is_special() ? 1 : (uint16_t) vl.date().day_of_year()) {
+            }
 
-            base_date_time as_datetime() const;
+            base_date_time as_datetime() const {
+                try {
+                    return base_date_time(base_date(static_cast<int> (year().as_number()), 1, 1)) +
+                            base_date_time::date_duration_type(day() ? day() - 1 : 0);
+                }
+                catch (...) {
+                }
+                return base_date_time();
+            }
 
-            base_date as_date() const;
+            base_date as_date() const {
+                try {
+                    return base_date(static_cast<int> (year().as_number()), 1, 1) +
+                            base_date_time::date_duration_type(day() ? day() - 1 : 0);
+                }
+                catch (...) {
+                }
+                return base_date();
+            }
 
-            std::string as_string() const;
+            std::string as_string() const {
+                return year().as_string() + "-" + time_detail::to_string(static_cast<int> (day()), 3, '0');
+            }
 
-            void as_string(const std::string& vl);
+            void as_string(const std::string& v) {
+                std::string vl = time_detail::normalize_time_str(v);
+                year(time_detail::revrs_substr(vl, 3));
+                day(time_detail::to_range<uint16_t>(time_detail::string_to_def<int>(time_detail::revrs_substr(vl, 0, 3)), (uint16_t) 1, (uint16_t) 366));
+            }
 
-            ITU_T_HOLDERH_DECL(year, ANY_YEAR_ENCODING);
-            ITU_T_HOLDERH_DECL(day, uint16_t); //   Ic(  [ 1  ...   366 ]   
+
+            ITU_T_HOLDERH_T_DECL(year, ANY_YEAR_TYPE);
+            ITU_T_HOLDERH_T_DECL(day, uint16_t); //   Ic(  [ 1  ...   366 ]   
+
+            void serialize(boost::asn1::x690::output_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x690::input_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x691::output_coder& arch) {
+                ITU_T_BIND_PER(year_);
+                ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint16_t> (1), static_cast<uint16_t> (366));
+            }
+
+            void serialize(boost::asn1::x691::input_coder& arch) {
+                ITU_T_BIND_PER(year_);
+                ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint16_t> (1), static_cast<uint16_t> (366));
+            }
+
+            friend std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_DAY_ENCODING& vl) {
+                return stream << "+YYYYDDD : " << vl.as_string();
+            };
+
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -525,7 +829,6 @@ namespace boost {
         // sequence YEAR-WEEK-ENCODING
 
         struct YEAR_WEEK_ENCODING {
-
             YEAR_WEEK_ENCODING();
 
             YEAR_WEEK_ENCODING(const YEAR_ENCODING& arg__year,
@@ -557,29 +860,94 @@ namespace boost {
 
         // sequence ANY-YEAR-WEEK-ENCODING
 
+        template<std::size_t N = DEFAULT_YEAR_FRACTION >
         struct ANY_YEAR_WEEK_ENCODING {
+            typedef ANY_YEAR_ENCODING<N> ANY_YEAR_TYPE;
 
-            ANY_YEAR_WEEK_ENCODING();
+            static std::size_t NF() {
+                return (N > MAX_YEAR_FRACTION) ? MAX_YEAR_FRACTION : N;
+            }
 
-            ANY_YEAR_WEEK_ENCODING(const ANY_YEAR_ENCODING& arg__year,
-                    const uint8_t& arg__week);
+            ANY_YEAR_WEEK_ENCODING() : year_(), week_(1) {
+            };
 
-            ANY_YEAR_WEEK_ENCODING(const std::string& vl);
+            ANY_YEAR_WEEK_ENCODING(integer_type arg__year,
+                    const uint8_t& arg__week) :
+            year_(arg__year),
+            week_(time_detail::to_range<uint8_t>(arg__week, (uint8_t) 1, (uint8_t) 53)) {
+            };
 
-            ANY_YEAR_WEEK_ENCODING(const char* vl);
+            ANY_YEAR_WEEK_ENCODING(const std::string& vl) : year_(), week_(1) {
+                as_string(vl);
+            }
 
-            ANY_YEAR_WEEK_ENCODING(const base_date_time& vl);
+            ANY_YEAR_WEEK_ENCODING(const char* vl) : year_(), week_(1) {
+                as_string(vl);
+            }
 
-            base_date_time as_datetime() const;
+            ANY_YEAR_WEEK_ENCODING(const base_date_time& vl) :
+            year_(vl.is_special() ? 0 : (integer_type) vl.date().year()),
+            week_(vl.is_special() ? 1 : (uint8_t) vl.date().week_number()) {
+            }
 
-            base_date as_date() const;
+            base_date_time as_datetime() const {
+                try {
+                    base_date tmp(static_cast<int> (year().as_number()), 1, 1);
+                    std::size_t dwst = (std::size_t)tmp.day_of_week();
+                    return base_date_time(tmp) + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
+                            base_date_time::date_duration_type((week() > 1) ? (7 * (week() - 1)) : 0);
+                }
+                catch (...) {
+                }
+                return base_date_time();
+            }
 
-            std::string as_string() const;
+            base_date as_date() const {
+                try {
+                    base_date tmp(static_cast<int> (year().as_number()), 1, 1);
+                    std::size_t dwst = (std::size_t)tmp.day_of_week();
+                    return tmp + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
+                            base_date_time::date_duration_type((week() > 1) ? (7 * (week() - 1)) : 0);
+                }
+                catch (...) {
+                }
+                return base_date();
+            }
 
-            void as_string(const std::string& vl);
+            std::string as_string() const {
+                return year().as_string() + "-W" + time_detail::to_string(static_cast<int> (week()), 2, '0');
+            }
 
-            ITU_T_HOLDERH_DECL(year, ANY_YEAR_ENCODING);
-            ITU_T_HOLDERH_DECL(week, uint8_t); //   Ic(  [ 1  ...   53 ]   
+            void as_string(const std::string& v) {
+                std::string vl = time_detail::normalize_time_str(v);
+                year(time_detail::revrs_substr(vl, 3));
+                week(time_detail::to_range<uint8_t>(time_detail::string_to_def<int>(time_detail::revrs_substr(vl, 0, 2)), (uint8_t) 1, (uint8_t) 53));
+            }
+
+            ITU_T_HOLDERH_T_DECL(year, ANY_YEAR_TYPE);
+            ITU_T_HOLDERH_T_DECL(week, uint8_t); //   Ic(  [ 1  ...   53 ]   
+
+            void serialize(boost::asn1::x690::output_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x690::input_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x691::output_coder& arch) {
+                ITU_T_BIND_PER(year_);
+                ITU_T_BIND_NUM_CONSTRAINT(week_, static_cast<uint8_t> (1), static_cast<uint8_t> (53));
+            }
+
+            void serialize(boost::asn1::x691::input_coder& arch) {
+                ITU_T_BIND_PER(year_);
+                ITU_T_BIND_NUM_CONSTRAINT(week_, static_cast<uint8_t> (1), static_cast<uint8_t> (53));
+            }
+
+            friend std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_WEEK_ENCODING& vl) {
+                return stream << "++YYYYWww : " << vl.as_string();
+            };
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -591,7 +959,6 @@ namespace boost {
         // sequence YEAR-WEEK-DAY-ENCODING
 
         struct YEAR_WEEK_DAY_ENCODING {
-
             YEAR_WEEK_DAY_ENCODING();
 
             YEAR_WEEK_DAY_ENCODING(const YEAR_ENCODING& arg__year,
@@ -625,31 +992,103 @@ namespace boost {
 
         // sequence ANY-YEAR-WEEK-DAY-ENCODING
 
+        template<std::size_t N = DEFAULT_YEAR_FRACTION >
         struct ANY_YEAR_WEEK_DAY_ENCODING {
+            typedef ANY_YEAR_ENCODING<N> ANY_YEAR_TYPE;
 
-            ANY_YEAR_WEEK_DAY_ENCODING();
+            static std::size_t NF() {
+                return (N > MAX_YEAR_FRACTION) ? MAX_YEAR_FRACTION : N;
+            }
 
-            ANY_YEAR_WEEK_DAY_ENCODING(const ANY_YEAR_ENCODING& arg__year,
+            ANY_YEAR_WEEK_DAY_ENCODING() : year_(), week_(1), day_(1) {
+            };
+
+            ANY_YEAR_WEEK_DAY_ENCODING(integer_type arg__year,
                     const uint8_t& arg__week,
-                    const uint8_t& arg__day);
+                    const uint8_t& arg__day) :
+            year_(arg__year),
+            week_(time_detail::to_range<uint8_t>(arg__week, (uint8_t) 1, (uint8_t) 53)),
+            day_(time_detail::to_range<uint8_t>(arg__day, (uint8_t) 1, (uint8_t) 7)) {
+            };
 
-            ANY_YEAR_WEEK_DAY_ENCODING(const std::string& vl);
+            ANY_YEAR_WEEK_DAY_ENCODING(const std::string& vl) : year_(), week_(1) {
+                as_string(vl);
+            }
 
-            ANY_YEAR_WEEK_DAY_ENCODING(const char* vl);
+            ANY_YEAR_WEEK_DAY_ENCODING(const char* vl) : year_(), week_(1) {
+                as_string(vl);
+            }
 
-            ANY_YEAR_WEEK_DAY_ENCODING(const base_date_time& vl);
+            ANY_YEAR_WEEK_DAY_ENCODING(const base_date_time& vl) :
+            year_(vl.is_special() ? 0 : (integer_type) vl.date().year()),
+            week_(vl.is_special() ? 1 : (uint8_t) vl.date().week_number()),
+            day_(vl.is_special() ? 1 : (uint8_t) vl.date().day_of_week()) {
+            }
 
-            base_date_time as_datetime() const;
+            base_date_time as_datetime() const {
+                try {
+                    base_date tmp(static_cast<int> (year().as_number()), 1, 1);
+                    std::size_t dwst = (std::size_t)tmp.day_of_week();
+                    return base_date_time(tmp) + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
+                            base_date_time::date_duration_type(((week() > 1) ? (7 * (week() - 1)) : 0) + ((day() > 1) ? (day() - 1) : 0));
+                }
+                catch (...) {
+                }
+                return base_date_time();
+            }
 
-            base_date as_date() const;
+            base_date as_date() const {
+                try {
+                    base_date tmp(static_cast<int> (year().as_number()), 1, 1);
+                    std::size_t dwst = (std::size_t)tmp.day_of_week();
+                    return tmp + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
+                            base_date_time::date_duration_type(((week() > 1) ? (7 * (week() - 1)) : 0) + ((day() > 1) ? (day() - 1) : 0));
+                }
+                catch (...) {
+                }
+                return base_date();
+            }
 
-            std::string as_string() const;
+            std::string as_string() const {
+                return year().as_string() + "-W" + time_detail::to_string(static_cast<int> (week()), 2, '0') +
+                        "-" + time_detail::to_string(static_cast<int> (day()), 1);
+            }
 
-            void as_string(const std::string& vl);
+            void as_string(const std::string& v) {
+                std::string vl = time_detail::normalize_time_str(v);
+                year(time_detail::revrs_substr(vl, 4));
+                week(time_detail::to_range<uint8_t>(time_detail::string_to_def<int>(time_detail::revrs_substr(vl, 1, 2)), (uint8_t) 1, (uint8_t) 53));
+                day(time_detail::to_range<uint8_t>(time_detail::string_to_def<int>(time_detail::revrs_substr(vl, 0, 1)), (uint8_t) 1, (uint8_t) 7));
+            }
 
-            ITU_T_HOLDERH_DECL(year, ANY_YEAR_ENCODING);
-            ITU_T_HOLDERH_DECL(week, uint8_t); //   Ic(  [ 1  ...   53 ]   
-            ITU_T_HOLDERH_DECL(day, uint8_t); //   Ic(  [ 1  ...   7 ]   
+            ITU_T_HOLDERH_T_DECL(year, ANY_YEAR_TYPE);
+            ITU_T_HOLDERH_T_DECL(week, uint8_t); //   Ic(  [ 1  ...   53 ]   
+            ITU_T_HOLDERH_T_DECL(day, uint8_t); //   Ic(  [ 1  ...   7 ]   
+
+            void serialize(boost::asn1::x690::output_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x690::input_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x691::output_coder& arch) {
+                ITU_T_BIND_PER(year_);
+                ITU_T_BIND_NUM_CONSTRAINT(week_, static_cast<uint8_t> (1), static_cast<uint8_t> (53));
+                ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint8_t> (1), static_cast<uint8_t> (7));
+            }
+
+            void serialize(boost::asn1::x691::input_coder& arch) {
+                ITU_T_BIND_PER(year_);
+                ITU_T_BIND_NUM_CONSTRAINT(week_, static_cast<uint8_t> (1), static_cast<uint8_t> (53));
+                ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint8_t> (1), static_cast<uint8_t> (7));
+            }
+
+            friend std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_WEEK_DAY_ENCODING& vl) {
+                return stream << "+YYYYWwwDD : " << vl.as_string();
+            };
+
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -661,7 +1100,6 @@ namespace boost {
         // sequence HOURS-ENCODING
 
         struct HOURS_ENCODING {
-
             HOURS_ENCODING();
 
             HOURS_ENCODING(const uint8_t& arg__val);
@@ -690,7 +1128,6 @@ namespace boost {
         // sequence HOURS-UTC-ENCODING
 
         struct HOURS_UTC_ENCODING {
-
             HOURS_UTC_ENCODING();
 
             HOURS_UTC_ENCODING(const uint8_t& arg__val);
@@ -719,7 +1156,6 @@ namespace boost {
         // sequence TIME-DIFFERENCE
 
         struct TIME_DIFFERENCE {
-
             static const enumerated sign_positive;
             static const enumerated sign_negative;
 
@@ -754,7 +1190,6 @@ namespace boost {
         // sequence HOURS-AND-DIFF-ENCODING
 
         struct HOURS_AND_DIFF_ENCODING {
-
             HOURS_AND_DIFF_ENCODING();
 
             HOURS_AND_DIFF_ENCODING(const uint8_t& arg__local_hours,
@@ -784,7 +1219,6 @@ namespace boost {
         // sequence MINUTES-ENCODING
 
         struct MINUTES_ENCODING {
-
             MINUTES_ENCODING();
 
             MINUTES_ENCODING(const uint8_t& arg__hours,
@@ -817,7 +1251,6 @@ namespace boost {
         // sequence MINUTES-UTC-ENCODING
 
         struct MINUTES_UTC_ENCODING {
-
             MINUTES_UTC_ENCODING();
 
             MINUTES_UTC_ENCODING(const uint8_t& arg__hours,
@@ -850,7 +1283,6 @@ namespace boost {
         // sequence MINUTES-AND-DIFF-ENCODING
 
         struct MINUTES_AND_DIFF_ENCODING {
-
             MINUTES_AND_DIFF_ENCODING();
 
             MINUTES_AND_DIFF_ENCODING(const MINUTES_ENCODING& arg__time,
@@ -885,7 +1317,6 @@ namespace boost {
         // sequence TIME-OF-DAY-ENCODING
 
         struct TIME_OF_DAY_ENCODING {
-
             TIME_OF_DAY_ENCODING();
 
             TIME_OF_DAY_ENCODING(const uint8_t& arg__hours,
@@ -917,7 +1348,6 @@ namespace boost {
         // sequence TIME-OF-DAY-UTC-ENCODING
 
         struct TIME_OF_DAY_UTC_ENCODING {
-
             TIME_OF_DAY_UTC_ENCODING();
 
             TIME_OF_DAY_UTC_ENCODING(const uint8_t& arg__hours,
@@ -950,7 +1380,6 @@ namespace boost {
         // sequence TIME-OF-DAY-AND-DIFF-ENCODING
 
         struct TIME_OF_DAY_AND_DIFF_ENCODING {
-
             TIME_OF_DAY_AND_DIFF_ENCODING();
 
             TIME_OF_DAY_AND_DIFF_ENCODING(const TIME_OF_DAY_ENCODING& arg__local_time,
@@ -1019,7 +1448,8 @@ namespace boost {
                     return base_time_duration(static_cast<int> (hours()),
                             time_detail::minute_fraction_HF(fraction(), NF()),
                             time_detail::second_fraction_HF(fraction(), NF()));
-                } catch (...) {
+                }
+                catch (...) {
                 }
                 return base_time_duration();
             }
@@ -1101,7 +1531,8 @@ namespace boost {
                     return base_time_duration(static_cast<int> (hours()),
                             time_detail::minute_fraction_HF(fraction(), NF()),
                             time_detail::second_fraction_HF(fraction(), NF()));
-                } catch (...) {
+                }
+                catch (...) {
                 }
                 return base_time_duration();
             }
@@ -1191,7 +1622,8 @@ namespace boost {
                     return base_time_duration(static_cast<int> (hours()),
                             time_detail::minute_fraction_HF(fraction(), NF()),
                             time_detail::second_fraction_HF(fraction(), NF()));
-                } catch (...) {
+                }
+                catch (...) {
                 }
                 return base_time_duration();
             }
@@ -1288,7 +1720,8 @@ namespace boost {
                 try {
                     return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()),
                             time_detail::second_fraction_HMF(fraction(), NF()));
-                } catch (...) {
+                }
+                catch (...) {
                 }
                 return base_time_duration();
             }
@@ -1381,7 +1814,8 @@ namespace boost {
                 try {
                     return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()),
                             time_detail::second_fraction_HMF(fraction(), NF()));
-                } catch (...) {
+                }
+                catch (...) {
                 }
                 return base_time_duration();
             }
@@ -1439,7 +1873,6 @@ namespace boost {
 
         template<std::size_t N = DEFAULT_TM_FRACTION >
         struct MINUTES_AND_DIFF_AND_FRACTION_ENCODING {
-
             typedef MINUTES_AND_FRACTION_ENCODING<N> MINUTES_AND_FRACTION;
 
             static std::size_t NF() {
@@ -1540,7 +1973,7 @@ namespace boost {
                     const integer_type& arg__fraction) :
             hours_(time_detail::to_range(arg__hours, (uint8_t) 0, (uint8_t) 24)),
             minutes_(time_detail::to_range(arg__minutes, (uint8_t) 0, (uint8_t) 59)),
-            seconds_(time_detail::to_range(arg__seconds, (uint8_t) 0, (uint8_t) 60)),    
+            seconds_(time_detail::to_range(arg__seconds, (uint8_t) 0, (uint8_t) 60)),
             fraction_(arg__fraction) {
             };
 
@@ -1562,9 +1995,10 @@ namespace boost {
             base_time_duration as_time() const {
                 try {
                     return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()),
-                           static_cast<int> (seconds())) + 
-                           base_microseconds(time_detail::microsecond_fraction_HMSF(fraction(), NF()));
-                } catch (...) {
+                            static_cast<int> (seconds())) +
+                            base_microseconds(time_detail::microsecond_fraction_HMSF(fraction(), NF()));
+                }
+                catch (...) {
                 }
                 return base_time_duration();
             }
@@ -1572,7 +2006,7 @@ namespace boost {
             std::string as_string() const {
                 return time_detail::to_string(static_cast<integer_type> (hours()), 2, '0') + ":" +
                         time_detail::to_string(static_cast<integer_type> (minutes()), 2, '0') + ":" +
-                        time_detail::to_string(static_cast<integer_type> (seconds()), 2, '0') + "," +                        
+                        time_detail::to_string(static_cast<integer_type> (seconds()), 2, '0') + "," +
                         time_detail::to_string(static_cast<integer_type> (fraction()), NF(), '0');
             }
 
@@ -1583,7 +2017,7 @@ namespace boost {
                 minutes(time_detail::to_range<uint8_t>(time_detail::string_to_def<int>(
                         time_detail::drct_substr(vl, 2, 2), 0, "0"), (uint8_t) 0, (uint8_t) 59));
                 seconds(time_detail::to_range<uint8_t>(time_detail::string_to_def<int>(
-                        time_detail::drct_substr(vl, 4, 2), 0, "0"), (uint8_t) 0, (uint8_t) 60));               
+                        time_detail::drct_substr(vl, 4, 2), 0, "0"), (uint8_t) 0, (uint8_t) 60));
                 fraction(time_detail::string_to_def<int>(time_detail::normalize_str_size(time_detail::drct_substr(vl, 7), NF()), 0));
             }
 
@@ -1610,7 +2044,7 @@ namespace boost {
             void serialize(boost::asn1::x691::input_coder& arch) {
                 ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
                 ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (0), static_cast<uint8_t> (59));
-                ITU_T_BIND_NUM_CONSTRAINT(seconds_, static_cast<uint8_t> (0), static_cast<uint8_t> (60));                
+                ITU_T_BIND_NUM_CONSTRAINT(seconds_, static_cast<uint8_t> (0), static_cast<uint8_t> (60));
                 ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
             }
 
@@ -1664,9 +2098,10 @@ namespace boost {
             base_time_duration as_time() const {
                 try {
                     return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()),
-                            static_cast<int> (seconds())) + 
-                           base_microseconds(time_detail::microsecond_fraction_HMSF(fraction(), NF()));
-                } catch (...) {
+                            static_cast<int> (seconds())) +
+                            base_microseconds(time_detail::microsecond_fraction_HMSF(fraction(), NF()));
+                }
+                catch (...) {
                 }
                 return base_time_duration();
             }
@@ -1674,7 +2109,7 @@ namespace boost {
             std::string as_string() const {
                 return time_detail::to_string(static_cast<integer_type> (hours()), 2, '0') + ":" +
                         time_detail::to_string(static_cast<integer_type> (minutes()), 2, '0') + ":" +
-                        time_detail::to_string(static_cast<integer_type> (seconds()), 2, '0') + "," +                        
+                        time_detail::to_string(static_cast<integer_type> (seconds()), 2, '0') + "," +
                         time_detail::to_string(static_cast<integer_type> (fraction()), NF(), '0') + "Z";
             }
 
@@ -1685,7 +2120,7 @@ namespace boost {
                 minutes(time_detail::to_range<uint8_t>(time_detail::string_to_def<int>(
                         time_detail::drct_substr(vl, 2, 2), 0, "0"), (uint8_t) 0, (uint8_t) 59));
                 seconds(time_detail::to_range<uint8_t>(time_detail::string_to_def<int>(
-                        time_detail::drct_substr(vl, 4, 2), 0, "0"), (uint8_t) 0, (uint8_t) 60));               
+                        time_detail::drct_substr(vl, 4, 2), 0, "0"), (uint8_t) 0, (uint8_t) 60));
                 fraction(time_detail::string_to_def<int>(time_detail::normalize_str_size(time_detail::drct_substr(vl, 7), NF()), 0));
             }
 
@@ -1705,14 +2140,14 @@ namespace boost {
             void serialize(boost::asn1::x691::output_coder& arch) {
                 ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
                 ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (0), static_cast<uint8_t> (59));
-                ITU_T_BIND_NUM_CONSTRAINT(seconds_, static_cast<uint8_t> (0), static_cast<uint8_t> (60));                
+                ITU_T_BIND_NUM_CONSTRAINT(seconds_, static_cast<uint8_t> (0), static_cast<uint8_t> (60));
                 ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
             }
 
             void serialize(boost::asn1::x691::input_coder& arch) {
                 ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
                 ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (0), static_cast<uint8_t> (59));
-                ITU_T_BIND_NUM_CONSTRAINT(seconds_, static_cast<uint8_t> (0), static_cast<uint8_t> (60));                
+                ITU_T_BIND_NUM_CONSTRAINT(seconds_, static_cast<uint8_t> (0), static_cast<uint8_t> (60));
                 ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
             }
 
@@ -1728,7 +2163,6 @@ namespace boost {
 
         template<std::size_t N = DEFAULT_TM_FRACTION >
         struct TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING {
-
             typedef TIME_OF_DAY_AND_FRACTION_ENCODING<N> TIME_OF_DAY_AND_FRACTION;
 
             static std::size_t NF() {
@@ -1805,17 +2239,15 @@ namespace boost {
 
             ITU_T_ARCHIVE_FUNC;
         };
-        
-        
+
+
 
         // sequence DURATION-INTERVAL-ENCODING
 
         struct DURATION_INTERVAL_ENCODING {
-
             struct Fractional_part_type;
 
             struct Fractional_part_type {
-
                 Fractional_part_type();
 
                 Fractional_part_type(const integer_type& arg__number_of_digits,
@@ -1857,7 +2289,6 @@ namespace boost {
         // sequence REC-DURATION-INTERVAL-ENCODING
 
         struct REC_DURATION_INTERVAL_ENCODING {
-
             REC_DURATION_INTERVAL_ENCODING();
 
             REC_DURATION_INTERVAL_ENCODING(const DURATION_INTERVAL_ENCODING& arg__duration);
@@ -2718,19 +3149,19 @@ namespace boost {
         // std::cout methods
 
         std::ostream& operator<<(std::ostream& stream, const CENTURY_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const ANY_CENTURY_ENCODING& vl);
+        //std::ostream& operator<<(std::ostream& stream, const ANY_CENTURY_ENCODING& vl);
         std::ostream& operator<<(std::ostream& stream, const YEAR_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_ENCODING& vl);
+        //std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_ENCODING& vl);
         std::ostream& operator<<(std::ostream& stream, const YEAR_MONTH_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_MONTH_ENCODING& vl);
+        //std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_MONTH_ENCODING& vl);
         std::ostream& operator<<(std::ostream& stream, const DATE_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const ANY_DATE_ENCODING& vl);
+        //std::ostream& operator<<(std::ostream& stream, const ANY_DATE_ENCODING& vl);
         std::ostream& operator<<(std::ostream& stream, const YEAR_DAY_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_DAY_ENCODING& vl);
+        //std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_DAY_ENCODING& vl);
         std::ostream& operator<<(std::ostream& stream, const YEAR_WEEK_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_WEEK_ENCODING& vl);
+        //std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_WEEK_ENCODING& vl);
         std::ostream& operator<<(std::ostream& stream, const YEAR_WEEK_DAY_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_WEEK_DAY_ENCODING& vl);
+        //std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_WEEK_DAY_ENCODING& vl);
         std::ostream& operator<<(std::ostream& stream, const HOURS_ENCODING& vl);
         std::ostream& operator<<(std::ostream& stream, const HOURS_UTC_ENCODING& vl);
         std::ostream& operator<<(std::ostream& stream, const HOURS_AND_DIFF_ENCODING& vl);
@@ -2797,19 +3228,19 @@ namespace boost {
         std::ostream& operator<<(std::ostream& stream, const TIME_TYPE::Time_type_type& vl);*/
 
         ITU_T_ARCHIVE_X690_DECL(CENTURY_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(ANY_CENTURY_ENCODING);
+        //ITU_T_ARCHIVE_X690_DECL(ANY_CENTURY_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(YEAR_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(ANY_YEAR_ENCODING);
+        //ITU_T_ARCHIVE_X690_DECL(ANY_YEAR_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(YEAR_MONTH_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(ANY_YEAR_MONTH_ENCODING);
+        //ITU_T_ARCHIVE_X690_DECL(ANY_YEAR_MONTH_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(DATE_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(ANY_DATE_ENCODING);
+        //ITU_T_ARCHIVE_X690_DECL(ANY_DATE_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(YEAR_DAY_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(ANY_YEAR_DAY_ENCODING);
+        //ITU_T_ARCHIVE_X690_DECL(ANY_YEAR_DAY_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(YEAR_WEEK_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(ANY_YEAR_WEEK_ENCODING);
+        //ITU_T_ARCHIVE_X690_DECL(ANY_YEAR_WEEK_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(YEAR_WEEK_DAY_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(ANY_YEAR_WEEK_DAY_ENCODING);
+        //ITU_T_ARCHIVE_X690_DECL(ANY_YEAR_WEEK_DAY_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(HOURS_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(HOURS_UTC_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(HOURS_AND_DIFF_ENCODING);
@@ -2876,19 +3307,19 @@ namespace boost {
         ITU_T_ARCHIVE_X690_DECL(TIME_TYPE::Time_type_type);*/
 
         ITU_T_ARCHIVE_X691_DECL(CENTURY_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(ANY_CENTURY_ENCODING);
+        //ITU_T_ARCHIVE_X691_DECL(ANY_CENTURY_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(YEAR_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(ANY_YEAR_ENCODING);
+        //ITU_T_ARCHIVE_X691_DECL(ANY_YEAR_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(YEAR_MONTH_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(ANY_YEAR_MONTH_ENCODING);
+        //ITU_T_ARCHIVE_X691_DECL(ANY_YEAR_MONTH_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(DATE_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(ANY_DATE_ENCODING);
+        //ITU_T_ARCHIVE_X691_DECL(ANY_DATE_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(YEAR_DAY_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(ANY_YEAR_DAY_ENCODING);
+        //ITU_T_ARCHIVE_X691_DECL(ANY_YEAR_DAY_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(YEAR_WEEK_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(ANY_YEAR_WEEK_ENCODING);
+        //ITU_T_ARCHIVE_X691_DECL(ANY_YEAR_WEEK_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(YEAR_WEEK_DAY_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(ANY_YEAR_WEEK_DAY_ENCODING);
+        //ITU_T_ARCHIVE_X691_DECL(ANY_YEAR_WEEK_DAY_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(HOURS_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(HOURS_UTC_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(HOURS_AND_DIFF_ENCODING);
@@ -2957,19 +3388,19 @@ namespace boost {
 
 
         ITU_T_INTERNAL_REGESTRATE(CENTURY_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(ANY_CENTURY_ENCODING, TYPE_TIME);
+        //ITU_T_INTERNAL_REGESTRATE(ANY_CENTURY_ENCODING, TYPE_TIME);
         ITU_T_INTERNAL_REGESTRATE(YEAR_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(ANY_YEAR_ENCODING, TYPE_TIME);
+        //ITU_T_INTERNAL_REGESTRATE(ANY_YEAR_ENCODING, TYPE_TIME);
         ITU_T_INTERNAL_REGESTRATE(YEAR_MONTH_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(ANY_YEAR_MONTH_ENCODING, TYPE_TIME);
+        //ITU_T_INTERNAL_REGESTRATE(ANY_YEAR_MONTH_ENCODING, TYPE_TIME);
         ITU_T_INTERNAL_REGESTRATE(DATE_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(ANY_DATE_ENCODING, TYPE_TIME);
+        //ITU_T_INTERNAL_REGESTRATE(ANY_DATE_ENCODING, TYPE_TIME);
         ITU_T_INTERNAL_REGESTRATE(YEAR_DAY_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(ANY_YEAR_DAY_ENCODING, TYPE_TIME);
+        //ITU_T_INTERNAL_REGESTRATE(ANY_YEAR_DAY_ENCODING, TYPE_TIME);
         ITU_T_INTERNAL_REGESTRATE(YEAR_WEEK_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(ANY_YEAR_WEEK_ENCODING, TYPE_TIME);
+        //ITU_T_INTERNAL_REGESTRATE(ANY_YEAR_WEEK_ENCODING, TYPE_TIME);
         ITU_T_INTERNAL_REGESTRATE(YEAR_WEEK_DAY_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(ANY_YEAR_WEEK_DAY_ENCODING, TYPE_TIME);
+        //ITU_T_INTERNAL_REGESTRATE(ANY_YEAR_WEEK_DAY_ENCODING, TYPE_TIME);
         ITU_T_INTERNAL_REGESTRATE(HOURS_ENCODING, TYPE_TIME);
         ITU_T_INTERNAL_REGESTRATE(HOURS_UTC_ENCODING, TYPE_TIME);
         ITU_T_INTERNAL_REGESTRATE(HOURS_AND_DIFF_ENCODING, TYPE_TIME);

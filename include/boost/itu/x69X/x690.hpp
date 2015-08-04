@@ -65,19 +65,19 @@ namespace boost {
     namespace asn1 {
 
         struct CENTURY_ENCODING;
-        struct ANY_CENTURY_ENCODING;
+        template<std::size_t N> struct ANY_CENTURY_ENCODING;
         struct YEAR_ENCODING;
-        struct ANY_YEAR_ENCODING;
+        template<std::size_t N> struct ANY_YEAR_ENCODING;
         struct YEAR_MONTH_ENCODING;
-        struct ANY_YEAR_MONTH_ENCODING;
+        template<std::size_t N> struct ANY_YEAR_MONTH_ENCODING;
         struct DATE_ENCODING;
-        struct ANY_DATE_ENCODING;
+        template<std::size_t N> struct ANY_DATE_ENCODING;
         struct YEAR_DAY_ENCODING;
-        struct ANY_YEAR_DAY_ENCODING;
+        template<std::size_t N> struct ANY_YEAR_DAY_ENCODING;
         struct YEAR_WEEK_ENCODING;
-        struct ANY_YEAR_WEEK_ENCODING;
+        template<std::size_t N> struct ANY_YEAR_WEEK_ENCODING;
         struct YEAR_WEEK_DAY_ENCODING;
-        struct ANY_YEAR_WEEK_DAY_ENCODING;
+        template<std::size_t N> struct ANY_YEAR_WEEK_DAY_ENCODING;
         struct HOURS_ENCODING;
         struct HOURS_UTC_ENCODING;
         struct HOURS_AND_DIFF_ENCODING;
@@ -261,19 +261,19 @@ namespace boost {
                 }
 
                 void operator&(const CENTURY_ENCODING& vl);
-                void operator&(const ANY_CENTURY_ENCODING& vl);
+                ITU_T_DEFINE_OUT_TIME_NTYPE(ANY_CENTURY_ENCODING);
                 void operator&(const YEAR_ENCODING& vl);
-                void operator&(const ANY_YEAR_ENCODING& vl);
+                ITU_T_DEFINE_OUT_TIME_NTYPE(ANY_YEAR_ENCODING);
                 void operator&(const YEAR_MONTH_ENCODING& vl);
-                void operator&(const ANY_YEAR_MONTH_ENCODING& vl);
+                ITU_T_DEFINE_OUT_TIME_NTYPE(ANY_YEAR_MONTH_ENCODING);
                 void operator&(const DATE_ENCODING& vl);
-                void operator&(const ANY_DATE_ENCODING& vl);
+                ITU_T_DEFINE_OUT_TIME_NTYPE(ANY_DATE_ENCODING);
                 void operator&(const YEAR_DAY_ENCODING& vl);
-                void operator&(const ANY_YEAR_DAY_ENCODING& vl);
+                ITU_T_DEFINE_OUT_TIME_NTYPE(ANY_YEAR_DAY_ENCODING);
                 void operator&(const YEAR_WEEK_ENCODING& vl);
-                void operator&(const ANY_YEAR_WEEK_ENCODING& vl);
+                ITU_T_DEFINE_OUT_TIME_NTYPE(ANY_YEAR_WEEK_ENCODING);
                 void operator&(const YEAR_WEEK_DAY_ENCODING& vl);
-                void operator&(const ANY_YEAR_WEEK_DAY_ENCODING& vl);
+                ITU_T_DEFINE_OUT_TIME_NTYPE(ANY_YEAR_WEEK_DAY_ENCODING);
                 void operator&(const HOURS_ENCODING& vl);
                 void operator&(const HOURS_UTC_ENCODING& vl);
                 void operator&(const HOURS_AND_DIFF_ENCODING& vl);
@@ -807,19 +807,19 @@ namespace boost {
                 }
 
                 void operator&(CENTURY_ENCODING& vl);
-                void operator&(ANY_CENTURY_ENCODING& vl);
+                ITU_T_DEFINE_IN_TIME_NTYPE(ANY_CENTURY_ENCODING);
                 void operator&(YEAR_ENCODING& vl);
-                void operator&(ANY_YEAR_ENCODING& vl);
+                ITU_T_DEFINE_IN_TIME_NTYPE(ANY_YEAR_ENCODING);
                 void operator&(YEAR_MONTH_ENCODING& vl);
-                void operator&(ANY_YEAR_MONTH_ENCODING& vl);
+                ITU_T_DEFINE_IN_TIME_NTYPE(ANY_YEAR_MONTH_ENCODING);
                 void operator&(DATE_ENCODING& vl);
-                void operator&(ANY_DATE_ENCODING& vl);
+                ITU_T_DEFINE_IN_TIME_NTYPE(ANY_DATE_ENCODING);
                 void operator&(YEAR_DAY_ENCODING& vl);
-                void operator&(ANY_YEAR_DAY_ENCODING& vl);
+                ITU_T_DEFINE_IN_TIME_NTYPE(ANY_YEAR_DAY_ENCODING);
                 void operator&(YEAR_WEEK_ENCODING& vl);
-                void operator&(ANY_YEAR_WEEK_ENCODING& vl);
+                ITU_T_DEFINE_IN_TIME_NTYPE(ANY_YEAR_WEEK_ENCODING);
                 void operator&(YEAR_WEEK_DAY_ENCODING& vl);
-                void operator&(ANY_YEAR_WEEK_DAY_ENCODING& vl);
+                ITU_T_DEFINE_IN_TIME_NTYPE(ANY_YEAR_WEEK_DAY_ENCODING);
                 void operator&(HOURS_ENCODING& vl);
                 void operator&(HOURS_UTC_ENCODING& vl);
                 void operator&(HOURS_AND_DIFF_ENCODING& vl);
