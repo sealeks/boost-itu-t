@@ -1562,7 +1562,8 @@ namespace boost {
             base_time_duration as_time() const {
                 try {
                     return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()),
-                           static_cast<int> (seconds()));// + base_time_duration::time_detail::second_fraction_HMSF(fraction(), NF()));
+                           static_cast<int> (seconds())) + 
+                           base_microseconds(time_detail::microsecond_fraction_HMSF(fraction(), NF()));
                 } catch (...) {
                 }
                 return base_time_duration();
@@ -1663,7 +1664,8 @@ namespace boost {
             base_time_duration as_time() const {
                 try {
                     return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()),
-                            static_cast<int> (seconds()));//, time_detail::second_fraction_HMSF(fraction(), NF()));
+                            static_cast<int> (seconds())) + 
+                           base_microseconds(time_detail::microsecond_fraction_HMSF(fraction(), NF()));
                 } catch (...) {
                 }
                 return base_time_duration();
