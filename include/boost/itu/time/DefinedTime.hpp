@@ -2282,7 +2282,7 @@ namespace boost {
             
             base_date_time as_datetime() const {
                 try {
-                    return as_date() + as_time();
+                    return base_date_time(as_date()) + as_time();
                 }
                 catch (...) {
                 }
@@ -2305,10 +2305,10 @@ namespace boost {
                 std::string vl = time_detail::normalize_time_str(v);
                 std::string::size_type it = vl.find_first_of('T');
                 std::string vll = (it == std::string::npos) ? vl : vl.substr(0, it);
-                std::string vlr = (it == std::string::npos) ? "" : vl.substr(it);
+                std::string vlr = (it == std::string::npos) ? "" : vl.substr(it+1);
                 date(DATE_TYPE(vll));
-                time(DATE_TYPE(vlr));
-            }
+                time(TIME_TYPE(vlr));
+            };
 
             ITU_T_HOLDERH_T_DECL(date, DATE_TYPE);
             ITU_T_HOLDERH_T_DECL(time, TIME_TYPE);
