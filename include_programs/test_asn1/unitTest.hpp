@@ -727,6 +727,14 @@ namespace TestTm {
         DEBUG_VAL_ITU(time_of_day_d_and_fract_enc3)
         DEBUG_VAL_ITU_TREAD(time_of_day_d_and_fract_enc3_r);        
         
+        typedef DATE_TIME_ENCODING<DATE_ENCODING, TIME_OF_DAY_ENCODING> DATE_TIME_ENC;
+        
+        DATE_TIME_ENC date_time_enc_1 ="2015-08-05T19:30:33";
+        DATE_TIME_ENC date_time_enc_1_r;
+        
+        DEBUG_VAL_ITU(date_time_enc_1)
+        DEBUG_VAL_ITU_READ(date_time_enc_1_r);        
+        
         /*std::cout << boost::asn1::time_detail::minute_fraction_HF(499,3)  << std::endl;
         std::cout << boost::asn1::time_detail::second_fraction_HF(2, 2)  << std::endl;     
         std::cout << boost::asn1::time_detail::microsecond_fraction_HF(9999, 4 )  << std::endl;        
