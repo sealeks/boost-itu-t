@@ -2245,9 +2245,102 @@ namespace boost {
 
             ITU_T_ARCHIVE_FUNC;
         };
+        
+        
+
+        // sequence TIME-OF-DAY-AND-DIFF-AND-FRACTION-ENCODING
+
+        template<typename DT,  typename TM>
+        struct DATE_TIME_ENCODING {
+            
+            typedef DT DATE_TYPE;            
+            typedef TM TIME_TYPE;
 
 
+            DATE_TIME_ENCODING() : date_(), time_() {
+            };
 
+            DATE_TIME_ENCODING(const DATE_TYPE& arg__date,
+                    const TIME_TYPE& arg__time) :
+            date_(arg__date),
+            time_(arg__time) {
+            };
+
+            DATE_TIME_ENCODING(const std::string& vl) : date_(), time_() {
+                as_string(vl);
+            };
+
+            DATE_TIME_ENCODING(const char* vl) : date_(), time_() {
+                as_string(vl);
+            };
+
+            DATE_TIME_ENCODING(const base_date_time& vl) :
+            date_( (!vl.is_special()) ? vl.date() : base_date() ),
+            time_( (!vl.is_special() && !vl.time_of_day().is_special()) ? 
+                vl.time_of_day() : base_time_duration()) {
+            };
+            
+            base_date_time as_datetime() const {
+                try {
+                    return as_date() + as_time();
+                }
+                catch (...) {
+                }
+                return base_date_time();
+            }           
+
+            base_date as_date() const {
+                return date().as_date();
+            }
+
+            base_time_duration as_time() const {
+                return time().as_time();
+            }
+
+            std::string as_string() const {
+                return date().as_string() + "T" + time().as_string();
+            }
+
+            void as_string(const std::string& v) {
+                std::string vl = time_detail::normalize_time_str(v);
+                std::string::size_type it = vl.find_first_of('T');
+                std::string vll = (it == std::string::npos) ? vl : vl.substr(0, it);
+                std::string vlr = (it == std::string::npos) ? "" : vl.substr(it);
+                date(DATE_TYPE(vll));
+                time(DATE_TYPE(vlr));
+            }
+
+            ITU_T_HOLDERH_T_DECL(date, DATE_TYPE);
+            ITU_T_HOLDERH_T_DECL(time, TIME_TYPE);
+
+            void serialize(boost::asn1::x690::output_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x690::input_coder& arch) {
+                time_serialize(*this, arch);
+            }
+
+            void serialize(boost::asn1::x691::output_coder& arch) {
+                ITU_T_BIND_PER(date_);
+                ITU_T_BIND_PER(time_);
+            }
+
+            void serialize(boost::asn1::x691::input_coder& arch) {
+                ITU_T_BIND_PER(date_);
+                ITU_T_BIND_PER(time_);
+            }
+
+            friend std::ostream& operator<<(std::ostream& stream, const DATE_TIME_ENCODING& vl) {
+                return stream << "DDDDTTTTT: "  << vl.as_string();
+            };
+
+            ITU_T_ARCHIVE_FUNC;
+        };
+
+        
+        
+        
         // sequence DURATION-INTERVAL-ENCODING
 
         struct DURATION_INTERVAL_ENCODING {
