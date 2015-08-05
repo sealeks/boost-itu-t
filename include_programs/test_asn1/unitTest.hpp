@@ -29,6 +29,7 @@
 #define DEBUG_VAL_ITU(a)  tsstr.clear(); std::cout << #a " = "  <<  a  << "    ===> ";   tsstr << a;
 #define DEBUG_VAL_ITU_READ(a)     tsstr >> a; std::cout << "read     " <<  #a " = "  <<  a << " as_dt : "  << a.as_datetime() <<  " wd:" << ((a.as_datetime().is_special()) ? 0 : (int)(a.as_datetime().date().day_of_week())) << "\n-----------------------------------------------------------------------------------\n";
 #define DEBUG_VAL_ITU_TREAD(a)     tsstr >> a; std::cout << "read     " <<  #a " = "  <<  a << " as_tm : "  << a.as_time() << "\n-----------------------------------------------------------------------------------\n";
+#define DEBUG_VAL_ITU_DREAD(a)     tsstr >> a; std::cout << "read     " <<  #a " = "  <<  a  << "\n-----------------------------------------------------------------------------------\n";
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -727,13 +728,34 @@ namespace TestTm {
         DEBUG_VAL_ITU(time_of_day_d_and_fract_enc3)
         DEBUG_VAL_ITU_TREAD(time_of_day_d_and_fract_enc3_r);        
         
-        typedef DATE_TIME_ENCODING<DATE_ENCODING, TIME_OF_DAY_ENCODING> DATE_TIME_ENC;
+        typedef DATE_TIME_ENCODING<ANY_DATE_ENCODING<4>, TIME_OF_DAY_ENCODING> DATE_TIME_ENC;
         
         DATE_TIME_ENC date_time_enc_1 ="2015-08-05T19:30:33";
         DATE_TIME_ENC date_time_enc_1_r;
         
         DEBUG_VAL_ITU(date_time_enc_1)
-        DEBUG_VAL_ITU_READ(date_time_enc_1_r);        
+        DEBUG_VAL_ITU_READ(date_time_enc_1_r);    
+        
+        
+        DURATION_INTERVAL_ENCODING durat_enc (3, 6);
+        DURATION_INTERVAL_ENCODING durat_enc1 = std::string("P1Y2M15DT12H30M0S");
+        DURATION_INTERVAL_ENCODING durat_enc2 = "P1Y2M15DT12H30M0S";
+        DURATION_INTERVAL_ENCODING durat_enc3 = "P23W";
+
+        DURATION_INTERVAL_ENCODING durat_enc_r;
+        DURATION_INTERVAL_ENCODING durat_enc1_r;
+        DURATION_INTERVAL_ENCODING durat_enc2_r;
+        DURATION_INTERVAL_ENCODING durat_enc3_r;
+
+
+        DEBUG_VAL_ITU(durat_enc)
+        DEBUG_VAL_ITU_DREAD(durat_enc_r);
+        DEBUG_VAL_ITU(durat_enc1)
+        DEBUG_VAL_ITU_DREAD(durat_enc1_r);
+        DEBUG_VAL_ITU(durat_enc2)
+        DEBUG_VAL_ITU_DREAD(durat_enc2_r);
+        DEBUG_VAL_ITU(durat_enc3)
+        DEBUG_VAL_ITU_DREAD(durat_enc3_r);        
         
         /*std::cout << boost::asn1::time_detail::minute_fraction_HF(499,3)  << std::endl;
         std::cout << boost::asn1::time_detail::second_fraction_HF(2, 2)  << std::endl;     
