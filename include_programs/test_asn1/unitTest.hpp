@@ -782,10 +782,16 @@ namespace TestTm {
         std::cout << boost::asn1::time_detail::nanosecond_fraction_HMSF(999999, 6) << std::endl;
         std::cout << boost::asn1::time_detail::nanosecond_fraction_HMSF(9999999, 7) << std::endl;
         std::cout << boost::asn1::time_detail::nanosecond_fraction_HMSF(99999999, 8) << std::endl;
-        std::cout << boost::asn1::time_detail::nanosecond_fraction_HMSF(999999999, 9) << std::endl; */
+        std::cout << boost::asn1::time_detail::nanosecond_fraction_HMSF(999999999, 9) << std::endl;
                 
         //std::cout << boost::asn1::time_detail::normalize_time_str("\"yy-yy-y:y")  << std::endl;
         
+        std::cout << "tst: =" << boost::asn1::time_detail::get_numstr_marker(std::string("P8887Y655M-42D+241H76W66S"), 'Y')  << std::endl;
+        std::cout << "tst: =" << boost::asn1::time_detail::get_numstr_marker(std::string("P8887Y655M-42D+241H76W66S"), 'M')  << std::endl;        
+         std::cout << "tst: =" << boost::asn1::time_detail::get_numstr_marker(std::string("P8887Y655M-42D+241H76W66S"), 'D')  << std::endl;        
+         std::cout << "tst: =" << boost::asn1::time_detail::get_numstr_marker(std::string("P8887Y655M-42D+241H76W66S"), 'H')  << std::endl;           
+         std::cout << "tst: =" << boost::asn1::time_detail::get_numstr_marker(std::string("TP8887Y655M-42D+241H76W66S"), 'P')  << std::endl;             
+         std::cout << "tst: =" << boost::asn1::time_detail::get_numstr_marker(std::string("P8887Y655M-42D+241H76W66S"), 'P')  << std::endl;   */         
     }
 
 }
