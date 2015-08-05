@@ -98,10 +98,18 @@ namespace boost {
             std::string revrs_substr(const std::string& vl, std::string::size_type endps = 0, std::string::size_type sz = 0);
 
             std::string revrs_substr(const visible_string& vl, std::string::size_type endps = 0, std::string::size_type sz = 0);
+            
+            
+            std::string get_str_marker(const std::string& vl, std::string::value_type markchar); 
+            
+            integer_type get_numstr_marker(const std::string& vl, std::string::value_type markchar);
+            
+            
 
             std::string normalize_str_size(const std::string& vl, std::string::size_type sz);
 
             std::string normalize_time_str(std::string vl);
+            
 
             uint64_t pow10(std::size_t n);
 
@@ -2337,6 +2345,9 @@ namespace boost {
 
             ITU_T_ARCHIVE_FUNC;
         };
+        
+        
+        
 
         
         
@@ -2344,6 +2355,7 @@ namespace boost {
         // sequence DURATION-INTERVAL-ENCODING
 
         struct DURATION_INTERVAL_ENCODING {
+            
             struct Fractional_part_type;
 
             struct Fractional_part_type {
@@ -2352,9 +2364,6 @@ namespace boost {
                 Fractional_part_type(const integer_type& arg__number_of_digits,
                         const integer_type& arg__fractional_value);
 
-                Fractional_part_type(ITU_T_SHARED(integer_type) arg__number_of_digits,
-                        ITU_T_SHARED(integer_type) arg__fractional_value);
-
                 ITU_T_HOLDERH_DECL(number_of_digits, integer_type); //   Ic(  [ 1  ...   3 ]   ...ext...) 
                 ITU_T_HOLDERH_DECL(fractional_value, integer_type); //   Ic(  [ 1  ...   999 ]   ...ext...) 
 
@@ -2362,16 +2371,28 @@ namespace boost {
             };
 
 
-            DURATION_INTERVAL_ENCODING();
 
-            DURATION_INTERVAL_ENCODING(ITU_T_SHARED(integer_type) arg__years,
-                    ITU_T_SHARED(integer_type) arg__months,
-                    ITU_T_SHARED(integer_type) arg__weeks,
-                    ITU_T_SHARED(integer_type) arg__days,
-                    ITU_T_SHARED(integer_type) arg__hours,
-                    ITU_T_SHARED(integer_type) arg__minutes,
-                    ITU_T_SHARED(integer_type) arg__seconds,
-                    ITU_T_SHARED(Fractional_part_type) arg__fractional_part);
+            DURATION_INTERVAL_ENCODING(integer_type arg__years=0,
+                    integer_type arg__months=0,
+                    integer_type arg__weeks=0,
+                    integer_type arg__days=0,
+                    integer_type arg__hours=0,
+                    integer_type arg__minutes=0,
+                    integer_type arg__seconds=0,
+                    ITU_T_SHARED(Fractional_part_type) arg__fractional_part=ITU_T_SHARED(Fractional_part_type)());
+            
+            
+            DURATION_INTERVAL_ENCODING(const std::string& vl);
+
+            DURATION_INTERVAL_ENCODING(const char* vl);
+            
+            DURATION_INTERVAL_ENCODING(const base_time_duration& vl);            
+
+            std::string as_string() const;
+            
+            void as_string(const std::string& v);   
+            
+            base_time_duration as_duration() const;         
 
             ITU_T_OPTIONAL_DECL(years, integer_type); //   Ic(  [ 0  ...   31 ]   ...ext...) 
             ITU_T_OPTIONAL_DECL(months, integer_type); //   Ic(  [ 0  ...   15 ]   ...ext...) 
@@ -2384,6 +2405,10 @@ namespace boost {
 
             ITU_T_ARCHIVE_FUNC;
         };
+        
+        
+        
+        
 
         // sequence REC-DURATION-INTERVAL-ENCODING
 
@@ -2400,6 +2425,10 @@ namespace boost {
 
             ITU_T_ARCHIVE_FUNC;
         };
+        
+        
+        
+        
 
         // choice MIXED-ENCODING
 

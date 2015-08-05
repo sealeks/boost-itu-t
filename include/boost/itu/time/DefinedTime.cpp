@@ -56,6 +56,24 @@ namespace boost {
             std::string revrs_substr(const visible_string& vl, std::string::size_type endps, std::string::size_type sz) {
                 return revrs_substr(std::string(vl.c_str()), endps, sz);
             }
+            
+            
+            
+             std::string get_str_marker(const std::string& vl, std::string::value_type markchar){
+                 std::string::size_type fit=vl.find_first_of(markchar);
+                 if (fit!=std::string::npos){
+                     std::string subvl=vl.substr(0,fit);
+                     std::string::size_type sit=subvl.find_last_not_of("0123456789+-");
+                     if (sit!=std::string::npos)
+                         return subvl.substr(sit+1);
+                     return subvl;    
+                 }
+                 return "";
+             }
+            
+            integer_type get_numstr_marker(const std::string& vl, std::string::value_type markchar) {
+                return string_to_def<integer_type>(get_str_marker(vl,markchar));
+            }              
 
             std::string normalize_str_size(const std::string& vl, std::string::size_type sz) {
                 if (vl.size() == sz)
@@ -1949,41 +1967,102 @@ namespace boost {
 
         ITU_T_HOLDERH_DEFN(TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING::local_time, local_time, TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING::Local_time_type);
         ITU_T_HOLDERH_DEFN(TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING::time_difference, time_difference, TIME_DIFFERENCE);*/
+        
+        
+        
+        
+        
 
         // sequence DURATION-INTERVAL-ENCODING
 
-        DURATION_INTERVAL_ENCODING::DURATION_INTERVAL_ENCODING() {
-        };
 
-        DURATION_INTERVAL_ENCODING::DURATION_INTERVAL_ENCODING(ITU_T_SHARED(integer_type) arg__years,
-                ITU_T_SHARED(integer_type) arg__months,
-                ITU_T_SHARED(integer_type) arg__weeks,
-                ITU_T_SHARED(integer_type) arg__days,
-                ITU_T_SHARED(integer_type) arg__hours,
-                ITU_T_SHARED(integer_type) arg__minutes,
-                ITU_T_SHARED(integer_type) arg__seconds,
+        DURATION_INTERVAL_ENCODING::DURATION_INTERVAL_ENCODING(integer_type arg__years,
+                integer_type arg__months,
+                integer_type arg__weeks,
+                integer_type arg__days,
+                integer_type arg__hours,
+                integer_type arg__minutes,
+                integer_type arg__seconds,
                 ITU_T_SHARED(Fractional_part_type) arg__fractional_part) :
-        years_(arg__years),
-        months_(arg__months),
-        weeks_(arg__weeks),
-        days_(arg__days),
-        hours_(arg__hours),
-        minutes_(arg__minutes),
-        seconds_(arg__seconds),
+        years_(arg__years ?  ITU_T_MAKE(integer_type)(arg__years) : (ITU_T_SHARED(integer_type)())),
+        months_(arg__months ?  ITU_T_MAKE(integer_type)(arg__months) : (ITU_T_SHARED(integer_type)())),
+        weeks_(arg__weeks ?  ITU_T_MAKE(integer_type)(arg__weeks) : (ITU_T_SHARED(integer_type)())),
+        days_(arg__days ?  ITU_T_MAKE(integer_type)(arg__days) : (ITU_T_SHARED(integer_type)())),
+        hours_(arg__hours ?  ITU_T_MAKE(integer_type)(arg__hours) : (ITU_T_SHARED(integer_type)())),
+        minutes_(arg__minutes ?  ITU_T_MAKE(integer_type)(arg__minutes) : (ITU_T_SHARED(integer_type)())),
+        seconds_(arg__seconds ?  ITU_T_MAKE(integer_type)(arg__seconds) : (ITU_T_SHARED(integer_type)())),
         fractional_part_(arg__fractional_part) {
         };
+
+        DURATION_INTERVAL_ENCODING::DURATION_INTERVAL_ENCODING(const std::string& vl) {
+            as_string(vl);
+        };
+
+        DURATION_INTERVAL_ENCODING::DURATION_INTERVAL_ENCODING(const char* vl) {
+            as_string(vl);
+        };
+        
+        DURATION_INTERVAL_ENCODING::DURATION_INTERVAL_ENCODING(const base_time_duration& vl){          
+        }
+
+        std::string DURATION_INTERVAL_ENCODING::as_string() const {
+            std::string rslt;
+            if (years())
+                rslt += (to_string(*years()) + "Y");
+            if (months())
+                rslt += (to_string(*months()) + "M");
+            if (weeks())
+                rslt += (to_string(*weeks()) + "W");
+            if (days())
+                rslt += (to_string(*days()) + "D");
+            if (hours() || minutes() || seconds()) {
+                rslt += "T";
+                if (hours())
+                    rslt += (to_string(*hours()) + "H");
+                if (minutes())
+                    rslt += (to_string(*minutes()) + "M");
+                if (seconds())
+                    rslt += (to_string(*seconds()) + "W");
+            } else {
+
+            }
+            return rslt;
+        }
+
+        void DURATION_INTERVAL_ENCODING::as_string(const std::string& v) {
+            std::string vl = time_detail::normalize_time_str(v);
+            std::string::size_type it = vl.find_first_of('T');
+            std::string vll = (it == std::string::npos) ? vl : vl.substr(0, it);
+            std::string vlr = (it == std::string::npos) ? "" : vl.substr(it + 1);
+            integer_type arg__years = get_numstr_marker(vll, 'Y');
+            integer_type arg__months = get_numstr_marker(vll, 'M');
+            integer_type arg__weeks = get_numstr_marker(vll, 'W');
+            integer_type arg__days = get_numstr_marker(vll, 'D');
+            integer_type arg__hours = get_numstr_marker(vlr, 'H');
+            integer_type arg__minutes = get_numstr_marker(vlr, 'M');
+            integer_type arg__seconds = get_numstr_marker(vlr, 'S');
+            years(arg__years ? ITU_T_MAKE(integer_type)(arg__years) : (ITU_T_SHARED(integer_type)()));
+            months(arg__months ? ITU_T_MAKE(integer_type)(arg__months) : (ITU_T_SHARED(integer_type)()));
+            weeks(arg__weeks ? ITU_T_MAKE(integer_type)(arg__weeks) : (ITU_T_SHARED(integer_type)()));
+            days(arg__days ? ITU_T_MAKE(integer_type)(arg__days) : (ITU_T_SHARED(integer_type)()));
+            hours(arg__hours ? ITU_T_MAKE(integer_type)(arg__hours) : (ITU_T_SHARED(integer_type)()));
+            minutes(arg__minutes ? ITU_T_MAKE(integer_type)(arg__minutes) : (ITU_T_SHARED(integer_type)()));
+            seconds(arg__seconds ? ITU_T_MAKE(integer_type)(arg__seconds) : (ITU_T_SHARED(integer_type)()));
+        }      
+        
+        base_time_duration DURATION_INTERVAL_ENCODING::as_duration() const {
+            try {
+                return base_time_duration();
+            }            catch (...) {
+            }
+            return base_time_duration();
+        }                   
 
         DURATION_INTERVAL_ENCODING::Fractional_part_type::Fractional_part_type() : number_of_digits_(), fractional_value_() {
         };
 
         DURATION_INTERVAL_ENCODING::Fractional_part_type::Fractional_part_type(const integer_type& arg__number_of_digits,
                 const integer_type& arg__fractional_value) :
-        number_of_digits_(arg__number_of_digits),
-        fractional_value_(arg__fractional_value) {
-        };
-
-        DURATION_INTERVAL_ENCODING::Fractional_part_type::Fractional_part_type(ITU_T_SHARED(integer_type) arg__number_of_digits,
-                ITU_T_SHARED(integer_type) arg__fractional_value) :
         number_of_digits_(arg__number_of_digits),
         fractional_value_(arg__fractional_value) {
         };
@@ -2001,6 +2080,12 @@ namespace boost {
         ITU_T_OPTIONAL_DEFN(DURATION_INTERVAL_ENCODING::minutes, minutes, integer_type);
         ITU_T_OPTIONAL_DEFN(DURATION_INTERVAL_ENCODING::seconds, seconds, integer_type);
         ITU_T_OPTIONAL_DEFN(DURATION_INTERVAL_ENCODING::fractional_part, fractional_part, DURATION_INTERVAL_ENCODING::Fractional_part_type);
+        
+        
+        
+        
+        
+        
 
         // sequence REC-DURATION-INTERVAL-ENCODING
 
