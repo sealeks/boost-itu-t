@@ -87,9 +87,12 @@ namespace boost {
             std::string normalize_time_str(std::string vl) {
                 boost::algorithm::erase_last(vl, "\"");
                 boost::algorithm::erase_first(vl, "\"");
+                bool hassign = (!vl.empty() && vl[0]=='-');                
                 boost::algorithm::erase_all(vl, "-");
                 boost::algorithm::erase_all(vl, ":");
                 boost::algorithm::replace_all(vl, ".", ",");
+                if (hassign)
+                   return  "-"+vl;
                 return vl;
             }
 
@@ -2002,11 +2005,11 @@ namespace boost {
             as_string(vl);
         };
         
-        DURATION_INTERVAL_ENCODING::DURATION_INTERVAL_ENCODING(const base_time_duration& vl){          
-        }
+        /*DURATION_INTERVAL_ENCODING::DURATION_INTERVAL_ENCODING(const base_time_duration& vl){          
+        }*/
 
         std::string DURATION_INTERVAL_ENCODING::as_string() const {
-            std::string rslt;
+            std::string rslt="P";
             if (years())
                 rslt += (to_string(*years()) + "Y");
             if (months())
@@ -2022,7 +2025,7 @@ namespace boost {
                 if (minutes())
                     rslt += (to_string(*minutes()) + "M");
                 if (seconds())
-                    rslt += (to_string(*seconds()) + "W");
+                    rslt += (to_string(*seconds()) + "S");
             } else {
 
             }
@@ -2050,13 +2053,15 @@ namespace boost {
             seconds(arg__seconds ? ITU_T_MAKE(integer_type)(arg__seconds) : (ITU_T_SHARED(integer_type)()));
         }      
         
-        base_time_duration DURATION_INTERVAL_ENCODING::as_duration() const {
+        /*base_duration DURATION_INTERVAL_ENCODING::as_duration() const {
             try {
+                base_duration rslt;
+                rslt.
                 return base_time_duration();
             }            catch (...) {
             }
             return base_time_duration();
-        }                   
+        }*/                   
 
         DURATION_INTERVAL_ENCODING::Fractional_part_type::Fractional_part_type() : number_of_digits_(), fractional_value_() {
         };
@@ -2092,17 +2097,37 @@ namespace boost {
         REC_DURATION_INTERVAL_ENCODING::REC_DURATION_INTERVAL_ENCODING() : duration_() {
         };
 
-        REC_DURATION_INTERVAL_ENCODING::REC_DURATION_INTERVAL_ENCODING(const DURATION_INTERVAL_ENCODING& arg__duration) :
+        REC_DURATION_INTERVAL_ENCODING::REC_DURATION_INTERVAL_ENCODING(const DURATION_INTERVAL_ENCODING& arg__duration,
+                integer_type arg__recurrence) :
+        recurrence_(arg__recurrence ? ITU_T_MAKE(integer_type)(arg__recurrence) : ITU_T_SHARED(integer_type)()),
         duration_(arg__duration) {
         };
 
-        REC_DURATION_INTERVAL_ENCODING::REC_DURATION_INTERVAL_ENCODING(ITU_T_SHARED(integer_type) arg__recurrence,
-                ITU_T_SHARED(DURATION_INTERVAL_ENCODING) arg__duration) :
-        recurrence_(arg__recurrence),
-        duration_(arg__duration) {
+        REC_DURATION_INTERVAL_ENCODING::REC_DURATION_INTERVAL_ENCODING(const std::string& vl) {
+            as_string(vl);
         };
 
+        REC_DURATION_INTERVAL_ENCODING::REC_DURATION_INTERVAL_ENCODING(const char* vl) {
+            as_string(vl);
+        };
 
+        std::string REC_DURATION_INTERVAL_ENCODING::as_string() const {
+            std::string rslt="";
+            if (recurrence())
+                rslt += ("R" + to_string(recurrence()));
+            return rslt +duration().as_string() ;
+        }
+
+        void REC_DURATION_INTERVAL_ENCODING::as_string(const std::string& v) {
+            std::string vl = time_detail::normalize_time_str(v);     
+            std::string::size_type it = vl.find_first_of('P');
+            std::string vll = (it == std::string::npos) ? vl : vl.substr(0, it+1);
+            std::string vlr = (it == std::string::npos) ? "" : vl.substr(it + 1);            
+             integer_type arg__recurrence = get_numstr_marker(vll, 'P');
+             recurrence(arg__recurrence ? ITU_T_MAKE(integer_type)(arg__recurrence) : ITU_T_SHARED(integer_type)());
+             duration(DURATION_INTERVAL_ENCODING(vlr));           
+        }
+        
         ITU_T_OPTIONAL_DEFN(REC_DURATION_INTERVAL_ENCODING::recurrence, recurrence, integer_type);
         ITU_T_HOLDERH_DEFN(REC_DURATION_INTERVAL_ENCODING::duration, duration, DURATION_INTERVAL_ENCODING);
 
@@ -2933,17 +2958,17 @@ namespace boost {
 
         // std::cout methods
 
-        std::ostream& operator<<(std::ostream& stream, const CENTURY_ENCODING& vl) {
+        /*std::ostream& operator<<(std::ostream& stream, const CENTURY_ENCODING& vl) {
             return stream << "CC : " << vl.as_string();
         };
 
-        /*std::ostream& operator<<(std::ostream& stream, const ANY_CENTURY_ENCODING& vl) {
+        std::ostream& operator<<(std::ostream& stream, const ANY_CENTURY_ENCODING& vl) {
             return stream << "+CC : " << vl.as_string();
-        };*/
+        };
 
         std::ostream& operator<<(std::ostream& stream, const YEAR_ENCODING& vl) {
             return stream << "YYYY : " << vl.as_string();
-        };
+        };*/
 
         /*std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_ENCODING& vl) {
             return stream << "+YYYY : " << vl.as_string();
@@ -3128,17 +3153,7 @@ namespace boost {
         };*/
 
         std::ostream& operator<<(std::ostream& stream, const DURATION_INTERVAL_ENCODING& vl) {
-            stream << "{ ";
-            if (vl.years()) stream << "years :  " << *(vl.years());
-            if (vl.months()) stream << ", months :  " << *(vl.months());
-            if (vl.weeks()) stream << ", weeks :  " << *(vl.weeks());
-            if (vl.days()) stream << ", days :  " << *(vl.days());
-            if (vl.hours()) stream << ", hours :  " << *(vl.hours());
-            if (vl.minutes()) stream << ", minutes :  " << *(vl.minutes());
-            if (vl.seconds()) stream << ", seconds :  " << *(vl.seconds());
-            if (vl.fractional_part()) stream << ", fractional_part :  " << *(vl.fractional_part());
-            stream << " }";
-            return stream;
+            return stream << "P: " << vl.as_string();
         };
 
         std::ostream& operator<<(std::ostream& stream, const DURATION_INTERVAL_ENCODING::Fractional_part_type& vl) {

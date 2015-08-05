@@ -12,7 +12,7 @@
 #pragma warning(disable: 4065)
 #endif
 
-
+#define ITU_T_TIME_COUTTP_FN( nm)  friend std::ostream& operator<<(std::ostream& stream, const nm & vl) {return stream <<  vl.format() << " : " << vl.as_string();};
 
 namespace boost {
     namespace asn1 {
@@ -25,6 +25,7 @@ namespace boost {
 
         const std::size_t DEFAULT_YEAR_FRACTION = 4;
         const std::size_t MAX_YEAR_FRACTION = 12;
+        
 
         namespace time_detail {
 
@@ -218,6 +219,12 @@ namespace boost {
             std::string as_string() const;
 
             void as_string(const std::string& vl);
+            
+            std::string format() const {
+                return "CC";
+            }         
+            
+            ITU_T_TIME_COUTTP_FN( CENTURY_ENCODING);
 
             ITU_T_HOLDERH_DECL(as_number, uint8_t); //   Ic(  [ 0  ...   99 ]   
 
@@ -304,9 +311,11 @@ namespace boost {
                 ITU_T_BIND_PER(as_number_);
             }
 
-            friend std::ostream& operator<<(std::ostream& stream, const ANY_CENTURY_ENCODING& vl) {
-                return stream << "+CC : " << vl.as_string();
-            };
+            std::string format() const {
+                return std::string( (NF() ? NF() : 1), 'C');
+            }         
+            
+            ITU_T_TIME_COUTTP_FN(ANY_CENTURY_ENCODING);            
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -354,6 +363,12 @@ namespace boost {
             std::string as_string() const;
 
             void as_string(const std::string & vl);
+            
+            std::string format() const {
+                return "YYYY";
+            }         
+            
+            ITU_T_TIME_COUTTP_FN( YEAR_ENCODING);            
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -437,9 +452,11 @@ namespace boost {
                 ITU_T_BIND_PER(as_number_);
             }
 
-            friend std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_ENCODING& vl) {
-                return stream << "+YYYY : " << vl.as_string();
-            };
+            std::string format() const {
+                return std::string( (NF() ? NF() : 1), 'Y');
+            }         
+            
+            ITU_T_TIME_COUTTP_FN(ANY_YEAR_ENCODING);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -2386,13 +2403,13 @@ namespace boost {
 
             DURATION_INTERVAL_ENCODING(const char* vl);
             
-            DURATION_INTERVAL_ENCODING(const base_time_duration& vl);            
+            //DURATION_INTERVAL_ENCODING(const base_duration& vl);            
 
             std::string as_string() const;
             
             void as_string(const std::string& v);   
             
-            base_time_duration as_duration() const;         
+            //base_duration as_duration() const;         
 
             ITU_T_OPTIONAL_DECL(years, integer_type); //   Ic(  [ 0  ...   31 ]   ...ext...) 
             ITU_T_OPTIONAL_DECL(months, integer_type); //   Ic(  [ 0  ...   15 ]   ...ext...) 
@@ -2409,17 +2426,26 @@ namespace boost {
         
         
         
+        
+        
 
         // sequence REC-DURATION-INTERVAL-ENCODING
 
         struct REC_DURATION_INTERVAL_ENCODING {
             REC_DURATION_INTERVAL_ENCODING();
 
-            REC_DURATION_INTERVAL_ENCODING(const DURATION_INTERVAL_ENCODING& arg__duration);
+            REC_DURATION_INTERVAL_ENCODING(
+                          const DURATION_INTERVAL_ENCODING& arg__duration,
+                          integer_type arg__recurrence = 0);
 
-            REC_DURATION_INTERVAL_ENCODING(ITU_T_SHARED(integer_type) arg__recurrence,
-                    ITU_T_SHARED(DURATION_INTERVAL_ENCODING) arg__duration);
+            REC_DURATION_INTERVAL_ENCODING(const std::string& vl);
 
+            REC_DURATION_INTERVAL_ENCODING(const char* vl);       
+
+            std::string as_string() const;
+            
+            void as_string(const std::string& v);               
+            
             ITU_T_OPTIONAL_DECL(recurrence, integer_type);
             ITU_T_HOLDERH_DECL(duration, DURATION_INTERVAL_ENCODING);
 
@@ -3355,9 +3381,9 @@ namespace boost {
         std::ostream& operator<<(std::ostream& stream, const TIME_TYPE& vl);
         std::ostream& operator<<(std::ostream& stream, const TIME_TYPE::Time_type_type& vl);*/
 
-        ITU_T_ARCHIVE_X690_DECL(CENTURY_ENCODING);
+        //ITU_T_ARCHIVE_X690_DECL(CENTURY_ENCODING);
         //ITU_T_ARCHIVE_X690_DECL(ANY_CENTURY_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(YEAR_ENCODING);
+        //ITU_T_ARCHIVE_X690_DECL(YEAR_ENCODING);
         //ITU_T_ARCHIVE_X690_DECL(ANY_YEAR_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(YEAR_MONTH_ENCODING);
         //ITU_T_ARCHIVE_X690_DECL(ANY_YEAR_MONTH_ENCODING);
