@@ -2958,61 +2958,6 @@ namespace boost {
 
         // std::cout methods
 
-        /*std::ostream& operator<<(std::ostream& stream, const CENTURY_ENCODING& vl) {
-            return stream << "CC : " << vl.as_string();
-        };
-
-        std::ostream& operator<<(std::ostream& stream, const ANY_CENTURY_ENCODING& vl) {
-            return stream << "+CC : " << vl.as_string();
-        };
-
-        std::ostream& operator<<(std::ostream& stream, const YEAR_ENCODING& vl) {
-            return stream << "YYYY : " << vl.as_string();
-        };*/
-
-        /*std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_ENCODING& vl) {
-            return stream << "+YYYY : " << vl.as_string();
-        };*/
-
-        std::ostream& operator<<(std::ostream& stream, const YEAR_MONTH_ENCODING& vl) {
-            return stream << "YYYYMM : " << vl.as_string();
-        };
-
-        /*std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_MONTH_ENCODING& vl) {
-            return stream << "+YYYYMM : " << vl.as_string();
-        };*/
-
-        std::ostream& operator<<(std::ostream& stream, const DATE_ENCODING& vl) {
-            return stream << "YYYYMMDD : " << vl.as_string();
-        };
-
-        /*std::ostream& operator<<(std::ostream& stream, const ANY_DATE_ENCODING& vl) {
-            return stream << "+YYYYMMDD : " << vl.as_string();
-        };*/
-
-        std::ostream& operator<<(std::ostream& stream, const YEAR_DAY_ENCODING& vl) {
-            return stream << "YYYYDDD : " << vl.as_string();
-        };
-
-        /*std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_DAY_ENCODING& vl) {
-            return stream << "+YYYYDDD : " << vl.as_string();
-        };*/
-
-        std::ostream& operator<<(std::ostream& stream, const YEAR_WEEK_ENCODING& vl) {
-            return stream << "YYYYWww : " << vl.as_string();
-        };
-
-        /*std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_WEEK_ENCODING& vl) {
-            return stream << "++YYYYWww : " << vl.as_string();
-        };*/
-
-        std::ostream& operator<<(std::ostream& stream, const YEAR_WEEK_DAY_ENCODING& vl) {
-            return stream << "YYYYWwwDD : " << vl.as_string();
-        };
-
-        /*std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_WEEK_DAY_ENCODING& vl) {
-            return stream << "+YYYYWwwDD : " << vl.as_string();
-        };*/
 
         std::ostream& operator<<(std::ostream& stream, const HOURS_ENCODING& vl) {
             return stream << "hh: " << vl.as_string();

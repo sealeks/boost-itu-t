@@ -220,7 +220,7 @@ namespace boost {
 
             void as_string(const std::string& vl);
             
-            std::string format() const {
+            std::string format() const  {
                 return "CC";
             }         
             
@@ -492,6 +492,12 @@ namespace boost {
 
             ITU_T_HOLDERH_DECL(year, YEAR_ENCODING);
             ITU_T_HOLDERH_DECL(month, uint8_t); //   Ic(  [ 1  ...   12 ]   
+            
+            std::string format() const  {
+                return year().format()+"-MM";
+            }         
+            
+            ITU_T_TIME_COUTTP_FN( YEAR_MONTH_ENCODING);               
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -582,10 +588,12 @@ namespace boost {
                 ITU_T_BIND_PER(year_);
                 ITU_T_BIND_NUM_CONSTRAINT(month_, static_cast<uint8_t> (1), static_cast<uint8_t> (12));
             }
-
-            friend std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_MONTH_ENCODING& vl) {
-                return stream << "+YYYYMM : " << vl.as_string();
-            };
+            
+            std::string format() const  {
+                return year().format()+"-MM";
+            }         
+            
+            ITU_T_TIME_COUTTP_FN( ANY_YEAR_MONTH_ENCODING);                 
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -619,6 +627,12 @@ namespace boost {
             ITU_T_HOLDERH_DECL(year, YEAR_ENCODING);
             ITU_T_HOLDERH_DECL(month, uint8_t); //   Ic(  [ 1  ...   12 ]   
             ITU_T_HOLDERH_DECL(day, uint8_t); //   Ic(  [ 1  ...   31 ]   
+            
+            std::string format() const  {
+                return year().format()+"-MM-DD";
+            }         
+            
+            ITU_T_TIME_COUTTP_FN( DATE_ENCODING);                 
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -717,10 +731,12 @@ namespace boost {
                 ITU_T_BIND_NUM_CONSTRAINT(month_, static_cast<uint8_t> (1), static_cast<uint8_t> (12));
                 ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint8_t> (1), static_cast<uint8_t> (31));
             }
-
-            friend std::ostream& operator<<(std::ostream& stream, const ANY_DATE_ENCODING& vl) {
-                return stream << "+YYYYMMDD : " << vl.as_string();
-            };
+            
+            std::string format() const  {
+                return year().format()+"-MM-DD";
+            }         
+            
+            ITU_T_TIME_COUTTP_FN( ANY_DATE_ENCODING);                 
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -753,6 +769,12 @@ namespace boost {
 
             ITU_T_HOLDERH_DECL(year, YEAR_ENCODING);
             ITU_T_HOLDERH_DECL(day, uint16_t); //   Ic(  [ 1  ...   366 ]   
+            
+            std::string format() const  {
+                return year().format()+"-DDD";
+            }         
+            
+            ITU_T_TIME_COUTTP_FN( YEAR_DAY_ENCODING);                   
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -845,9 +867,12 @@ namespace boost {
                 ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint16_t> (1), static_cast<uint16_t> (366));
             }
 
-            friend std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_DAY_ENCODING& vl) {
-                return stream << "+YYYYDDD : " << vl.as_string();
-            };
+            
+            std::string format() const  {
+                return year().format()+"-DDD";
+            }         
+            
+            ITU_T_TIME_COUTTP_FN( ANY_YEAR_DAY_ENCODING);  
 
 
             ITU_T_ARCHIVE_FUNC;
@@ -881,6 +906,13 @@ namespace boost {
 
             ITU_T_HOLDERH_DECL(year, YEAR_ENCODING);
             ITU_T_HOLDERH_DECL(week, uint8_t); //   Ic(  [ 1  ...   53 ]   
+            
+            
+            std::string format() const  {
+                return year().format()+"-Www";
+            }         
+            
+            ITU_T_TIME_COUTTP_FN( YEAR_WEEK_ENCODING);                  
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -976,9 +1008,11 @@ namespace boost {
                 ITU_T_BIND_NUM_CONSTRAINT(week_, static_cast<uint8_t> (1), static_cast<uint8_t> (53));
             }
 
-            friend std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_WEEK_ENCODING& vl) {
-                return stream << "++YYYYWww : " << vl.as_string();
-            };
+            std::string format() const  {
+                return year().format()+"-Www";
+            }         
+            
+            ITU_T_TIME_COUTTP_FN( ANY_YEAR_WEEK_ENCODING);    
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -1013,6 +1047,12 @@ namespace boost {
             ITU_T_HOLDERH_DECL(year, YEAR_ENCODING);
             ITU_T_HOLDERH_DECL(week, uint8_t); //   Ic(  [ 1  ...   53 ]   
             ITU_T_HOLDERH_DECL(day, uint8_t); //   Ic(  [ 1  ...   7 ]   
+            
+            std::string format() const  {
+                return year().format()+"-Www-D";
+            }         
+            
+            ITU_T_TIME_COUTTP_FN( YEAR_WEEK_DAY_ENCODING);                
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -1116,9 +1156,12 @@ namespace boost {
                 ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint8_t> (1), static_cast<uint8_t> (7));
             }
 
-            friend std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_WEEK_DAY_ENCODING& vl) {
-                return stream << "+YYYYWwwDD : " << vl.as_string();
-            };
+            
+            std::string format() const  {
+                return year().format()+"-Www-D";
+            }         
+            
+            ITU_T_TIME_COUTTP_FN( ANY_YEAR_WEEK_DAY_ENCODING);    
 
 
             ITU_T_ARCHIVE_FUNC;
@@ -3302,19 +3345,19 @@ namespace boost {
 
         // std::cout methods
 
-        std::ostream& operator<<(std::ostream& stream, const CENTURY_ENCODING& vl);
+        //std::ostream& operator<<(std::ostream& stream, const CENTURY_ENCODING& vl);
         //std::ostream& operator<<(std::ostream& stream, const ANY_CENTURY_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const YEAR_ENCODING& vl);
+        //std::ostream& operator<<(std::ostream& stream, const YEAR_ENCODING& vl);
         //std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const YEAR_MONTH_ENCODING& vl);
+        //std::ostream& operator<<(std::ostream& stream, const YEAR_MONTH_ENCODING& vl);
         //std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_MONTH_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const DATE_ENCODING& vl);
+       //std::ostream& operator<<(std::ostream& stream, const DATE_ENCODING& vl);
         //std::ostream& operator<<(std::ostream& stream, const ANY_DATE_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const YEAR_DAY_ENCODING& vl);
+        //std::ostream& operator<<(std::ostream& stream, const YEAR_DAY_ENCODING& vl);
         //std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_DAY_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const YEAR_WEEK_ENCODING& vl);
+        //std::ostream& operator<<(std::ostream& stream, const YEAR_WEEK_ENCODING& vl);
         //std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_WEEK_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const YEAR_WEEK_DAY_ENCODING& vl);
+        //std::ostream& operator<<(std::ostream& stream, const YEAR_WEEK_DAY_ENCODING& vl);
         //std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_WEEK_DAY_ENCODING& vl);
         std::ostream& operator<<(std::ostream& stream, const HOURS_ENCODING& vl);
         std::ostream& operator<<(std::ostream& stream, const HOURS_UTC_ENCODING& vl);
