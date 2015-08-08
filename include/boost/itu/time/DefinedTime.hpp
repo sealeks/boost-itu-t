@@ -3381,9 +3381,9 @@ namespace boost {
         std::ostream& operator<<(std::ostream& stream, const TIME_TYPE& vl);
         std::ostream& operator<<(std::ostream& stream, const TIME_TYPE::Time_type_type& vl);*/
 
-        //ITU_T_ARCHIVE_X690_DECL(CENTURY_ENCODING);
+        ITU_T_ARCHIVE_X690_DECL(CENTURY_ENCODING);
         //ITU_T_ARCHIVE_X690_DECL(ANY_CENTURY_ENCODING);
-        //ITU_T_ARCHIVE_X690_DECL(YEAR_ENCODING);
+        ITU_T_ARCHIVE_X690_DECL(YEAR_ENCODING);
         //ITU_T_ARCHIVE_X690_DECL(ANY_YEAR_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(YEAR_MONTH_ENCODING);
         //ITU_T_ARCHIVE_X690_DECL(ANY_YEAR_MONTH_ENCODING);
