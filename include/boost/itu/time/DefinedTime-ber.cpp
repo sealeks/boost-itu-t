@@ -13,7 +13,7 @@ namespace boost {
 
         // sequence DURATION-INTERVAL-ENCODING
 
-        template<> void DURATION_INTERVAL_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
+        /*template<> void DURATION_INTERVAL_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
             ITU_T_BIND_IMPLICIT(years_, 0, CONTEXT_CLASS);
             ITU_T_BIND_IMPLICIT(months_, 1, CONTEXT_CLASS);
             ITU_T_BIND_IMPLICIT(weeks_, 2, CONTEXT_CLASS);
@@ -45,7 +45,7 @@ namespace boost {
         template<> void DURATION_INTERVAL_ENCODING::Fractional_part_type::serialize(boost::asn1::x690::input_coder& arch) {
             ITU_T_BIND_IMPLICIT(number_of_digits_, 0, CONTEXT_CLASS);
             ITU_T_BIND_IMPLICIT(fractional_value_, 1, CONTEXT_CLASS);
-        }
+        }*/
 
         // sequence REC-DURATION-INTERVAL-ENCODING
 

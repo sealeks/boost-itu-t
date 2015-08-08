@@ -56,24 +56,22 @@ namespace boost {
             std::string revrs_substr(const visible_string& vl, std::string::size_type endps, std::string::size_type sz) {
                 return revrs_substr(std::string(vl.c_str()), endps, sz);
             }
-            
-            
-            
-             std::string get_str_marker(const std::string& vl, std::string::value_type markchar){
-                 std::string::size_type fit=vl.find_first_of(markchar);
-                 if (fit!=std::string::npos){
-                     std::string subvl=vl.substr(0,fit);
-                     std::string::size_type sit=subvl.find_last_not_of("0123456789+-");
-                     if (sit!=std::string::npos)
-                         return subvl.substr(sit+1);
-                     return subvl;    
-                 }
-                 return "";
-             }
-            
+
+            std::string get_str_marker(const std::string& vl, std::string::value_type markchar) {
+                std::string::size_type fit = vl.find_first_of(markchar);
+                if (fit != std::string::npos) {
+                    std::string subvl = vl.substr(0, fit);
+                    std::string::size_type sit = subvl.find_last_not_of("0123456789+-");
+                    if (sit != std::string::npos)
+                        return subvl.substr(sit + 1);
+                    return subvl;
+                }
+                return "";
+            }
+
             integer_type get_numstr_marker(const std::string& vl, std::string::value_type markchar) {
-                return string_to_def<integer_type>(get_str_marker(vl,markchar));
-            }              
+                return string_to_def<integer_type>(get_str_marker(vl, markchar));
+            }
 
             std::string normalize_str_size(const std::string& vl, std::string::size_type sz) {
                 if (vl.size() == sz)
@@ -87,12 +85,12 @@ namespace boost {
             std::string normalize_time_str(std::string vl) {
                 boost::algorithm::erase_last(vl, "\"");
                 boost::algorithm::erase_first(vl, "\"");
-                bool hassign = (!vl.empty() && vl[0]=='-');                
+                bool hassign = (!vl.empty() && vl[0] == '-');
                 boost::algorithm::erase_all(vl, "-");
                 boost::algorithm::erase_all(vl, ":");
                 boost::algorithm::replace_all(vl, ".", ",");
                 if (hassign)
-                   return  "-"+vl;
+                    return "-" + vl;
                 return vl;
             }
 
@@ -120,7 +118,7 @@ namespace boost {
             std::size_t second_fraction_HF(integer_type f, std::size_t n) {
                 if (n > 1)
                     return ((static_cast<uint64_t> (f) * 36) /
-                            static_cast<uint64_t> (pow10(n - 2))) % 60;
+                        static_cast<uint64_t> (pow10(n - 2))) % 60;
                 return 0;
             }
 
@@ -260,8 +258,7 @@ namespace boost {
         base_date_time CENTURY_ENCODING::as_datetime() const {
             try {
                 return base_date_time(base_date(static_cast<int> (as_number())*100, 1, 1));
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return base_date_time();
         }
@@ -269,8 +266,7 @@ namespace boost {
         base_date CENTURY_ENCODING::as_date() const {
             try {
                 return base_date(static_cast<int> (as_number())*100, 1, 1);
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return base_date();
         }
@@ -282,7 +278,7 @@ namespace boost {
         void CENTURY_ENCODING::as_string(const std::string& v) {
             std::string vl = normalize_time_str(v);
             as_number(to_range<uint8_t>(string_to_def<int>(revrs_substr(vl, 1), 0, "0"),
-                                        (uint8_t) 0, (uint8_t) 99));
+                    (uint8_t) 0, (uint8_t) 99));
         }
 
 
@@ -405,8 +401,7 @@ namespace boost {
         base_date_time YEAR_ENCODING::as_datetime() const {
             try {
                 return base_date_time(base_date(static_cast<int> (as_number()), 1, 1));
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return base_date_time();
         }
@@ -414,8 +409,7 @@ namespace boost {
         base_date YEAR_ENCODING::as_date() const {
             try {
                 return base_date(static_cast<int> (as_number()), 1, 1);
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return base_date();
         }
@@ -427,7 +421,7 @@ namespace boost {
         void YEAR_ENCODING::as_string(const std::string& v) {
             std::string vl = normalize_time_str(v);
             as_number(to_range<integer_type>(string_to_def<int>(vl, 0, "0"),
-                                             (integer_type) 0, (integer_type) 9999));
+                    (integer_type) 0, (integer_type) 9999));
         }
 
 
@@ -516,8 +510,7 @@ namespace boost {
         base_date_time YEAR_MONTH_ENCODING::as_datetime() const {
             try {
                 return base_date_time(base_date(static_cast<int> (year().as_number()), (int) month(), 1));
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return base_date_time();
         }
@@ -525,8 +518,7 @@ namespace boost {
         base_date YEAR_MONTH_ENCODING::as_date() const {
             try {
                 return base_date(static_cast<int> (year().as_number()), (int) month(), 1);
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return base_date();
         }
@@ -637,8 +629,7 @@ namespace boost {
         base_date_time DATE_ENCODING::as_datetime() const {
             try {
                 return base_date_time(base_date(static_cast<int> (year().as_number()), (int) month(), (int) day()));
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return base_date_time();
         }
@@ -646,8 +637,7 @@ namespace boost {
         base_date DATE_ENCODING::as_date() const {
             try {
                 return base_date(static_cast<int> (year().as_number()), (int) month(), (int) day());
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return base_date();
         }
@@ -669,7 +659,64 @@ namespace boost {
         ITU_T_HOLDERH_DEFN(DATE_ENCODING::day, day, uint8_t);
 
 
+        // sequence DATE-ENCODING
 
+        DATE::DATE() : year_(), month_(1), day_(1) {
+        };
+
+        DATE::DATE(integer_type arg__year,
+                const uint8_t& arg__month,
+                const uint8_t& arg__day) :
+        year_(arg__year),
+        month_(to_range<uint8_t>(arg__month, (uint8_t) 1, (uint8_t) 12)),
+        day_(to_range<uint8_t>(arg__day, (uint8_t) 1, (uint8_t) 31)) {
+        };
+
+        DATE::DATE(const std::string& vl) : year_(), month_(1), day_(1) {
+            as_string(vl);
+        }
+
+        DATE::DATE(const char* vl) : year_(), month_(1), day_(1) {
+            as_string(vl);
+        }
+
+        DATE::DATE(const base_date_time& vl) :
+        year_(vl.is_special() ? 0 : (integer_type) vl.date().year()),
+        month_(vl.is_special() ? 1 : (uint8_t) vl.date().month()),
+        day_(vl.is_special() ? 1 : (uint8_t) vl.date().day()) {
+        }
+
+        base_date_time DATE::as_datetime() const {
+            try {
+                return base_date_time(base_date(static_cast<int> (year().as_number()), (int) month(), (int) day()));
+            }            catch (...) {
+            }
+            return base_date_time();
+        }
+
+        base_date DATE::as_date() const {
+            try {
+                return base_date(static_cast<int> (year().as_number()), (int) month(), (int) day());
+            }            catch (...) {
+            }
+            return base_date();
+        }
+
+        std::string DATE::as_string() const {
+            return year().as_string() + "-" + to_string(static_cast<int> (month()), 2, '0') +
+                    "-" + to_string(static_cast<int> (day()), 2, '0');
+        }
+
+        void DATE::as_string(const std::string& v) {
+            std::string vl = normalize_time_str(v);
+            year(revrs_substr(vl, 4));
+            month(to_range<uint8_t>(string_to_def<int>(revrs_substr(vl, 2, 2)), (uint8_t) 1, (uint8_t) 12));
+            day(to_range<uint8_t>(string_to_def<int>(revrs_substr(vl, 0, 2)), (uint8_t) 1, (uint8_t) 31));
+        }
+
+        ITU_T_HOLDERH_DEFN(DATE::year, year, YEAR_ENCODING);
+        ITU_T_HOLDERH_DEFN(DATE::month, month, uint8_t);
+        ITU_T_HOLDERH_DEFN(DATE::day, day, uint8_t);
 
 
         // sequence ANY-DATE-ENCODING
@@ -763,8 +810,7 @@ namespace boost {
             try {
                 return base_date_time(base_date(static_cast<int> (year().as_number()), 1, 1)) +
                         base_date_time::date_duration_type(day() ? day() - 1 : 0);
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return base_date_time();
         }
@@ -773,8 +819,7 @@ namespace boost {
             try {
                 return base_date(static_cast<int> (year().as_number()), 1, 1) +
                         base_date_time::date_duration_type(day() ? day() - 1 : 0);
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return base_date();
         }
@@ -887,8 +932,7 @@ namespace boost {
                 std::size_t dwst = (std::size_t)tmp.day_of_week();
                 return base_date_time(tmp) + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
                         base_date_time::date_duration_type((week() > 1) ? (7 * (week() - 1)) : 0);
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return base_date_time();
         }
@@ -899,8 +943,7 @@ namespace boost {
                 std::size_t dwst = (std::size_t)tmp.day_of_week();
                 return tmp + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
                         base_date_time::date_duration_type((week() > 1) ? (7 * (week() - 1)) : 0);
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return base_date();
         }
@@ -1021,8 +1064,7 @@ namespace boost {
                 std::size_t dwst = (std::size_t)tmp.day_of_week();
                 return base_date_time(tmp) + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
                         base_date_time::date_duration_type(((week() > 1) ? (7 * (week() - 1)) : 0) + ((day() > 1) ? (day() - 1) : 0));
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return base_date_time();
         }
@@ -1033,8 +1075,7 @@ namespace boost {
                 std::size_t dwst = (std::size_t)tmp.day_of_week();
                 return tmp + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
                         base_date_time::date_duration_type(((week() > 1) ? (7 * (week() - 1)) : 0) + ((day() > 1) ? (day() - 1) : 0));
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return base_date();
         }
@@ -1155,8 +1196,7 @@ namespace boost {
         base_time_duration HOURS_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (as_number()), 0, 0);
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return base_time_duration();
         }
@@ -1203,8 +1243,7 @@ namespace boost {
         base_time_duration HOURS_UTC_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (as_number()), 0, 0);
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return base_time_duration();
         }
@@ -1316,8 +1355,7 @@ namespace boost {
         base_time_duration HOURS_AND_DIFF_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (local_hours()), 0, 0);
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return base_time_duration();
         }
@@ -1370,8 +1408,7 @@ namespace boost {
         base_time_duration MINUTES_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()), 0);
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return base_time_duration();
         }
@@ -1426,8 +1463,7 @@ namespace boost {
         base_time_duration MINUTES_UTC_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()), 0);
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return base_time_duration();
         }
@@ -1488,8 +1524,7 @@ namespace boost {
         base_time_duration MINUTES_AND_DIFF_ENCODING::as_time() const {
             try {
                 return local_time().as_time();
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return base_time_duration();
         }
@@ -1545,8 +1580,7 @@ namespace boost {
         base_time_duration TIME_OF_DAY_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()), static_cast<int> (seconds()));
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return base_time_duration();
         }
@@ -1567,6 +1601,64 @@ namespace boost {
         ITU_T_HOLDERH_DEFN(TIME_OF_DAY_ENCODING::hours, hours, uint8_t);
         ITU_T_HOLDERH_DEFN(TIME_OF_DAY_ENCODING::minutes, minutes, uint8_t);
         ITU_T_HOLDERH_DEFN(TIME_OF_DAY_ENCODING::seconds, seconds, uint8_t);
+
+
+
+
+
+        // sequence TIME-OF-DAY
+
+        TIME_OF_DAY::TIME_OF_DAY() : hours_(), minutes_(), seconds_() {
+        };
+
+        TIME_OF_DAY::TIME_OF_DAY(const uint8_t& arg__hours,
+                const uint8_t& arg__minutes,
+                const uint8_t& arg__seconds) :
+        hours_(to_range(arg__hours, (uint8_t) 0, (uint8_t) 24)),
+        minutes_(to_range(arg__minutes, (uint8_t) 0, (uint8_t) 59)),
+        seconds_(to_range(arg__seconds, (uint8_t) 0, (uint8_t) 60)) {
+        };
+
+        TIME_OF_DAY::TIME_OF_DAY(const std::string& vl) :
+        hours_(), minutes_(), seconds_() {
+            as_string(vl);
+        };
+
+        TIME_OF_DAY::TIME_OF_DAY(const char* vl) :
+        hours_(), minutes_(), seconds_() {
+            as_string(vl);
+        };
+
+        TIME_OF_DAY::TIME_OF_DAY(const base_time_duration& vl) :
+        hours_(to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)),
+        minutes_(to_range<uint8_t>(vl.is_special() ? 0 : vl.minutes(), (uint8_t) 0, (uint8_t) 59)),
+        seconds_(to_range<uint8_t>(vl.is_special() ? 0 : vl.seconds(), (uint8_t) 0, (uint8_t) 60)) {
+        };
+
+        base_time_duration TIME_OF_DAY::as_time() const {
+            try {
+                return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()), static_cast<int> (seconds()));
+            }            catch (...) {
+            }
+            return base_time_duration();
+        }
+
+        std::string TIME_OF_DAY::as_string() const {
+            return to_string(static_cast<int> (hours()), 2, '0') + ":" +
+                    to_string(static_cast<int> (minutes()), 2, '0') + ":" +
+                    to_string(static_cast<int> (seconds()), 2, '0');
+        }
+
+        void TIME_OF_DAY::as_string(const std::string& v) {
+            std::string vl = normalize_time_str(v);
+            hours(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 0, 2), 0, "0"), (uint8_t) 0, (uint8_t) 24));
+            minutes(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 2, 2), 0, "0"), (uint8_t) 0, (uint8_t) 59));
+            seconds(to_range<uint8_t>(string_to_def<int>(drct_substr(vl, 4, 2), 0, "0"), (uint8_t) 0, (uint8_t) 60));
+        }
+
+        ITU_T_HOLDERH_DEFN(TIME_OF_DAY::hours, hours, uint8_t);
+        ITU_T_HOLDERH_DEFN(TIME_OF_DAY::minutes, minutes, uint8_t);
+        ITU_T_HOLDERH_DEFN(TIME_OF_DAY::seconds, seconds, uint8_t);
 
 
 
@@ -1605,8 +1697,7 @@ namespace boost {
         base_time_duration TIME_OF_DAY_UTC_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()), static_cast<int> (seconds()));
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return base_time_duration();
         }
@@ -1669,8 +1760,7 @@ namespace boost {
         base_time_duration TIME_OF_DAY_AND_DIFF_ENCODING::as_time() const {
             try {
                 return local_time().as_time();
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return base_time_duration();
         }
@@ -1970,14 +2060,13 @@ namespace boost {
 
         ITU_T_HOLDERH_DEFN(TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING::local_time, local_time, TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING::Local_time_type);
         ITU_T_HOLDERH_DEFN(TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING::time_difference, time_difference, TIME_DIFFERENCE);*/
-        
-        
-        
-        
-        
+
+
+
+
+
 
         // sequence DURATION-INTERVAL-ENCODING
-
 
         DURATION_INTERVAL_ENCODING::DURATION_INTERVAL_ENCODING(integer_type arg__years,
                 integer_type arg__months,
@@ -1987,13 +2076,13 @@ namespace boost {
                 integer_type arg__minutes,
                 integer_type arg__seconds,
                 ITU_T_SHARED(Fractional_part_type) arg__fractional_part) :
-        years_(arg__years ?  ITU_T_MAKE(integer_type)(arg__years) : (ITU_T_SHARED(integer_type)())),
-        months_(arg__months ?  ITU_T_MAKE(integer_type)(arg__months) : (ITU_T_SHARED(integer_type)())),
-        weeks_(arg__weeks ?  ITU_T_MAKE(integer_type)(arg__weeks) : (ITU_T_SHARED(integer_type)())),
-        days_(arg__days ?  ITU_T_MAKE(integer_type)(arg__days) : (ITU_T_SHARED(integer_type)())),
-        hours_(arg__hours ?  ITU_T_MAKE(integer_type)(arg__hours) : (ITU_T_SHARED(integer_type)())),
-        minutes_(arg__minutes ?  ITU_T_MAKE(integer_type)(arg__minutes) : (ITU_T_SHARED(integer_type)())),
-        seconds_(arg__seconds ?  ITU_T_MAKE(integer_type)(arg__seconds) : (ITU_T_SHARED(integer_type)())),
+        years_(arg__years ? ITU_T_MAKE(integer_type)(arg__years) : (ITU_T_SHARED(integer_type)())),
+        months_(arg__months ? ITU_T_MAKE(integer_type)(arg__months) : (ITU_T_SHARED(integer_type)())),
+        weeks_(arg__weeks ? ITU_T_MAKE(integer_type)(arg__weeks) : (ITU_T_SHARED(integer_type)())),
+        days_(arg__days ? ITU_T_MAKE(integer_type)(arg__days) : (ITU_T_SHARED(integer_type)())),
+        hours_(arg__hours ? ITU_T_MAKE(integer_type)(arg__hours) : (ITU_T_SHARED(integer_type)())),
+        minutes_(arg__minutes ? ITU_T_MAKE(integer_type)(arg__minutes) : (ITU_T_SHARED(integer_type)())),
+        seconds_(arg__seconds ? ITU_T_MAKE(integer_type)(arg__seconds) : (ITU_T_SHARED(integer_type)())),
         fractional_part_(arg__fractional_part) {
         };
 
@@ -2004,12 +2093,12 @@ namespace boost {
         DURATION_INTERVAL_ENCODING::DURATION_INTERVAL_ENCODING(const char* vl) {
             as_string(vl);
         };
-        
+
         /*DURATION_INTERVAL_ENCODING::DURATION_INTERVAL_ENCODING(const base_time_duration& vl){          
         }*/
 
         std::string DURATION_INTERVAL_ENCODING::as_string() const {
-            std::string rslt="P";
+            std::string rslt = "P";
             if (years())
                 rslt += (to_string(*years()) + "Y");
             if (months())
@@ -2051,8 +2140,8 @@ namespace boost {
             hours(arg__hours ? ITU_T_MAKE(integer_type)(arg__hours) : (ITU_T_SHARED(integer_type)()));
             minutes(arg__minutes ? ITU_T_MAKE(integer_type)(arg__minutes) : (ITU_T_SHARED(integer_type)()));
             seconds(arg__seconds ? ITU_T_MAKE(integer_type)(arg__seconds) : (ITU_T_SHARED(integer_type)()));
-        }      
-        
+        }
+
         /*base_duration DURATION_INTERVAL_ENCODING::as_duration() const {
             try {
                 base_duration rslt;
@@ -2061,7 +2150,7 @@ namespace boost {
             }            catch (...) {
             }
             return base_time_duration();
-        }*/                   
+        }*/
 
         DURATION_INTERVAL_ENCODING::Fractional_part_type::Fractional_part_type() : number_of_digits_(), fractional_value_() {
         };
@@ -2085,12 +2174,124 @@ namespace boost {
         ITU_T_OPTIONAL_DEFN(DURATION_INTERVAL_ENCODING::minutes, minutes, integer_type);
         ITU_T_OPTIONAL_DEFN(DURATION_INTERVAL_ENCODING::seconds, seconds, integer_type);
         ITU_T_OPTIONAL_DEFN(DURATION_INTERVAL_ENCODING::fractional_part, fractional_part, DURATION_INTERVAL_ENCODING::Fractional_part_type);
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+
+        // sequence DURATION
+
+        DURATION::DURATION(integer_type arg__years,
+                integer_type arg__months,
+                integer_type arg__weeks,
+                integer_type arg__days,
+                integer_type arg__hours,
+                integer_type arg__minutes,
+                integer_type arg__seconds,
+                ITU_T_SHARED(Fractional_part_type) arg__fractional_part) :
+        years_(arg__years ? ITU_T_MAKE(integer_type)(arg__years) : (ITU_T_SHARED(integer_type)())),
+        months_(arg__months ? ITU_T_MAKE(integer_type)(arg__months) : (ITU_T_SHARED(integer_type)())),
+        weeks_(arg__weeks ? ITU_T_MAKE(integer_type)(arg__weeks) : (ITU_T_SHARED(integer_type)())),
+        days_(arg__days ? ITU_T_MAKE(integer_type)(arg__days) : (ITU_T_SHARED(integer_type)())),
+        hours_(arg__hours ? ITU_T_MAKE(integer_type)(arg__hours) : (ITU_T_SHARED(integer_type)())),
+        minutes_(arg__minutes ? ITU_T_MAKE(integer_type)(arg__minutes) : (ITU_T_SHARED(integer_type)())),
+        seconds_(arg__seconds ? ITU_T_MAKE(integer_type)(arg__seconds) : (ITU_T_SHARED(integer_type)())),
+        fractional_part_(arg__fractional_part) {
+        };
+
+        DURATION::DURATION(const std::string& vl) {
+            as_string(vl);
+        };
+
+        DURATION::DURATION(const char* vl) {
+            as_string(vl);
+        };
+
+        /*DURATION::DURATION(const base_time_duration& vl){          
+        }*/
+
+        std::string DURATION::as_string() const {
+            std::string rslt = "P";
+            if (years())
+                rslt += (to_string(*years()) + "Y");
+            if (months())
+                rslt += (to_string(*months()) + "M");
+            if (weeks())
+                rslt += (to_string(*weeks()) + "W");
+            if (days())
+                rslt += (to_string(*days()) + "D");
+            if (hours() || minutes() || seconds()) {
+                rslt += "T";
+                if (hours())
+                    rslt += (to_string(*hours()) + "H");
+                if (minutes())
+                    rslt += (to_string(*minutes()) + "M");
+                if (seconds())
+                    rslt += (to_string(*seconds()) + "S");
+            } else {
+
+            }
+            return rslt;
+        }
+
+        void DURATION::as_string(const std::string& v) {
+            std::string vl = time_detail::normalize_time_str(v);
+            std::string::size_type it = vl.find_first_of('T');
+            std::string vll = (it == std::string::npos) ? vl : vl.substr(0, it);
+            std::string vlr = (it == std::string::npos) ? "" : vl.substr(it + 1);
+            integer_type arg__years = get_numstr_marker(vll, 'Y');
+            integer_type arg__months = get_numstr_marker(vll, 'M');
+            integer_type arg__weeks = get_numstr_marker(vll, 'W');
+            integer_type arg__days = get_numstr_marker(vll, 'D');
+            integer_type arg__hours = get_numstr_marker(vlr, 'H');
+            integer_type arg__minutes = get_numstr_marker(vlr, 'M');
+            integer_type arg__seconds = get_numstr_marker(vlr, 'S');
+            years(arg__years ? ITU_T_MAKE(integer_type)(arg__years) : (ITU_T_SHARED(integer_type)()));
+            months(arg__months ? ITU_T_MAKE(integer_type)(arg__months) : (ITU_T_SHARED(integer_type)()));
+            weeks(arg__weeks ? ITU_T_MAKE(integer_type)(arg__weeks) : (ITU_T_SHARED(integer_type)()));
+            days(arg__days ? ITU_T_MAKE(integer_type)(arg__days) : (ITU_T_SHARED(integer_type)()));
+            hours(arg__hours ? ITU_T_MAKE(integer_type)(arg__hours) : (ITU_T_SHARED(integer_type)()));
+            minutes(arg__minutes ? ITU_T_MAKE(integer_type)(arg__minutes) : (ITU_T_SHARED(integer_type)()));
+            seconds(arg__seconds ? ITU_T_MAKE(integer_type)(arg__seconds) : (ITU_T_SHARED(integer_type)()));
+        }
+
+        /*base_duration DURATION::as_duration() const {
+            try {
+                base_duration rslt;
+                rslt.
+                return base_time_duration();
+            }            catch (...) {
+            }
+            return base_time_duration();
+        }*/
+
+        DURATION::Fractional_part_type::Fractional_part_type() : number_of_digits_(), fractional_value_() {
+        };
+
+        DURATION::Fractional_part_type::Fractional_part_type(const integer_type& arg__number_of_digits,
+                const integer_type& arg__fractional_value) :
+        number_of_digits_(arg__number_of_digits),
+        fractional_value_(arg__fractional_value) {
+        };
+
+
+        ITU_T_HOLDERH_DEFN(DURATION::Fractional_part_type::number_of_digits, number_of_digits, integer_type);
+        ITU_T_HOLDERH_DEFN(DURATION::Fractional_part_type::fractional_value, fractional_value, integer_type);
+
+
+        ITU_T_OPTIONAL_DEFN(DURATION::years, years, integer_type);
+        ITU_T_OPTIONAL_DEFN(DURATION::months, months, integer_type);
+        ITU_T_OPTIONAL_DEFN(DURATION::weeks, weeks, integer_type);
+        ITU_T_OPTIONAL_DEFN(DURATION::days, days, integer_type);
+        ITU_T_OPTIONAL_DEFN(DURATION::hours, hours, integer_type);
+        ITU_T_OPTIONAL_DEFN(DURATION::minutes, minutes, integer_type);
+        ITU_T_OPTIONAL_DEFN(DURATION::seconds, seconds, integer_type);
+        ITU_T_OPTIONAL_DEFN(DURATION::fractional_part, fractional_part, DURATION::Fractional_part_type);
+
+
 
         // sequence REC-DURATION-INTERVAL-ENCODING
 
@@ -2112,22 +2313,22 @@ namespace boost {
         };
 
         std::string REC_DURATION_INTERVAL_ENCODING::as_string() const {
-            std::string rslt="";
+            std::string rslt = "";
             if (recurrence())
                 rslt += ("R" + to_string(recurrence()));
-            return rslt +duration().as_string() ;
+            return rslt + duration().as_string();
         }
 
         void REC_DURATION_INTERVAL_ENCODING::as_string(const std::string& v) {
-            std::string vl = time_detail::normalize_time_str(v);     
+            std::string vl = time_detail::normalize_time_str(v);
             std::string::size_type it = vl.find_first_of('P');
-            std::string vll = (it == std::string::npos) ? vl : vl.substr(0, it+1);
-            std::string vlr = (it == std::string::npos) ? "" : vl.substr(it + 1);            
-             integer_type arg__recurrence = get_numstr_marker(vll, 'P');
-             recurrence(arg__recurrence ? ITU_T_MAKE(integer_type)(arg__recurrence) : ITU_T_SHARED(integer_type)());
-             duration(DURATION_INTERVAL_ENCODING(vlr));           
+            std::string vll = (it == std::string::npos) ? vl : vl.substr(0, it + 1);
+            std::string vlr = (it == std::string::npos) ? "" : vl.substr(it + 1);
+            integer_type arg__recurrence = get_numstr_marker(vll, 'P');
+            recurrence(arg__recurrence ? ITU_T_MAKE(integer_type)(arg__recurrence) : ITU_T_SHARED(integer_type)());
+            duration(DURATION_INTERVAL_ENCODING(vlr));
         }
-        
+
         ITU_T_OPTIONAL_DEFN(REC_DURATION_INTERVAL_ENCODING::recurrence, recurrence, integer_type);
         ITU_T_HOLDERH_DEFN(REC_DURATION_INTERVAL_ENCODING::duration, duration, DURATION_INTERVAL_ENCODING);
 
@@ -3056,17 +3257,7 @@ namespace boost {
             return stream;
         };*/
 
-        std::ostream& operator<<(std::ostream& stream, const DURATION_INTERVAL_ENCODING& vl) {
-            return stream << "P: " << vl.as_string();
-        };
 
-        std::ostream& operator<<(std::ostream& stream, const DURATION_INTERVAL_ENCODING::Fractional_part_type& vl) {
-            stream << "{ ";
-            stream << "number_of_digits :  " << vl.number_of_digits();
-            stream << ", fractional_value :  " << vl.fractional_value();
-            stream << " }";
-            return stream;
-        };
 
         std::ostream& operator<<(std::ostream& stream, const REC_DURATION_INTERVAL_ENCODING& vl) {
             stream << "{ ";
@@ -3606,6 +3797,7 @@ namespace boost {
             ITU_T_DEFINE_TIME_TYPE(YEAR_MONTH_ENCODING);
             //ITU_T_DEFINE_TIME_TYPE(ANY_YEAR_MONTH_ENCODING);
             ITU_T_DEFINE_TIME_TYPE(DATE_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(DATE);
             //ITU_T_DEFINE_TIME_TYPE(ANY_DATE_ENCODING);
             ITU_T_DEFINE_TIME_TYPE(YEAR_DAY_ENCODING);
             //ITU_T_DEFINE_TIME_TYPE(ANY_YEAR_DAY_ENCODING);
@@ -3621,6 +3813,7 @@ namespace boost {
             ITU_T_DEFINE_TIME_TYPE(MINUTES_UTC_ENCODING);
             ITU_T_DEFINE_TIME_TYPE(MINUTES_AND_DIFF_ENCODING);
             ITU_T_DEFINE_TIME_TYPE(TIME_OF_DAY_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(TIME_OF_DAY);
             ITU_T_DEFINE_TIME_TYPE(TIME_OF_DAY_UTC_ENCODING);
             ITU_T_DEFINE_TIME_TYPE(TIME_OF_DAY_AND_DIFF_ENCODING);
             //ITU_T_DEFINE_TIME_TYPE(HOURS_AND_FRACTION_ENCODING);
@@ -3632,7 +3825,9 @@ namespace boost {
             //ITU_T_DEFINE_TIME_TYPE(TIME_OF_DAY_AND_FRACTION_ENCODING);
             //ITU_T_DEFINE_TIME_TYPE(TIME_OF_DAY_UTC_AND_FRACTION_ENCODING);
             //ITU_T_DEFINE_TIME_TYPE(TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(DATE_TIME);
             ITU_T_DEFINE_TIME_TYPE(DURATION_INTERVAL_ENCODING);
+            ITU_T_DEFINE_TIME_TYPE(DURATION);
             ITU_T_DEFINE_TIME_TYPE(REC_DURATION_INTERVAL_ENCODING);
             /*ITU_T_DEFINE_TIME_TYPE(MIXED_ENCODING);
             ITU_T_DEFINE_TIME_TYPE(DATE_TYPE);

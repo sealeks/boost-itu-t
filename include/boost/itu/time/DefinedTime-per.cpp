@@ -26,15 +26,7 @@ namespace boost {
             ITU_T_BIND_NUM_CONSTRAINT(as_number_, static_cast<uint8_t> (0), static_cast<uint8_t> (99));
         }
 
-        // sequence ANY-CENTURY-ENCODING
 
-        /*template<> void ANY_CENTURY_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(as_number_);
-        }
-
-        template<> void ANY_CENTURY_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(as_number_);
-        }*/
 
         // choice YEAR-ENCODING
 
@@ -101,15 +93,7 @@ namespace boost {
             }
         }
 
-        // sequence ANY-YEAR-ENCODING
 
-        /*template<> void ANY_YEAR_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(as_number_);
-        }
-
-        template<> void ANY_YEAR_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(as_number_);
-        }*/
 
         // sequence YEAR-MONTH-ENCODING
 
@@ -123,17 +107,7 @@ namespace boost {
             ITU_T_BIND_NUM_CONSTRAINT(month_, static_cast<uint8_t> (1), static_cast<uint8_t> (12));
         }
 
-        // sequence ANY-YEAR-MONTH-ENCODING
 
-        /*template<> void ANY_YEAR_MONTH_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(year_);
-            ITU_T_BIND_NUM_CONSTRAINT(month_, static_cast<uint8_t> (1), static_cast<uint8_t> (12));
-        }
-
-        template<> void ANY_YEAR_MONTH_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(year_);
-            ITU_T_BIND_NUM_CONSTRAINT(month_, static_cast<uint8_t> (1), static_cast<uint8_t> (12));
-        }*/
 
         // sequence DATE-ENCODING
 
@@ -149,19 +123,21 @@ namespace boost {
             ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint8_t> (1), static_cast<uint8_t> (31));
         }
 
-        // sequence ANY-DATE-ENCODING
 
-        /*template<> void ANY_DATE_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
+        // sequence DATE-ENCODING
+
+        template<> void DATE::serialize(boost::asn1::x691::output_coder& arch) {
             ITU_T_BIND_PER(year_);
             ITU_T_BIND_NUM_CONSTRAINT(month_, static_cast<uint8_t> (1), static_cast<uint8_t> (12));
             ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint8_t> (1), static_cast<uint8_t> (31));
         }
 
-        template<> void ANY_DATE_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
+        template<> void DATE::serialize(boost::asn1::x691::input_coder& arch) {
             ITU_T_BIND_PER(year_);
             ITU_T_BIND_NUM_CONSTRAINT(month_, static_cast<uint8_t> (1), static_cast<uint8_t> (12));
             ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint8_t> (1), static_cast<uint8_t> (31));
-        }*/
+        }
+
 
         // sequence YEAR-DAY-ENCODING
 
@@ -175,17 +151,6 @@ namespace boost {
             ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint16_t> (1), static_cast<uint16_t> (366));
         }
 
-        // sequence ANY-YEAR-DAY-ENCODING
-
-        /*template<> void ANY_YEAR_DAY_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(year_);
-            ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint16_t> (1), static_cast<uint16_t> (366));
-        }
-
-        template<> void ANY_YEAR_DAY_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(year_);
-            ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint16_t> (1), static_cast<uint16_t> (366));
-        }*/
 
         // sequence YEAR-WEEK-ENCODING
 
@@ -199,17 +164,6 @@ namespace boost {
             ITU_T_BIND_NUM_CONSTRAINT(week_, static_cast<uint8_t> (1), static_cast<uint8_t> (53));
         }
 
-        // sequence ANY-YEAR-WEEK-ENCODING
-
-        /*template<> void ANY_YEAR_WEEK_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(year_);
-            ITU_T_BIND_NUM_CONSTRAINT(week_, static_cast<uint8_t> (1), static_cast<uint8_t> (53));
-        }
-
-        template<> void ANY_YEAR_WEEK_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(year_);
-            ITU_T_BIND_NUM_CONSTRAINT(week_, static_cast<uint8_t> (1), static_cast<uint8_t> (53));
-        }*/
 
         // sequence YEAR-WEEK-DAY-ENCODING
 
@@ -225,19 +179,6 @@ namespace boost {
             ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint8_t> (1), static_cast<uint8_t> (7));
         }
 
-        // sequence ANY-YEAR-WEEK-DAY-ENCODING
-
-        /*template<> void ANY_YEAR_WEEK_DAY_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(year_);
-            ITU_T_BIND_NUM_CONSTRAINT(week_, static_cast<uint8_t> (1), static_cast<uint8_t> (53));
-            ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint8_t> (1), static_cast<uint8_t> (7));
-        }
-
-        template<> void ANY_YEAR_WEEK_DAY_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(year_);
-            ITU_T_BIND_NUM_CONSTRAINT(week_, static_cast<uint8_t> (1), static_cast<uint8_t> (53));
-            ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint8_t> (1), static_cast<uint8_t> (7));
-        }*/
 
         // sequence HOURS-ENCODING
 
@@ -345,6 +286,20 @@ namespace boost {
             ITU_T_BIND_NUM_CONSTRAINT(seconds_, static_cast<uint8_t> (0), static_cast<uint8_t> (60));
         }
 
+        // sequence TIME-OF-DAY
+
+        template<> void TIME_OF_DAY::serialize(boost::asn1::x691::output_coder& arch) {
+            ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
+            ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (0), static_cast<uint8_t> (59));
+            ITU_T_BIND_NUM_CONSTRAINT(seconds_, static_cast<uint8_t> (0), static_cast<uint8_t> (60));
+        }
+
+        template<> void TIME_OF_DAY::serialize(boost::asn1::x691::input_coder& arch) {
+            ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
+            ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (0), static_cast<uint8_t> (59));
+            ITU_T_BIND_NUM_CONSTRAINT(seconds_, static_cast<uint8_t> (0), static_cast<uint8_t> (60));
+        }
+
         // sequence TIME-OF-DAY-UTC-ENCODING
 
         template<> void TIME_OF_DAY_UTC_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
@@ -371,158 +326,6 @@ namespace boost {
             ITU_T_BIND_PER(time_difference_);
         }
 
-
-        // sequence HOURS-AND-FRACTION-ENCODING
-
-        /*template<> void HOURS_AND_FRACTION_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
-            ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
-        }
-
-        template<> void HOURS_AND_FRACTION_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
-            ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
-        }
-
-        // sequence HOURS-UTC-AND-FRACTION-ENCODING
-
-        template<> void HOURS_UTC_AND_FRACTION_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
-            ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
-        }
-
-        template<> void HOURS_UTC_AND_FRACTION_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
-            ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
-        }
-        // sequence HOURS-AND-DIFF-AND-FRACTION-ENCODING
-
-        template<> void HOURS_AND_DIFF_AND_FRACTION_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(local_hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
-            ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
-            ITU_T_BIND_PER(time_difference_);
-        }
-
-        template<> void HOURS_AND_DIFF_AND_FRACTION_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(local_hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
-            ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
-            ITU_T_BIND_PER(time_difference_);
-        }
-
-
-        // sequence MINUTES-AND-FRACTION-ENCODING
-
-        template<> void MINUTES_AND_FRACTION_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
-            ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (0), static_cast<uint8_t> (59));
-            ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
-        }
-
-        template<> void MINUTES_AND_FRACTION_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
-            ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (0), static_cast<uint8_t> (59));
-            ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
-        }
-
-        // sequence MINUTES-UTC-AND-FRACTION-ENCODING
-
-        template<> void MINUTES_UTC_AND_FRACTION_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
-            ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (0), static_cast<uint8_t> (59));
-            ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
-        }
-
-        template<> void MINUTES_UTC_AND_FRACTION_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
-            ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (0), static_cast<uint8_t> (59));
-            ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
-        }
-
-        // sequence MINUTES-AND-DIFF-AND-FRACTION-ENCODING
-
-        template<> void MINUTES_AND_DIFF_AND_FRACTION_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(local_time_);
-            ITU_T_BIND_PER(time_difference_);
-        }
-
-        template<> void MINUTES_AND_DIFF_AND_FRACTION_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(local_time_);
-            ITU_T_BIND_PER(time_difference_);
-        }
-
-        // sequence local-time
-
-        template<> void MINUTES_AND_DIFF_AND_FRACTION_ENCODING::Local_time_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
-            ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (0), static_cast<uint8_t> (59));
-            ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
-        }
-
-        template<> void MINUTES_AND_DIFF_AND_FRACTION_ENCODING::Local_time_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
-            ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (0), static_cast<uint8_t> (59));
-            ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
-        }
-
-        // sequence TIME-OF-DAY-AND-FRACTION-ENCODING
-
-        template<> void TIME_OF_DAY_AND_FRACTION_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
-            ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (0), static_cast<uint8_t> (59));
-            ITU_T_BIND_NUM_CONSTRAINT(seconds_, static_cast<uint8_t> (0), static_cast<uint8_t> (60));
-            ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
-        }
-
-        template<> void TIME_OF_DAY_AND_FRACTION_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
-            ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (0), static_cast<uint8_t> (59));
-            ITU_T_BIND_NUM_CONSTRAINT(seconds_, static_cast<uint8_t> (0), static_cast<uint8_t> (60));
-            ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
-        }
-
-        // sequence TIME-OF-DAY-UTC-AND-FRACTION-ENCODING
-
-        template<> void TIME_OF_DAY_UTC_AND_FRACTION_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
-            ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (0), static_cast<uint8_t> (59));
-            ITU_T_BIND_NUM_CONSTRAINT(seconds_, static_cast<uint8_t> (0), static_cast<uint8_t> (60));
-            ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
-        }
-
-        template<> void TIME_OF_DAY_UTC_AND_FRACTION_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
-            ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (0), static_cast<uint8_t> (59));
-            ITU_T_BIND_NUM_CONSTRAINT(seconds_, static_cast<uint8_t> (0), static_cast<uint8_t> (60));
-            ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
-        }
-
-        // sequence TIME-OF-DAY-AND-DIFF-AND-FRACTION-ENCODING
-
-        template<> void TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(local_time_);
-            ITU_T_BIND_PER(time_difference_);
-        }
-
-        template<> void TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(local_time_);
-            ITU_T_BIND_PER(time_difference_);
-        }
-
-        // sequence local-time
-
-        template<> void TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING::Local_time_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
-            ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (0), static_cast<uint8_t> (59));
-            ITU_T_BIND_NUM_CONSTRAINT(seconds_, static_cast<uint8_t> (0), static_cast<uint8_t> (60));
-            ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
-        }
-
-        template<> void TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING::Local_time_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (24));
-            ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (0), static_cast<uint8_t> (59));
-            ITU_T_BIND_NUM_CONSTRAINT(seconds_, static_cast<uint8_t> (0), static_cast<uint8_t> (60));
-            ITU_T_BIND_NUM_CONSTRAINT_EXT(fraction_, static_cast<integer_type> (0), static_cast<integer_type> (999));
-        }*/
 
         // sequence DURATION-INTERVAL-ENCODING
 
@@ -574,6 +377,62 @@ namespace boost {
             ITU_T_BIND_NUM_CONSTRAINT_EXT(number_of_digits_, static_cast<integer_type> (1), static_cast<integer_type> (3));
             ITU_T_BIND_NUM_CONSTRAINT_EXT(fractional_value_, static_cast<integer_type> (1), static_cast<integer_type> (999));
         }
+
+
+
+        // sequence DURATION
+
+        template<> void DURATION::serialize(boost::asn1::x691::output_coder& arch) {
+
+            ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(years_) +
+                    ITU_T_EXISTS_BMP(months_) +
+                    ITU_T_EXISTS_BMP(weeks_) +
+                    ITU_T_EXISTS_BMP(days_) +
+                    ITU_T_EXISTS_BMP(hours_) +
+                    ITU_T_EXISTS_BMP(minutes_) +
+                    ITU_T_EXISTS_BMP(seconds_) +
+                    ITU_T_EXISTS_BMP(fractional_part_);
+
+            ITU_T_OPTIONAL_WRITE;
+
+            ITU_T_BIND_NUM_CONSTRAINT_EXT(years_, static_cast<integer_type> (0), static_cast<integer_type> (31));
+            ITU_T_BIND_NUM_CONSTRAINT_EXT(months_, static_cast<integer_type> (0), static_cast<integer_type> (15));
+            ITU_T_BIND_NUM_CONSTRAINT_EXT(weeks_, static_cast<integer_type> (0), static_cast<integer_type> (63));
+            ITU_T_BIND_NUM_CONSTRAINT_EXT(days_, static_cast<integer_type> (0), static_cast<integer_type> (31));
+            ITU_T_BIND_NUM_CONSTRAINT_EXT(hours_, static_cast<integer_type> (0), static_cast<integer_type> (31));
+            ITU_T_BIND_NUM_CONSTRAINT_EXT(minutes_, static_cast<integer_type> (0), static_cast<integer_type> (63));
+            ITU_T_BIND_NUM_CONSTRAINT_EXT(seconds_, static_cast<integer_type> (0), static_cast<integer_type> (63));
+            ITU_T_BIND_PER(fractional_part_);
+        }
+
+        template<> void DURATION::serialize(boost::asn1::x691::input_coder& arch) {
+
+            ITU_T_OPTIONAL_READ(8);
+
+            ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRAINT_EXT(years_, static_cast<integer_type> (0), static_cast<integer_type> (31));
+            ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRAINT_EXT(months_, static_cast<integer_type> (0), static_cast<integer_type> (15));
+            ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRAINT_EXT(weeks_, static_cast<integer_type> (0), static_cast<integer_type> (63));
+            ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_NUM_CONSTRAINT_EXT(days_, static_cast<integer_type> (0), static_cast<integer_type> (31));
+            ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_NUM_CONSTRAINT_EXT(hours_, static_cast<integer_type> (0), static_cast<integer_type> (31));
+            ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_NUM_CONSTRAINT_EXT(minutes_, static_cast<integer_type> (0), static_cast<integer_type> (63));
+            ITU_T_OPTIONAL_CHECK(6) ITU_T_BIND_NUM_CONSTRAINT_EXT(seconds_, static_cast<integer_type> (0), static_cast<integer_type> (63));
+            ITU_T_OPTIONAL_CHECK(7) ITU_T_BIND_PER(fractional_part_);
+        }
+
+        // sequence fractional-part
+
+        template<> void DURATION::Fractional_part_type::serialize(boost::asn1::x691::output_coder& arch) {
+            ITU_T_BIND_NUM_CONSTRAINT_EXT(number_of_digits_, static_cast<integer_type> (1), static_cast<integer_type> (3));
+            ITU_T_BIND_NUM_CONSTRAINT_EXT(fractional_value_, static_cast<integer_type> (1), static_cast<integer_type> (999));
+        }
+
+        template<> void DURATION::Fractional_part_type::serialize(boost::asn1::x691::input_coder& arch) {
+            ITU_T_BIND_NUM_CONSTRAINT_EXT(number_of_digits_, static_cast<integer_type> (1), static_cast<integer_type> (3));
+            ITU_T_BIND_NUM_CONSTRAINT_EXT(fractional_value_, static_cast<integer_type> (1), static_cast<integer_type> (999));
+        }
+
+
+
 
         // sequence REC-DURATION-INTERVAL-ENCODING
 

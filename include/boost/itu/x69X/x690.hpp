@@ -71,6 +71,7 @@ namespace boost {
         struct YEAR_MONTH_ENCODING;
         template<std::size_t N> struct ANY_YEAR_MONTH_ENCODING;
         struct DATE_ENCODING;
+        struct DATE;
         template<std::size_t N> struct ANY_DATE_ENCODING;
         struct YEAR_DAY_ENCODING;
         template<std::size_t N> struct ANY_YEAR_DAY_ENCODING;
@@ -86,6 +87,7 @@ namespace boost {
         struct MINUTES_UTC_ENCODING;
         struct MINUTES_AND_DIFF_ENCODING;
         struct TIME_OF_DAY_ENCODING;
+        struct TIME_OF_DAY;
         struct TIME_OF_DAY_UTC_ENCODING;
         struct TIME_OF_DAY_AND_DIFF_ENCODING;
         template<std::size_t N> struct HOURS_AND_FRACTION_ENCODING;
@@ -97,7 +99,10 @@ namespace boost {
         template<std::size_t N> struct TIME_OF_DAY_AND_FRACTION_ENCODING;
         template<std::size_t N> struct TIME_OF_DAY_UTC_AND_FRACTION_ENCODING;
         template<std::size_t N> struct TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING;
+        template<typename DT, typename TM> struct DATE_TIME_ENCODING;
+        struct DATE_TIME;
         struct DURATION_INTERVAL_ENCODING;
+        struct DURATION;
         struct REC_DURATION_INTERVAL_ENCODING;
         /*struct MIXED_ENCODING;
         struct DATE_TYPE;
@@ -267,6 +272,7 @@ namespace boost {
                 void operator&(const YEAR_MONTH_ENCODING& vl);
                 ITU_T_DEFINE_OUT_TIME_NTYPE(ANY_YEAR_MONTH_ENCODING);
                 void operator&(const DATE_ENCODING& vl);
+                void operator&(const DATE& vl);
                 ITU_T_DEFINE_OUT_TIME_NTYPE(ANY_DATE_ENCODING);
                 void operator&(const YEAR_DAY_ENCODING& vl);
                 ITU_T_DEFINE_OUT_TIME_NTYPE(ANY_YEAR_DAY_ENCODING);
@@ -282,9 +288,10 @@ namespace boost {
                 void operator&(const MINUTES_UTC_ENCODING& vl);
                 void operator&(const MINUTES_AND_DIFF_ENCODING& vl);
                 void operator&(const TIME_OF_DAY_ENCODING& vl);
+                void operator&(const TIME_OF_DAY& vl);
                 void operator&(const TIME_OF_DAY_UTC_ENCODING& vl);
                 void operator&(const TIME_OF_DAY_AND_DIFF_ENCODING& vl);
-                ITU_T_DEFINE_OUT_TIME_NTYPE(HOURS_AND_FRACTION_ENCODING);            
+                ITU_T_DEFINE_OUT_TIME_NTYPE(HOURS_AND_FRACTION_ENCODING);
                 ITU_T_DEFINE_OUT_TIME_NTYPE(HOURS_UTC_AND_FRACTION_ENCODING);
                 ITU_T_DEFINE_OUT_TIME_NTYPE(HOURS_AND_DIFF_AND_FRACTION_ENCODING);
                 ITU_T_DEFINE_OUT_TIME_NTYPE(MINUTES_AND_FRACTION_ENCODING);
@@ -293,11 +300,19 @@ namespace boost {
                 ITU_T_DEFINE_OUT_TIME_NTYPE(TIME_OF_DAY_AND_FRACTION_ENCODING);
                 ITU_T_DEFINE_OUT_TIME_NTYPE(TIME_OF_DAY_UTC_AND_FRACTION_ENCODING);
                 ITU_T_DEFINE_OUT_TIME_NTYPE(TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING);
+                void operator&(const DATE_TIME& vl);
                 void operator&(const DURATION_INTERVAL_ENCODING& vl);
+                void operator&(const DURATION& vl);
                 void operator&(const REC_DURATION_INTERVAL_ENCODING& vl);
+
                 /*void operator&(const MIXED_ENCODING& vl);
                 void operator&(const DATE_TYPE& vl);
                 void operator&(const TIME_TYPE& vl);*/
+
+                template<typename DT, typename TM>
+                void operator&(const DATE_TIME_ENCODING <DT, TM>& vl) {
+                    direct_serialize(vl, *this);
+                }
 
                 iterator_type addtag(const tag& tg, bool settype);
 
@@ -813,6 +828,7 @@ namespace boost {
                 void operator&(YEAR_MONTH_ENCODING& vl);
                 ITU_T_DEFINE_IN_TIME_NTYPE(ANY_YEAR_MONTH_ENCODING);
                 void operator&(DATE_ENCODING& vl);
+                void operator&(DATE& vl);
                 ITU_T_DEFINE_IN_TIME_NTYPE(ANY_DATE_ENCODING);
                 void operator&(YEAR_DAY_ENCODING& vl);
                 ITU_T_DEFINE_IN_TIME_NTYPE(ANY_YEAR_DAY_ENCODING);
@@ -828,6 +844,7 @@ namespace boost {
                 void operator&(MINUTES_UTC_ENCODING& vl);
                 void operator&(MINUTES_AND_DIFF_ENCODING& vl);
                 void operator&(TIME_OF_DAY_ENCODING& vl);
+                void operator&(TIME_OF_DAY& vl);
                 void operator&(TIME_OF_DAY_UTC_ENCODING& vl);
                 void operator&(TIME_OF_DAY_AND_DIFF_ENCODING& vl);
                 ITU_T_DEFINE_IN_TIME_NTYPE(HOURS_AND_FRACTION_ENCODING);
@@ -839,11 +856,19 @@ namespace boost {
                 ITU_T_DEFINE_IN_TIME_NTYPE(TIME_OF_DAY_AND_FRACTION_ENCODING);
                 ITU_T_DEFINE_IN_TIME_NTYPE(TIME_OF_DAY_UTC_AND_FRACTION_ENCODING);
                 ITU_T_DEFINE_IN_TIME_NTYPE(TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING);
+                void operator&(DATE_TIME& vl);
                 void operator&(DURATION_INTERVAL_ENCODING& vl);
+                void operator&(DURATION& vl);
                 void operator&(REC_DURATION_INTERVAL_ENCODING& vl);
+
                 /*void operator&(MIXED_ENCODING& vl);
                 void operator&(DATE_TYPE& vl);
                 void operator&(TIME_TYPE& vl);*/
+
+                template<typename DT, typename TM>
+                void operator&(DATE_TIME_ENCODING <DT, TM>& vl) {
+                    direct_serialize(vl, *this);
+                }
 
                 tag test_tl(size_class& sz);
 
