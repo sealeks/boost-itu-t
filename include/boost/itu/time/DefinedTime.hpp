@@ -13,6 +13,10 @@
 #endif
 
 #define ITU_T_TIME_COUTTP_FN( nm)  friend std::ostream& operator<<(std::ostream& stream, const nm & vl) {return stream <<  vl.format() << " : " << vl.as_string();};
+#define ITU_T_TIME_X690_FN_DECL             void serialize(boost::asn1::x690::output_coder& arch) {\
+                time_serialize(*this, arch);}\
+            void serialize(boost::asn1::x690::input_coder& arch) {\
+                time_serialize(*this, arch);}\
 
 namespace boost {
     namespace asn1 {
@@ -227,7 +231,9 @@ namespace boost {
             ITU_T_TIME_COUTTP_FN( CENTURY_ENCODING);
 
             ITU_T_HOLDERH_DECL(as_number, uint8_t); //   Ic(  [ 0  ...   99 ]   
-
+            
+            
+            ITU_T_TIME_X690_FN_DECL 
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -295,13 +301,6 @@ namespace boost {
 
             ITU_T_HOLDERH_T_DECL(as_number, integer_type);
 
-            void serialize(boost::asn1::x690::output_coder& arch) {
-                time_serialize(*this, arch);
-            }
-
-            void serialize(boost::asn1::x690::input_coder& arch) {
-                time_serialize(*this, arch);
-            }
 
             void serialize(boost::asn1::x691::output_coder& arch) {
                 ITU_T_BIND_PER(as_number_);
@@ -317,6 +316,7 @@ namespace boost {
             
             ITU_T_TIME_COUTTP_FN(ANY_CENTURY_ENCODING);            
 
+            ITU_T_TIME_X690_FN_DECL 
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -370,6 +370,7 @@ namespace boost {
             
             ITU_T_TIME_COUTTP_FN( YEAR_ENCODING);            
 
+            ITU_T_TIME_X690_FN_DECL 
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -436,14 +437,6 @@ namespace boost {
 
             ITU_T_HOLDERH_T_DECL(as_number, integer_type);
 
-            void serialize(boost::asn1::x690::output_coder& arch) {
-                time_serialize(*this, arch);
-            }
-
-            void serialize(boost::asn1::x690::input_coder& arch) {
-                time_serialize(*this, arch);
-            }
-
             void serialize(boost::asn1::x691::output_coder& arch) {
                 ITU_T_BIND_PER(as_number_);
             }
@@ -458,6 +451,7 @@ namespace boost {
             
             ITU_T_TIME_COUTTP_FN(ANY_YEAR_ENCODING);
 
+            ITU_T_TIME_X690_FN_DECL; 
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -499,6 +493,7 @@ namespace boost {
             
             ITU_T_TIME_COUTTP_FN( YEAR_MONTH_ENCODING);               
 
+            ITU_T_TIME_X690_FN_DECL; 
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -571,14 +566,6 @@ namespace boost {
             ITU_T_HOLDERH_T_DECL(year, ANY_YEAR_TYPE);
             ITU_T_HOLDERH_T_DECL(month, uint8_t); //   Ic(  [ 1  ...   12 ]   
 
-            void serialize(boost::asn1::x690::output_coder& arch) {
-                time_serialize(*this, arch);
-            }
-
-            void serialize(boost::asn1::x690::input_coder& arch) {
-                time_serialize(*this, arch);
-            }
-
             void serialize(boost::asn1::x691::output_coder& arch) {
                 ITU_T_BIND_PER(year_);
                 ITU_T_BIND_NUM_CONSTRAINT(month_, static_cast<uint8_t> (1), static_cast<uint8_t> (12));
@@ -595,6 +582,7 @@ namespace boost {
             
             ITU_T_TIME_COUTTP_FN( ANY_YEAR_MONTH_ENCODING);                 
 
+            ITU_T_TIME_X690_FN_DECL; 
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -634,6 +622,7 @@ namespace boost {
             
             ITU_T_TIME_COUTTP_FN( DATE_ENCODING);                 
 
+            ITU_T_TIME_X690_FN_DECL; 
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -712,14 +701,6 @@ namespace boost {
             ITU_T_HOLDERH_T_DECL(month, uint8_t); //   Ic(  [ 1  ...   12 ]   
             ITU_T_HOLDERH_T_DECL(day, uint8_t); //   Ic(  [ 1  ...   31 ]   
 
-            void serialize(boost::asn1::x690::output_coder& arch) {
-                time_serialize(*this, arch);
-            }
-
-            void serialize(boost::asn1::x690::input_coder& arch) {
-                time_serialize(*this, arch);
-            }
-
             void serialize(boost::asn1::x691::output_coder& arch) {
                 ITU_T_BIND_PER(year_);
                 ITU_T_BIND_NUM_CONSTRAINT(month_, static_cast<uint8_t> (1), static_cast<uint8_t> (12));
@@ -738,6 +719,7 @@ namespace boost {
             
             ITU_T_TIME_COUTTP_FN( ANY_DATE_ENCODING);                 
 
+            ITU_T_TIME_X690_FN_DECL; 
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -776,6 +758,7 @@ namespace boost {
             
             ITU_T_TIME_COUTTP_FN( YEAR_DAY_ENCODING);                   
 
+            ITU_T_TIME_X690_FN_DECL; 
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -849,14 +832,6 @@ namespace boost {
             ITU_T_HOLDERH_T_DECL(year, ANY_YEAR_TYPE);
             ITU_T_HOLDERH_T_DECL(day, uint16_t); //   Ic(  [ 1  ...   366 ]   
 
-            void serialize(boost::asn1::x690::output_coder& arch) {
-                time_serialize(*this, arch);
-            }
-
-            void serialize(boost::asn1::x690::input_coder& arch) {
-                time_serialize(*this, arch);
-            }
-
             void serialize(boost::asn1::x691::output_coder& arch) {
                 ITU_T_BIND_PER(year_);
                 ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint16_t> (1), static_cast<uint16_t> (366));
@@ -874,7 +849,7 @@ namespace boost {
             
             ITU_T_TIME_COUTTP_FN( ANY_YEAR_DAY_ENCODING);  
 
-
+            ITU_T_TIME_X690_FN_DECL; 
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -914,6 +889,7 @@ namespace boost {
             
             ITU_T_TIME_COUTTP_FN( YEAR_WEEK_ENCODING);                  
 
+            ITU_T_TIME_X690_FN_DECL; 
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -990,14 +966,6 @@ namespace boost {
             ITU_T_HOLDERH_T_DECL(year, ANY_YEAR_TYPE);
             ITU_T_HOLDERH_T_DECL(week, uint8_t); //   Ic(  [ 1  ...   53 ]   
 
-            void serialize(boost::asn1::x690::output_coder& arch) {
-                time_serialize(*this, arch);
-            }
-
-            void serialize(boost::asn1::x690::input_coder& arch) {
-                time_serialize(*this, arch);
-            }
-
             void serialize(boost::asn1::x691::output_coder& arch) {
                 ITU_T_BIND_PER(year_);
                 ITU_T_BIND_NUM_CONSTRAINT(week_, static_cast<uint8_t> (1), static_cast<uint8_t> (53));
@@ -1014,6 +982,7 @@ namespace boost {
             
             ITU_T_TIME_COUTTP_FN( ANY_YEAR_WEEK_ENCODING);    
 
+            ITU_T_TIME_X690_FN_DECL; 
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -1054,6 +1023,7 @@ namespace boost {
             
             ITU_T_TIME_COUTTP_FN( YEAR_WEEK_DAY_ENCODING);                
 
+            ITU_T_TIME_X690_FN_DECL; 
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -1136,14 +1106,6 @@ namespace boost {
             ITU_T_HOLDERH_T_DECL(week, uint8_t); //   Ic(  [ 1  ...   53 ]   
             ITU_T_HOLDERH_T_DECL(day, uint8_t); //   Ic(  [ 1  ...   7 ]   
 
-            void serialize(boost::asn1::x690::output_coder& arch) {
-                time_serialize(*this, arch);
-            }
-
-            void serialize(boost::asn1::x690::input_coder& arch) {
-                time_serialize(*this, arch);
-            }
-
             void serialize(boost::asn1::x691::output_coder& arch) {
                 ITU_T_BIND_PER(year_);
                 ITU_T_BIND_NUM_CONSTRAINT(week_, static_cast<uint8_t> (1), static_cast<uint8_t> (53));
@@ -1156,7 +1118,6 @@ namespace boost {
                 ITU_T_BIND_NUM_CONSTRAINT(day_, static_cast<uint8_t> (1), static_cast<uint8_t> (7));
             }
 
-            
             std::string format() const  {
                 return year().format()+"-Www-D";
             }         
@@ -1164,6 +1125,7 @@ namespace boost {
             ITU_T_TIME_COUTTP_FN( ANY_YEAR_WEEK_DAY_ENCODING);    
 
 
+            ITU_T_TIME_X690_FN_DECL; 
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -1192,6 +1154,13 @@ namespace boost {
 
             ITU_T_HOLDERH_DECL(as_number, uint8_t); //   Ic(  [ 0  ...   24 ]   
 
+            std::string format() const {
+                return "hh";
+            }  
+            
+            ITU_T_TIME_COUTTP_FN( HOURS_ENCODING);               
+
+            ITU_T_TIME_X690_FN_DECL;            
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -1220,6 +1189,13 @@ namespace boost {
 
             ITU_T_HOLDERH_DECL(as_number, uint8_t); //   Ic(  [ 0  ...   24 ]   
 
+            std::string format() const {
+                return "hhZ";
+            }  
+            
+            ITU_T_TIME_COUTTP_FN( HOURS_UTC_ENCODING);               
+
+            ITU_T_TIME_X690_FN_DECL;               
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -1250,6 +1226,10 @@ namespace boost {
             std::string as_string() const;
 
             void as_string(const std::string& vl);
+            
+            std::string format() const {
+                return "+hh[::mm]";
+            }              
 
             ITU_T_HOLDERH_DECL(sign, enumerated);
             ITU_T_HOLDERH_DECL(hours, uint8_t); //   Ic(  [ 0  ...   15 ]   
@@ -1284,6 +1264,13 @@ namespace boost {
             ITU_T_HOLDERH_DECL(local_hours, uint8_t); //   Ic(  [ 0  ...   24 ]   
             ITU_T_HOLDERH_DECL(time_difference, TIME_DIFFERENCE);
 
+            std::string format() const {
+                return "hh"+ time_difference().format();
+            }  
+            
+            ITU_T_TIME_COUTTP_FN( HOURS_AND_DIFF_ENCODING);               
+
+            ITU_T_TIME_X690_FN_DECL;               
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -1315,6 +1302,13 @@ namespace boost {
             ITU_T_HOLDERH_DECL(hours, uint8_t); //   Ic(  [ 0  ...   24 ]   
             ITU_T_HOLDERH_DECL(minutes, uint8_t); //   Ic(  [ 0  ...   59 ]   
 
+            std::string format() const {
+                return "hh:mm";
+            }  
+            
+            ITU_T_TIME_COUTTP_FN(  MINUTES_ENCODING);               
+
+            ITU_T_TIME_X690_FN_DECL;               
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -1347,6 +1341,13 @@ namespace boost {
             ITU_T_HOLDERH_DECL(hours, uint8_t); //   Ic(  [ 0  ...   24 ]   
             ITU_T_HOLDERH_DECL(minutes, uint8_t); //   Ic(  [ 0  ...   59 ]   
 
+            std::string format() const {
+                return "hh:mmZ";
+            }  
+            
+            ITU_T_TIME_COUTTP_FN(  MINUTES_UTC_ENCODING);               
+
+            ITU_T_TIME_X690_FN_DECL;               
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -1381,6 +1382,13 @@ namespace boost {
             ITU_T_HOLDERH_DECL(local_time, MINUTES_ENCODING);
             ITU_T_HOLDERH_DECL(time_difference, TIME_DIFFERENCE);
 
+            std::string format() const {
+                return "hh:mm"+ time_difference().format();
+            }  
+            
+            ITU_T_TIME_COUTTP_FN( MINUTES_AND_DIFF_ENCODING);               
+
+            ITU_T_TIME_X690_FN_DECL;               
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -1413,6 +1421,13 @@ namespace boost {
             ITU_T_HOLDERH_DECL(minutes, uint8_t); //   Ic(  [ 0  ...   59 ]   
             ITU_T_HOLDERH_DECL(seconds, uint8_t); //   Ic(  [ 0  ...   60 ]   
 
+            std::string format() const {
+                return "hh:mm::ss";
+            }  
+            
+            ITU_T_TIME_COUTTP_FN(  TIME_OF_DAY_ENCODING);               
+
+            ITU_T_TIME_X690_FN_DECL;               
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -1444,6 +1459,13 @@ namespace boost {
             ITU_T_HOLDERH_DECL(minutes, uint8_t); //   Ic(  [ 0  ...   59 ]   
             ITU_T_HOLDERH_DECL(seconds, uint8_t); //   Ic(  [ 0  ...   60 ]   
 
+            std::string format() const {
+                return "hh:mm::ssZ";
+            }  
+            
+            ITU_T_TIME_COUTTP_FN(  TIME_OF_DAY_UTC_ENCODING);               
+
+            ITU_T_TIME_X690_FN_DECL;               
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -1479,6 +1501,13 @@ namespace boost {
             ITU_T_HOLDERH_DECL(local_time, TIME_OF_DAY_ENCODING);
             ITU_T_HOLDERH_DECL(time_difference, TIME_DIFFERENCE);
 
+            std::string format() const {
+                return "hh:mm:ss"+ time_difference().format();
+            }  
+            
+            ITU_T_TIME_COUTTP_FN( TIME_OF_DAY_AND_DIFF_ENCODING);               
+
+            ITU_T_TIME_X690_FN_DECL;               
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -3345,41 +3374,7 @@ namespace boost {
 
         // std::cout methods
 
-        //std::ostream& operator<<(std::ostream& stream, const CENTURY_ENCODING& vl);
-        //std::ostream& operator<<(std::ostream& stream, const ANY_CENTURY_ENCODING& vl);
-        //std::ostream& operator<<(std::ostream& stream, const YEAR_ENCODING& vl);
-        //std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_ENCODING& vl);
-        //std::ostream& operator<<(std::ostream& stream, const YEAR_MONTH_ENCODING& vl);
-        //std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_MONTH_ENCODING& vl);
-       //std::ostream& operator<<(std::ostream& stream, const DATE_ENCODING& vl);
-        //std::ostream& operator<<(std::ostream& stream, const ANY_DATE_ENCODING& vl);
-        //std::ostream& operator<<(std::ostream& stream, const YEAR_DAY_ENCODING& vl);
-        //std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_DAY_ENCODING& vl);
-        //std::ostream& operator<<(std::ostream& stream, const YEAR_WEEK_ENCODING& vl);
-        //std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_WEEK_ENCODING& vl);
-        //std::ostream& operator<<(std::ostream& stream, const YEAR_WEEK_DAY_ENCODING& vl);
-        //std::ostream& operator<<(std::ostream& stream, const ANY_YEAR_WEEK_DAY_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const HOURS_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const HOURS_UTC_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const HOURS_AND_DIFF_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const TIME_DIFFERENCE& vl);
-        std::ostream& operator<<(std::ostream& stream, const MINUTES_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const MINUTES_UTC_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const MINUTES_AND_DIFF_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const TIME_OF_DAY_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const TIME_OF_DAY_UTC_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const TIME_OF_DAY_AND_DIFF_ENCODING& vl);
-        //std::ostream& operator<<(std::ostream& stream, const HOURS_AND_FRACTION_ENCODING& vl);
-        //std::ostream& operator<<(std::ostream& stream, const HOURS_UTC_AND_FRACTION_ENCODING& vl);
-        //std::ostream& operator<<(std::ostream& stream, const HOURS_AND_DIFF_AND_FRACTION_ENCODING& vl);
-        //std::ostream& operator<<(std::ostream& stream, const MINUTES_AND_FRACTION_ENCODING& vl);
-        //std::ostream& operator<<(std::ostream& stream, const MINUTES_UTC_AND_FRACTION_ENCODING& vl);
-        //std::ostream& operator<<(std::ostream& stream, const MINUTES_AND_DIFF_AND_FRACTION_ENCODING& vl);
-        //std::ostream& operator<<(std::ostream& stream, const MINUTES_AND_DIFF_AND_FRACTION_ENCODING::Local_time_type& vl);
-        //std::ostream& operator<<(std::ostream& stream, const TIME_OF_DAY_AND_FRACTION_ENCODING& vl);
-        //std::ostream& operator<<(std::ostream& stream, const TIME_OF_DAY_UTC_AND_FRACTION_ENCODING& vl);
-        //std::ostream& operator<<(std::ostream& stream, const TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING& vl);
-        //std::ostream& operator<<(std::ostream& stream, const TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING::Local_time_type& vl);
+
         std::ostream& operator<<(std::ostream& stream, const DURATION_INTERVAL_ENCODING& vl);
         std::ostream& operator<<(std::ostream& stream, const DURATION_INTERVAL_ENCODING::Fractional_part_type& vl);
         std::ostream& operator<<(std::ostream& stream, const REC_DURATION_INTERVAL_ENCODING& vl);
@@ -3424,41 +3419,6 @@ namespace boost {
         std::ostream& operator<<(std::ostream& stream, const TIME_TYPE& vl);
         std::ostream& operator<<(std::ostream& stream, const TIME_TYPE::Time_type_type& vl);*/
 
-        ITU_T_ARCHIVE_X690_DECL(CENTURY_ENCODING);
-        //ITU_T_ARCHIVE_X690_DECL(ANY_CENTURY_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(YEAR_ENCODING);
-        //ITU_T_ARCHIVE_X690_DECL(ANY_YEAR_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(YEAR_MONTH_ENCODING);
-        //ITU_T_ARCHIVE_X690_DECL(ANY_YEAR_MONTH_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(DATE_ENCODING);
-        //ITU_T_ARCHIVE_X690_DECL(ANY_DATE_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(YEAR_DAY_ENCODING);
-        //ITU_T_ARCHIVE_X690_DECL(ANY_YEAR_DAY_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(YEAR_WEEK_ENCODING);
-        //ITU_T_ARCHIVE_X690_DECL(ANY_YEAR_WEEK_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(YEAR_WEEK_DAY_ENCODING);
-        //ITU_T_ARCHIVE_X690_DECL(ANY_YEAR_WEEK_DAY_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(HOURS_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(HOURS_UTC_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(HOURS_AND_DIFF_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(TIME_DIFFERENCE);
-        ITU_T_ARCHIVE_X690_DECL(MINUTES_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(MINUTES_UTC_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(MINUTES_AND_DIFF_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(TIME_OF_DAY_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(TIME_OF_DAY_UTC_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(TIME_OF_DAY_AND_DIFF_ENCODING);
-        //ITU_T_ARCHIVE_X690_DECL(HOURS_AND_FRACTION_ENCODING);
-        //ITU_T_ARCHIVE_X690_DECL(HOURS_UTC_AND_FRACTION_ENCODING);
-        //ITU_T_ARCHIVE_X690_DECL(HOURS_AND_DIFF_AND_FRACTION_ENCODING);
-        //ITU_T_ARCHIVE_X690_DECL(MINUTES_AND_FRACTION_ENCODING);
-        //ITU_T_ARCHIVE_X690_DECL(MINUTES_UTC_AND_FRACTION_ENCODING);
-        //ITU_T_ARCHIVE_X690_DECL(MINUTES_AND_DIFF_AND_FRACTION_ENCODING);
-        //ITU_T_ARCHIVE_X690_DECL(MINUTES_AND_DIFF_AND_FRACTION_ENCODING::Local_time_type);
-        //ITU_T_ARCHIVE_X690_DECL(TIME_OF_DAY_AND_FRACTION_ENCODING);
-        //ITU_T_ARCHIVE_X690_DECL(TIME_OF_DAY_UTC_AND_FRACTION_ENCODING);
-        //ITU_T_ARCHIVE_X690_DECL(TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING);
-        //ITU_T_ARCHIVE_X690_DECL(TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING::Local_time_type);
         ITU_T_ARCHIVE_X690_DECL(DURATION_INTERVAL_ENCODING);
         ITU_T_ARCHIVE_X690_DECL(DURATION_INTERVAL_ENCODING::Fractional_part_type);
         ITU_T_ARCHIVE_X690_DECL(REC_DURATION_INTERVAL_ENCODING);

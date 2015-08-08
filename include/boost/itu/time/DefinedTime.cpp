@@ -2958,47 +2958,6 @@ namespace boost {
 
         // std::cout methods
 
-
-        std::ostream& operator<<(std::ostream& stream, const HOURS_ENCODING& vl) {
-            return stream << "hh: " << vl.as_string();
-        };
-
-        std::ostream& operator<<(std::ostream& stream, const HOURS_UTC_ENCODING& vl) {
-            return stream << "hhZ: " << vl.as_string();
-        };
-
-        std::ostream& operator<<(std::ostream& stream, const HOURS_AND_DIFF_ENCODING& vl) {
-            return stream << "hh: " << vl.as_string();
-        };
-
-        std::ostream& operator<<(std::ostream& stream, const TIME_DIFFERENCE& vl) {
-            return stream << "hh: " << vl.as_string();
-        };
-
-        std::ostream& operator<<(std::ostream& stream, const MINUTES_ENCODING& vl) {
-            return stream << "hhmm: " << vl.as_string();
-        };
-
-        std::ostream& operator<<(std::ostream& stream, const MINUTES_UTC_ENCODING& vl) {
-            return stream << "hhmmZ: " << vl.as_string();
-        };
-
-        std::ostream& operator<<(std::ostream& stream, const MINUTES_AND_DIFF_ENCODING& vl) {
-            return stream << "hhmm: " << vl.as_string();
-        };
-
-        std::ostream& operator<<(std::ostream& stream, const TIME_OF_DAY_ENCODING& vl) {
-            return stream << "hhmmss: " << vl.as_string();
-        };
-
-        std::ostream& operator<<(std::ostream& stream, const TIME_OF_DAY_UTC_ENCODING& vl) {
-            return stream << "hhmmssZ: " << vl.as_string();
-        };
-
-        std::ostream& operator<<(std::ostream& stream, const TIME_OF_DAY_AND_DIFF_ENCODING& vl) {
-            return stream << "hhmmss: " << vl.as_string();
-        };
-
         /*std::ostream& operator<<(std::ostream& stream, const HOURS_AND_FRACTION_ENCODING& vl) {
             stream << "{ ";
             stream << "hours :  " << vl.hours();
