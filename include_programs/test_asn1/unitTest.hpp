@@ -736,8 +736,21 @@ namespace TestTm {
         DEBUG_VAL_ITU(date_time_enc_1)
         DEBUG_VAL_ITU_READ(date_time_enc_1_r);    
         
+
         
-        DURATION_INTERVAL_ENCODING durat_enc (3, 6);
+        DATE_TIME date_time_1 ="2015-08-05T19:30:33";
+        DATE_TIME date_time_2 =now_generator();        
+        
+        DATE_TIME date_time_1_r;
+        DATE_TIME date_time_2_r;        
+        
+        DEBUG_VAL_ITU(date_time_1)
+        DEBUG_VAL_ITU_READ(date_time_1_r);    
+        DEBUG_VAL_ITU(date_time_2)
+        DEBUG_VAL_ITU_READ(date_time_2_r);        
+        
+        
+        /*DURATION_INTERVAL_ENCODING durat_enc (3, 6);
         DURATION_INTERVAL_ENCODING durat_enc1 = std::string("P1Y2M15DT12H30M0S");
         DURATION_INTERVAL_ENCODING durat_enc2 = "P1Y2M15DT12H30M0S";
         DURATION_INTERVAL_ENCODING durat_enc3 = "P23W";
@@ -755,54 +768,14 @@ namespace TestTm {
         DEBUG_VAL_ITU(durat_enc2)
         DEBUG_VAL_ITU_DREAD(durat_enc2_r);
         DEBUG_VAL_ITU(durat_enc3)
-        DEBUG_VAL_ITU_DREAD(durat_enc3_r);        
+        DEBUG_VAL_ITU_DREAD(durat_enc3_r);    */    
         
         /*std::cout << boost::asn1::time_detail::minute_fraction_HF(499,3)  << std::endl;
         std::cout << boost::asn1::time_detail::second_fraction_HF(2, 2)  << std::endl;     
         std::cout << boost::asn1::time_detail::microsecond_fraction_HF(9999, 4 )  << std::endl;        
         std::cout << boost::asn1::time_detail::microsecond_fraction_HF(99999, 5 )  << std::endl;         
         std::cout << boost::asn1::time_detail::microsecond_fraction_HF(999999, 6 )  << std::endl;        
-        std::cout << boost::asn1::time_detail::microsecond_fraction_HF(9999999, 7 )  << std::endl;         
-        std::cout << boost::asn1::time_detail::microsecond_fraction_HF(99999999, 8 )  << std::endl;        
-        std::cout << boost::asn1::time_detail::microsecond_fraction_HF(999999999, 9 )  << std::endl;       
-        std::cout << boost::asn1::time_detail::nanosecond_fraction_HF(9999, 4 )  << std::endl;        
-        std::cout << boost::asn1::time_detail::nanosecond_fraction_HF(99999, 5 )  << std::endl;         
-        std::cout << boost::asn1::time_detail::nanosecond_fraction_HF(999999, 6 )  << std::endl;        
-        std::cout << boost::asn1::time_detail::nanosecond_fraction_HF(9999999, 7 )  << std::endl;         
-        std::cout << boost::asn1::time_detail::nanosecond_fraction_HF(99999999, 8 )  << std::endl;        
-        std::cout << boost::asn1::time_detail::nanosecond_fraction_HF(999999999, 9 )  << std::endl; 
-        
-        std::cout << boost::asn1::time_detail::second_fraction_HMF(54, 2)  << std::endl;
-        std::cout << boost::asn1::time_detail::microsecond_fraction_HMF(1, 4) << std::endl;
-        std::cout << boost::asn1::time_detail::microsecond_fraction_HMF(1, 5) << std::endl;
-        std::cout << boost::asn1::time_detail::microsecond_fraction_HMF(1, 6) << std::endl;
-        std::cout << boost::asn1::time_detail::microsecond_fraction_HMF(1, 7) << std::endl;
-        std::cout << boost::asn1::time_detail::microsecond_fraction_HMF(1, 8) << std::endl;
-        std::cout << boost::asn1::time_detail::microsecond_fraction_HMF(1, 9) << std::endl;
-        std::cout << boost::asn1::time_detail::nanosecond_fraction_HMF(9999, 4) << std::endl;
-        std::cout << boost::asn1::time_detail::nanosecond_fraction_HMF(99999, 5) << std::endl;
-        std::cout << boost::asn1::time_detail::nanosecond_fraction_HMF(999999, 6) << std::endl;
-        std::cout << boost::asn1::time_detail::nanosecond_fraction_HMF(9999999, 7) << std::endl;
-        std::cout << boost::asn1::time_detail::nanosecond_fraction_HMF(99999999, 8) << std::endl;
-        std::cout << boost::asn1::time_detail::nanosecond_fraction_HMF(999999999, 9) << std::endl; 
-        
-        
-        std::cout << boost::asn1::time_detail::microsecond_fraction_HMSF(1, 1) << std::endl;
-        std::cout << boost::asn1::time_detail::microsecond_fraction_HMSF(1,2) << std::endl;
-        std::cout << boost::asn1::time_detail::microsecond_fraction_HMSF(1, 3) << std::endl;        
-        std::cout << boost::asn1::time_detail::microsecond_fraction_HMSF(1, 4) << std::endl;
-        std::cout << boost::asn1::time_detail::microsecond_fraction_HMSF(1, 5) << std::endl;
-        std::cout << boost::asn1::time_detail::microsecond_fraction_HMSF(1, 6) << std::endl;
-        std::cout << boost::asn1::time_detail::microsecond_fraction_HMSF(1, 7) << std::endl;
-        std::cout << boost::asn1::time_detail::microsecond_fraction_HMSF(1, 8) << std::endl;
-        std::cout << boost::asn1::time_detail::microsecond_fraction_HMSF(1, 9) << std::endl;
-        std::cout << boost::asn1::time_detail::nanosecond_fraction_HMSF(9, 1) << std::endl;
-        std::cout << boost::asn1::time_detail::nanosecond_fraction_HMSF(99, 2) << std::endl;
-        std::cout << boost::asn1::time_detail::nanosecond_fraction_HMSF(999, 3) << std::endl;        
-        std::cout << boost::asn1::time_detail::nanosecond_fraction_HMSF(9999, 4) << std::endl;
-        std::cout << boost::asn1::time_detail::nanosecond_fraction_HMSF(99999, 5) << std::endl;
-        std::cout << boost::asn1::time_detail::nanosecond_fraction_HMSF(999999, 6) << std::endl;
-        std::cout << boost::asn1::time_detail::nanosecond_fraction_HMSF(9999999, 7) << std::endl;
+        s
         std::cout << boost::asn1::time_detail::nanosecond_fraction_HMSF(99999999, 8) << std::endl;
         std::cout << boost::asn1::time_detail::nanosecond_fraction_HMSF(999999999, 9) << std::endl;
                 
