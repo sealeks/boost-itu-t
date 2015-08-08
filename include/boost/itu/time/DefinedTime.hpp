@@ -2431,7 +2431,7 @@ namespace boost {
             };
 
             DATE_TIME_ENCODING(const base_date_time& vl) :
-            date_((!vl.is_special()) ? vl.date() : base_date()),
+            date_((!vl.is_special()) ? vl : base_date_time()),
             time_((!vl.is_special() && !vl.time_of_day().is_special()) ?
             vl.time_of_day() : base_time_duration()) {
             };
@@ -2514,11 +2514,11 @@ namespace boost {
                 as_string(vl);
             };
 
-            /*DATE_TIME(const base_date_time& vl) :
-            date_( (!vl.is_special()) ? vl.date() : base_date() ),
-            time_( (!vl.is_special() && !vl.time_of_day().is_special()) ? 
-                vl.time_of_day() : base_time_duration()) {
-            };*/
+            DATE_TIME(const base_date_time& vl) :
+            date_(DATE(!vl.is_special() ? vl : base_date_time())),
+            time_(TIME_OF_DAY((!vl.is_special() && !vl.time_of_day().is_special()) ?
+            vl.time_of_day() : base_time_duration())) {
+            };
 
             base_date_time as_datetime() const {
                 try {

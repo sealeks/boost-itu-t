@@ -3832,7 +3832,6 @@ namespace boost {
             /*ITU_T_DEFINE_TIME_TYPE(MIXED_ENCODING);
             ITU_T_DEFINE_TIME_TYPE(DATE_TYPE);
             ITU_T_DEFINE_TIME_TYPE(TIME_TYPE);*/
-
         }
     }
 }
