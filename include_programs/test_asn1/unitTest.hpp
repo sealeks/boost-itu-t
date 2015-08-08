@@ -814,6 +814,7 @@ namespace TestTm {
          std::cout << "tst: =" << boost::asn1::time_detail::get_numstr_marker(std::string("P8887Y655M-42D+241H76W66S"), 'H')  << std::endl;           
          std::cout << "tst: =" << boost::asn1::time_detail::get_numstr_marker(std::string("TP8887Y655M-42D+241H76W66S"), 'P')  << std::endl;             
          std::cout << "tst: =" << boost::asn1::time_detail::get_numstr_marker(std::string("P8887Y655M-42D+241H76W66S"), 'P')  << std::endl;   */         
+        
     }
 
 }
