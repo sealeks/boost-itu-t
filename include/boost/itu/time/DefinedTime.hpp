@@ -2571,19 +2571,19 @@ namespace boost {
             ITU_T_TIME_X690_FN_ID_DECL(TYPE_DATE_TIME);
             ITU_T_ARCHIVE_FUNC;
         };
-        
-        
-        
+
+
+
         // temlate fore
         // sequence START-END-DATE-INTERVAL-ENCODING
         // sequence START-END-TIME-INTERVAL-ENCODING      
         // sequence START-END-DATE-TIME-INTERVAL-ENCODING
-        
+
         template<typename T>
         struct START_END_INTERVAL_ENCODING {
 
             typedef T Tm_Type;
-            
+
             START_END_INTERVAL_ENCODING() : start_(), end_() {
             };
 
@@ -2601,7 +2601,6 @@ namespace boost {
                 as_string(vl);
             };
 
-
             std::string as_string() const {
                 return start().as_string() + "/" + end().as_string();
             }
@@ -2615,7 +2614,6 @@ namespace boost {
                 end(Tm_Type(vlr));
             };
 
-
             void serialize(boost::asn1::x691::output_coder& arch) {
                 ITU_T_BIND_PER(start_);
                 ITU_T_BIND_PER(end_);
@@ -2627,21 +2625,21 @@ namespace boost {
             }
 
             std::string format() const {
-                return start().format() + "T" + end().format();
+                return start().format() + "/" + end().format();
             };
 
             ITU_T_HOLDERH_DECL(start, Tm_Type);
             ITU_T_HOLDERH_DECL(end, Tm_Type);
-            
-            ITU_T_TIME_COUTTP_FN(START_END_INTERVAL_ENCODING);            
+
+            ITU_T_TIME_COUTTP_FN(START_END_INTERVAL_ENCODING);
 
             ITU_T_TIME_X690_FN_DECL;
             ITU_T_ARCHIVE_FUNC;
-        };        
+        };
 
 
-        
-        
+
+
 
         // sequence DURATION-INTERVAL-ENCODING
 
@@ -2706,8 +2704,8 @@ namespace boost {
         };
 
 
-        
-        
+
+
 
         // sequence DURATION
 
@@ -2772,18 +2770,18 @@ namespace boost {
         };
 
 
-        
-        
+
+
         // temlate fore
         // sequence START-DATE-IDURATION-NTERVAL-ENCODING
         // sequence START-TIME-DURATION-INTERVAL-ENCODING      
         // sequence START-DATE-TIME-DURATION-INTERVAL-ENCODING
-        
+
         template<typename T>
         struct START_DURATION_INTERVAL_ENCODING {
 
             typedef T Tm_Type;
-            
+
             START_DURATION_INTERVAL_ENCODING() : start_(), duration_() {
             };
 
@@ -2801,7 +2799,6 @@ namespace boost {
                 as_string(vl);
             };
 
-
             std::string as_string() const {
                 return start().as_string() + "/" + duration().as_string();
             }
@@ -2815,7 +2812,6 @@ namespace boost {
                 duration(DURATION(vlr));
             };
 
-
             void serialize(boost::asn1::x691::output_coder& arch) {
                 ITU_T_BIND_PER(start_);
                 ITU_T_BIND_PER(duration_);
@@ -2827,33 +2823,33 @@ namespace boost {
             }
 
             std::string format() const {
-                return start().format() + "T" + duration().format();
+                return start().format() + "/" + duration().format();
             };
 
             ITU_T_HOLDERH_DECL(start, Tm_Type);
             ITU_T_HOLDERH_DECL(duration, DURATION);
-            
-            ITU_T_TIME_COUTTP_FN(START_DURATION_INTERVAL_ENCODING);            
+
+            ITU_T_TIME_COUTTP_FN(START_DURATION_INTERVAL_ENCODING);
 
             ITU_T_TIME_X690_FN_DECL;
             ITU_T_ARCHIVE_FUNC;
-        };    
-        
-        
-        
-        
-        
-        
+        };
+
+
+
+
+
+
         // temlate fore
         // sequence DURATION-END-DATE-INTERVAL-ENCODING
         // sequence DURATION-END-TIME-INTERVAL-ENCODING      
         // sequence DURATION-END-DATE-TIME-INTERVAL-ENCODING
-        
+
         template<typename T>
         struct DURATION_END_INTERVAL_ENCODING {
 
             typedef T Tm_Type;
-            
+
             DURATION_END_INTERVAL_ENCODING() : duration_(), end_() {
             };
 
@@ -2871,7 +2867,6 @@ namespace boost {
                 as_string(vl);
             };
 
-
             std::string as_string() const {
                 return duration().as_string() + "/" + end().as_string();
             }
@@ -2885,7 +2880,6 @@ namespace boost {
                 end(Tm_Type(vlr));
             };
 
-
             void serialize(boost::asn1::x691::output_coder& arch) {
                 ITU_T_BIND_PER(duration_);
                 ITU_T_BIND_PER(end_);
@@ -2897,20 +2891,111 @@ namespace boost {
             }
 
             std::string format() const {
-                return duration().format() + "T" + end().format();
+                return duration().format() + "/" + end().format();
             };
 
             ITU_T_HOLDERH_DECL(duration, DURATION);
             ITU_T_HOLDERH_DECL(end, Tm_Type);
-                  
-            ITU_T_TIME_COUTTP_FN(DURATION_END_INTERVAL_ENCODING);               
+
+            ITU_T_TIME_COUTTP_FN(DURATION_END_INTERVAL_ENCODING);
 
             ITU_T_TIME_X690_FN_DECL;
             ITU_T_ARCHIVE_FUNC;
-        };            
-        
-        
-        
+        };
+
+
+
+
+        // temlate fore
+        // sequence REC-START-END-DATE-INTERVAL-ENCODING
+        // sequence REC-START-END-TIME-INTERVAL-ENCODING      
+        // sequence REC-START-END-DATE-TIME-INTERVAL-ENCODING
+
+        template<typename T>
+        struct REC_START_END_INTERVAL_ENCODING {
+
+            typedef T Tm_Type;
+
+            REC_START_END_INTERVAL_ENCODING() : recurrence_(), start_(), end_() {
+            };
+
+            REC_START_END_INTERVAL_ENCODING(const Tm_Type& arg__start,
+                    const Tm_Type& arg__end,
+                    integer_type arg__recurrence = 0) :
+            recurrence_(arg__recurrence ? ITU_T_MAKE(integer_type)(arg__recurrence) :
+            (ITU_T_SHARED(integer_type)())),
+            start_(arg__start),
+            end_(arg__end) {
+            };
+
+            REC_START_END_INTERVAL_ENCODING(const std::string& vl) : recurrence_(), start_(), end_() {
+                as_string(vl);
+            };
+
+            REC_START_END_INTERVAL_ENCODING(const char* vl) : recurrence_(), start_(), end_() {
+                as_string(vl);
+            };
+
+            std::string as_string() const {
+                return "R" + ((recurrence() && *recurrence()) ? (time_detail::to_string(*recurrence())) : (std::string()))
+                        + "/" + start().as_string() + "/" + end().as_string();
+            }
+
+            void as_string(const std::string& v) {
+                std::string vl = time_detail::normalize_time_str(v);
+                std::string::size_type it = vl.find_first_of('/');
+                std::string vll = (it == std::string::npos) ? vl : vl.substr(0, it);
+                std::string vl2 = (it == std::string::npos) ? "" : vl.substr(it + 1);
+                std::string::size_type it2 = vl2.find_first_of('/');
+                std::string vls = (it2 == std::string::npos) ? vl2 : vl2.substr(0, it2);
+                std::string vlr = (it2 == std::string::npos) ? "" : vl2.substr(it2 + 1);
+                if (vll.size() > 1) {
+                    vll = vll.substr(1);
+                    integer_type rc = time_detail::string_to_def<integer_type>(vll);
+                    recurrence_ = rc ? (ITU_T_MAKE(integer_type)(rc)) :
+                            (ITU_T_SHARED(integer_type)());
+                } else
+                    recurrence_ = ITU_T_SHARED(integer_type)();
+                start(Tm_Type(vls));
+                end(Tm_Type(vlr));
+            };
+
+            void serialize(boost::asn1::x691::output_coder& arch) {
+
+                ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(recurrence_);
+
+                ITU_T_OPTIONAL_WRITE;
+
+                ITU_T_BIND_PER(recurrence_);
+                ITU_T_BIND_PER(start_);
+                ITU_T_BIND_PER(end_);
+            }
+
+            void serialize(boost::asn1::x691::input_coder& arch) {
+
+                ITU_T_OPTIONAL_READ(1);
+
+                ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(recurrence_);
+                ITU_T_BIND_PER(start_);
+                ITU_T_BIND_PER(end_);
+            }
+
+            std::string format() const {
+                return "Rn/" + start().format() + "/" + end().format();
+            };
+
+            ITU_T_OPTIONAL_DECL(recurrence, integer_type);
+            ITU_T_HOLDERH_DECL(start, Tm_Type);
+            ITU_T_HOLDERH_DECL(end, Tm_Type);
+
+            ITU_T_TIME_COUTTP_FN(REC_START_END_INTERVAL_ENCODING);
+
+            ITU_T_TIME_X690_FN_DECL;
+            ITU_T_ARCHIVE_FUNC;
+        };
+
+
+
 
         // sequence REC-DURATION-INTERVAL-ENCODING
 
@@ -2918,22 +3003,22 @@ namespace boost {
 
             REC_DURATION_INTERVAL_ENCODING();
 
-            REC_DURATION_INTERVAL_ENCODING(
+                    REC_DURATION_INTERVAL_ENCODING(
                     const DURATION_INTERVAL_ENCODING& arg__duration,
                     integer_type arg__recurrence = 0);
 
-            REC_DURATION_INTERVAL_ENCODING(const std::string& vl);
+                    REC_DURATION_INTERVAL_ENCODING(const std::string& vl);
 
-            REC_DURATION_INTERVAL_ENCODING(const char* vl);
+                    REC_DURATION_INTERVAL_ENCODING(const char* vl);
 
-            std::string as_string() const;
+                    std::string as_string() const;
 
-            void as_string(const std::string& v);
+                    void as_string(const std::string& v);
 
-            ITU_T_OPTIONAL_DECL(recurrence, integer_type);
-            ITU_T_HOLDERH_DECL(duration, DURATION_INTERVAL_ENCODING);
+                    ITU_T_OPTIONAL_DECL(recurrence, integer_type);
+                    ITU_T_HOLDERH_DECL(duration, DURATION_INTERVAL_ENCODING);
 
-            ITU_T_ARCHIVE_FUNC;
+                    ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -3789,209 +3874,209 @@ namespace boost {
 
 
         std::ostream& operator<<(std::ostream& stream, const REC_DURATION_INTERVAL_ENCODING& vl);
-        /*std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Time_HFn_L_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Time_HFn_Z_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Time_HFn_LD_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Time_HMFn_L_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Time_HMFn_Z_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Time_HMFn_LD_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Time_HMFSn_L_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Time_HMFSn_Z_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Time_HMFSn_LD_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Date_time_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SE_Date_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SE_Time_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SE_Date_Time_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SE_Date_Time_type::Start_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SE_Date_Time_type::End_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SD_Date_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SD_Time_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SD_Date_Time_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SD_Date_Time_type::Start_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_DE_Date_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_DE_Time_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_DE_Date_Time_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_DE_Date_Time_type::End_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SE_Date_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SE_Time_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SE_Date_Time_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::Start_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::End_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SD_Date_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SD_Time_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SD_Date_Time_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SD_Date_Time_type::Start_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_DE_Date_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_DE_Time_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_DE_Date_Time_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_DE_Date_Time_type::End_type& vl);
-        std::ostream& operator<<(std::ostream& stream, const DATE_TYPE& vl);
-        std::ostream& operator<<(std::ostream& stream, const TIME_TYPE& vl);
-        std::ostream& operator<<(std::ostream& stream, const TIME_TYPE::Time_type_type& vl);*/
+                /*std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Time_HFn_L_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Time_HFn_Z_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Time_HFn_LD_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Time_HMFn_L_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Time_HMFn_Z_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Time_HMFn_LD_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Time_HMFSn_L_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Time_HMFSn_Z_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Time_HMFSn_LD_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Date_time_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SE_Date_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SE_Time_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SE_Date_Time_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SE_Date_Time_type::Start_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SE_Date_Time_type::End_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SD_Date_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SD_Time_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SD_Date_Time_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_SD_Date_Time_type::Start_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_DE_Date_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_DE_Time_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_DE_Date_Time_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Iterval_DE_Date_Time_type::End_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SE_Date_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SE_Time_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SE_Date_Time_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::Start_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::End_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SD_Date_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SD_Time_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SD_Date_Time_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_SD_Date_Time_type::Start_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_DE_Date_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_DE_Time_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_DE_Date_Time_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const MIXED_ENCODING::Rec_Interval_DE_Date_Time_type::End_type& vl);
+                std::ostream& operator<<(std::ostream& stream, const DATE_TYPE& vl);
+                std::ostream& operator<<(std::ostream& stream, const TIME_TYPE& vl);
+                std::ostream& operator<<(std::ostream& stream, const TIME_TYPE::Time_type_type& vl);*/
 
-        //ITU_T_ARCHIVE_X690_DECL(DURATION_INTERVAL_ENCODING);
-        //ITU_T_ARCHIVE_X690_DECL(DURATION_INTERVAL_ENCODING::Fractional_part_type);
-        ITU_T_ARCHIVE_X690_DECL(REC_DURATION_INTERVAL_ENCODING);
-        /*ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Time_HFn_L_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Time_HFn_Z_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Time_HFn_LD_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Time_HMFn_L_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Time_HMFn_Z_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Time_HMFn_LD_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Time_HMFSn_L_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Time_HMFSn_Z_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Time_HMFSn_LD_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Date_time_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_SE_Date_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_SE_Time_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_SE_Date_Time_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_SE_Date_Time_type::Start_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_SE_Date_Time_type::End_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_SD_Date_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_SD_Time_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_SD_Date_Time_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_SD_Date_Time_type::Start_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_DE_Date_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_DE_Time_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_DE_Date_Time_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_DE_Date_Time_type::End_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_SE_Date_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_SE_Time_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_SE_Date_Time_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::Start_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::End_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_SD_Date_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_SD_Time_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_SD_Date_Time_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_SD_Date_Time_type::Start_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_DE_Date_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_DE_Time_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_DE_Date_Time_type);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_DE_Date_Time_type::End_type);
-        ITU_T_ARCHIVE_X690_DECL(DATE_TYPE);
-        ITU_T_ARCHIVE_X690_DECL(TIME_TYPE);
-        ITU_T_ARCHIVE_X690_DECL(TIME_TYPE::Time_type_type);*/
+                //ITU_T_ARCHIVE_X690_DECL(DURATION_INTERVAL_ENCODING);
+                //ITU_T_ARCHIVE_X690_DECL(DURATION_INTERVAL_ENCODING::Fractional_part_type);
+                ITU_T_ARCHIVE_X690_DECL(REC_DURATION_INTERVAL_ENCODING);
+                /*ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Time_HFn_L_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Time_HFn_Z_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Time_HFn_LD_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Time_HMFn_L_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Time_HMFn_Z_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Time_HMFn_LD_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Time_HMFSn_L_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Time_HMFSn_Z_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Time_HMFSn_LD_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Date_time_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_SE_Date_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_SE_Time_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_SE_Date_Time_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_SE_Date_Time_type::Start_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_SE_Date_Time_type::End_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_SD_Date_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_SD_Time_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_SD_Date_Time_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_SD_Date_Time_type::Start_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_DE_Date_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_DE_Time_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_DE_Date_Time_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Iterval_DE_Date_Time_type::End_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_SE_Date_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_SE_Time_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_SE_Date_Time_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::Start_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::End_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_SD_Date_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_SD_Time_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_SD_Date_Time_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_SD_Date_Time_type::Start_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_DE_Date_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_DE_Time_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_DE_Date_Time_type);
+                ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING::Rec_Interval_DE_Date_Time_type::End_type);
+                ITU_T_ARCHIVE_X690_DECL(DATE_TYPE);
+                ITU_T_ARCHIVE_X690_DECL(TIME_TYPE);
+                ITU_T_ARCHIVE_X690_DECL(TIME_TYPE::Time_type_type);*/
 
-        ITU_T_ARCHIVE_X691_DECL(CENTURY_ENCODING);
-        //ITU_T_ARCHIVE_X691_DECL(ANY_CENTURY_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(YEAR_ENCODING);
-        //ITU_T_ARCHIVE_X691_DECL(ANY_YEAR_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(YEAR_MONTH_ENCODING);
-        //ITU_T_ARCHIVE_X691_DECL(ANY_YEAR_MONTH_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(DATE_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(DATE);        
-        //ITU_T_ARCHIVE_X691_DECL(ANY_DATE_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(YEAR_DAY_ENCODING);
-        //ITU_T_ARCHIVE_X691_DECL(ANY_YEAR_DAY_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(YEAR_WEEK_ENCODING);
-        //ITU_T_ARCHIVE_X691_DECL(ANY_YEAR_WEEK_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(YEAR_WEEK_DAY_ENCODING);
-        //ITU_T_ARCHIVE_X691_DECL(ANY_YEAR_WEEK_DAY_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(HOURS_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(HOURS_UTC_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(HOURS_AND_DIFF_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(TIME_DIFFERENCE);
-        ITU_T_ARCHIVE_X691_DECL(MINUTES_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(MINUTES_UTC_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(MINUTES_AND_DIFF_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY);        
-        ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY_UTC_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY_AND_DIFF_ENCODING);
-        //ITU_T_ARCHIVE_X691_DECL(HOURS_AND_FRACTION_ENCODING);
-        //ITU_T_ARCHIVE_X691_DECL(HOURS_UTC_AND_FRACTION_ENCODING);
-        //ITU_T_ARCHIVE_X691_DECL(HOURS_AND_DIFF_AND_FRACTION_ENCODING);
-        //ITU_T_ARCHIVE_X691_DECL(MINUTES_AND_FRACTION_ENCODING);
-        //ITU_T_ARCHIVE_X691_DECL(MINUTES_UTC_AND_FRACTION_ENCODING);
-        //ITU_T_ARCHIVE_X691_DECL(MINUTES_AND_DIFF_AND_FRACTION_ENCODING);
-        //ITU_T_ARCHIVE_X691_DECL(MINUTES_AND_DIFF_AND_FRACTION_ENCODING::Local_time_type);
-        //ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY_AND_FRACTION_ENCODING);
-        //ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY_UTC_AND_FRACTION_ENCODING);
-        //ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING);
-        //ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING::Local_time_type);
-        ITU_T_ARCHIVE_X691_DECL(DATE_TIME);        
-        ITU_T_ARCHIVE_X691_DECL(DURATION_INTERVAL_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(DURATION_INTERVAL_ENCODING::Fractional_part_type);        
-        ITU_T_ARCHIVE_X691_DECL(DURATION);        
-        ITU_T_ARCHIVE_X691_DECL(DURATION::Fractional_part_type);        
-        ITU_T_ARCHIVE_X691_DECL(REC_DURATION_INTERVAL_ENCODING);
-        /*ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Time_HFn_L_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Time_HFn_Z_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Time_HFn_LD_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Time_HMFn_L_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Time_HMFn_Z_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Time_HMFn_LD_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Time_HMFSn_L_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Time_HMFSn_Z_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Time_HMFSn_LD_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Date_time_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_SE_Date_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_SE_Time_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_SE_Date_Time_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_SE_Date_Time_type::Start_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_SE_Date_Time_type::End_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_SD_Date_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_SD_Time_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_SD_Date_Time_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_SD_Date_Time_type::Start_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_DE_Date_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_DE_Time_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_DE_Date_Time_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_DE_Date_Time_type::End_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_SE_Date_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_SE_Time_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_SE_Date_Time_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::Start_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::End_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_SD_Date_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_SD_Time_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_SD_Date_Time_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_SD_Date_Time_type::Start_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_DE_Date_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_DE_Time_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_DE_Date_Time_type);
-        ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_DE_Date_Time_type::End_type);
-        ITU_T_ARCHIVE_X691_DECL(DATE_TYPE);
-        ITU_T_ARCHIVE_X691_DECL(TIME_TYPE);
-        ITU_T_ARCHIVE_X691_DECL(TIME_TYPE::Time_type_type);*/
+                ITU_T_ARCHIVE_X691_DECL(CENTURY_ENCODING);
+                //ITU_T_ARCHIVE_X691_DECL(ANY_CENTURY_ENCODING);
+                ITU_T_ARCHIVE_X691_DECL(YEAR_ENCODING);
+                //ITU_T_ARCHIVE_X691_DECL(ANY_YEAR_ENCODING);
+                ITU_T_ARCHIVE_X691_DECL(YEAR_MONTH_ENCODING);
+                //ITU_T_ARCHIVE_X691_DECL(ANY_YEAR_MONTH_ENCODING);
+                ITU_T_ARCHIVE_X691_DECL(DATE_ENCODING);
+                ITU_T_ARCHIVE_X691_DECL(DATE);
+                //ITU_T_ARCHIVE_X691_DECL(ANY_DATE_ENCODING);
+                ITU_T_ARCHIVE_X691_DECL(YEAR_DAY_ENCODING);
+                //ITU_T_ARCHIVE_X691_DECL(ANY_YEAR_DAY_ENCODING);
+                ITU_T_ARCHIVE_X691_DECL(YEAR_WEEK_ENCODING);
+                //ITU_T_ARCHIVE_X691_DECL(ANY_YEAR_WEEK_ENCODING);
+                ITU_T_ARCHIVE_X691_DECL(YEAR_WEEK_DAY_ENCODING);
+                //ITU_T_ARCHIVE_X691_DECL(ANY_YEAR_WEEK_DAY_ENCODING);
+                ITU_T_ARCHIVE_X691_DECL(HOURS_ENCODING);
+                ITU_T_ARCHIVE_X691_DECL(HOURS_UTC_ENCODING);
+                ITU_T_ARCHIVE_X691_DECL(HOURS_AND_DIFF_ENCODING);
+                ITU_T_ARCHIVE_X691_DECL(TIME_DIFFERENCE);
+                ITU_T_ARCHIVE_X691_DECL(MINUTES_ENCODING);
+                ITU_T_ARCHIVE_X691_DECL(MINUTES_UTC_ENCODING);
+                ITU_T_ARCHIVE_X691_DECL(MINUTES_AND_DIFF_ENCODING);
+                ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY_ENCODING);
+                ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY);
+                ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY_UTC_ENCODING);
+                ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY_AND_DIFF_ENCODING);
+                //ITU_T_ARCHIVE_X691_DECL(HOURS_AND_FRACTION_ENCODING);
+                //ITU_T_ARCHIVE_X691_DECL(HOURS_UTC_AND_FRACTION_ENCODING);
+                //ITU_T_ARCHIVE_X691_DECL(HOURS_AND_DIFF_AND_FRACTION_ENCODING);
+                //ITU_T_ARCHIVE_X691_DECL(MINUTES_AND_FRACTION_ENCODING);
+                //ITU_T_ARCHIVE_X691_DECL(MINUTES_UTC_AND_FRACTION_ENCODING);
+                //ITU_T_ARCHIVE_X691_DECL(MINUTES_AND_DIFF_AND_FRACTION_ENCODING);
+                //ITU_T_ARCHIVE_X691_DECL(MINUTES_AND_DIFF_AND_FRACTION_ENCODING::Local_time_type);
+                //ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY_AND_FRACTION_ENCODING);
+                //ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY_UTC_AND_FRACTION_ENCODING);
+                //ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING);
+                //ITU_T_ARCHIVE_X691_DECL(TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING::Local_time_type);
+                ITU_T_ARCHIVE_X691_DECL(DATE_TIME);
+                ITU_T_ARCHIVE_X691_DECL(DURATION_INTERVAL_ENCODING);
+                ITU_T_ARCHIVE_X691_DECL(DURATION_INTERVAL_ENCODING::Fractional_part_type);
+                ITU_T_ARCHIVE_X691_DECL(DURATION);
+                ITU_T_ARCHIVE_X691_DECL(DURATION::Fractional_part_type);
+                ITU_T_ARCHIVE_X691_DECL(REC_DURATION_INTERVAL_ENCODING);
+                /*ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Time_HFn_L_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Time_HFn_Z_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Time_HFn_LD_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Time_HMFn_L_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Time_HMFn_Z_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Time_HMFn_LD_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Time_HMFSn_L_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Time_HMFSn_Z_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Time_HMFSn_LD_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Date_time_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_SE_Date_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_SE_Time_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_SE_Date_Time_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_SE_Date_Time_type::Start_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_SE_Date_Time_type::End_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_SD_Date_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_SD_Time_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_SD_Date_Time_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_SD_Date_Time_type::Start_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_DE_Date_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_DE_Time_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_DE_Date_Time_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Iterval_DE_Date_Time_type::End_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_SE_Date_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_SE_Time_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_SE_Date_Time_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::Start_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::End_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_SD_Date_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_SD_Time_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_SD_Date_Time_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_SD_Date_Time_type::Start_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_DE_Date_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_DE_Time_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_DE_Date_Time_type);
+                ITU_T_ARCHIVE_X691_DECL(MIXED_ENCODING::Rec_Interval_DE_Date_Time_type::End_type);
+                ITU_T_ARCHIVE_X691_DECL(DATE_TYPE);
+                ITU_T_ARCHIVE_X691_DECL(TIME_TYPE);
+                ITU_T_ARCHIVE_X691_DECL(TIME_TYPE::Time_type_type);*/
 
 
 
-        ITU_T_INTERNAL_REGESTRATE(CENTURY_ENCODING, TYPE_TIME);
-        //ITU_T_INTERNAL_REGESTRATE(ANY_CENTURY_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(YEAR_ENCODING, TYPE_TIME);
-        //ITU_T_INTERNAL_REGESTRATE(ANY_YEAR_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(YEAR_MONTH_ENCODING, TYPE_TIME);
-        //ITU_T_INTERNAL_REGESTRATE(ANY_YEAR_MONTH_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(DATE_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(DATE, TYPE_DATE);
-        //ITU_T_INTERNAL_REGESTRATE(ANY_DATE_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(YEAR_DAY_ENCODING, TYPE_TIME);
-        //ITU_T_INTERNAL_REGESTRATE(ANY_YEAR_DAY_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(YEAR_WEEK_ENCODING, TYPE_TIME);
-        //ITU_T_INTERNAL_REGESTRATE(ANY_YEAR_WEEK_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(YEAR_WEEK_DAY_ENCODING, TYPE_TIME);
-        //ITU_T_INTERNAL_REGESTRATE(ANY_YEAR_WEEK_DAY_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(HOURS_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(HOURS_UTC_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(HOURS_AND_DIFF_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(TIME_DIFFERENCE, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(MINUTES_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(MINUTES_UTC_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(MINUTES_AND_DIFF_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(TIME_OF_DAY_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(TIME_OF_DAY, TYPE_TIME_OF_DAY);
-        ITU_T_INTERNAL_REGESTRATE(TIME_OF_DAY_UTC_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(TIME_OF_DAY_AND_DIFF_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(DATE_TIME, TYPE_DATE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(DURATION_INTERVAL_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(REC_DURATION_INTERVAL_ENCODING, TYPE_TIME);
-        /*ITU_T_INTERNAL_REGESTRATE(MIXED_ENCODING, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(DATE_TYPE, TYPE_TIME);
-        ITU_T_INTERNAL_REGESTRATE(TIME_TYPE, TYPE_TIME);*/
+                ITU_T_INTERNAL_REGESTRATE(CENTURY_ENCODING, TYPE_TIME);
+                //ITU_T_INTERNAL_REGESTRATE(ANY_CENTURY_ENCODING, TYPE_TIME);
+                ITU_T_INTERNAL_REGESTRATE(YEAR_ENCODING, TYPE_TIME);
+                //ITU_T_INTERNAL_REGESTRATE(ANY_YEAR_ENCODING, TYPE_TIME);
+                ITU_T_INTERNAL_REGESTRATE(YEAR_MONTH_ENCODING, TYPE_TIME);
+                //ITU_T_INTERNAL_REGESTRATE(ANY_YEAR_MONTH_ENCODING, TYPE_TIME);
+                ITU_T_INTERNAL_REGESTRATE(DATE_ENCODING, TYPE_TIME);
+                ITU_T_INTERNAL_REGESTRATE(DATE, TYPE_DATE);
+                //ITU_T_INTERNAL_REGESTRATE(ANY_DATE_ENCODING, TYPE_TIME);
+                ITU_T_INTERNAL_REGESTRATE(YEAR_DAY_ENCODING, TYPE_TIME);
+                //ITU_T_INTERNAL_REGESTRATE(ANY_YEAR_DAY_ENCODING, TYPE_TIME);
+                ITU_T_INTERNAL_REGESTRATE(YEAR_WEEK_ENCODING, TYPE_TIME);
+                //ITU_T_INTERNAL_REGESTRATE(ANY_YEAR_WEEK_ENCODING, TYPE_TIME);
+                ITU_T_INTERNAL_REGESTRATE(YEAR_WEEK_DAY_ENCODING, TYPE_TIME);
+                //ITU_T_INTERNAL_REGESTRATE(ANY_YEAR_WEEK_DAY_ENCODING, TYPE_TIME);
+                ITU_T_INTERNAL_REGESTRATE(HOURS_ENCODING, TYPE_TIME);
+                ITU_T_INTERNAL_REGESTRATE(HOURS_UTC_ENCODING, TYPE_TIME);
+                ITU_T_INTERNAL_REGESTRATE(HOURS_AND_DIFF_ENCODING, TYPE_TIME);
+                ITU_T_INTERNAL_REGESTRATE(TIME_DIFFERENCE, TYPE_TIME);
+                ITU_T_INTERNAL_REGESTRATE(MINUTES_ENCODING, TYPE_TIME);
+                ITU_T_INTERNAL_REGESTRATE(MINUTES_UTC_ENCODING, TYPE_TIME);
+                ITU_T_INTERNAL_REGESTRATE(MINUTES_AND_DIFF_ENCODING, TYPE_TIME);
+                ITU_T_INTERNAL_REGESTRATE(TIME_OF_DAY_ENCODING, TYPE_TIME);
+                ITU_T_INTERNAL_REGESTRATE(TIME_OF_DAY, TYPE_TIME_OF_DAY);
+                ITU_T_INTERNAL_REGESTRATE(TIME_OF_DAY_UTC_ENCODING, TYPE_TIME);
+                ITU_T_INTERNAL_REGESTRATE(TIME_OF_DAY_AND_DIFF_ENCODING, TYPE_TIME);
+                ITU_T_INTERNAL_REGESTRATE(DATE_TIME, TYPE_DATE_TIME);
+                ITU_T_INTERNAL_REGESTRATE(DURATION_INTERVAL_ENCODING, TYPE_TIME);
+                ITU_T_INTERNAL_REGESTRATE(REC_DURATION_INTERVAL_ENCODING, TYPE_TIME);
+                /*ITU_T_INTERNAL_REGESTRATE(MIXED_ENCODING, TYPE_TIME);
+                ITU_T_INTERNAL_REGESTRATE(DATE_TYPE, TYPE_TIME);
+                ITU_T_INTERNAL_REGESTRATE(TIME_TYPE, TYPE_TIME);*/
 
 
     }
