@@ -2571,8 +2571,81 @@ namespace boost {
             ITU_T_TIME_X690_FN_ID_DECL(TYPE_DATE_TIME);
             ITU_T_ARCHIVE_FUNC;
         };
+        
+        
+        
+        // temlate fore
+        // sequence START-END-DATE-INTERVAL-ENCODING
+        // sequence START-END-TIME-INTERVAL-ENCODING      
+        // sequence START-END-DATE-TIME-INTERVAL-ENCODING
+        
+        template<typename T>
+        struct START_END_INTERVAL_ENCODING {
+
+            typedef T Tm_Type;
+            
+            START_END_INTERVAL_ENCODING() : start_(), end_() {
+            };
+
+            START_END_INTERVAL_ENCODING(const Tm_Type& arg__start,
+                    const Tm_Type& arg__end) :
+            start_(arg__start),
+            end_(arg__end) {
+            };
+
+            START_END_INTERVAL_ENCODING(const std::string& vl) : start_(), end_() {
+                as_string(vl);
+            };
+
+            START_END_INTERVAL_ENCODING(const char* vl) : start_(), end_() {
+                as_string(vl);
+            };
+
+            /*START_END_INTERVAL_ENCODING(const base_date& arg__start,
+                    const base_date& arg__end) :
+            start_(arg__start),
+            end_(arg__end) {
+            };*/
 
 
+            std::string as_string() const {
+                return start().as_string() + "/" + end().as_string();
+            }
+
+            void as_string(const std::string& v) {
+                std::string vl = time_detail::normalize_time_str(v);
+                std::string::size_type it = vl.find_first_of('/');
+                std::string vll = (it == std::string::npos) ? vl : vl.substr(0, it);
+                std::string vlr = (it == std::string::npos) ? "" : vl.substr(it + 1);
+                start(Tm_Type(vll));
+                end(Tm_Type(vlr));
+            };
+
+
+            void serialize(boost::asn1::x691::output_coder& arch) {
+                ITU_T_BIND_PER(start_);
+                ITU_T_BIND_PER(end_);
+            }
+
+            void serialize(boost::asn1::x691::input_coder& arch) {
+                ITU_T_BIND_PER(start_);
+                ITU_T_BIND_PER(end_);
+            }
+
+            std::string format() const {
+                return start().format() + "T" + end().format();
+            };
+
+            ITU_T_HOLDERH_DECL(start, Tm_Type);
+            ITU_T_HOLDERH_DECL(end, Tm_Type);
+
+            ITU_T_TIME_X690_FN_DECL;
+            ITU_T_ARCHIVE_FUNC;
+        };        
+
+
+        
+        
 
         // sequence DURATION-INTERVAL-ENCODING
 
@@ -2637,8 +2710,8 @@ namespace boost {
         };
 
 
-
-
+        
+        
 
         // sequence DURATION
 
@@ -2703,7 +2776,76 @@ namespace boost {
         };
 
 
+        
+        
+        // temlate fore
+        // sequence START-DATE-IDURATION-NTERVAL-ENCODING
+        // sequence START-TIME-DURATION-INTERVAL-ENCODING      
+        // sequence START-DATE-TIME-DURATION-INTERVAL-ENCODING
+        
+        template<typename T>
+        struct START_DURATION_INTERVAL_ENCODING {
 
+            typedef T Tm_Type;
+            
+            START_DURATION_INTERVAL_ENCODING() : start_(), duration_() {
+            };
+
+            START_DURATION_INTERVAL_ENCODING(const Tm_Type& arg__start,
+                    const DURATION& arg__duration) :
+            start_(arg__start),
+            duration_(arg__duration) {
+            };
+
+            START_DURATION_INTERVAL_ENCODING(const std::string& vl) : start_(), duration_() {
+                as_string(vl);
+            };
+
+            START_DURATION_INTERVAL_ENCODING(const char* vl) : start_(), duration_() {
+                as_string(vl);
+            };
+
+
+            std::string as_string() const {
+                return start().as_string() + "/" + duration().as_string();
+            }
+
+            void as_string(const std::string& v) {
+                std::string vl = time_detail::normalize_time_str(v);
+                std::string::size_type it = vl.find_first_of('/');
+                std::string vll = (it == std::string::npos) ? vl : vl.substr(0, it);
+                std::string vlr = (it == std::string::npos) ? "" : vl.substr(it + 1);
+                start(Tm_Type(vll));
+                duration(DURATION(vlr));
+            };
+
+
+            void serialize(boost::asn1::x691::output_coder& arch) {
+                ITU_T_BIND_PER(start_);
+                ITU_T_BIND_PER(duration_);
+            }
+
+            void serialize(boost::asn1::x691::input_coder& arch) {
+                ITU_T_BIND_PER(start_);
+                ITU_T_BIND_PER(duration_);
+            }
+
+            std::string format() const {
+                return start().format() + "T" + duration().format();
+            };
+
+            ITU_T_HOLDERH_DECL(start, Tm_Type);
+            ITU_T_HOLDERH_DECL(duration, DURATION);
+
+            ITU_T_TIME_X690_FN_DECL;
+            ITU_T_ARCHIVE_FUNC;
+        };    
+        
+        
+        
+        
+        
+        
 
         // sequence REC-DURATION-INTERVAL-ENCODING
 
