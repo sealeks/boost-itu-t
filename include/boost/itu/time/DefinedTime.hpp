@@ -2574,7 +2574,7 @@ namespace boost {
 
 
 
-        // temlate fore
+        // temlate for
         // sequence START-END-DATE-INTERVAL-ENCODING
         // sequence START-END-TIME-INTERVAL-ENCODING      
         // sequence START-END-DATE-TIME-INTERVAL-ENCODING
@@ -2772,7 +2772,7 @@ namespace boost {
 
 
 
-        // temlate fore
+        // temlate for
         // sequence START-DATE-IDURATION-NTERVAL-ENCODING
         // sequence START-TIME-DURATION-INTERVAL-ENCODING      
         // sequence START-DATE-TIME-DURATION-INTERVAL-ENCODING
@@ -2840,7 +2840,7 @@ namespace boost {
 
 
 
-        // temlate fore
+        // temlate for
         // sequence DURATION-END-DATE-INTERVAL-ENCODING
         // sequence DURATION-END-TIME-INTERVAL-ENCODING      
         // sequence DURATION-END-DATE-TIME-INTERVAL-ENCODING
@@ -2906,7 +2906,7 @@ namespace boost {
 
 
 
-        // temlate fore
+        // temlate for
         // sequence REC-START-END-DATE-INTERVAL-ENCODING
         // sequence REC-START-END-TIME-INTERVAL-ENCODING      
         // sequence REC-START-END-DATE-TIME-INTERVAL-ENCODING
@@ -3022,8 +3022,11 @@ namespace boost {
         };
 
 
+        
+        
+        
 
-        // temlate fore
+        // temlate for
         // sequence REC-START-DATE-DURATION-INTERVAL-ENCODING
         // sequence REC-START-TIME-DURATION-INTERVAL-ENCODING      
         // sequence REC-START-DATE-TIME-DURATION-INTERVAL-ENCODING
@@ -3113,6 +3116,95 @@ namespace boost {
 
 
 
+
+
+        // temlate for
+        // sequence REC-DURATION-END-DATE-INTERVAL-ENCODING
+        // sequence REC-DURATION-END-TIME-INTERVAL-ENCODING      
+        // sequence REC-DURATION-END-DATE-TIME-INTERVAL-ENCODING
+
+        template<typename T>
+        struct REC_DURATION_END_INTERVAL_ENCODING {
+
+            typedef T Tm_Type;
+
+            REC_DURATION_END_INTERVAL_ENCODING() : recurrence_(), duration_(), end_() {
+            };
+
+            REC_DURATION_END_INTERVAL_ENCODING(const DURATION& arg__duration,
+                    const Tm_Type& arg__end,
+                    integer_type arg__recurrence = 0) :
+            recurrence_(arg__recurrence ? ITU_T_MAKE(integer_type)(arg__recurrence) :
+            (ITU_T_SHARED(integer_type)())),
+            duration_(arg__duration),
+            end_(arg__end) {
+            };
+
+            REC_DURATION_END_INTERVAL_ENCODING(const std::string& vl) : recurrence_(), duration_(), end_() {
+                as_string(vl);
+            };
+
+            REC_DURATION_END_INTERVAL_ENCODING(const char* vl) : recurrence_(), duration_(), end_() {
+                as_string(vl);
+            };
+
+            std::string as_string() const {
+                return "R" + ((recurrence() && *recurrence()) ? (time_detail::to_string(*recurrence())) : (std::string()))
+                        + "/" + duration().as_string() + "/" + end().as_string();
+            }
+
+            void as_string(const std::string& v) {
+                std::string vl = time_detail::normalize_time_str(v);
+                std::string::size_type it = vl.find_first_of('/');
+                std::string vll = (it == std::string::npos) ? vl : vl.substr(0, it);
+                std::string vl2 = (it == std::string::npos) ? "" : vl.substr(it + 1);
+                std::string::size_type it2 = vl2.find_first_of('/');
+                std::string vls = (it2 == std::string::npos) ? vl2 : vl2.substr(0, it2);
+                std::string vlr = (it2 == std::string::npos) ? "" : vl2.substr(it2 + 1);
+                if (vll.size() > 1) {
+                    vll = vll.substr(1);
+                    integer_type rc = time_detail::string_to_def<integer_type>(vll);
+                    recurrence_ = rc ? (ITU_T_MAKE(integer_type)(rc)) :
+                            (ITU_T_SHARED(integer_type)());
+                } else
+                    recurrence_ = ITU_T_SHARED(integer_type)();
+                duration(DURATION(vls));
+                end(Tm_Type(vlr));
+            };
+
+            void serialize(boost::asn1::x691::output_coder& arch) {
+
+                ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(recurrence_);
+
+                ITU_T_OPTIONAL_WRITE;
+
+                ITU_T_BIND_PER(recurrence_);
+                ITU_T_BIND_PER(duration_);
+                ITU_T_BIND_PER(end_);
+            }
+
+            void serialize(boost::asn1::x691::input_coder& arch) {
+
+                ITU_T_OPTIONAL_READ(1);
+
+                ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(recurrence_);
+                ITU_T_BIND_PER(duration_);
+                ITU_T_BIND_PER(end_);
+            }
+
+            std::string format() const {
+                return "Rn/" + duration().format() + "/" + end().format();
+            };
+
+            ITU_T_OPTIONAL_DECL(recurrence, integer_type);
+            ITU_T_HOLDERH_DECL(duration, DURATION);
+            ITU_T_HOLDERH_DECL(end, Tm_Type);
+
+            ITU_T_TIME_COUTTP_FN(REC_DURATION_END_INTERVAL_ENCODING);
+
+            ITU_T_TIME_X690_FN_DECL;
+            ITU_T_ARCHIVE_FUNC;
+        };
 
 
         // choice MIXED-ENCODING
