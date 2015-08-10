@@ -453,6 +453,9 @@ namespace boost {
             ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(recurrence_);
             ITU_T_BIND_PER(duration_);
         }
+        
+        
+        
 
         // choice MIXED-ENCODING
 

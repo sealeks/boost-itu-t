@@ -11,53 +11,6 @@ namespace boost {
 
         using namespace time_detail;
 
-        // sequence DURATION-INTERVAL-ENCODING
-
-        /*template<> void DURATION_INTERVAL_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_BIND_IMPLICIT(years_, 0, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(months_, 1, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(weeks_, 2, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(days_, 3, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(hours_, 4, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(minutes_, 5, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(seconds_, 6, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(fractional_part_, 7, CONTEXT_CLASS);
-        }
-
-        template<> void DURATION_INTERVAL_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_BIND_IMPLICIT(years_, 0, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(months_, 1, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(weeks_, 2, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(days_, 3, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(hours_, 4, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(minutes_, 5, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(seconds_, 6, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(fractional_part_, 7, CONTEXT_CLASS);
-        }
-
-        // sequence fractional-part
-
-        template<> void DURATION_INTERVAL_ENCODING::Fractional_part_type::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_BIND_IMPLICIT(number_of_digits_, 0, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(fractional_value_, 1, CONTEXT_CLASS);
-        }
-
-        template<> void DURATION_INTERVAL_ENCODING::Fractional_part_type::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_BIND_IMPLICIT(number_of_digits_, 0, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(fractional_value_, 1, CONTEXT_CLASS);
-        }*/
-
-        // sequence REC-DURATION-INTERVAL-ENCODING
-
-        template<> void REC_DURATION_INTERVAL_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_BIND_IMPLICIT(recurrence_, 0, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(duration_, 1, CONTEXT_CLASS);
-        }
-
-        template<> void REC_DURATION_INTERVAL_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_BIND_IMPLICIT(recurrence_, 0, CONTEXT_CLASS);
-            ITU_T_BIND_IMPLICIT(duration_, 1, CONTEXT_CLASS);
-        }
 
         // choice MIXED-ENCODING
 
