@@ -101,12 +101,16 @@ namespace boost {
         template<std::size_t N> struct TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING;
         template<typename DT, typename TM> struct DATE_TIME_ENCODING;
         struct DATE_TIME;
+        template<typename T> struct START_END_INTERVAL_ENCODING;        
         struct DURATION_INTERVAL_ENCODING;
         struct DURATION;
+        template<typename T> struct START_DURATION_INTERVAL_ENCODING;        
+        template<typename T> struct DURATION_END_INTERVAL_ENCODING;
+        template<typename T> struct REC_START_END_INTERVAL_ENCODING;        
         struct REC_DURATION_INTERVAL_ENCODING;
-        /*struct MIXED_ENCODING;
-        struct DATE_TYPE;
-        struct TIME_TYPE;*/
+        template<typename T> struct REC_START_DURATION_INTERVAL_ENCODING;        
+        template<typename T> struct REC_DURATION_END_INTERVAL_ENCODING;       
+        /*struct MIXED_ENCODING;*/
 
         namespace x690 {
 
@@ -313,6 +317,36 @@ namespace boost {
                 void operator&(const DATE_TIME_ENCODING <DT, TM>& vl) {
                     direct_serialize(vl, *this);
                 }
+     
+                template<typename T>
+                void operator&(const START_END_INTERVAL_ENCODING <T>& vl) {
+                    direct_serialize(vl, *this);
+                }                    
+                
+                template<typename T>
+                void operator&(const START_DURATION_INTERVAL_ENCODING <T>& vl) {
+                    direct_serialize(vl, *this);
+                }                
+                             
+                template<typename T>
+                void operator&(const DURATION_END_INTERVAL_ENCODING <T>& vl) {
+                    direct_serialize(vl, *this);
+                }                      
+                
+                template<typename T>
+                void operator&(const REC_START_END_INTERVAL_ENCODING <T>& vl) {
+                    direct_serialize(vl, *this);
+                }                    
+                
+                template<typename T>
+                void operator&(const REC_START_DURATION_INTERVAL_ENCODING <T>& vl) {
+                    direct_serialize(vl, *this);
+                }                
+                             
+                template<typename T>
+                void operator&(const REC_DURATION_END_INTERVAL_ENCODING <T>& vl) {
+                    direct_serialize(vl, *this);
+                }                             
 
                 iterator_type addtag(const tag& tg, bool settype);
 
@@ -861,14 +895,42 @@ namespace boost {
                 void operator&(DURATION& vl);
                 void operator&(REC_DURATION_INTERVAL_ENCODING& vl);
 
-                /*void operator&(MIXED_ENCODING& vl);
-                void operator&(DATE_TYPE& vl);
-                void operator&(TIME_TYPE& vl);*/
+                /*void operator&(MIXED_ENCODING& vl);*/
 
                 template<typename DT, typename TM>
                 void operator&(DATE_TIME_ENCODING <DT, TM>& vl) {
                     direct_serialize(vl, *this);
                 }
+                
+                template<typename T>
+                void operator&(START_END_INTERVAL_ENCODING <T>& vl) {
+                    direct_serialize(vl, *this);
+                }                    
+                
+                template<typename T>
+                void operator&(START_DURATION_INTERVAL_ENCODING <T>& vl) {
+                    direct_serialize(vl, *this);
+                }                
+                             
+                template<typename T>
+                void operator&(DURATION_END_INTERVAL_ENCODING <T>& vl) {
+                    direct_serialize(vl, *this);
+                }                      
+                
+                template<typename T>
+                void operator&(REC_START_END_INTERVAL_ENCODING <T>& vl) {
+                    direct_serialize(vl, *this);
+                }                    
+                
+                template<typename T>
+                void operator&(REC_START_DURATION_INTERVAL_ENCODING <T>& vl) {
+                    direct_serialize(vl, *this);
+                }                
+                             
+                template<typename T>
+                void operator&(REC_DURATION_END_INTERVAL_ENCODING <T>& vl) {
+                    direct_serialize(vl, *this);
+                }                                             
 
                 tag test_tl(size_class& sz);
 
