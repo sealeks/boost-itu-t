@@ -27,9 +27,9 @@
 #include <boost/itu/time/DefinedTime.hpp>
 
 #define DEBUG_VAL_ITU(a)  tsstr.clear(); std::cout << #a " = "  <<  a  << "    ===> ";   tsstr << a;
-#define DEBUG_VAL_ITU_READ(a)     tsstr >> a; std::cout << "read     " <<  #a " = "  <<  a << " as_dt : "  << a.as_datetime() <<  " wd:" << ((a.as_datetime().is_special()) ? 0 : (int)(a.as_datetime().date().day_of_week())) << "\n-----------------------------------------------------------------------------------\n";
+#define DEBUG_VAL_ITU_DREAD(a)     tsstr >> a; std::cout << "read     " <<  #a " = "  <<  a << " as_dt : "  << a.as_date() <<  " wd:" << ((a.as_date().is_special()) ? 0 : (int)(a.as_date().day_of_week())) << "\n-----------------------------------------------------------------------------------\n";
 #define DEBUG_VAL_ITU_TREAD(a)     tsstr >> a; std::cout << "read     " <<  #a " = "  <<  a << " as_tm : "  << a.as_time() << "\n-----------------------------------------------------------------------------------\n";
-#define DEBUG_VAL_ITU_DREAD(a)     tsstr >> a; std::cout << "read     " <<  #a " = "  <<  a  << "\n-----------------------------------------------------------------------------------\n";
+#define DEBUG_VAL_ITU_VREAD(a)     tsstr >> a; std::cout << "read     " <<  #a " = "  <<  a  << "\n-----------------------------------------------------------------------------------\n";
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -164,7 +164,7 @@ namespace TestTm {
         CENTURY_ENCODING cetn_enc=3;
         CENTURY_ENCODING cetn_enc1=std::string("04C");
         CENTURY_ENCODING cetn_enc2="21C";        
-        CENTURY_ENCODING cetn_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 1, 12));              
+        CENTURY_ENCODING cetn_enc3=boost::asn1::base_date_time::date_type(1812, 1, 12);              
         ANY_CENTURY_ENCODING<3> acetn_enc(19);        
         
         CENTURY_ENCODING cetn_enc_r;
@@ -175,20 +175,20 @@ namespace TestTm {
         
         
         DEBUG_VAL_ITU(cetn_enc)
-        DEBUG_VAL_ITU_READ(cetn_enc_r);
+        DEBUG_VAL_ITU_DREAD(cetn_enc_r);
         DEBUG_VAL_ITU(cetn_enc1)  
-        DEBUG_VAL_ITU_READ(cetn_enc1_r);                
+        DEBUG_VAL_ITU_DREAD(cetn_enc1_r);                
         DEBUG_VAL_ITU(cetn_enc2)   
-        DEBUG_VAL_ITU_READ(cetn_enc2_r);                
+        DEBUG_VAL_ITU_DREAD(cetn_enc2_r);                
         DEBUG_VAL_ITU(cetn_enc3) 
-        DEBUG_VAL_ITU_READ(cetn_enc3_r);                
+        DEBUG_VAL_ITU_DREAD(cetn_enc3_r);                
         DEBUG_VAL_ITU(acetn_enc)                 
-        DEBUG_VAL_ITU_READ(acetn_enc_r);
+        DEBUG_VAL_ITU_DREAD(acetn_enc_r);
         
         YEAR_ENCODING year_enc=1943;
         YEAR_ENCODING year_enc1=std::string("2004");
         YEAR_ENCODING year_enc2="2125";        
-        YEAR_ENCODING year_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 1, 12));              
+        YEAR_ENCODING year_enc3=boost::asn1::base_date_time::date_type(1812, 1, 12);              
         ANY_YEAR_ENCODING<5> ayear_enc(1958);        
         
         YEAR_ENCODING year_enc_r;
@@ -199,20 +199,20 @@ namespace TestTm {
         
         
         DEBUG_VAL_ITU(year_enc)
-        DEBUG_VAL_ITU_READ(year_enc_r);
+        DEBUG_VAL_ITU_DREAD(year_enc_r);
         DEBUG_VAL_ITU(year_enc1)  
-        DEBUG_VAL_ITU_READ(year_enc1_r);                
+        DEBUG_VAL_ITU_DREAD(year_enc1_r);                
         DEBUG_VAL_ITU(year_enc2)   
-        DEBUG_VAL_ITU_READ(year_enc2_r);                
+        DEBUG_VAL_ITU_DREAD(year_enc2_r);                
         DEBUG_VAL_ITU(year_enc3) 
-        DEBUG_VAL_ITU_READ(year_enc3_r);                
+        DEBUG_VAL_ITU_DREAD(year_enc3_r);                
         DEBUG_VAL_ITU(ayear_enc)                 
-        DEBUG_VAL_ITU_READ(ayear_enc_r);        
+        DEBUG_VAL_ITU_DREAD(ayear_enc_r);        
         
         YEAR_MONTH_ENCODING year_month_enc(1941,6);
         YEAR_MONTH_ENCODING year_month_enc1=std::string("2004-08");
         YEAR_MONTH_ENCODING year_month_enc2="2015-07";        
-        YEAR_MONTH_ENCODING year_month_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 2, 12));              
+        YEAR_MONTH_ENCODING year_month_enc3=boost::asn1::base_date_time::date_type(1812, 2, 12);              
         ANY_YEAR_MONTH_ENCODING<5> ayear_month_enc(1958, 7);        
         
         YEAR_MONTH_ENCODING year_month_enc_r;
@@ -223,21 +223,21 @@ namespace TestTm {
         
         
         DEBUG_VAL_ITU(year_month_enc)
-        DEBUG_VAL_ITU_READ(year_month_enc_r);
+        DEBUG_VAL_ITU_DREAD(year_month_enc_r);
         DEBUG_VAL_ITU(year_month_enc1)  
-        DEBUG_VAL_ITU_READ(year_month_enc1_r);                
+        DEBUG_VAL_ITU_DREAD(year_month_enc1_r);                
         DEBUG_VAL_ITU(year_month_enc2)   
-        DEBUG_VAL_ITU_READ(year_month_enc2_r);                
+        DEBUG_VAL_ITU_DREAD(year_month_enc2_r);                
         DEBUG_VAL_ITU(year_month_enc3) 
-        DEBUG_VAL_ITU_READ(year_month_enc3_r);                
+        DEBUG_VAL_ITU_DREAD(year_month_enc3_r);                
         DEBUG_VAL_ITU(ayear_month_enc)                 
-        DEBUG_VAL_ITU_READ(ayear_month_enc_r);         
+        DEBUG_VAL_ITU_DREAD(ayear_month_enc_r);         
         
         
         DATE_ENCODING date_enc(1941,6,22);
         DATE_ENCODING date_enc1=std::string("2004-08-30");
         DATE_ENCODING date_enc2="2015-07-24";        
-        DATE_ENCODING date_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 2, 12));              
+        DATE_ENCODING date_enc3=boost::asn1::base_date_time::date_type(1812, 2, 12);              
         ANY_DATE_ENCODING<5> adate_enc(1958, 7,6);        
         
         DATE_ENCODING date_enc_r;
@@ -248,21 +248,21 @@ namespace TestTm {
         
         
         DEBUG_VAL_ITU(date_enc)
-        DEBUG_VAL_ITU_READ(date_enc_r);
+        DEBUG_VAL_ITU_DREAD(date_enc_r);
         DEBUG_VAL_ITU(date_enc1)  
-        DEBUG_VAL_ITU_READ(date_enc1_r);                
+        DEBUG_VAL_ITU_DREAD(date_enc1_r);                
         DEBUG_VAL_ITU(date_enc2)   
-        DEBUG_VAL_ITU_READ(date_enc2_r);                
+        DEBUG_VAL_ITU_DREAD(date_enc2_r);                
         DEBUG_VAL_ITU(date_enc3) 
-        DEBUG_VAL_ITU_READ(date_enc3_r);                
+        DEBUG_VAL_ITU_DREAD(date_enc3_r);                
         DEBUG_VAL_ITU(adate_enc)                 
-        DEBUG_VAL_ITU_READ(adate_enc_r);            
+        DEBUG_VAL_ITU_DREAD(adate_enc_r);            
         
         
         YEAR_DAY_ENCODING year_day_enc(1941,64);
         YEAR_DAY_ENCODING year_day_enc1=std::string("2004-085");
         YEAR_DAY_ENCODING year_day_enc2="2015-186";        
-        YEAR_DAY_ENCODING year_day_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 2, 12));              
+        YEAR_DAY_ENCODING year_day_enc3=boost::asn1::base_date_time::date_type(1812, 2, 12);              
         ANY_YEAR_DAY_ENCODING<5> ayear_day_enc(1958, 78);        
         
         YEAR_DAY_ENCODING year_day_enc_r;
@@ -273,22 +273,22 @@ namespace TestTm {
         
         
         DEBUG_VAL_ITU(year_day_enc)
-        DEBUG_VAL_ITU_READ(year_day_enc_r);
+        DEBUG_VAL_ITU_DREAD(year_day_enc_r);
         DEBUG_VAL_ITU(year_day_enc1)  
-        DEBUG_VAL_ITU_READ(year_day_enc1_r);                
+        DEBUG_VAL_ITU_DREAD(year_day_enc1_r);                
         DEBUG_VAL_ITU(year_day_enc2)   
-        DEBUG_VAL_ITU_READ(year_day_enc2_r);                
+        DEBUG_VAL_ITU_DREAD(year_day_enc2_r);                
         DEBUG_VAL_ITU(year_day_enc3) 
-        DEBUG_VAL_ITU_READ(year_day_enc3_r);                
+        DEBUG_VAL_ITU_DREAD(year_day_enc3_r);                
         DEBUG_VAL_ITU(ayear_day_enc)                 
-        DEBUG_VAL_ITU_READ(ayear_day_enc_r);
+        DEBUG_VAL_ITU_DREAD(ayear_day_enc_r);
 
       
         
         YEAR_WEEK_ENCODING year_week_enc(1941,12);
         YEAR_WEEK_ENCODING year_week_enc1=std::string("2004-W40");
         YEAR_WEEK_ENCODING year_week_enc2="2015-W18";        
-        YEAR_WEEK_ENCODING year_week_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 2, 12));              
+        YEAR_WEEK_ENCODING year_week_enc3=boost::asn1::base_date_time::date_type(1812, 2, 12);              
         ANY_YEAR_WEEK_ENCODING<5> ayear_week_enc(1958, 43);        
         
         YEAR_WEEK_ENCODING year_week_enc_r;
@@ -299,15 +299,15 @@ namespace TestTm {
         
         
         DEBUG_VAL_ITU(year_week_enc)
-        DEBUG_VAL_ITU_READ(year_week_enc_r);
+        DEBUG_VAL_ITU_DREAD(year_week_enc_r);
         DEBUG_VAL_ITU(year_week_enc1)  
-        DEBUG_VAL_ITU_READ(year_week_enc1_r);                
+        DEBUG_VAL_ITU_DREAD(year_week_enc1_r);                
         DEBUG_VAL_ITU(year_week_enc2)   
-        DEBUG_VAL_ITU_READ(year_week_enc2_r);                
+        DEBUG_VAL_ITU_DREAD(year_week_enc2_r);                
         DEBUG_VAL_ITU(year_week_enc3) 
-        DEBUG_VAL_ITU_READ(year_week_enc3_r);                
+        DEBUG_VAL_ITU_DREAD(year_week_enc3_r);                
         DEBUG_VAL_ITU(ayear_week_enc)                 
-        DEBUG_VAL_ITU_READ(ayear_week_enc_r);         
+        DEBUG_VAL_ITU_DREAD(ayear_week_enc_r);         
         
         
         
@@ -315,7 +315,7 @@ namespace TestTm {
         YEAR_WEEK_DAY_ENCODING year_week_day_enc(1941,12, 4);
         YEAR_WEEK_DAY_ENCODING year_week_day_enc1=std::string("2004-W40-2");
         YEAR_WEEK_DAY_ENCODING year_week_day_enc2="2015-W18-4";        
-        YEAR_WEEK_DAY_ENCODING year_week_day_enc3=boost::asn1::base_date_time(boost::asn1::base_date_time::date_type(1812, 2, 12));              
+        YEAR_WEEK_DAY_ENCODING year_week_day_enc3=boost::asn1::base_date_time::date_type(1812, 2, 12);              
         ANY_YEAR_WEEK_DAY_ENCODING<5> ayear_week_day_enc(1958, 43,5);        
         
         YEAR_WEEK_DAY_ENCODING year_week_day_enc_r;
@@ -326,17 +326,17 @@ namespace TestTm {
         
         
         DEBUG_VAL_ITU(year_week_day_enc)
-        DEBUG_VAL_ITU_READ(year_week_day_enc_r);
+        DEBUG_VAL_ITU_DREAD(year_week_day_enc_r);
         DEBUG_VAL_ITU(year_week_day_enc1)  
-        DEBUG_VAL_ITU_READ(year_week_day_enc1_r);                
+        DEBUG_VAL_ITU_DREAD(year_week_day_enc1_r);                
         DEBUG_VAL_ITU(year_week_day_enc2)   
-        DEBUG_VAL_ITU_READ(year_week_day_enc2_r);                
+        DEBUG_VAL_ITU_DREAD(year_week_day_enc2_r);                
         DEBUG_VAL_ITU(year_week_day_enc3) 
-        DEBUG_VAL_ITU_READ(year_week_day_enc3_r);                
+        DEBUG_VAL_ITU_DREAD(year_week_day_enc3_r);                
         DEBUG_VAL_ITU(ayear_week_day_enc)                 
-        DEBUG_VAL_ITU_READ(ayear_week_day_enc_r);              
+        DEBUG_VAL_ITU_DREAD(ayear_week_day_enc_r);              
 
-        /*HOURS_ENCODING hors_enc = 3;
+        HOURS_ENCODING hors_enc = 3;
         HOURS_ENCODING hors_enc1 = std::string("04");
         HOURS_ENCODING hors_enc2 = "21";
         HOURS_ENCODING hors_enc3 = boost::asn1::base_time_duration(4, 23, 40);
@@ -394,13 +394,11 @@ namespace TestTm {
         DEBUG_VAL_ITU(hors_diff_enc2)
         DEBUG_VAL_ITU_TREAD(hors_diff_enc2_r);
         DEBUG_VAL_ITU(hors_diff_enc3)
-        DEBUG_VAL_ITU_TREAD(hors_diff_enc3_r)*/
+        DEBUG_VAL_ITU_TREAD(hors_diff_enc3_r);
                 
                 
-                
-                
-                
-                
+                                     
+              
                 
                 
         MINUTES_ENCODING minuts_enc (3, 25);
@@ -734,7 +732,7 @@ namespace TestTm {
         DATE_TIME_ENC date_time_enc_1_r;
         
         DEBUG_VAL_ITU(date_time_enc_1)
-        DEBUG_VAL_ITU_READ(date_time_enc_1_r);    
+        DEBUG_VAL_ITU_DREAD(date_time_enc_1_r);    
         
 
         
@@ -745,9 +743,9 @@ namespace TestTm {
         DATE_TIME date_time_2_r;        
         
         DEBUG_VAL_ITU(date_time_1)
-        DEBUG_VAL_ITU_READ(date_time_1_r);    
+        DEBUG_VAL_ITU_DREAD(date_time_1_r);    
         DEBUG_VAL_ITU(date_time_2)
-        DEBUG_VAL_ITU_READ(date_time_2_r);        
+        DEBUG_VAL_ITU_DREAD(date_time_2_r);        
         
         
         /*DURATION_INTERVAL_ENCODING durat_enc (3, 6);
@@ -762,13 +760,13 @@ namespace TestTm {
 
 
         DEBUG_VAL_ITU(durat_enc)
-        DEBUG_VAL_ITU_DREAD(durat_enc_r);
+        DEBUG_VAL_ITU_VREAD(durat_enc_r);
         DEBUG_VAL_ITU(durat_enc1)
-        DEBUG_VAL_ITU_DREAD(durat_enc1_r);
+        DEBUG_VAL_ITU_VREAD(durat_enc1_r);
         DEBUG_VAL_ITU(durat_enc2)
-        DEBUG_VAL_ITU_DREAD(durat_enc2_r);
+        DEBUG_VAL_ITU_VREAD(durat_enc2_r);
         DEBUG_VAL_ITU(durat_enc3)
-        DEBUG_VAL_ITU_DREAD(durat_enc3_r);    */    
+        DEBUG_VAL_ITU_VREAD(durat_enc3_r);    */    
         
         /*std::cout << boost::asn1::time_detail::minute_fraction_HF(499,3)  << std::endl;
         std::cout << boost::asn1::time_detail::second_fraction_HF(2, 2)  << std::endl;     
