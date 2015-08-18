@@ -49,8 +49,7 @@ namespace boost {
                 try {
                     std::string rslt = boost::lexical_cast<std::string > (val);
                     return (sz && nlchar && (rslt.size() < sz)) ? (std::string(sz - rslt.size(), nlchar) + rslt) : rslt;
-                }
-                catch (boost::bad_lexical_cast) {
+                }                catch (boost::bad_lexical_cast) {
                 }
                 return (sz && nlchar) ? std::string(nlchar, sz) : "";
             }
@@ -81,8 +80,7 @@ namespace boost {
                             return boost::lexical_cast<T > (v);
                         }
                     }
-                }
-                catch (boost::bad_lexical_cast) {
+                }                catch (boost::bad_lexical_cast) {
                 }
                 return def;
             }
@@ -186,6 +184,7 @@ namespace boost {
         // sequence CENTURY-ENCODING
 
         struct CENTURY_ENCODING {
+
             CENTURY_ENCODING();
 
             CENTURY_ENCODING(const uint8_t& arg__vl);
@@ -252,8 +251,7 @@ namespace boost {
             base_date as_date() const {
                 try {
                     return base_date(static_cast<int> (as_number())*100, 1, 1);
-                }
-                catch (...) {
+                }                catch (...) {
                 }
                 return base_date();
             }
@@ -295,6 +293,7 @@ namespace boost {
         // choice YEAR-ENCODING
 
         enum YEAR_ENCODING_enum {
+
             YEAR_ENCODING_null = 0,
             YEAR_ENCODING_immediate,
             YEAR_ENCODING_near_future,
@@ -377,8 +376,7 @@ namespace boost {
             base_date as_date() const {
                 try {
                     return base_date(static_cast<int> (as_number()), 1, 1);
-                }
-                catch (...) {
+                }                catch (...) {
                 }
                 return base_date();
             }
@@ -422,6 +420,7 @@ namespace boost {
         // sequence YEAR-MONTH-ENCODING
 
         struct YEAR_MONTH_ENCODING {
+
             YEAR_MONTH_ENCODING();
 
             YEAR_MONTH_ENCODING(integer_type arg__year,
@@ -462,6 +461,7 @@ namespace boost {
 
         template<std::size_t N = DEFAULT_YEAR_FRACTION >
         struct ANY_YEAR_MONTH_ENCODING {
+
             typedef ANY_YEAR_ENCODING<N> ANY_YEAR_TYPE;
 
             static std::size_t NF() {
@@ -493,8 +493,7 @@ namespace boost {
             base_date as_date() const {
                 try {
                     return base_date(static_cast<int> (year().as_number()), (int) month(), 1);
-                }
-                catch (...) {
+                }                catch (...) {
                 }
                 return base_date();
             }
@@ -539,6 +538,7 @@ namespace boost {
         // sequence DATE-ENCODING
 
         struct DATE_ENCODING {
+
             DATE_ENCODING();
 
             DATE_ENCODING(integer_type arg__year,
@@ -576,6 +576,7 @@ namespace boost {
         // sequence DATE
 
         struct DATE {
+
             DATE();
 
             DATE(integer_type arg__year,
@@ -608,14 +609,15 @@ namespace boost {
             ITU_T_ARCHIVE_FUNC;
         };
 
-        
-        
-        
+
+
+
 
         // sequence ANY-DATE-ENCODING
 
         template<std::size_t N = DEFAULT_YEAR_FRACTION >
         struct ANY_DATE_ENCODING {
+
             typedef ANY_YEAR_ENCODING<N> ANY_YEAR_TYPE;
 
             static std::size_t NF() {
@@ -650,8 +652,7 @@ namespace boost {
             base_date as_date() const {
                 try {
                     return base_date(static_cast<int> (year().as_number()), (int) month(), (int) day());
-                }
-                catch (...) {
+                }                catch (...) {
                 }
                 return base_date();
             }
@@ -702,6 +703,7 @@ namespace boost {
         // sequence YEAR-DAY-ENCODING
 
         struct YEAR_DAY_ENCODING {
+
             YEAR_DAY_ENCODING();
 
             YEAR_DAY_ENCODING(integer_type arg__year,
@@ -734,13 +736,14 @@ namespace boost {
 
 
 
-        
+
 
 
         // sequence ANY-YEAR-DAY-ENCODING
 
         template<std::size_t N = DEFAULT_YEAR_FRACTION >
         struct ANY_YEAR_DAY_ENCODING {
+
             typedef ANY_YEAR_ENCODING<N> ANY_YEAR_TYPE;
 
             static std::size_t NF() {
@@ -773,8 +776,7 @@ namespace boost {
                 try {
                     return base_date(static_cast<int> (year().as_number()), 1, 1) +
                             base_date_time::date_duration_type(day() ? day() - 1 : 0);
-                }
-                catch (...) {
+                }                catch (...) {
                 }
                 return base_date();
             }
@@ -820,6 +822,7 @@ namespace boost {
         // sequence YEAR-WEEK-ENCODING
 
         struct YEAR_WEEK_ENCODING {
+
             YEAR_WEEK_ENCODING();
 
             YEAR_WEEK_ENCODING(const YEAR_ENCODING& arg__year,
@@ -858,6 +861,7 @@ namespace boost {
 
         template<std::size_t N = DEFAULT_YEAR_FRACTION >
         struct ANY_YEAR_WEEK_ENCODING {
+
             typedef ANY_YEAR_ENCODING<N> ANY_YEAR_TYPE;
 
             static std::size_t NF() {
@@ -892,8 +896,7 @@ namespace boost {
                     std::size_t dwst = (std::size_t)tmp.day_of_week();
                     return tmp + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
                             base_date_time::date_duration_type((week() > 1) ? (7 * (week() - 1)) : 0);
-                }
-                catch (...) {
+                }                catch (...) {
                 }
                 return base_date();
             }
@@ -938,6 +941,7 @@ namespace boost {
         // sequence YEAR-WEEK-DAY-ENCODING
 
         struct YEAR_WEEK_DAY_ENCODING {
+
             YEAR_WEEK_DAY_ENCODING();
 
             YEAR_WEEK_DAY_ENCODING(const YEAR_ENCODING& arg__year,
@@ -978,6 +982,7 @@ namespace boost {
 
         template<std::size_t N = DEFAULT_YEAR_FRACTION >
         struct ANY_YEAR_WEEK_DAY_ENCODING {
+
             typedef ANY_YEAR_ENCODING<N> ANY_YEAR_TYPE;
 
             static std::size_t NF() {
@@ -1015,8 +1020,7 @@ namespace boost {
                     std::size_t dwst = (std::size_t)tmp.day_of_week();
                     return tmp + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
                             base_date_time::date_duration_type(((week() > 1) ? (7 * (week() - 1)) : 0) + ((day() > 1) ? (day() - 1) : 0));
-                }
-                catch (...) {
+                }                catch (...) {
                 }
                 return base_date();
             }
@@ -1069,6 +1073,7 @@ namespace boost {
         // sequence HOURS-ENCODING
 
         struct HOURS_ENCODING {
+
             HOURS_ENCODING();
 
             HOURS_ENCODING(const uint8_t& arg__val);
@@ -1104,6 +1109,7 @@ namespace boost {
         // sequence HOURS-UTC-ENCODING
 
         struct HOURS_UTC_ENCODING {
+
             HOURS_UTC_ENCODING();
 
             HOURS_UTC_ENCODING(const uint8_t& arg__val);
@@ -1139,6 +1145,7 @@ namespace boost {
         // sequence TIME-DIFFERENCE
 
         struct TIME_DIFFERENCE {
+
             static const enumerated sign_positive;
             static const enumerated sign_negative;
 
@@ -1168,6 +1175,9 @@ namespace boost {
             ITU_T_HOLDERH_DECL(hours, uint8_t); //   Ic(  [ 0  ...   15 ]   
             ITU_T_OPTIONAL_DECL(minutes, uint8_t); //   Ic(  [ 1  ...   59 ]   
 
+
+            ITU_T_TIME_COUTTP_FN(TIME_DIFFERENCE);
+
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -1177,6 +1187,7 @@ namespace boost {
         // sequence HOURS-AND-DIFF-ENCODING
 
         struct HOURS_AND_DIFF_ENCODING {
+
             HOURS_AND_DIFF_ENCODING();
 
             HOURS_AND_DIFF_ENCODING(const uint8_t& arg__local_hours,
@@ -1213,6 +1224,7 @@ namespace boost {
         // sequence MINUTES-ENCODING
 
         struct MINUTES_ENCODING {
+
             MINUTES_ENCODING();
 
             MINUTES_ENCODING(const uint8_t& arg__hours,
@@ -1252,6 +1264,7 @@ namespace boost {
         // sequence MINUTES-UTC-ENCODING
 
         struct MINUTES_UTC_ENCODING {
+
             MINUTES_UTC_ENCODING();
 
             MINUTES_UTC_ENCODING(const uint8_t& arg__hours,
@@ -1291,6 +1304,7 @@ namespace boost {
         // sequence MINUTES-AND-DIFF-ENCODING
 
         struct MINUTES_AND_DIFF_ENCODING {
+
             MINUTES_AND_DIFF_ENCODING();
 
             MINUTES_AND_DIFF_ENCODING(const MINUTES_ENCODING& arg__time,
@@ -1332,6 +1346,7 @@ namespace boost {
         // sequence TIME-OF-DAY-ENCODING
 
         struct TIME_OF_DAY_ENCODING {
+
             TIME_OF_DAY_ENCODING();
 
             TIME_OF_DAY_ENCODING(const uint8_t& arg__hours,
@@ -1369,6 +1384,7 @@ namespace boost {
         // sequence TIME-OF-DAY
 
         struct TIME_OF_DAY {
+
             TIME_OF_DAY();
 
             TIME_OF_DAY(const uint8_t& arg__hours,
@@ -1407,6 +1423,7 @@ namespace boost {
         // sequence TIME-OF-DAY-UTC-ENCODING
 
         struct TIME_OF_DAY_UTC_ENCODING {
+
             TIME_OF_DAY_UTC_ENCODING();
 
             TIME_OF_DAY_UTC_ENCODING(const uint8_t& arg__hours,
@@ -1446,6 +1463,7 @@ namespace boost {
         // sequence TIME-OF-DAY-AND-DIFF-ENCODING
 
         struct TIME_OF_DAY_AND_DIFF_ENCODING {
+
             TIME_OF_DAY_AND_DIFF_ENCODING();
 
             TIME_OF_DAY_AND_DIFF_ENCODING(const TIME_OF_DAY_ENCODING& arg__local_time,
@@ -1521,8 +1539,7 @@ namespace boost {
                     return base_time_duration(static_cast<int> (hours()),
                             time_detail::minute_fraction_HF(fraction(), NF()),
                             time_detail::second_fraction_HF(fraction(), NF()));
-                }
-                catch (...) {
+                }                catch (...) {
                 }
                 return base_time_duration();
             }
@@ -1563,8 +1580,8 @@ namespace boost {
         };
 
 
-        
-        
+
+
 
         // sequence HOURS-UTC-AND-FRACTION-ENCODING
 
@@ -1602,8 +1619,7 @@ namespace boost {
                     return base_time_duration(static_cast<int> (hours()),
                             time_detail::minute_fraction_HF(fraction(), NF()),
                             time_detail::second_fraction_HF(fraction(), NF()));
-                }
-                catch (...) {
+                }                catch (...) {
                 }
                 return base_time_duration();
             }
@@ -1689,8 +1705,7 @@ namespace boost {
                     return base_time_duration(static_cast<int> (hours()),
                             time_detail::minute_fraction_HF(fraction(), NF()),
                             time_detail::second_fraction_HF(fraction(), NF()));
-                }
-                catch (...) {
+                }                catch (...) {
                 }
                 return base_time_duration();
             }
@@ -1785,8 +1800,7 @@ namespace boost {
                 try {
                     return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()),
                             time_detail::second_fraction_HMF(fraction(), NF()));
-                }
-                catch (...) {
+                }                catch (...) {
                 }
                 return base_time_duration();
             }
@@ -1833,8 +1847,8 @@ namespace boost {
         };
 
 
-        
-        
+
+
 
 
 
@@ -1877,8 +1891,7 @@ namespace boost {
                 try {
                     return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()),
                             time_detail::second_fraction_HMF(fraction(), NF()));
-                }
-                catch (...) {
+                }                catch (...) {
                 }
                 return base_time_duration();
             }
@@ -1927,14 +1940,15 @@ namespace boost {
 
 
 
-        
-        
-        
+
+
+
 
         // sequence MINUTES-AND-DIFF-AND-FRACTION-ENCODING
 
         template<std::size_t N = DEFAULT_TM_FRACTION >
         struct MINUTES_AND_DIFF_AND_FRACTION_ENCODING {
+
             typedef MINUTES_AND_FRACTION_ENCODING<N> MINUTES_AND_FRACTION;
 
             static std::size_t NF() {
@@ -2054,8 +2068,7 @@ namespace boost {
                     return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()),
                             static_cast<int> (seconds())) +
                             base_microseconds(time_detail::microsecond_fraction_HMSF(fraction(), NF()));
-                }
-                catch (...) {
+                }                catch (...) {
                 }
                 return base_time_duration();
             }
@@ -2109,8 +2122,8 @@ namespace boost {
         };
 
 
-        
-        
+
+
 
 
 
@@ -2156,8 +2169,7 @@ namespace boost {
                     return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()),
                             static_cast<int> (seconds())) +
                             base_microseconds(time_detail::microsecond_fraction_HMSF(fraction(), NF()));
-                }
-                catch (...) {
+                }                catch (...) {
                 }
                 return base_time_duration();
             }
@@ -2212,14 +2224,15 @@ namespace boost {
         };
 
 
-        
-        
-        
+
+
+
 
         // sequence TIME-OF-DAY-AND-DIFF-AND-FRACTION-ENCODING
 
         template<std::size_t N = DEFAULT_TM_FRACTION >
         struct TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING {
+
             typedef TIME_OF_DAY_AND_FRACTION_ENCODING<N> TIME_OF_DAY_AND_FRACTION;
 
             static std::size_t NF() {
@@ -2297,12 +2310,13 @@ namespace boost {
 
 
 
-        
-        
+
+
         // sequence TIME-OF-DAY-AND-DIFF-AND-FRACTION-ENCODING
 
         template<typename DT, typename TM>
         struct DATE_TIME_ENCODING {
+
             typedef DT DATE_TYPE;
             typedef TM TIME_TYPE;
 
@@ -2333,8 +2347,7 @@ namespace boost {
             base_date_time as_datetime() const {
                 try {
                     return base_date_time(as_date()) + as_time();
-                }
-                catch (...) {
+                }                catch (...) {
                 }
                 return base_date_time();
             }
@@ -2391,6 +2404,7 @@ namespace boost {
         // sequence TIME-OF-DAY-AND-DIFF-AND-FRACTION-ENCODING
 
         struct DATE_TIME {
+
             typedef DATE DATE_TYPE;
             typedef TIME_OF_DAY TIME_TYPE;
 
@@ -2421,8 +2435,7 @@ namespace boost {
             base_date_time as_datetime() const {
                 try {
                     return base_date_time(as_date()) + as_time();
-                }
-                catch (...) {
+                }                catch (...) {
                 }
                 return base_date_time();
             }
@@ -2482,6 +2495,7 @@ namespace boost {
 
         template<typename T>
         struct START_END_INTERVAL_ENCODING {
+
             typedef T Tm_Type;
 
             START_END_INTERVAL_ENCODING() : start_(), end_() {
@@ -2544,9 +2558,11 @@ namespace boost {
         // sequence DURATION-INTERVAL-ENCODING
 
         struct DURATION_INTERVAL_ENCODING {
+
             struct Fractional_part_type;
 
             struct Fractional_part_type {
+
                 Fractional_part_type();
 
                 Fractional_part_type(const integer_type& arg__number_of_digits,
@@ -2604,16 +2620,18 @@ namespace boost {
 
 
 
-        
-        
-        
+
+
+
 
         // sequence DURATION
 
         struct DURATION {
+
             struct Fractional_part_type;
 
             struct Fractional_part_type {
+
                 Fractional_part_type();
 
                 Fractional_part_type(const integer_type& arg__number_of_digits,
@@ -2678,6 +2696,7 @@ namespace boost {
 
         template<typename T>
         struct START_DURATION_INTERVAL_ENCODING {
+
             typedef T Tm_Type;
 
             START_DURATION_INTERVAL_ENCODING() : start_(), duration_() {
@@ -2745,6 +2764,7 @@ namespace boost {
 
         template<typename T>
         struct DURATION_END_INTERVAL_ENCODING {
+
             typedef T Tm_Type;
 
             DURATION_END_INTERVAL_ENCODING() : duration_(), end_() {
@@ -2810,6 +2830,7 @@ namespace boost {
 
         template<typename T>
         struct REC_START_END_INTERVAL_ENCODING {
+
             typedef T Tm_Type;
 
             REC_START_END_INTERVAL_ENCODING() : recurrence_(), start_(), end_() {
@@ -2850,8 +2871,7 @@ namespace boost {
                     integer_type rc = time_detail::string_to_def<integer_type>(vll);
                     recurrence_ = rc ? (ITU_T_MAKE(integer_type)(rc)) :
                             (ITU_T_SHARED(integer_type)());
-                }
-                else
+                } else
                     recurrence_ = ITU_T_SHARED(integer_type)();
                 start(Tm_Type(vls));
                 end(Tm_Type(vlr));
@@ -2897,6 +2917,7 @@ namespace boost {
         // sequence REC-DURATION-INTERVAL-ENCODING
 
         struct REC_DURATION_INTERVAL_ENCODING {
+
             REC_DURATION_INTERVAL_ENCODING();
 
             REC_DURATION_INTERVAL_ENCODING(
@@ -2910,17 +2931,17 @@ namespace boost {
             std::string as_string() const;
 
             void as_string(const std::string& v);
-            
+
             std::string format() const {
                 return "Rn/" + duration().format();
-            };           
+            };
 
             ITU_T_OPTIONAL_DECL(recurrence, integer_type);
             ITU_T_HOLDERH_DECL(duration, DURATION_INTERVAL_ENCODING);
 
             ITU_T_TIME_COUTTP_FN(REC_DURATION_INTERVAL_ENCODING);
 
-            ITU_T_TIME_X690_FN_DECL;            
+            ITU_T_TIME_X690_FN_DECL;
             ITU_T_ARCHIVE_FUNC;
         };
 
@@ -2936,6 +2957,7 @@ namespace boost {
 
         template<typename T>
         struct REC_START_DURATION_INTERVAL_ENCODING {
+
             typedef T Tm_Type;
 
             REC_START_DURATION_INTERVAL_ENCODING() : recurrence_(), start_(), duration_() {
@@ -2976,8 +2998,7 @@ namespace boost {
                     integer_type rc = time_detail::string_to_def<integer_type>(vll);
                     recurrence_ = rc ? (ITU_T_MAKE(integer_type)(rc)) :
                             (ITU_T_SHARED(integer_type)());
-                }
-                else
+                } else
                     recurrence_ = ITU_T_SHARED(integer_type)();
                 start(Tm_Type(vls));
                 duration(DURATION(vlr));
@@ -3028,6 +3049,7 @@ namespace boost {
 
         template<typename T>
         struct REC_DURATION_END_INTERVAL_ENCODING {
+
             typedef T Tm_Type;
 
             REC_DURATION_END_INTERVAL_ENCODING() : recurrence_(), duration_(), end_() {
@@ -3068,8 +3090,7 @@ namespace boost {
                     integer_type rc = time_detail::string_to_def<integer_type>(vll);
                     recurrence_ = rc ? (ITU_T_MAKE(integer_type)(rc)) :
                             (ITU_T_SHARED(integer_type)());
-                }
-                else
+                } else
                     recurrence_ = ITU_T_SHARED(integer_type)();
                 duration(DURATION(vls));
                 end(Tm_Type(vlr));
