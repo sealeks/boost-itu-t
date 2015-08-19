@@ -1438,7 +1438,7 @@ namespace boost {
 
             template<typename T>
             inline input_coder& operator>>(input_coder& stream, T& vl) {
-                vl.serialize(stream);
+                const_cast<T&> (vl).serialize(stream);
                 return stream;
             }
 

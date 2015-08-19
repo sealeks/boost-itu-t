@@ -220,10 +220,7 @@ namespace boost {
 
             ITU_T_OPTIONAL_WRITE;
 
-            bool minus = (*sign_).value();
-
-            ITU_T_BIND_PER(minus);
-            //ITU_T_BIND_PER_ENUM(sign_, TIME_DIFFERENCE__enumerated__helper);
+            ITU_T_BIND_PER_ENUM(sign_, TIME_DIFFERENCE__enumerated__helper);
             ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (15));
             ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (1), static_cast<uint8_t> (59));
         }
@@ -232,16 +229,10 @@ namespace boost {
 
             ITU_T_OPTIONAL_READ(1);
 
-            bool minus = false;
-
-            ITU_T_BIND_PER(minus);
-            //ITU_T_BIND_PER_ENUM(sign_, TIME_DIFFERENCE__enumerated__helper);
+            ITU_T_BIND_PER_ENUM(sign_, TIME_DIFFERENCE__enumerated__helper);
             ITU_T_BIND_NUM_CONSTRAINT(hours_, static_cast<uint8_t> (0), static_cast<uint8_t> (15));
             ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRAINT(minutes_, static_cast<uint8_t> (1), static_cast<uint8_t> (59));
-
-            sign(minus ? sign_negative : sign_positive);
         }
-
 
         // sequence MINUTES-ENCODING
 
@@ -462,9 +453,9 @@ namespace boost {
             ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(recurrence_);
             ITU_T_BIND_PER(duration_);
         }
-
-
-
+        
+        
+        
 
         // choice MIXED-ENCODING
 
