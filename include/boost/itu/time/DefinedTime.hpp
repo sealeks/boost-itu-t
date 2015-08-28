@@ -1529,16 +1529,16 @@ namespace boost {
                 as_string(vl);
             };
 
-            HOURS_AND_FRACTION_ENCODING(const base_time_duration& vl) :
+            HOURS_AND_FRACTION_ENCODING(const base_time_duration& vl, std::size_t frc  = 0) :
             hours_(time_detail::to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)),
-            fraction_(time_detail::HF_to_fraction(vl, NF())) {
+            fraction_(time_detail::HF_to_fraction(vl, frc ? frc : NF())) {
             };
 
-            base_time_duration as_time() const {
+            base_time_duration as_time(std::size_t frc  = 0) const {
                 try {
                     return base_time_duration(static_cast<int> (hours()),
-                            time_detail::minute_fraction_HF(fraction(), NF()),
-                            time_detail::second_fraction_HF(fraction(), NF()));
+                            time_detail::minute_fraction_HF(fraction(),  frc ? frc : NF()),
+                            time_detail::second_fraction_HF(fraction(),  frc ? frc : NF()));
                 }                catch (...) {
                 }
                 return base_time_duration();
@@ -1609,16 +1609,16 @@ namespace boost {
                 as_string(vl);
             };
 
-            HOURS_UTC_AND_FRACTION_ENCODING(const base_time_duration& vl) :
+            HOURS_UTC_AND_FRACTION_ENCODING(const base_time_duration& vl, std::size_t frc  = 0) :
             hours_(time_detail::to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)),
-            fraction_(time_detail::HF_to_fraction(vl, NF())) {
+            fraction_(time_detail::HF_to_fraction(vl, frc ? frc : NF())) {
             };
 
-            base_time_duration as_time() const {
+            base_time_duration as_time(std::size_t frc  = 0) const {
                 try {
                     return base_time_duration(static_cast<int> (hours()),
-                            time_detail::minute_fraction_HF(fraction(), NF()),
-                            time_detail::second_fraction_HF(fraction(), NF()));
+                            time_detail::minute_fraction_HF(fraction(), frc ? frc : NF()),
+                            time_detail::second_fraction_HF(fraction(), frc ? frc : NF()));
                 }                catch (...) {
                 }
                 return base_time_duration();
@@ -1694,17 +1694,17 @@ namespace boost {
                 as_string(vl);
             };
 
-            HOURS_AND_DIFF_AND_FRACTION_ENCODING(const base_time_duration& vl) :
+            HOURS_AND_DIFF_AND_FRACTION_ENCODING(const base_time_duration& vl, std::size_t frc  = 0) :
             hours_(time_detail::to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)),
-            fraction_(time_detail::HF_to_fraction(vl, NF())),
+            fraction_(time_detail::HF_to_fraction(vl, frc ? frc : NF())),
             time_difference_() {
             };
 
-            base_time_duration as_time() const {
+            base_time_duration as_time(std::size_t frc  = 0) const {
                 try {
                     return base_time_duration(static_cast<int> (hours()),
-                            time_detail::minute_fraction_HF(fraction(), NF()),
-                            time_detail::second_fraction_HF(fraction(), NF()));
+                            time_detail::minute_fraction_HF(fraction(), frc ? frc : NF()),
+                            time_detail::second_fraction_HF(fraction(), frc ? frc : NF()));
                 }                catch (...) {
                 }
                 return base_time_duration();
@@ -1790,16 +1790,16 @@ namespace boost {
                 as_string(vl);
             };
 
-            MINUTES_AND_FRACTION_ENCODING(const base_time_duration& vl) :
+            MINUTES_AND_FRACTION_ENCODING(const base_time_duration& vl, std::size_t frc  = 0) :
             hours_(time_detail::to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)),
             minutes_(time_detail::to_range<uint8_t>(vl.is_special() ? 0 : vl.minutes(), (uint8_t) 0, (uint8_t) 59)),
-            fraction_(time_detail::HMF_to_fraction(vl, NF())) {
+            fraction_(time_detail::HMF_to_fraction(vl, frc ? frc : NF())) {
             };
 
-            base_time_duration as_time() const {
+            base_time_duration as_time(std::size_t frc  = 0) const {
                 try {
                     return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()),
-                            time_detail::second_fraction_HMF(fraction(), NF()));
+                            time_detail::second_fraction_HMF(fraction(), frc ? frc : NF()));
                 }                catch (...) {
                 }
                 return base_time_duration();
@@ -1881,16 +1881,16 @@ namespace boost {
                 as_string(vl);
             };
 
-            MINUTES_UTC_AND_FRACTION_ENCODING(const base_time_duration& vl) :
+            MINUTES_UTC_AND_FRACTION_ENCODING(const base_time_duration& vl, std::size_t frc  = 0) :
             hours_(time_detail::to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)),
             minutes_(time_detail::to_range<uint8_t>(vl.is_special() ? 0 : vl.minutes(), (uint8_t) 0, (uint8_t) 59)),
-            fraction_(time_detail::HMF_to_fraction(vl, NF())) {
+            fraction_(time_detail::HMF_to_fraction(vl, frc ? frc : NF())) {
             };
 
-            base_time_duration as_time() const {
+            base_time_duration as_time(std::size_t frc  = 0) const {
                 try {
                     return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()),
-                            time_detail::second_fraction_HMF(fraction(), NF()));
+                            time_detail::second_fraction_HMF(fraction(), frc ? frc : NF()));
                 }                catch (...) {
                 }
                 return base_time_duration();
@@ -1974,12 +1974,13 @@ namespace boost {
                 as_string(vl);
             };
 
-            MINUTES_AND_DIFF_AND_FRACTION_ENCODING(const base_time_duration& vl) :
-            local_time_(vl), time_difference_() {
+            MINUTES_AND_DIFF_AND_FRACTION_ENCODING(const base_time_duration& vl, std::size_t frc  = 0) :
+            local_time_(MINUTES_AND_FRACTION(vl, frc)), 
+            time_difference_() {
             };
 
-            base_time_duration as_time() const {
-                return local_time().as_time();
+            base_time_duration as_time(std::size_t frc  = 0) const {
+                return local_time().as_time(frc);
             }
 
             std::string as_string() const {
@@ -2056,18 +2057,18 @@ namespace boost {
                 as_string(vl);
             };
 
-            TIME_OF_DAY_AND_FRACTION_ENCODING(const base_time_duration& vl) :
+            TIME_OF_DAY_AND_FRACTION_ENCODING(const base_time_duration& vl, std::size_t frc  = 0) :
             hours_(time_detail::to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)),
             minutes_(time_detail::to_range<uint8_t>(vl.is_special() ? 0 : vl.minutes(), (uint8_t) 0, (uint8_t) 59)),
             seconds_(time_detail::to_range<uint8_t>(vl.is_special() ? 0 : vl.seconds(), (uint8_t) 0, (uint8_t) 60)),
-            fraction_(time_detail::HMSF_to_fraction(vl, NF())) {
+            fraction_(time_detail::HMSF_to_fraction(vl, frc ? frc : NF())) {
             };
 
-            base_time_duration as_time() const {
+            base_time_duration as_time(std::size_t frc  = 0) const {
                 try {
                     return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()),
                             static_cast<int> (seconds())) +
-                            base_microseconds(time_detail::microsecond_fraction_HMSF(fraction(), NF()));
+                            base_microseconds(time_detail::microsecond_fraction_HMSF(fraction(), frc ? frc : NF()));
                 }                catch (...) {
                 }
                 return base_time_duration();
@@ -2157,18 +2158,18 @@ namespace boost {
                 as_string(vl);
             };
 
-            TIME_OF_DAY_UTC_AND_FRACTION_ENCODING(const base_time_duration& vl) :
+            TIME_OF_DAY_UTC_AND_FRACTION_ENCODING(const base_time_duration& vl, std::size_t frc  = 0) :
             hours_(time_detail::to_range<uint8_t>(vl.is_special() ? 0 : vl.hours(), (uint8_t) 0, (uint8_t) 24)),
             minutes_(time_detail::to_range<uint8_t>(vl.is_special() ? 0 : vl.minutes(), (uint8_t) 0, (uint8_t) 59)),
             seconds_(time_detail::to_range<uint8_t>(vl.is_special() ? 0 : vl.seconds(), (uint8_t) 0, (uint8_t) 60)),
-            fraction_(time_detail::HMSF_to_fraction(vl, NF())) {
+            fraction_(time_detail::HMSF_to_fraction(vl, frc ? frc : NF())) {
             };
 
-            base_time_duration as_time() const {
+            base_time_duration as_time(std::size_t frc  = 0) const {
                 try {
                     return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()),
                             static_cast<int> (seconds())) +
-                            base_microseconds(time_detail::microsecond_fraction_HMSF(fraction(), NF()));
+                            base_microseconds(time_detail::microsecond_fraction_HMSF(fraction(), frc ? frc : NF()));
                 }                catch (...) {
                 }
                 return base_time_duration();
@@ -2259,12 +2260,13 @@ namespace boost {
                 as_string(vl);
             };
 
-            TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING(const base_time_duration& vl) :
-            local_time_(vl), time_difference_() {
+            TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING(const base_time_duration& vl, std::size_t frc  = 0) :
+            local_time_(TIME_OF_DAY_AND_FRACTION(vl, frc)), 
+            time_difference_() {
             };
 
-            base_time_duration as_time() const {
-                return local_time().as_time();
+            base_time_duration as_time(std::size_t frc  = 0) const {
+                return local_time().as_time(frc);
             }
 
             std::string as_string() const {
