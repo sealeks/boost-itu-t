@@ -110,7 +110,7 @@ namespace boost {
         struct REC_DURATION_INTERVAL_ENCODING;
         template<typename T> struct REC_START_DURATION_INTERVAL_ENCODING;        
         template<typename T> struct REC_DURATION_END_INTERVAL_ENCODING;       
-        /*struct MIXED_ENCODING;*/
+        struct DATE_TYPE;
 
         namespace x690 {
 
@@ -308,6 +308,7 @@ namespace boost {
                 void operator&(const DURATION_INTERVAL_ENCODING& vl);
                 void operator&(const DURATION& vl);
                 void operator&(const REC_DURATION_INTERVAL_ENCODING& vl);
+                void operator&(const DATE_TYPE& vl);
 
                 /*void operator&(const MIXED_ENCODING& vl);
                 void operator&(const DATE_TYPE& vl);
@@ -894,6 +895,7 @@ namespace boost {
                 void operator&(DURATION_INTERVAL_ENCODING& vl);
                 void operator&(DURATION& vl);
                 void operator&(REC_DURATION_INTERVAL_ENCODING& vl);
+                void operator&(DATE_TYPE& vl);
 
                 /*void operator&(MIXED_ENCODING& vl);*/
 
