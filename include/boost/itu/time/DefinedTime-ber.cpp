@@ -10,9 +10,19 @@ namespace boost {
     namespace asn1 {
 
         using namespace time_detail;
-        
-        //1
-        //2
+
+        // choice DATE-TYPE
+
+        template<> void DATE_TYPE::serialize(boost::asn1::x690::output_coder& arch) {
+            visible_string tmpval = as_string();
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+        }
+
+        template<> void DATE_TYPE::serialize(boost::asn1::x690::input_coder& arch) {
+            visible_string tmpval;
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+            as_string(std::string(tmpval.c_str()));
+        }
 
 
         // choice MIXED-ENCODING

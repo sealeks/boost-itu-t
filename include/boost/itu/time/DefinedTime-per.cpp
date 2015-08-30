@@ -466,6 +466,182 @@ namespace boost {
 
 
 
+        // choice DATE-TYPE
+
+        template<> void DATE_TYPE::serialize(boost::asn1::x691::output_coder& arch) {
+            switch (type()) {
+                case DATE_TYPE_date_C_Basic:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(0, 13);
+                    ITU_T_BIND_PER(value<CENTURY_ENCODING > (false, DATE_TYPE_date_C_Basic));
+                    break;
+                }
+                case DATE_TYPE_date_C_L:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(1, 13);
+                    ITU_T_BIND_PER(value<ANY_CENTURY > (false, DATE_TYPE_date_C_L));
+                    break;
+                }
+                case DATE_TYPE_date_Y_Basic:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(2, 13);
+                    ITU_T_BIND_PER(value<YEAR_ENCODING > (false, DATE_TYPE_date_Y_Basic));
+                    break;
+                }
+                case DATE_TYPE_date_Y_L:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(3, 13);
+                    ITU_T_BIND_PER(value<ANY_YEAR > (false, DATE_TYPE_date_Y_L));
+                    break;
+                }
+                case DATE_TYPE_date_YM_Basic:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(4, 13);
+                    ITU_T_BIND_PER(value<YEAR_MONTH_ENCODING > (false, DATE_TYPE_date_YM_Basic));
+                    break;
+                }
+                case DATE_TYPE_date_YM_L:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(5, 13);
+                    ITU_T_BIND_PER(value<ANY_YEAR_MONTH > (false, DATE_TYPE_date_YM_L));
+                    break;
+                }
+                case DATE_TYPE_date_YMD_Basic:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(6, 13);
+                    ITU_T_BIND_PER(value<DATE_ENCODING > (false, DATE_TYPE_date_YMD_Basic));
+                    break;
+                }
+                case DATE_TYPE_date_YMD_L:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(7, 13);
+                    ITU_T_BIND_PER(value<ANY_DATE > (false, DATE_TYPE_date_YMD_L));
+                    break;
+                }
+                case DATE_TYPE_date_YD_Basic:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(8, 13);
+                    ITU_T_BIND_PER(value<YEAR_DAY_ENCODING > (false, DATE_TYPE_date_YD_Basic));
+                    break;
+                }
+                case DATE_TYPE_date_YD_L:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(9, 13);
+                    ITU_T_BIND_PER(value<ANY_YEAR_DAY > (false, DATE_TYPE_date_YD_L));
+                    break;
+                }
+                case DATE_TYPE_date_YW_Basic:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(10, 13);
+                    ITU_T_BIND_PER(value<YEAR_WEEK_ENCODING > (false, DATE_TYPE_date_YW_Basic));
+                    break;
+                }
+                case DATE_TYPE_date_YW_L:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(11, 13);
+                    ITU_T_BIND_PER(value<ANY_YEAR_WEEK > (false, DATE_TYPE_date_YW_L));
+                    break;
+                }
+                case DATE_TYPE_date_YWD_Basic:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(12, 13);
+                    ITU_T_BIND_PER(value<YEAR_WEEK_DAY_ENCODING > (false, DATE_TYPE_date_YWD_Basic));
+                    break;
+                }
+                case DATE_TYPE_date_YWD_L:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(13, 13);
+                    ITU_T_BIND_PER(value<ANY_YEAR_WEEK_DAY > (false, DATE_TYPE_date_YWD_L));
+                    break;
+                }
+                default:
+                {
+                }
+            }
+        }
+
+        template<> void DATE_TYPE::serialize(boost::asn1::x691::input_coder& arch) {
+
+            ITU_T_GET_CONSTAINED_INDX(13);
+
+            switch (__indx__) {
+                case 0:
+                {
+                    ITU_T_BIND_PER(value<CENTURY_ENCODING > (true, DATE_TYPE_date_C_Basic));
+                    break;
+                }
+                case 1:
+                {
+                    ITU_T_BIND_PER(value<ANY_CENTURY > (true, DATE_TYPE_date_C_L));
+                    break;
+                }
+                case 2:
+                {
+                    ITU_T_BIND_PER(value<YEAR_ENCODING > (true, DATE_TYPE_date_Y_Basic));
+                    break;
+                }
+                case 3:
+                {
+                    ITU_T_BIND_PER(value<ANY_YEAR > (true, DATE_TYPE_date_Y_L));
+                    break;
+                }
+                case 4:
+                {
+                    ITU_T_BIND_PER(value<YEAR_MONTH_ENCODING > (true, DATE_TYPE_date_YM_Basic));
+                    break;
+                }
+                case 5:
+                {
+                    ITU_T_BIND_PER(value<ANY_YEAR_MONTH > (true, DATE_TYPE_date_YM_L));
+                    break;
+                }
+                case 6:
+                {
+                    ITU_T_BIND_PER(value<DATE_ENCODING > (true, DATE_TYPE_date_YMD_Basic));
+                    break;
+                }
+                case 7:
+                {
+                    ITU_T_BIND_PER(value<ANY_DATE > (true, DATE_TYPE_date_YMD_L));
+                    break;
+                }
+                case 8:
+                {
+                    ITU_T_BIND_PER(value<YEAR_DAY_ENCODING > (true, DATE_TYPE_date_YD_Basic));
+                    break;
+                }
+                case 9:
+                {
+                    ITU_T_BIND_PER(value<ANY_YEAR_DAY > (true, DATE_TYPE_date_YD_L));
+                    break;
+                }
+                case 10:
+                {
+                    ITU_T_BIND_PER(value<YEAR_WEEK_ENCODING > (true, DATE_TYPE_date_YW_Basic));
+                    break;
+                }
+                case 11:
+                {
+                    ITU_T_BIND_PER(value<ANY_YEAR_WEEK > (true, DATE_TYPE_date_YW_L));
+                    break;
+                }
+                case 12:
+                {
+                    ITU_T_BIND_PER(value<YEAR_WEEK_DAY_ENCODING > (true, DATE_TYPE_date_YWD_Basic));
+                    break;
+                }
+                case 13:
+                {
+                    ITU_T_BIND_PER(value<ANY_YEAR_WEEK_DAY > (true, DATE_TYPE_date_YWD_L));
+                    break;
+                }
+                default:
+                {
+                }
+            }
+        }
+
+
         // choice MIXED-ENCODING
 
         /*template<> void MIXED_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {

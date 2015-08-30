@@ -94,6 +94,13 @@ namespace boost {
                 return vl;
             }
 
+            std::string normalizeLR_time_str(std::string vl) {
+                boost::algorithm::erase_last(vl, "\"");
+                boost::algorithm::erase_first(vl, "\"");
+                boost::algorithm::erase_first(vl, "-");
+                return vl;
+            }
+
             uint64_t pow10(std::size_t n) {
                 if (n) {
                     uint64_t rslt = 10;
@@ -258,7 +265,7 @@ namespace boost {
         base_date CENTURY_ENCODING::as_date() const {
             try {
                 return base_date(static_cast<int> (as_number())*100, 1, 1);
-            }            catch (...) {
+            } catch (...) {
             }
             return base_date();
         }
@@ -337,7 +344,7 @@ namespace boost {
         base_date YEAR_ENCODING::as_date() const {
             try {
                 return base_date(static_cast<int> (as_number()), 1, 1);
-            }            catch (...) {
+            } catch (...) {
             }
             return base_date();
         }
@@ -381,7 +388,7 @@ namespace boost {
         base_date YEAR_MONTH_ENCODING::as_date() const {
             try {
                 return base_date(static_cast<int> (year().as_number()), (int) month(), 1);
-            }            catch (...) {
+            } catch (...) {
             }
             return base_date();
         }
@@ -434,7 +441,7 @@ namespace boost {
         base_date DATE_ENCODING::as_date() const {
             try {
                 return base_date(static_cast<int> (year().as_number()), (int) month(), (int) day());
-            }            catch (...) {
+            } catch (...) {
             }
             return base_date();
         }
@@ -491,7 +498,7 @@ namespace boost {
         base_date DATE::as_date() const {
             try {
                 return base_date(static_cast<int> (year().as_number()), (int) month(), (int) day());
-            }            catch (...) {
+            } catch (...) {
             }
             return base_date();
         }
@@ -546,7 +553,7 @@ namespace boost {
             try {
                 return base_date(static_cast<int> (year().as_number()), 1, 1) +
                         base_date_time::date_duration_type(day() ? day() - 1 : 0);
-            }            catch (...) {
+            } catch (...) {
             }
             return base_date();
         }
@@ -601,7 +608,7 @@ namespace boost {
                 std::size_t dwst = (std::size_t)tmp.day_of_week();
                 return tmp + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
                         base_date_time::date_duration_type((week() > 1) ? (7 * (week() - 1)) : 0);
-            }            catch (...) {
+            } catch (...) {
             }
             return base_date();
         }
@@ -662,7 +669,7 @@ namespace boost {
                 std::size_t dwst = (std::size_t)tmp.day_of_week();
                 return tmp + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
                         base_date_time::date_duration_type(((week() > 1) ? (7 * (week() - 1)) : 0) + ((day() > 1) ? (day() - 1) : 0));
-            }            catch (...) {
+            } catch (...) {
             }
             return base_date();
         }
@@ -718,7 +725,7 @@ namespace boost {
         base_time_duration HOURS_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (as_number()), 0, 0);
-            }            catch (...) {
+            } catch (...) {
             }
             return base_time_duration();
         }
@@ -765,7 +772,7 @@ namespace boost {
         base_time_duration HOURS_UTC_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (as_number()), 0, 0);
-            }            catch (...) {
+            } catch (...) {
             }
             return base_time_duration();
         }
@@ -882,7 +889,7 @@ namespace boost {
         base_time_duration HOURS_AND_DIFF_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (local_hours()), 0, 0);
-            }            catch (...) {
+            } catch (...) {
             }
             return base_time_duration();
         }
@@ -935,7 +942,7 @@ namespace boost {
         base_time_duration MINUTES_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()), 0);
-            }            catch (...) {
+            } catch (...) {
             }
             return base_time_duration();
         }
@@ -990,7 +997,7 @@ namespace boost {
         base_time_duration MINUTES_UTC_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()), 0);
-            }            catch (...) {
+            } catch (...) {
             }
             return base_time_duration();
         }
@@ -1051,7 +1058,7 @@ namespace boost {
         base_time_duration MINUTES_AND_DIFF_ENCODING::as_time() const {
             try {
                 return local_time().as_time();
-            }            catch (...) {
+            } catch (...) {
             }
             return base_time_duration();
         }
@@ -1107,7 +1114,7 @@ namespace boost {
         base_time_duration TIME_OF_DAY_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()), static_cast<int> (seconds()));
-            }            catch (...) {
+            } catch (...) {
             }
             return base_time_duration();
         }
@@ -1165,7 +1172,7 @@ namespace boost {
         base_time_duration TIME_OF_DAY::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()), static_cast<int> (seconds()));
-            }            catch (...) {
+            } catch (...) {
             }
             return base_time_duration();
         }
@@ -1224,7 +1231,7 @@ namespace boost {
         base_time_duration TIME_OF_DAY_UTC_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()), static_cast<int> (seconds()));
-            }            catch (...) {
+            } catch (...) {
             }
             return base_time_duration();
         }
@@ -1287,7 +1294,7 @@ namespace boost {
         base_time_duration TIME_OF_DAY_AND_DIFF_ENCODING::as_time() const {
             try {
                 return local_time().as_time();
-            }            catch (...) {
+            } catch (...) {
             }
             return base_time_duration();
         }
@@ -1576,6 +1583,200 @@ namespace boost {
 
         ITU_T_OPTIONAL_DEFN(REC_DURATION_INTERVAL_ENCODING::recurrence, recurrence, integer_type);
         ITU_T_HOLDERH_DEFN(REC_DURATION_INTERVAL_ENCODING::duration, duration, DURATION_INTERVAL_ENCODING);
+
+
+
+
+
+        // choice DATE-TYPE
+
+        DATE_TYPE::DATE_TYPE(const std::string& vl) : ITU_T_CHOICE_CTORS_INHERITED(DATE_TYPE) {
+            as_string(vl);
+        };
+
+        DATE_TYPE::DATE_TYPE(const char* vl) : ITU_T_CHOICE_CTORS_INHERITED(DATE_TYPE) {
+            as_string(vl);
+        };
+
+        DATE_TYPE::DATE_TYPE(const base_date & vl, DATE_TYPE_enum enm) : ITU_T_CHOICE_CTORS_INHERITED(DATE_TYPE) {
+            if (!vl.is_special()) {
+                switch (enm) {
+                    case DATE_TYPE_date_C_Basic: date_C_Basic(CENTURY_ENCODING(vl));
+                        break;
+                    case DATE_TYPE_date_C_L: date_C_L(ANY_CENTURY(vl));
+                        break;
+                    case DATE_TYPE_date_Y_Basic: date_Y_Basic(YEAR_ENCODING(vl));
+                        break;
+                    case DATE_TYPE_date_Y_L: date_Y_L(ANY_YEAR(vl));
+                        break;
+                    case DATE_TYPE_date_YM_Basic: date_YM_Basic(YEAR_MONTH_ENCODING(vl));
+                        break;
+                    case DATE_TYPE_date_YM_L: date_YM_L(ANY_YEAR_MONTH(vl));
+                        break;
+                    case DATE_TYPE_date_YMD_Basic: date_YMD_Basic(DATE_ENCODING(vl));
+                        break;
+                    case DATE_TYPE_date_YMD_L: date_YMD_L(ANY_DATE(vl));
+                        break;
+                    case DATE_TYPE_date_YD_Basic: date_YD_Basic(YEAR_DAY_ENCODING(vl));
+                        break;
+                    case DATE_TYPE_date_YD_L: date_YD_L(ANY_YEAR_DAY(vl));
+                        break;
+                    case DATE_TYPE_date_YW_Basic: date_YW_Basic(YEAR_WEEK_ENCODING(vl));
+                        break;
+                    case DATE_TYPE_date_YW_L: date_YW_L(ANY_YEAR_WEEK(vl));
+                        break;
+                    case DATE_TYPE_date_YWD_Basic: date_YWD_Basic(YEAR_WEEK_DAY_ENCODING(vl));
+                        break;
+                    case DATE_TYPE_date_YWD_L: date_YWD_L(ANY_YEAR_WEEK_DAY(vl));
+                        break;
+                    default:
+                    {
+                    }
+                }
+            }
+        };
+
+        base_date DATE_TYPE::as_date() {
+            switch (type()) {
+                case DATE_TYPE_date_C_Basic: return date_C_Basic() ? date_C_Basic()->as_date(): base_date();
+                case DATE_TYPE_date_C_L: return date_C_L() ? date_C_L()->as_date(): base_date();
+                case DATE_TYPE_date_Y_Basic: return date_Y_Basic() ? date_Y_Basic()->as_date(): base_date();
+                case DATE_TYPE_date_Y_L: return date_Y_L() ? date_Y_L()->as_date(): base_date();
+                case DATE_TYPE_date_YM_Basic: return date_YM_Basic() ? date_YM_Basic()->as_date(): base_date();
+                case DATE_TYPE_date_YM_L: return date_YM_L() ? date_YM_L()->as_date(): base_date();
+                case DATE_TYPE_date_YMD_Basic: return date_YMD_Basic() ? date_YMD_Basic()->as_date(): base_date();
+                case DATE_TYPE_date_YMD_L: return date_YMD_L() ? date_YMD_L()->as_date(): base_date();
+                case DATE_TYPE_date_YD_Basic: return date_YD_Basic() ? date_YD_Basic()->as_date(): base_date();
+                case DATE_TYPE_date_YD_L: return date_YD_L() ? date_YD_L()->as_date(): base_date();
+                case DATE_TYPE_date_YW_Basic: return date_YW_Basic() ? date_YW_Basic()->as_date(): base_date();
+                case DATE_TYPE_date_YW_L: return date_YW_L() ? date_YW_L()->as_date(): base_date();
+                case DATE_TYPE_date_YWD_Basic: return date_YWD_Basic() ? date_YWD_Basic()->as_date(): base_date();
+                case DATE_TYPE_date_YWD_L: return date_YWD_L() ? date_YWD_L()->as_date(): base_date();
+                default:
+                {
+                }
+            }
+            return base_date();
+        }
+
+        std::string DATE_TYPE::as_string() {
+            switch (type()) {
+                case DATE_TYPE_date_C_Basic: return date_C_Basic() ? date_C_Basic()->as_string(): std::string();
+                case DATE_TYPE_date_C_L: return date_C_L() ? date_C_L()->as_string(): std::string();
+                case DATE_TYPE_date_Y_Basic: return date_Y_Basic() ? date_Y_Basic()->as_string(): std::string();
+                case DATE_TYPE_date_Y_L: return date_Y_L() ? date_Y_L()->as_string(): std::string();
+                case DATE_TYPE_date_YM_Basic: return date_YM_Basic() ? date_YM_Basic()->as_string(): std::string();
+                case DATE_TYPE_date_YM_L: return date_YM_L() ? date_YM_L()->as_string(): std::string();
+                case DATE_TYPE_date_YMD_Basic: return date_YMD_Basic() ? date_YMD_Basic()->as_string(): std::string();
+                case DATE_TYPE_date_YMD_L: return date_YMD_L() ? date_YMD_L()->as_string(): std::string();
+                case DATE_TYPE_date_YD_Basic: return date_YD_Basic() ? date_YD_Basic()->as_string(): std::string();
+                case DATE_TYPE_date_YD_L: return date_YD_L() ? date_YD_L()->as_string(): std::string();
+                case DATE_TYPE_date_YW_Basic: return date_YW_Basic() ? date_YW_Basic()->as_string(): std::string();
+                case DATE_TYPE_date_YW_L: return date_YW_L() ? date_YW_L()->as_string(): std::string();
+                case DATE_TYPE_date_YWD_Basic: return date_YWD_Basic() ? date_YWD_Basic()->as_string(): std::string();
+                case DATE_TYPE_date_YWD_L: return date_YWD_L() ? date_YWD_L()->as_string(): std::string();
+                default:
+                {
+                }
+            }
+            return "";
+        }
+
+        void DATE_TYPE::as_string(const std::string& vl) {
+            std::string tmpl = normalizeLR_time_str(vl);
+            std::string::size_type it = tmpl.find_first_of('W');
+            if (it == std::string::npos) {
+                it = tmpl.find_last_of('-');
+                if (it == std::string::npos) {
+                    it = tmpl.find_first_of('C');
+                    if (it == std::string::npos) {
+                        if (tmpl.size() == 4)
+                            date_Y_Basic(YEAR_ENCODING(vl));
+                        else
+                            date_Y_L(ANY_YEAR(vl));
+                    } else {
+                        if (tmpl.size() == 3)
+                            date_C_Basic(CENTURY_ENCODING(vl));
+                        else
+                            date_C_L(ANY_CENTURY(vl));
+                    }
+                } else {
+                    // if (size-it)>3 YD                  
+                    if ((tmpl.size() - it) > 3) {
+                        if (it == 4)
+                            date_YD_Basic(YEAR_DAY_ENCODING(vl));
+                        else
+                            date_YD_L(ANY_YEAR_DAY(vl));
+                    } else {
+                        std::string::size_type itf = tmpl.find_first_of('-');
+                        std::string::size_type itl = tmpl.find_last_of('-');
+                        if (itf != itl) {
+                            if (tmpl.size() == 4)
+                                date_YMD_Basic(DATE_ENCODING(vl));
+                            else
+                                date_YMD_L(ANY_DATE(vl));
+                        } else {
+                            if (tmpl.size() == 4)
+                                date_YM_Basic(YEAR_MONTH_ENCODING(vl));
+                            else
+                                date_YM_L(ANY_YEAR_MONTH(vl));
+                        }
+                    }
+                }
+            } else {
+                // if (size-it)>3 YWD else YW
+                if ((tmpl.size() - it) > 3) {
+                    if (it == 4)
+                        date_YWD_Basic(YEAR_WEEK_DAY_ENCODING(vl));
+                    else
+                        date_YWD_L(ANY_YEAR_WEEK_DAY(vl));
+                } else {
+                    if (it == 4)
+                        date_YW_Basic(YEAR_WEEK_ENCODING(vl));
+                    else
+                        date_YW_L(ANY_YEAR_WEEK(vl));
+                }
+            }
+        };
+
+        std::string DATE_TYPE::format() {
+            switch (type()) {
+                case DATE_TYPE_date_C_Basic: return date_C_Basic() ? date_C_Basic()->format(): std::string();
+                case DATE_TYPE_date_C_L: return date_C_L() ? date_C_L()->format(): std::string();
+                case DATE_TYPE_date_Y_Basic: return date_Y_Basic() ? date_Y_Basic()->format(): std::string();
+                case DATE_TYPE_date_Y_L: return date_Y_L() ? date_Y_L()->format(): std::string();
+                case DATE_TYPE_date_YM_Basic: return date_YM_Basic() ? date_YM_Basic()->format(): std::string();
+                case DATE_TYPE_date_YM_L: return date_YM_L() ? date_YM_L()->format(): std::string();
+                case DATE_TYPE_date_YMD_Basic: return date_YMD_Basic() ? date_YMD_Basic()->format(): std::string();
+                case DATE_TYPE_date_YMD_L: return date_YMD_L() ? date_YMD_L()->format(): std::string();
+                case DATE_TYPE_date_YD_Basic: return date_YD_Basic() ? date_YD_Basic()->format(): std::string();
+                case DATE_TYPE_date_YD_L: return date_YD_L() ? date_YD_L()->format(): std::string();
+                case DATE_TYPE_date_YW_Basic: return date_YW_Basic() ? date_YW_Basic()->format(): std::string();
+                case DATE_TYPE_date_YW_L: return date_YW_L() ? date_YW_L()->format(): std::string();
+                case DATE_TYPE_date_YWD_Basic: return date_YWD_Basic() ? date_YWD_Basic()->format(): std::string();
+                case DATE_TYPE_date_YWD_L: return date_YWD_L() ? date_YWD_L()->format(): std::string();
+                default:
+                {
+                }
+            }
+            return "";
+        }
+
+        ITU_T_CHOICES_DEFN(DATE_TYPE::date_C_Basic, date_C_Basic, CENTURY_ENCODING, DATE_TYPE_date_C_Basic);
+        ITU_T_CHOICES_DEFN(DATE_TYPE::date_C_L, date_C_L, ANY_CENTURY, DATE_TYPE_date_C_L);
+        ITU_T_CHOICES_DEFN(DATE_TYPE::date_Y_Basic, date_Y_Basic, YEAR_ENCODING, DATE_TYPE_date_Y_Basic);
+        ITU_T_CHOICES_DEFN(DATE_TYPE::date_Y_L, date_Y_L, ANY_YEAR, DATE_TYPE_date_Y_L);
+        ITU_T_CHOICES_DEFN(DATE_TYPE::date_YM_Basic, date_YM_Basic, YEAR_MONTH_ENCODING, DATE_TYPE_date_YM_Basic);
+        ITU_T_CHOICES_DEFN(DATE_TYPE::date_YM_L, date_YM_L, ANY_YEAR_MONTH, DATE_TYPE_date_YM_L);
+        ITU_T_CHOICES_DEFN(DATE_TYPE::date_YMD_Basic, date_YMD_Basic, DATE_ENCODING, DATE_TYPE_date_YMD_Basic);
+        ITU_T_CHOICES_DEFN(DATE_TYPE::date_YMD_L, date_YMD_L, ANY_DATE, DATE_TYPE_date_YMD_L);
+        ITU_T_CHOICES_DEFN(DATE_TYPE::date_YD_Basic, date_YD_Basic, YEAR_DAY_ENCODING, DATE_TYPE_date_YD_Basic);
+        ITU_T_CHOICES_DEFN(DATE_TYPE::date_YD_L, date_YD_L, ANY_YEAR_DAY, DATE_TYPE_date_YD_L);
+        ITU_T_CHOICES_DEFN(DATE_TYPE::date_YW_Basic, date_YW_Basic, YEAR_WEEK_ENCODING, DATE_TYPE_date_YW_Basic);
+        ITU_T_CHOICES_DEFN(DATE_TYPE::date_YW_L, date_YW_L, ANY_YEAR_WEEK, DATE_TYPE_date_YW_L);
+        ITU_T_CHOICES_DEFN(DATE_TYPE::date_YWD_Basic, date_YWD_Basic, YEAR_WEEK_DAY_ENCODING, DATE_TYPE_date_YWD_Basic);
+        ITU_T_CHOICES_DEFN(DATE_TYPE::date_YWD_L, date_YWD_L, ANY_YEAR_WEEK_DAY, DATE_TYPE_date_YWD_L);
+
 
         // choice MIXED-ENCODING
 
