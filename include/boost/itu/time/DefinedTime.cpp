@@ -1777,6 +1777,68 @@ namespace boost {
         ITU_T_CHOICES_DEFN(DATE_TYPE::date_YWD_Basic, date_YWD_Basic, YEAR_WEEK_DAY_ENCODING, DATE_TYPE_date_YWD_Basic);
         ITU_T_CHOICES_DEFN(DATE_TYPE::date_YWD_L, date_YWD_L, ANY_YEAR_WEEK_DAY, DATE_TYPE_date_YWD_L);
 
+        
+        
+
+        // sequence TIME-TYPE
+
+        TIME_TYPE::TIME_TYPE() : time_type_() {
+        };
+
+        TIME_TYPE::TIME_TYPE(const Time_type& arg__time_type) :
+        time_type_(arg__time_type) {
+        };
+
+        TIME_TYPE::TIME_TYPE(const std::string & vl) : time_type_() {
+            as_string(vl);
+        };
+
+        TIME_TYPE::TIME_TYPE(const char* vl) : time_type_() {
+            as_string(vl);
+        };
+
+        TIME_TYPE::TIME_TYPE(const base_date & vl, Time_type_enum enm) : time_type_() {
+        };
+
+        base_time_duration TIME_TYPE::as_time() {
+            return base_time_duration();
+        };
+
+        std::string TIME_TYPE::as_string() {
+            return "";
+        };
+
+        void TIME_TYPE::as_string(const std::string & v) {
+        };
+
+        std::string TIME_TYPE::format() {
+            return "";
+        };        
+
+        ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_H_L, time_H_L, HOURS_ENCODING, Time_type_time_H_L);
+        ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_H_Z, time_H_Z, HOURS_UTC_ENCODING, Time_type_time_H_Z);
+        ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_H_LD, time_H_LD, HOURS_AND_DIFF_ENCODING, Time_type_time_H_LD);
+        ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_HM_L, time_HM_L, MINUTES_ENCODING, Time_type_time_HM_L);
+        ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_HM_Z, time_HM_Z, MINUTES_UTC_ENCODING, Time_type_time_HM_Z);
+        ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_HM_LD, time_HM_LD, MINUTES_AND_DIFF_ENCODING, Time_type_time_HM_LD);
+        ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_HMS_L, time_HMS_L, TIME_OF_DAY_ENCODING, Time_type_time_HMS_L);
+        ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_HMS_Z, time_HMS_Z, TIME_OF_DAY_UTC_ENCODING, Time_type_time_HMS_Z);
+        ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_HMS_LD, time_HMS_LD, TIME_OF_DAY_AND_DIFF_ENCODING, Time_type_time_HMS_LD);
+        ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_HFn_L, time_HFn_L, HOURS_AND_FRACTION, Time_type_time_HFn_L);
+        ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_HFn_Z, time_HFn_Z, HOURS_UTC_AND_FRACTION, Time_type_time_HFn_Z);
+        ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_HFn_LD, time_HFn_LD, HOURS_AND_DIFF_AND_FRACTION, Time_type_time_HFn_LD);
+        ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_HMFn_L, time_HMFn_L, MINUTES_AND_FRACTION, Time_type_time_HMFn_L);
+        ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_HMFn_Z, time_HMFn_Z, MINUTES_UTC_AND_FRACTION, Time_type_time_HMFn_Z);
+        ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_HMFn_LD, time_HMFn_LD, MINUTES_AND_DIFF_AND_FRACTION, Time_type_time_HMFn_LD);
+        ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_HMFSn_L, time_HMFSn_L, TIME_OF_DAY_AND_FRACTION, Time_type_time_HMFSn_L);
+        ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_HMFSn_Z, time_HMFSn_Z, TIME_OF_DAY_UTC_AND_FRACTION, Time_type_time_HMFSn_Z);
+        ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_HMFSn_LD, time_HMFSn_LD, TIME_OF_DAY_AND_DIFF_AND_FRACTION, Time_type_time_HMFSn_LD);
+
+
+        ITU_T_OPTIONAL_DEFN(TIME_TYPE::number_of_digits, number_of_digits, integer_type);
+        ITU_T_HOLDERH_DEFN(TIME_TYPE::time_type, time_type, TIME_TYPE::Time_type);
+        
+        
 
     }
 }
@@ -1814,6 +1876,7 @@ namespace boost {
             ITU_T_DEFINE_TIME_TYPE(DURATION);
             ITU_T_DEFINE_TIME_TYPE(REC_DURATION_INTERVAL_ENCODING);
             ITU_T_DEFINE_TIME_TYPE(DATE_TYPE);
+            ITU_T_DEFINE_TIME_TYPE(TIME_TYPE);            
         }
     }
 }

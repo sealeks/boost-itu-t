@@ -642,1307 +642,6 @@ namespace boost {
         }
 
 
-        // choice MIXED-ENCODING
-
-        /*template<> void MIXED_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
-            switch (type()) {
-                case MIXED_ENCODING_date_C_Basic:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(0, 52);
-                    ITU_T_BIND_PER(value<CENTURY_ENCODING > (false, MIXED_ENCODING_date_C_Basic));
-                    break;
-                }
-                case MIXED_ENCODING_date_C_L:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(1, 52);
-                    ITU_T_BIND_PER(value<ANY_CENTURY_ENCODING > (false, MIXED_ENCODING_date_C_L));
-                    break;
-                }
-                case MIXED_ENCODING_date_Y_Basic:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(2, 52);
-                    ITU_T_BIND_PER(value<YEAR_ENCODING > (false, MIXED_ENCODING_date_Y_Basic));
-                    break;
-                }
-                case MIXED_ENCODING_date_Y_L:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(3, 52);
-                    ITU_T_BIND_PER(value<ANY_YEAR_ENCODING > (false, MIXED_ENCODING_date_Y_L));
-                    break;
-                }
-                case MIXED_ENCODING_date_YM_Basic:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(4, 52);
-                    ITU_T_BIND_PER(value<YEAR_MONTH_ENCODING > (false, MIXED_ENCODING_date_YM_Basic));
-                    break;
-                }
-                case MIXED_ENCODING_date_YM_L:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(5, 52);
-                    ITU_T_BIND_PER(value<ANY_YEAR_MONTH_ENCODING > (false, MIXED_ENCODING_date_YM_L));
-                    break;
-                }
-                case MIXED_ENCODING_date_YMD_Basic:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(6, 52);
-                    ITU_T_BIND_PER(value<DATE_ENCODING > (false, MIXED_ENCODING_date_YMD_Basic));
-                    break;
-                }
-                case MIXED_ENCODING_date_YMD_L:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(7, 52);
-                    ITU_T_BIND_PER(value<ANY_DATE_ENCODING > (false, MIXED_ENCODING_date_YMD_L));
-                    break;
-                }
-                case MIXED_ENCODING_date_YD_Basic:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(8, 52);
-                    ITU_T_BIND_PER(value<YEAR_DAY_ENCODING > (false, MIXED_ENCODING_date_YD_Basic));
-                    break;
-                }
-                case MIXED_ENCODING_date_YD_L:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(9, 52);
-                    ITU_T_BIND_PER(value<ANY_YEAR_DAY_ENCODING > (false, MIXED_ENCODING_date_YD_L));
-                    break;
-                }
-                case MIXED_ENCODING_date_YW_Basic:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(10, 52);
-                    ITU_T_BIND_PER(value<YEAR_WEEK_ENCODING > (false, MIXED_ENCODING_date_YW_Basic));
-                    break;
-                }
-                case MIXED_ENCODING_date_YW_L:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(11, 52);
-                    ITU_T_BIND_PER(value<ANY_YEAR_WEEK_ENCODING > (false, MIXED_ENCODING_date_YW_L));
-                    break;
-                }
-                case MIXED_ENCODING_date_YWD_Basic:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(12, 52);
-                    ITU_T_BIND_PER(value<YEAR_WEEK_DAY_ENCODING > (false, MIXED_ENCODING_date_YWD_Basic));
-                    break;
-                }
-                case MIXED_ENCODING_date_YWD_L:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(13, 52);
-                    ITU_T_BIND_PER(value<ANY_YEAR_WEEK_DAY_ENCODING > (false, MIXED_ENCODING_date_YWD_L));
-                    break;
-                }
-                case MIXED_ENCODING_time_H_L:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(14, 52);
-                    ITU_T_BIND_PER(value<HOURS_ENCODING > (false, MIXED_ENCODING_time_H_L));
-                    break;
-                }
-                case MIXED_ENCODING_time_H_Z:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(15, 52);
-                    ITU_T_BIND_PER(value<HOURS_UTC_ENCODING > (false, MIXED_ENCODING_time_H_Z));
-                    break;
-                }
-                case MIXED_ENCODING_time_H_LD:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(16, 52);
-                    ITU_T_BIND_PER(value<HOURS_AND_DIFF_ENCODING > (false, MIXED_ENCODING_time_H_LD));
-                    break;
-                }
-                case MIXED_ENCODING_time_HM_L:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(17, 52);
-                    ITU_T_BIND_PER(value<MINUTES_ENCODING > (false, MIXED_ENCODING_time_HM_L));
-                    break;
-                }
-                case MIXED_ENCODING_time_HM_Z:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(18, 52);
-                    ITU_T_BIND_PER(value<MINUTES_UTC_ENCODING > (false, MIXED_ENCODING_time_HM_Z));
-                    break;
-                }
-                case MIXED_ENCODING_time_HM_LD:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(19, 52);
-                    ITU_T_BIND_PER(value<MINUTES_AND_DIFF_ENCODING > (false, MIXED_ENCODING_time_HM_LD));
-                    break;
-                }
-                case MIXED_ENCODING_time_HMS_L:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(20, 52);
-                    ITU_T_BIND_PER(value<TIME_OF_DAY_ENCODING > (false, MIXED_ENCODING_time_HMS_L));
-                    break;
-                }
-                case MIXED_ENCODING_time_HMS_Z:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(21, 52);
-                    ITU_T_BIND_PER(value<TIME_OF_DAY_UTC_ENCODING > (false, MIXED_ENCODING_time_HMS_Z));
-                    break;
-                }
-                case MIXED_ENCODING_time_HMS_LD:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(22, 52);
-                    ITU_T_BIND_PER(value<TIME_OF_DAY_AND_DIFF_ENCODING > (false, MIXED_ENCODING_time_HMS_LD));
-                    break;
-                }
-                case MIXED_ENCODING_time_HFn_L:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(23, 52);
-                    ITU_T_BIND_PER(value<Time_HFn_L_type > (false, MIXED_ENCODING_time_HFn_L));
-                    break;
-                }
-                case MIXED_ENCODING_time_HFn_Z:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(24, 52);
-                    ITU_T_BIND_PER(value<Time_HFn_Z_type > (false, MIXED_ENCODING_time_HFn_Z));
-                    break;
-                }
-                case MIXED_ENCODING_time_HFn_LD:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(25, 52);
-                    ITU_T_BIND_PER(value<Time_HFn_LD_type > (false, MIXED_ENCODING_time_HFn_LD));
-                    break;
-                }
-                case MIXED_ENCODING_time_HMFn_L:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(26, 52);
-                    ITU_T_BIND_PER(value<Time_HMFn_L_type > (false, MIXED_ENCODING_time_HMFn_L));
-                    break;
-                }
-                case MIXED_ENCODING_time_HMFn_Z:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(27, 52);
-                    ITU_T_BIND_PER(value<Time_HMFn_Z_type > (false, MIXED_ENCODING_time_HMFn_Z));
-                    break;
-                }
-                case MIXED_ENCODING_time_HMFn_LD:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(28, 52);
-                    ITU_T_BIND_PER(value<Time_HMFn_LD_type > (false, MIXED_ENCODING_time_HMFn_LD));
-                    break;
-                }
-                case MIXED_ENCODING_time_HMFSn_L:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(29, 52);
-                    ITU_T_BIND_PER(value<Time_HMFSn_L_type > (false, MIXED_ENCODING_time_HMFSn_L));
-                    break;
-                }
-                case MIXED_ENCODING_time_HMFSn_Z:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(30, 52);
-                    ITU_T_BIND_PER(value<Time_HMFSn_Z_type > (false, MIXED_ENCODING_time_HMFSn_Z));
-                    break;
-                }
-                case MIXED_ENCODING_time_HMFSn_LD:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(31, 52);
-                    ITU_T_BIND_PER(value<Time_HMFSn_LD_type > (false, MIXED_ENCODING_time_HMFSn_LD));
-                    break;
-                }
-                case MIXED_ENCODING_date_time:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(32, 52);
-                    ITU_T_BIND_PER(value<Date_time_type > (false, MIXED_ENCODING_date_time));
-                    break;
-                }
-                case MIXED_ENCODING_iterval_SE_Date:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(33, 52);
-                    ITU_T_BIND_PER(value<Iterval_SE_Date_type > (false, MIXED_ENCODING_iterval_SE_Date));
-                    break;
-                }
-                case MIXED_ENCODING_iterval_SE_Time:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(34, 52);
-                    ITU_T_BIND_PER(value<Iterval_SE_Time_type > (false, MIXED_ENCODING_iterval_SE_Time));
-                    break;
-                }
-                case MIXED_ENCODING_iterval_SE_Date_Time:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(35, 52);
-                    ITU_T_BIND_PER(value<Iterval_SE_Date_Time_type > (false, MIXED_ENCODING_iterval_SE_Date_Time));
-                    break;
-                }
-                case MIXED_ENCODING_iterval_D:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(36, 52);
-                    ITU_T_BIND_PER(value<DURATION_INTERVAL_ENCODING > (false, MIXED_ENCODING_iterval_D));
-                    break;
-                }
-                case MIXED_ENCODING_iterval_SD_Date:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(37, 52);
-                    ITU_T_BIND_PER(value<Iterval_SD_Date_type > (false, MIXED_ENCODING_iterval_SD_Date));
-                    break;
-                }
-                case MIXED_ENCODING_iterval_SD_Time:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(38, 52);
-                    ITU_T_BIND_PER(value<Iterval_SD_Time_type > (false, MIXED_ENCODING_iterval_SD_Time));
-                    break;
-                }
-                case MIXED_ENCODING_iterval_SD_Date_Time:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(39, 52);
-                    ITU_T_BIND_PER(value<Iterval_SD_Date_Time_type > (false, MIXED_ENCODING_iterval_SD_Date_Time));
-                    break;
-                }
-                case MIXED_ENCODING_iterval_DE_Date:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(40, 52);
-                    ITU_T_BIND_PER(value<Iterval_DE_Date_type > (false, MIXED_ENCODING_iterval_DE_Date));
-                    break;
-                }
-                case MIXED_ENCODING_iterval_DE_Time:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(41, 52);
-                    ITU_T_BIND_PER(value<Iterval_DE_Time_type > (false, MIXED_ENCODING_iterval_DE_Time));
-                    break;
-                }
-                case MIXED_ENCODING_iterval_DE_Date_Time:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(42, 52);
-                    ITU_T_BIND_PER(value<Iterval_DE_Date_Time_type > (false, MIXED_ENCODING_iterval_DE_Date_Time));
-                    break;
-                }
-                case MIXED_ENCODING_rec_Interval_SE_Date:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(43, 52);
-                    ITU_T_BIND_PER(value<Rec_Interval_SE_Date_type > (false, MIXED_ENCODING_rec_Interval_SE_Date));
-                    break;
-                }
-                case MIXED_ENCODING_rec_Interval_SE_Time:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(44, 52);
-                    ITU_T_BIND_PER(value<Rec_Interval_SE_Time_type > (false, MIXED_ENCODING_rec_Interval_SE_Time));
-                    break;
-                }
-                case MIXED_ENCODING_rec_Interval_SE_Date_Time:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(45, 52);
-                    ITU_T_BIND_PER(value<Rec_Interval_SE_Date_Time_type > (false, MIXED_ENCODING_rec_Interval_SE_Date_Time));
-                    break;
-                }
-                case MIXED_ENCODING_rec_Interval_D:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(46, 52);
-                    ITU_T_BIND_PER(value<REC_DURATION_INTERVAL_ENCODING > (false, MIXED_ENCODING_rec_Interval_D));
-                    break;
-                }
-                case MIXED_ENCODING_rec_Interval_SD_Date:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(47, 52);
-                    ITU_T_BIND_PER(value<Rec_Interval_SD_Date_type > (false, MIXED_ENCODING_rec_Interval_SD_Date));
-                    break;
-                }
-                case MIXED_ENCODING_rec_Interval_SD_Time:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(48, 52);
-                    ITU_T_BIND_PER(value<Rec_Interval_SD_Time_type > (false, MIXED_ENCODING_rec_Interval_SD_Time));
-                    break;
-                }
-                case MIXED_ENCODING_rec_Interval_SD_Date_Time:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(49, 52);
-                    ITU_T_BIND_PER(value<Rec_Interval_SD_Date_Time_type > (false, MIXED_ENCODING_rec_Interval_SD_Date_Time));
-                    break;
-                }
-                case MIXED_ENCODING_rec_Interval_DE_Date:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(50, 52);
-                    ITU_T_BIND_PER(value<Rec_Interval_DE_Date_type > (false, MIXED_ENCODING_rec_Interval_DE_Date));
-                    break;
-                }
-                case MIXED_ENCODING_rec_Interval_DE_Time:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(51, 52);
-                    ITU_T_BIND_PER(value<Rec_Interval_DE_Time_type > (false, MIXED_ENCODING_rec_Interval_DE_Time));
-                    break;
-                }
-                case MIXED_ENCODING_rec_Interval_DE_Date_Time:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(52, 52);
-                    ITU_T_BIND_PER(value<Rec_Interval_DE_Date_Time_type > (false, MIXED_ENCODING_rec_Interval_DE_Date_Time));
-                    break;
-                }
-                default:
-                {
-                }
-            }
-        }
-
-        template<> void MIXED_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
-
-            ITU_T_GET_CONSTAINED_INDX(52);
-
-            switch (__indx__) {
-                case 0:
-                {
-                    ITU_T_BIND_PER(value<CENTURY_ENCODING > (true, MIXED_ENCODING_date_C_Basic));
-                    break;
-                }
-                case 1:
-                {
-                    ITU_T_BIND_PER(value<ANY_CENTURY_ENCODING > (true, MIXED_ENCODING_date_C_L));
-                    break;
-                }
-                case 2:
-                {
-                    ITU_T_BIND_PER(value<YEAR_ENCODING > (true, MIXED_ENCODING_date_Y_Basic));
-                    break;
-                }
-                case 3:
-                {
-                    ITU_T_BIND_PER(value<ANY_YEAR_ENCODING > (true, MIXED_ENCODING_date_Y_L));
-                    break;
-                }
-                case 4:
-                {
-                    ITU_T_BIND_PER(value<YEAR_MONTH_ENCODING > (true, MIXED_ENCODING_date_YM_Basic));
-                    break;
-                }
-                case 5:
-                {
-                    ITU_T_BIND_PER(value<ANY_YEAR_MONTH_ENCODING > (true, MIXED_ENCODING_date_YM_L));
-                    break;
-                }
-                case 6:
-                {
-                    ITU_T_BIND_PER(value<DATE_ENCODING > (true, MIXED_ENCODING_date_YMD_Basic));
-                    break;
-                }
-                case 7:
-                {
-                    ITU_T_BIND_PER(value<ANY_DATE_ENCODING > (true, MIXED_ENCODING_date_YMD_L));
-                    break;
-                }
-                case 8:
-                {
-                    ITU_T_BIND_PER(value<YEAR_DAY_ENCODING > (true, MIXED_ENCODING_date_YD_Basic));
-                    break;
-                }
-                case 9:
-                {
-                    ITU_T_BIND_PER(value<ANY_YEAR_DAY_ENCODING > (true, MIXED_ENCODING_date_YD_L));
-                    break;
-                }
-                case 10:
-                {
-                    ITU_T_BIND_PER(value<YEAR_WEEK_ENCODING > (true, MIXED_ENCODING_date_YW_Basic));
-                    break;
-                }
-                case 11:
-                {
-                    ITU_T_BIND_PER(value<ANY_YEAR_WEEK_ENCODING > (true, MIXED_ENCODING_date_YW_L));
-                    break;
-                }
-                case 12:
-                {
-                    ITU_T_BIND_PER(value<YEAR_WEEK_DAY_ENCODING > (true, MIXED_ENCODING_date_YWD_Basic));
-                    break;
-                }
-                case 13:
-                {
-                    ITU_T_BIND_PER(value<ANY_YEAR_WEEK_DAY_ENCODING > (true, MIXED_ENCODING_date_YWD_L));
-                    break;
-                }
-                case 14:
-                {
-                    ITU_T_BIND_PER(value<HOURS_ENCODING > (true, MIXED_ENCODING_time_H_L));
-                    break;
-                }
-                case 15:
-                {
-                    ITU_T_BIND_PER(value<HOURS_UTC_ENCODING > (true, MIXED_ENCODING_time_H_Z));
-                    break;
-                }
-                case 16:
-                {
-                    ITU_T_BIND_PER(value<HOURS_AND_DIFF_ENCODING > (true, MIXED_ENCODING_time_H_LD));
-                    break;
-                }
-                case 17:
-                {
-                    ITU_T_BIND_PER(value<MINUTES_ENCODING > (true, MIXED_ENCODING_time_HM_L));
-                    break;
-                }
-                case 18:
-                {
-                    ITU_T_BIND_PER(value<MINUTES_UTC_ENCODING > (true, MIXED_ENCODING_time_HM_Z));
-                    break;
-                }
-                case 19:
-                {
-                    ITU_T_BIND_PER(value<MINUTES_AND_DIFF_ENCODING > (true, MIXED_ENCODING_time_HM_LD));
-                    break;
-                }
-                case 20:
-                {
-                    ITU_T_BIND_PER(value<TIME_OF_DAY_ENCODING > (true, MIXED_ENCODING_time_HMS_L));
-                    break;
-                }
-                case 21:
-                {
-                    ITU_T_BIND_PER(value<TIME_OF_DAY_UTC_ENCODING > (true, MIXED_ENCODING_time_HMS_Z));
-                    break;
-                }
-                case 22:
-                {
-                    ITU_T_BIND_PER(value<TIME_OF_DAY_AND_DIFF_ENCODING > (true, MIXED_ENCODING_time_HMS_LD));
-                    break;
-                }
-                case 23:
-                {
-                    ITU_T_BIND_PER(value<Time_HFn_L_type > (true, MIXED_ENCODING_time_HFn_L));
-                    break;
-                }
-                case 24:
-                {
-                    ITU_T_BIND_PER(value<Time_HFn_Z_type > (true, MIXED_ENCODING_time_HFn_Z));
-                    break;
-                }
-                case 25:
-                {
-                    ITU_T_BIND_PER(value<Time_HFn_LD_type > (true, MIXED_ENCODING_time_HFn_LD));
-                    break;
-                }
-                case 26:
-                {
-                    ITU_T_BIND_PER(value<Time_HMFn_L_type > (true, MIXED_ENCODING_time_HMFn_L));
-                    break;
-                }
-                case 27:
-                {
-                    ITU_T_BIND_PER(value<Time_HMFn_Z_type > (true, MIXED_ENCODING_time_HMFn_Z));
-                    break;
-                }
-                case 28:
-                {
-                    ITU_T_BIND_PER(value<Time_HMFn_LD_type > (true, MIXED_ENCODING_time_HMFn_LD));
-                    break;
-                }
-                case 29:
-                {
-                    ITU_T_BIND_PER(value<Time_HMFSn_L_type > (true, MIXED_ENCODING_time_HMFSn_L));
-                    break;
-                }
-                case 30:
-                {
-                    ITU_T_BIND_PER(value<Time_HMFSn_Z_type > (true, MIXED_ENCODING_time_HMFSn_Z));
-                    break;
-                }
-                case 31:
-                {
-                    ITU_T_BIND_PER(value<Time_HMFSn_LD_type > (true, MIXED_ENCODING_time_HMFSn_LD));
-                    break;
-                }
-                case 32:
-                {
-                    ITU_T_BIND_PER(value<Date_time_type > (true, MIXED_ENCODING_date_time));
-                    break;
-                }
-                case 33:
-                {
-                    ITU_T_BIND_PER(value<Iterval_SE_Date_type > (true, MIXED_ENCODING_iterval_SE_Date));
-                    break;
-                }
-                case 34:
-                {
-                    ITU_T_BIND_PER(value<Iterval_SE_Time_type > (true, MIXED_ENCODING_iterval_SE_Time));
-                    break;
-                }
-                case 35:
-                {
-                    ITU_T_BIND_PER(value<Iterval_SE_Date_Time_type > (true, MIXED_ENCODING_iterval_SE_Date_Time));
-                    break;
-                }
-                case 36:
-                {
-                    ITU_T_BIND_PER(value<DURATION_INTERVAL_ENCODING > (true, MIXED_ENCODING_iterval_D));
-                    break;
-                }
-                case 37:
-                {
-                    ITU_T_BIND_PER(value<Iterval_SD_Date_type > (true, MIXED_ENCODING_iterval_SD_Date));
-                    break;
-                }
-                case 38:
-                {
-                    ITU_T_BIND_PER(value<Iterval_SD_Time_type > (true, MIXED_ENCODING_iterval_SD_Time));
-                    break;
-                }
-                case 39:
-                {
-                    ITU_T_BIND_PER(value<Iterval_SD_Date_Time_type > (true, MIXED_ENCODING_iterval_SD_Date_Time));
-                    break;
-                }
-                case 40:
-                {
-                    ITU_T_BIND_PER(value<Iterval_DE_Date_type > (true, MIXED_ENCODING_iterval_DE_Date));
-                    break;
-                }
-                case 41:
-                {
-                    ITU_T_BIND_PER(value<Iterval_DE_Time_type > (true, MIXED_ENCODING_iterval_DE_Time));
-                    break;
-                }
-                case 42:
-                {
-                    ITU_T_BIND_PER(value<Iterval_DE_Date_Time_type > (true, MIXED_ENCODING_iterval_DE_Date_Time));
-                    break;
-                }
-                case 43:
-                {
-                    ITU_T_BIND_PER(value<Rec_Interval_SE_Date_type > (true, MIXED_ENCODING_rec_Interval_SE_Date));
-                    break;
-                }
-                case 44:
-                {
-                    ITU_T_BIND_PER(value<Rec_Interval_SE_Time_type > (true, MIXED_ENCODING_rec_Interval_SE_Time));
-                    break;
-                }
-                case 45:
-                {
-                    ITU_T_BIND_PER(value<Rec_Interval_SE_Date_Time_type > (true, MIXED_ENCODING_rec_Interval_SE_Date_Time));
-                    break;
-                }
-                case 46:
-                {
-                    ITU_T_BIND_PER(value<REC_DURATION_INTERVAL_ENCODING > (true, MIXED_ENCODING_rec_Interval_D));
-                    break;
-                }
-                case 47:
-                {
-                    ITU_T_BIND_PER(value<Rec_Interval_SD_Date_type > (true, MIXED_ENCODING_rec_Interval_SD_Date));
-                    break;
-                }
-                case 48:
-                {
-                    ITU_T_BIND_PER(value<Rec_Interval_SD_Time_type > (true, MIXED_ENCODING_rec_Interval_SD_Time));
-                    break;
-                }
-                case 49:
-                {
-                    ITU_T_BIND_PER(value<Rec_Interval_SD_Date_Time_type > (true, MIXED_ENCODING_rec_Interval_SD_Date_Time));
-                    break;
-                }
-                case 50:
-                {
-                    ITU_T_BIND_PER(value<Rec_Interval_DE_Date_type > (true, MIXED_ENCODING_rec_Interval_DE_Date));
-                    break;
-                }
-                case 51:
-                {
-                    ITU_T_BIND_PER(value<Rec_Interval_DE_Time_type > (true, MIXED_ENCODING_rec_Interval_DE_Time));
-                    break;
-                }
-                case 52:
-                {
-                    ITU_T_BIND_PER(value<Rec_Interval_DE_Date_Time_type > (true, MIXED_ENCODING_rec_Interval_DE_Date_Time));
-                    break;
-                }
-                default:
-                {
-                }
-            }
-        }
-
-        // sequence time-HFn-L
-
-        template<> void MIXED_ENCODING::Time_HFn_L_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_NUM_SIMICONSTRAINT(number_of_digits_, static_cast<integer_type> (1));
-            ITU_T_BIND_PER(time_value_);
-        }
-
-        template<> void MIXED_ENCODING::Time_HFn_L_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_NUM_SIMICONSTRAINT(number_of_digits_, static_cast<integer_type> (1));
-            ITU_T_BIND_PER(time_value_);
-        }
-
-        // sequence time-HFn-Z
-
-        template<> void MIXED_ENCODING::Time_HFn_Z_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_NUM_SIMICONSTRAINT(number_of_digits_, static_cast<integer_type> (1));
-            ITU_T_BIND_PER(time_value_);
-        }
-
-        template<> void MIXED_ENCODING::Time_HFn_Z_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_NUM_SIMICONSTRAINT(number_of_digits_, static_cast<integer_type> (1));
-            ITU_T_BIND_PER(time_value_);
-        }
-
-        // sequence time-HFn-LD
-
-        template<> void MIXED_ENCODING::Time_HFn_LD_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_NUM_SIMICONSTRAINT(number_of_digits_, static_cast<integer_type> (1));
-            ITU_T_BIND_PER(time_value_);
-        }
-
-        template<> void MIXED_ENCODING::Time_HFn_LD_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_NUM_SIMICONSTRAINT(number_of_digits_, static_cast<integer_type> (1));
-            ITU_T_BIND_PER(time_value_);
-        }
-
-        // sequence time-HMFn-L
-
-        template<> void MIXED_ENCODING::Time_HMFn_L_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_NUM_SIMICONSTRAINT(number_of_digits_, static_cast<integer_type> (1));
-            ITU_T_BIND_PER(time_value_);
-        }
-
-        template<> void MIXED_ENCODING::Time_HMFn_L_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_NUM_SIMICONSTRAINT(number_of_digits_, static_cast<integer_type> (1));
-            ITU_T_BIND_PER(time_value_);
-        }
-
-        // sequence time-HMFn-Z
-
-        template<> void MIXED_ENCODING::Time_HMFn_Z_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_NUM_SIMICONSTRAINT(number_of_digits_, static_cast<integer_type> (1));
-            ITU_T_BIND_PER(time_value_);
-        }
-
-        template<> void MIXED_ENCODING::Time_HMFn_Z_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_NUM_SIMICONSTRAINT(number_of_digits_, static_cast<integer_type> (1));
-            ITU_T_BIND_PER(time_value_);
-        }
-
-        // sequence time-HMFn-LD
-
-        template<> void MIXED_ENCODING::Time_HMFn_LD_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_NUM_SIMICONSTRAINT(number_of_digits_, static_cast<integer_type> (1));
-            ITU_T_BIND_PER(time_value_);
-        }
-
-        template<> void MIXED_ENCODING::Time_HMFn_LD_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_NUM_SIMICONSTRAINT(number_of_digits_, static_cast<integer_type> (1));
-            ITU_T_BIND_PER(time_value_);
-        }
-
-        // sequence time-HMFSn-L
-
-        template<> void MIXED_ENCODING::Time_HMFSn_L_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_NUM_SIMICONSTRAINT(number_of_digits_, static_cast<integer_type> (1));
-            ITU_T_BIND_PER(time_value_);
-        }
-
-        template<> void MIXED_ENCODING::Time_HMFSn_L_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_NUM_SIMICONSTRAINT(number_of_digits_, static_cast<integer_type> (1));
-            ITU_T_BIND_PER(time_value_);
-        }
-
-        // sequence time-HMFSn-Z
-
-        template<> void MIXED_ENCODING::Time_HMFSn_Z_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_NUM_SIMICONSTRAINT(number_of_digits_, static_cast<integer_type> (1));
-            ITU_T_BIND_PER(time_value_);
-        }
-
-        template<> void MIXED_ENCODING::Time_HMFSn_Z_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_NUM_SIMICONSTRAINT(number_of_digits_, static_cast<integer_type> (1));
-            ITU_T_BIND_PER(time_value_);
-        }
-
-        // sequence time-HMFSn-LD
-
-        template<> void MIXED_ENCODING::Time_HMFSn_LD_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_NUM_SIMICONSTRAINT(number_of_digits_, static_cast<integer_type> (1));
-            ITU_T_BIND_PER(time_value_);
-        }
-
-        template<> void MIXED_ENCODING::Time_HMFSn_LD_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_NUM_SIMICONSTRAINT(number_of_digits_, static_cast<integer_type> (1));
-            ITU_T_BIND_PER(time_value_);
-        }
-
-        // sequence date-time
-
-        template<> void MIXED_ENCODING::Date_time_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(date_);
-            ITU_T_BIND_PER(time_);
-        }
-
-        template<> void MIXED_ENCODING::Date_time_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(date_);
-            ITU_T_BIND_PER(time_);
-        }
-
-        // sequence iterval-SE-Date
-
-        template<> void MIXED_ENCODING::Iterval_SE_Date_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(start_);
-            ITU_T_BIND_PER(end_);
-        }
-
-        template<> void MIXED_ENCODING::Iterval_SE_Date_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(start_);
-            ITU_T_BIND_PER(end_);
-        }
-
-        // sequence iterval-SE-Time
-
-        template<> void MIXED_ENCODING::Iterval_SE_Time_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(start_);
-            ITU_T_BIND_PER(end_);
-        }
-
-        template<> void MIXED_ENCODING::Iterval_SE_Time_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(start_);
-            ITU_T_BIND_PER(end_);
-        }
-
-        // sequence iterval-SE-Date-Time
-
-        template<> void MIXED_ENCODING::Iterval_SE_Date_Time_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(start_);
-            ITU_T_BIND_PER(end_);
-        }
-
-        template<> void MIXED_ENCODING::Iterval_SE_Date_Time_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(start_);
-            ITU_T_BIND_PER(end_);
-        }
-
-        // sequence start
-
-        template<> void MIXED_ENCODING::Iterval_SE_Date_Time_type::Start_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(date_);
-            ITU_T_BIND_PER(time_);
-        }
-
-        template<> void MIXED_ENCODING::Iterval_SE_Date_Time_type::Start_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(date_);
-            ITU_T_BIND_PER(time_);
-        }
-
-        // sequence end
-
-        template<> void MIXED_ENCODING::Iterval_SE_Date_Time_type::End_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(date_);
-            ITU_T_BIND_PER(time_);
-        }
-
-        template<> void MIXED_ENCODING::Iterval_SE_Date_Time_type::End_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(date_);
-            ITU_T_BIND_PER(time_);
-        }
-
-        // sequence iterval-SD-Date
-
-        template<> void MIXED_ENCODING::Iterval_SD_Date_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(start_);
-            ITU_T_BIND_PER(duration_);
-        }
-
-        template<> void MIXED_ENCODING::Iterval_SD_Date_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(start_);
-            ITU_T_BIND_PER(duration_);
-        }
-
-        // sequence iterval-SD-Time
-
-        template<> void MIXED_ENCODING::Iterval_SD_Time_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(start_);
-            ITU_T_BIND_PER(duration_);
-        }
-
-        template<> void MIXED_ENCODING::Iterval_SD_Time_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(start_);
-            ITU_T_BIND_PER(duration_);
-        }
-
-        // sequence iterval-SD-Date-Time
-
-        template<> void MIXED_ENCODING::Iterval_SD_Date_Time_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(start_);
-            ITU_T_BIND_PER(duration_);
-        }
-
-        template<> void MIXED_ENCODING::Iterval_SD_Date_Time_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(start_);
-            ITU_T_BIND_PER(duration_);
-        }
-
-        // sequence start
-
-        template<> void MIXED_ENCODING::Iterval_SD_Date_Time_type::Start_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(date_);
-            ITU_T_BIND_PER(time_);
-        }
-
-        template<> void MIXED_ENCODING::Iterval_SD_Date_Time_type::Start_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(date_);
-            ITU_T_BIND_PER(time_);
-        }
-
-        // sequence iterval-DE-Date
-
-        template<> void MIXED_ENCODING::Iterval_DE_Date_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(duration_);
-            ITU_T_BIND_PER(end_);
-        }
-
-        template<> void MIXED_ENCODING::Iterval_DE_Date_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(duration_);
-            ITU_T_BIND_PER(end_);
-        }
-
-        // sequence iterval-DE-Time
-
-        template<> void MIXED_ENCODING::Iterval_DE_Time_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(duration_);
-            ITU_T_BIND_PER(end_);
-        }
-
-        template<> void MIXED_ENCODING::Iterval_DE_Time_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(duration_);
-            ITU_T_BIND_PER(end_);
-        }
-
-        // sequence iterval-DE-Date-Time
-
-        template<> void MIXED_ENCODING::Iterval_DE_Date_Time_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(duration_);
-            ITU_T_BIND_PER(end_);
-        }
-
-        template<> void MIXED_ENCODING::Iterval_DE_Date_Time_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(duration_);
-            ITU_T_BIND_PER(end_);
-        }
-
-        // sequence end
-
-        template<> void MIXED_ENCODING::Iterval_DE_Date_Time_type::End_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(date_);
-            ITU_T_BIND_PER(time_);
-        }
-
-        template<> void MIXED_ENCODING::Iterval_DE_Date_Time_type::End_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(date_);
-            ITU_T_BIND_PER(time_);
-        }
-
-        // sequence rec-Interval-SE-Date
-
-        template<> void MIXED_ENCODING::Rec_Interval_SE_Date_type::serialize(boost::asn1::x691::output_coder& arch) {
-
-            ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(recurrence_);
-
-            ITU_T_OPTIONAL_WRITE;
-
-            ITU_T_BIND_PER(recurrence_);
-            ITU_T_BIND_PER(start_);
-            ITU_T_BIND_PER(end_);
-        }
-
-        template<> void MIXED_ENCODING::Rec_Interval_SE_Date_type::serialize(boost::asn1::x691::input_coder& arch) {
-
-            ITU_T_OPTIONAL_READ(1);
-
-            ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(recurrence_);
-            ITU_T_BIND_PER(start_);
-            ITU_T_BIND_PER(end_);
-        }
-
-        // sequence rec-Interval-SE-Time
-
-        template<> void MIXED_ENCODING::Rec_Interval_SE_Time_type::serialize(boost::asn1::x691::output_coder& arch) {
-
-            ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(recurrence_);
-
-            ITU_T_OPTIONAL_WRITE;
-
-            ITU_T_BIND_PER(recurrence_);
-            ITU_T_BIND_PER(start_);
-            ITU_T_BIND_PER(end_);
-        }
-
-        template<> void MIXED_ENCODING::Rec_Interval_SE_Time_type::serialize(boost::asn1::x691::input_coder& arch) {
-
-            ITU_T_OPTIONAL_READ(1);
-
-            ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(recurrence_);
-            ITU_T_BIND_PER(start_);
-            ITU_T_BIND_PER(end_);
-        }
-
-        // sequence rec-Interval-SE-Date-Time
-
-        template<> void MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::serialize(boost::asn1::x691::output_coder& arch) {
-
-            ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(recurrence_);
-
-            ITU_T_OPTIONAL_WRITE;
-
-            ITU_T_BIND_PER(recurrence_);
-            ITU_T_BIND_PER(start_);
-            ITU_T_BIND_PER(end_);
-        }
-
-        template<> void MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::serialize(boost::asn1::x691::input_coder& arch) {
-
-            ITU_T_OPTIONAL_READ(1);
-
-            ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(recurrence_);
-            ITU_T_BIND_PER(start_);
-            ITU_T_BIND_PER(end_);
-        }
-
-        // sequence start
-
-        template<> void MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::Start_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(date_);
-            ITU_T_BIND_PER(time_);
-        }
-
-        template<> void MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::Start_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(date_);
-            ITU_T_BIND_PER(time_);
-        }
-
-        // sequence end
-
-        template<> void MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::End_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(date_);
-            ITU_T_BIND_PER(time_);
-        }
-
-        template<> void MIXED_ENCODING::Rec_Interval_SE_Date_Time_type::End_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(date_);
-            ITU_T_BIND_PER(time_);
-        }
-
-        // sequence rec-Interval-SD-Date
-
-        template<> void MIXED_ENCODING::Rec_Interval_SD_Date_type::serialize(boost::asn1::x691::output_coder& arch) {
-
-            ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(recurrence_);
-
-            ITU_T_OPTIONAL_WRITE;
-
-            ITU_T_BIND_PER(recurrence_);
-            ITU_T_BIND_PER(start_);
-            ITU_T_BIND_PER(duration_);
-        }
-
-        template<> void MIXED_ENCODING::Rec_Interval_SD_Date_type::serialize(boost::asn1::x691::input_coder& arch) {
-
-            ITU_T_OPTIONAL_READ(1);
-
-            ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(recurrence_);
-            ITU_T_BIND_PER(start_);
-            ITU_T_BIND_PER(duration_);
-        }
-
-        // sequence rec-Interval-SD-Time
-
-        template<> void MIXED_ENCODING::Rec_Interval_SD_Time_type::serialize(boost::asn1::x691::output_coder& arch) {
-
-            ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(recurrence_);
-
-            ITU_T_OPTIONAL_WRITE;
-
-            ITU_T_BIND_PER(recurrence_);
-            ITU_T_BIND_PER(start_);
-            ITU_T_BIND_PER(duration_);
-        }
-
-        template<> void MIXED_ENCODING::Rec_Interval_SD_Time_type::serialize(boost::asn1::x691::input_coder& arch) {
-
-            ITU_T_OPTIONAL_READ(1);
-
-            ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(recurrence_);
-            ITU_T_BIND_PER(start_);
-            ITU_T_BIND_PER(duration_);
-        }
-
-        // sequence rec-Interval-SD-Date-Time
-
-        template<> void MIXED_ENCODING::Rec_Interval_SD_Date_Time_type::serialize(boost::asn1::x691::output_coder& arch) {
-
-            ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(recurrence_);
-
-            ITU_T_OPTIONAL_WRITE;
-
-            ITU_T_BIND_PER(recurrence_);
-            ITU_T_BIND_PER(start_);
-            ITU_T_BIND_PER(duration_);
-        }
-
-        template<> void MIXED_ENCODING::Rec_Interval_SD_Date_Time_type::serialize(boost::asn1::x691::input_coder& arch) {
-
-            ITU_T_OPTIONAL_READ(1);
-
-            ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(recurrence_);
-            ITU_T_BIND_PER(start_);
-            ITU_T_BIND_PER(duration_);
-        }
-
-        // sequence start
-
-        template<> void MIXED_ENCODING::Rec_Interval_SD_Date_Time_type::Start_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(date_);
-            ITU_T_BIND_PER(time_);
-        }
-
-        template<> void MIXED_ENCODING::Rec_Interval_SD_Date_Time_type::Start_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(date_);
-            ITU_T_BIND_PER(time_);
-        }
-
-        // sequence rec-Interval-DE-Date
-
-        template<> void MIXED_ENCODING::Rec_Interval_DE_Date_type::serialize(boost::asn1::x691::output_coder& arch) {
-
-            ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(recurrence_);
-
-            ITU_T_OPTIONAL_WRITE;
-
-            ITU_T_BIND_PER(recurrence_);
-            ITU_T_BIND_PER(duration_);
-            ITU_T_BIND_PER(end_);
-        }
-
-        template<> void MIXED_ENCODING::Rec_Interval_DE_Date_type::serialize(boost::asn1::x691::input_coder& arch) {
-
-            ITU_T_OPTIONAL_READ(1);
-
-            ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(recurrence_);
-            ITU_T_BIND_PER(duration_);
-            ITU_T_BIND_PER(end_);
-        }
-
-        // sequence rec-Interval-DE-Time
-
-        template<> void MIXED_ENCODING::Rec_Interval_DE_Time_type::serialize(boost::asn1::x691::output_coder& arch) {
-
-            ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(recurrence_);
-
-            ITU_T_OPTIONAL_WRITE;
-
-            ITU_T_BIND_PER(recurrence_);
-            ITU_T_BIND_PER(duration_);
-            ITU_T_BIND_PER(end_);
-        }
-
-        template<> void MIXED_ENCODING::Rec_Interval_DE_Time_type::serialize(boost::asn1::x691::input_coder& arch) {
-
-            ITU_T_OPTIONAL_READ(1);
-
-            ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(recurrence_);
-            ITU_T_BIND_PER(duration_);
-            ITU_T_BIND_PER(end_);
-        }
-
-        // sequence rec-Interval-DE-Date-Time
-
-        template<> void MIXED_ENCODING::Rec_Interval_DE_Date_Time_type::serialize(boost::asn1::x691::output_coder& arch) {
-
-            ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(recurrence_);
-
-            ITU_T_OPTIONAL_WRITE;
-
-            ITU_T_BIND_PER(recurrence_);
-            ITU_T_BIND_PER(duration_);
-            ITU_T_BIND_PER(end_);
-        }
-
-        template<> void MIXED_ENCODING::Rec_Interval_DE_Date_Time_type::serialize(boost::asn1::x691::input_coder& arch) {
-
-            ITU_T_OPTIONAL_READ(1);
-
-            ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(recurrence_);
-            ITU_T_BIND_PER(duration_);
-            ITU_T_BIND_PER(end_);
-        }
-
-        // sequence end
-
-        template<> void MIXED_ENCODING::Rec_Interval_DE_Date_Time_type::End_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_BIND_PER(date_);
-            ITU_T_BIND_PER(time_);
-        }
-
-        template<> void MIXED_ENCODING::Rec_Interval_DE_Date_Time_type::End_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_BIND_PER(date_);
-            ITU_T_BIND_PER(time_);
-        }
-
-        // choice DATE-TYPE
-
-        template<> void DATE_TYPE::serialize(boost::asn1::x691::output_coder& arch) {
-            switch (type()) {
-                case DATE_TYPE_dt_C_Basic:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(0, 13);
-                    ITU_T_BIND_PER(value<CENTURY_ENCODING > (false, DATE_TYPE_dt_C_Basic));
-                    break;
-                }
-                case DATE_TYPE_dt_C_L:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(1, 13);
-                    ITU_T_BIND_PER(value<ANY_CENTURY_ENCODING > (false, DATE_TYPE_dt_C_L));
-                    break;
-                }
-                case DATE_TYPE_dt_Y_Basic:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(2, 13);
-                    ITU_T_BIND_PER(value<YEAR_ENCODING > (false, DATE_TYPE_dt_Y_Basic));
-                    break;
-                }
-                case DATE_TYPE_dt_Y_L:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(3, 13);
-                    ITU_T_BIND_PER(value<ANY_YEAR_ENCODING > (false, DATE_TYPE_dt_Y_L));
-                    break;
-                }
-                case DATE_TYPE_dt_YM_Basic:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(4, 13);
-                    ITU_T_BIND_PER(value<YEAR_MONTH_ENCODING > (false, DATE_TYPE_dt_YM_Basic));
-                    break;
-                }
-                case DATE_TYPE_dt_YM_L:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(5, 13);
-                    ITU_T_BIND_PER(value<ANY_YEAR_MONTH_ENCODING > (false, DATE_TYPE_dt_YM_L));
-                    break;
-                }
-                case DATE_TYPE_dt_YMD_Basic:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(6, 13);
-                    ITU_T_BIND_PER(value<DATE_ENCODING > (false, DATE_TYPE_dt_YMD_Basic));
-                    break;
-                }
-                case DATE_TYPE_dt_YMD_L:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(7, 13);
-                    ITU_T_BIND_PER(value<ANY_DATE_ENCODING > (false, DATE_TYPE_dt_YMD_L));
-                    break;
-                }
-                case DATE_TYPE_dt_YD_Basic:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(8, 13);
-                    ITU_T_BIND_PER(value<YEAR_DAY_ENCODING > (false, DATE_TYPE_dt_YD_Basic));
-                    break;
-                }
-                case DATE_TYPE_dt_YD_L:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(9, 13);
-                    ITU_T_BIND_PER(value<ANY_YEAR_DAY_ENCODING > (false, DATE_TYPE_dt_YD_L));
-                    break;
-                }
-                case DATE_TYPE_dt_YW_Basic:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(10, 13);
-                    ITU_T_BIND_PER(value<YEAR_WEEK_ENCODING > (false, DATE_TYPE_dt_YW_Basic));
-                    break;
-                }
-                case DATE_TYPE_dt_YW_L:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(11, 13);
-                    ITU_T_BIND_PER(value<ANY_YEAR_WEEK_ENCODING > (false, DATE_TYPE_dt_YW_L));
-                    break;
-                }
-                case DATE_TYPE_dt_YWD_Basic:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(12, 13);
-                    ITU_T_BIND_PER(value<YEAR_WEEK_DAY_ENCODING > (false, DATE_TYPE_dt_YWD_Basic));
-                    break;
-                }
-                case DATE_TYPE_dt_YWD_L:
-                {
-                    ITU_T_SET_CONSTAINED_INDX(13, 13);
-                    ITU_T_BIND_PER(value<ANY_YEAR_WEEK_DAY_ENCODING > (false, DATE_TYPE_dt_YWD_L));
-                    break;
-                }
-                default:
-                {
-                }
-            }
-        }
-
-        template<> void DATE_TYPE::serialize(boost::asn1::x691::input_coder& arch) {
-
-            ITU_T_GET_CONSTAINED_INDX(13);
-
-            switch (__indx__) {
-                case 0:
-                {
-                    ITU_T_BIND_PER(value<CENTURY_ENCODING > (true, DATE_TYPE_dt_C_Basic));
-                    break;
-                }
-                case 1:
-                {
-                    ITU_T_BIND_PER(value<ANY_CENTURY_ENCODING > (true, DATE_TYPE_dt_C_L));
-                    break;
-                }
-                case 2:
-                {
-                    ITU_T_BIND_PER(value<YEAR_ENCODING > (true, DATE_TYPE_dt_Y_Basic));
-                    break;
-                }
-                case 3:
-                {
-                    ITU_T_BIND_PER(value<ANY_YEAR_ENCODING > (true, DATE_TYPE_dt_Y_L));
-                    break;
-                }
-                case 4:
-                {
-                    ITU_T_BIND_PER(value<YEAR_MONTH_ENCODING > (true, DATE_TYPE_dt_YM_Basic));
-                    break;
-                }
-                case 5:
-                {
-                    ITU_T_BIND_PER(value<ANY_YEAR_MONTH_ENCODING > (true, DATE_TYPE_dt_YM_L));
-                    break;
-                }
-                case 6:
-                {
-                    ITU_T_BIND_PER(value<DATE_ENCODING > (true, DATE_TYPE_dt_YMD_Basic));
-                    break;
-                }
-                case 7:
-                {
-                    ITU_T_BIND_PER(value<ANY_DATE_ENCODING > (true, DATE_TYPE_dt_YMD_L));
-                    break;
-                }
-                case 8:
-                {
-                    ITU_T_BIND_PER(value<YEAR_DAY_ENCODING > (true, DATE_TYPE_dt_YD_Basic));
-                    break;
-                }
-                case 9:
-                {
-                    ITU_T_BIND_PER(value<ANY_YEAR_DAY_ENCODING > (true, DATE_TYPE_dt_YD_L));
-                    break;
-                }
-                case 10:
-                {
-                    ITU_T_BIND_PER(value<YEAR_WEEK_ENCODING > (true, DATE_TYPE_dt_YW_Basic));
-                    break;
-                }
-                case 11:
-                {
-                    ITU_T_BIND_PER(value<ANY_YEAR_WEEK_ENCODING > (true, DATE_TYPE_dt_YW_L));
-                    break;
-                }
-                case 12:
-                {
-                    ITU_T_BIND_PER(value<YEAR_WEEK_DAY_ENCODING > (true, DATE_TYPE_dt_YWD_Basic));
-                    break;
-                }
-                case 13:
-                {
-                    ITU_T_BIND_PER(value<ANY_YEAR_WEEK_DAY_ENCODING > (true, DATE_TYPE_dt_YWD_L));
-                    break;
-                }
-                default:
-                {
-                }
-            }
-        }
-
         // sequence TIME-TYPE
 
         template<> void TIME_TYPE::serialize(boost::asn1::x691::output_coder& arch) {
@@ -1965,114 +664,114 @@ namespace boost {
 
         // choice time-type
 
-        template<> void TIME_TYPE::Time_type_type::serialize(boost::asn1::x691::output_coder& arch) {
+        template<> void TIME_TYPE::Time_type::serialize(boost::asn1::x691::output_coder& arch) {
             switch (type()) {
-                case Time_type_type_tm_H_L:
+                case Time_type_time_H_L:
                 {
                     ITU_T_SET_CONSTAINED_INDX(0, 17);
-                    ITU_T_BIND_PER(value<HOURS_ENCODING > (false, Time_type_type_tm_H_L));
+                    ITU_T_BIND_PER(value<HOURS_ENCODING > (false, Time_type_time_H_L));
                     break;
                 }
-                case Time_type_type_tm_H_Z:
+                case Time_type_time_H_Z:
                 {
                     ITU_T_SET_CONSTAINED_INDX(1, 17);
-                    ITU_T_BIND_PER(value<HOURS_UTC_ENCODING > (false, Time_type_type_tm_H_Z));
+                    ITU_T_BIND_PER(value<HOURS_UTC_ENCODING > (false, Time_type_time_H_Z));
                     break;
                 }
-                case Time_type_type_tm_H_LD:
+                case Time_type_time_H_LD:
                 {
                     ITU_T_SET_CONSTAINED_INDX(2, 17);
-                    ITU_T_BIND_PER(value<HOURS_AND_DIFF_ENCODING > (false, Time_type_type_tm_H_LD));
+                    ITU_T_BIND_PER(value<HOURS_AND_DIFF_ENCODING > (false, Time_type_time_H_LD));
                     break;
                 }
-                case Time_type_type_tm_HM_L:
+                case Time_type_time_HM_L:
                 {
                     ITU_T_SET_CONSTAINED_INDX(3, 17);
-                    ITU_T_BIND_PER(value<MINUTES_ENCODING > (false, Time_type_type_tm_HM_L));
+                    ITU_T_BIND_PER(value<MINUTES_ENCODING > (false, Time_type_time_HM_L));
                     break;
                 }
-                case Time_type_type_tm_HM_Z:
+                case Time_type_time_HM_Z:
                 {
                     ITU_T_SET_CONSTAINED_INDX(4, 17);
-                    ITU_T_BIND_PER(value<MINUTES_UTC_ENCODING > (false, Time_type_type_tm_HM_Z));
+                    ITU_T_BIND_PER(value<MINUTES_UTC_ENCODING > (false, Time_type_time_HM_Z));
                     break;
                 }
-                case Time_type_type_tm_HM_LD:
+                case Time_type_time_HM_LD:
                 {
                     ITU_T_SET_CONSTAINED_INDX(5, 17);
-                    ITU_T_BIND_PER(value<MINUTES_AND_DIFF_ENCODING > (false, Time_type_type_tm_HM_LD));
+                    ITU_T_BIND_PER(value<MINUTES_AND_DIFF_ENCODING > (false, Time_type_time_HM_LD));
                     break;
                 }
-                case Time_type_type_tm_HMS_L:
+                case Time_type_time_HMS_L:
                 {
                     ITU_T_SET_CONSTAINED_INDX(6, 17);
-                    ITU_T_BIND_PER(value<TIME_OF_DAY_ENCODING > (false, Time_type_type_tm_HMS_L));
+                    ITU_T_BIND_PER(value<TIME_OF_DAY_ENCODING > (false, Time_type_time_HMS_L));
                     break;
                 }
-                case Time_type_type_tm_HMS_Z:
+                case Time_type_time_HMS_Z:
                 {
                     ITU_T_SET_CONSTAINED_INDX(7, 17);
-                    ITU_T_BIND_PER(value<TIME_OF_DAY_UTC_ENCODING > (false, Time_type_type_tm_HMS_Z));
+                    ITU_T_BIND_PER(value<TIME_OF_DAY_UTC_ENCODING > (false, Time_type_time_HMS_Z));
                     break;
                 }
-                case Time_type_type_tm_HMS_LD:
+                case Time_type_time_HMS_LD:
                 {
                     ITU_T_SET_CONSTAINED_INDX(8, 17);
-                    ITU_T_BIND_PER(value<TIME_OF_DAY_AND_DIFF_ENCODING > (false, Time_type_type_tm_HMS_LD));
+                    ITU_T_BIND_PER(value<TIME_OF_DAY_AND_DIFF_ENCODING > (false, Time_type_time_HMS_LD));
                     break;
                 }
-                case Time_type_type_tm_HFn_L:
+                case Time_type_time_HFn_L:
                 {
                     ITU_T_SET_CONSTAINED_INDX(9, 17);
-                    ITU_T_BIND_PER(value<HOURS_AND_FRACTION_ENCODING > (false, Time_type_type_tm_HFn_L));
+                    ITU_T_BIND_PER(value<HOURS_AND_FRACTION > (false, Time_type_time_HFn_L));
                     break;
                 }
-                case Time_type_type_tm_HFn_Z:
+                case Time_type_time_HFn_Z:
                 {
                     ITU_T_SET_CONSTAINED_INDX(10, 17);
-                    ITU_T_BIND_PER(value<HOURS_UTC_AND_FRACTION_ENCODING > (false, Time_type_type_tm_HFn_Z));
+                    ITU_T_BIND_PER(value<HOURS_UTC_AND_FRACTION > (false, Time_type_time_HFn_Z));
                     break;
                 }
-                case Time_type_type_tm_HFn_LD:
+                case Time_type_time_HFn_LD:
                 {
                     ITU_T_SET_CONSTAINED_INDX(11, 17);
-                    ITU_T_BIND_PER(value<HOURS_AND_DIFF_AND_FRACTION_ENCODING > (false, Time_type_type_tm_HFn_LD));
+                    ITU_T_BIND_PER(value<HOURS_AND_DIFF_AND_FRACTION > (false, Time_type_time_HFn_LD));
                     break;
                 }
-                case Time_type_type_tm_HMFn_L:
+                case Time_type_time_HMFn_L:
                 {
                     ITU_T_SET_CONSTAINED_INDX(12, 17);
-                    ITU_T_BIND_PER(value<MINUTES_AND_FRACTION_ENCODING > (false, Time_type_type_tm_HMFn_L));
+                    ITU_T_BIND_PER(value<MINUTES_AND_FRACTION > (false, Time_type_time_HMFn_L));
                     break;
                 }
-                case Time_type_type_tm_HMFn_Z:
+                case Time_type_time_HMFn_Z:
                 {
                     ITU_T_SET_CONSTAINED_INDX(13, 17);
-                    ITU_T_BIND_PER(value<MINUTES_UTC_AND_FRACTION_ENCODING > (false, Time_type_type_tm_HMFn_Z));
+                    ITU_T_BIND_PER(value<MINUTES_UTC_AND_FRACTION > (false, Time_type_time_HMFn_Z));
                     break;
                 }
-                case Time_type_type_tm_HMFn_LD:
+                case Time_type_time_HMFn_LD:
                 {
                     ITU_T_SET_CONSTAINED_INDX(14, 17);
-                    ITU_T_BIND_PER(value<MINUTES_AND_DIFF_AND_FRACTION_ENCODING > (false, Time_type_type_tm_HMFn_LD));
+                    ITU_T_BIND_PER(value<MINUTES_AND_DIFF_AND_FRACTION > (false, Time_type_time_HMFn_LD));
                     break;
                 }
-                case Time_type_type_tm_HMFSn_L:
+                case Time_type_time_HMFSn_L:
                 {
                     ITU_T_SET_CONSTAINED_INDX(15, 17);
-                    ITU_T_BIND_PER(value<TIME_OF_DAY_AND_FRACTION_ENCODING > (false, Time_type_type_tm_HMFSn_L));
+                    ITU_T_BIND_PER(value<TIME_OF_DAY_AND_FRACTION > (false, Time_type_time_HMFSn_L));
                     break;
                 }
-                case Time_type_type_tm_HMFSn_Z:
+                case Time_type_time_HMFSn_Z:
                 {
                     ITU_T_SET_CONSTAINED_INDX(16, 17);
-                    ITU_T_BIND_PER(value<TIME_OF_DAY_UTC_AND_FRACTION_ENCODING > (false, Time_type_type_tm_HMFSn_Z));
+                    ITU_T_BIND_PER(value<TIME_OF_DAY_UTC_AND_FRACTION > (false, Time_type_time_HMFSn_Z));
                     break;
                 }
-                case Time_type_type_tm_HMFSn_LD:
+                case Time_type_time_HMFSn_LD:
                 {
                     ITU_T_SET_CONSTAINED_INDX(17, 17);
-                    ITU_T_BIND_PER(value<TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING > (false, Time_type_type_tm_HMFSn_LD));
+                    ITU_T_BIND_PER(value<TIME_OF_DAY_AND_DIFF_AND_FRACTION > (false, Time_type_time_HMFSn_LD));
                     break;
                 }
                 default:
@@ -2081,106 +780,106 @@ namespace boost {
             }
         }
 
-        template<> void TIME_TYPE::Time_type_type::serialize(boost::asn1::x691::input_coder& arch) {
+        template<> void TIME_TYPE::Time_type::serialize(boost::asn1::x691::input_coder& arch) {
 
             ITU_T_GET_CONSTAINED_INDX(17);
 
             switch (__indx__) {
                 case 0:
                 {
-                    ITU_T_BIND_PER(value<HOURS_ENCODING > (true, Time_type_type_tm_H_L));
+                    ITU_T_BIND_PER(value<HOURS_ENCODING > (true, Time_type_time_H_L));
                     break;
                 }
                 case 1:
                 {
-                    ITU_T_BIND_PER(value<HOURS_UTC_ENCODING > (true, Time_type_type_tm_H_Z));
+                    ITU_T_BIND_PER(value<HOURS_UTC_ENCODING > (true, Time_type_time_H_Z));
                     break;
                 }
                 case 2:
                 {
-                    ITU_T_BIND_PER(value<HOURS_AND_DIFF_ENCODING > (true, Time_type_type_tm_H_LD));
+                    ITU_T_BIND_PER(value<HOURS_AND_DIFF_ENCODING > (true, Time_type_time_H_LD));
                     break;
                 }
                 case 3:
                 {
-                    ITU_T_BIND_PER(value<MINUTES_ENCODING > (true, Time_type_type_tm_HM_L));
+                    ITU_T_BIND_PER(value<MINUTES_ENCODING > (true, Time_type_time_HM_L));
                     break;
                 }
                 case 4:
                 {
-                    ITU_T_BIND_PER(value<MINUTES_UTC_ENCODING > (true, Time_type_type_tm_HM_Z));
+                    ITU_T_BIND_PER(value<MINUTES_UTC_ENCODING > (true, Time_type_time_HM_Z));
                     break;
                 }
                 case 5:
                 {
-                    ITU_T_BIND_PER(value<MINUTES_AND_DIFF_ENCODING > (true, Time_type_type_tm_HM_LD));
+                    ITU_T_BIND_PER(value<MINUTES_AND_DIFF_ENCODING > (true, Time_type_time_HM_LD));
                     break;
                 }
                 case 6:
                 {
-                    ITU_T_BIND_PER(value<TIME_OF_DAY_ENCODING > (true, Time_type_type_tm_HMS_L));
+                    ITU_T_BIND_PER(value<TIME_OF_DAY_ENCODING > (true, Time_type_time_HMS_L));
                     break;
                 }
                 case 7:
                 {
-                    ITU_T_BIND_PER(value<TIME_OF_DAY_UTC_ENCODING > (true, Time_type_type_tm_HMS_Z));
+                    ITU_T_BIND_PER(value<TIME_OF_DAY_UTC_ENCODING > (true, Time_type_time_HMS_Z));
                     break;
                 }
                 case 8:
                 {
-                    ITU_T_BIND_PER(value<TIME_OF_DAY_AND_DIFF_ENCODING > (true, Time_type_type_tm_HMS_LD));
+                    ITU_T_BIND_PER(value<TIME_OF_DAY_AND_DIFF_ENCODING > (true, Time_type_time_HMS_LD));
                     break;
                 }
                 case 9:
                 {
-                    ITU_T_BIND_PER(value<HOURS_AND_FRACTION_ENCODING > (true, Time_type_type_tm_HFn_L));
+                    ITU_T_BIND_PER(value<HOURS_AND_FRACTION > (true, Time_type_time_HFn_L));
                     break;
                 }
                 case 10:
                 {
-                    ITU_T_BIND_PER(value<HOURS_UTC_AND_FRACTION_ENCODING > (true, Time_type_type_tm_HFn_Z));
+                    ITU_T_BIND_PER(value<HOURS_UTC_AND_FRACTION > (true, Time_type_time_HFn_Z));
                     break;
                 }
                 case 11:
                 {
-                    ITU_T_BIND_PER(value<HOURS_AND_DIFF_AND_FRACTION_ENCODING > (true, Time_type_type_tm_HFn_LD));
+                    ITU_T_BIND_PER(value<HOURS_AND_DIFF_AND_FRACTION > (true, Time_type_time_HFn_LD));
                     break;
                 }
                 case 12:
                 {
-                    ITU_T_BIND_PER(value<MINUTES_AND_FRACTION_ENCODING > (true, Time_type_type_tm_HMFn_L));
+                    ITU_T_BIND_PER(value<MINUTES_AND_FRACTION > (true, Time_type_time_HMFn_L));
                     break;
                 }
                 case 13:
                 {
-                    ITU_T_BIND_PER(value<MINUTES_UTC_AND_FRACTION_ENCODING > (true, Time_type_type_tm_HMFn_Z));
+                    ITU_T_BIND_PER(value<MINUTES_UTC_AND_FRACTION > (true, Time_type_time_HMFn_Z));
                     break;
                 }
                 case 14:
                 {
-                    ITU_T_BIND_PER(value<MINUTES_AND_DIFF_AND_FRACTION_ENCODING > (true, Time_type_type_tm_HMFn_LD));
+                    ITU_T_BIND_PER(value<MINUTES_AND_DIFF_AND_FRACTION > (true, Time_type_time_HMFn_LD));
                     break;
                 }
                 case 15:
                 {
-                    ITU_T_BIND_PER(value<TIME_OF_DAY_AND_FRACTION_ENCODING > (true, Time_type_type_tm_HMFSn_L));
+                    ITU_T_BIND_PER(value<TIME_OF_DAY_AND_FRACTION > (true, Time_type_time_HMFSn_L));
                     break;
                 }
                 case 16:
                 {
-                    ITU_T_BIND_PER(value<TIME_OF_DAY_UTC_AND_FRACTION_ENCODING > (true, Time_type_type_tm_HMFSn_Z));
+                    ITU_T_BIND_PER(value<TIME_OF_DAY_UTC_AND_FRACTION > (true, Time_type_time_HMFSn_Z));
                     break;
                 }
                 case 17:
                 {
-                    ITU_T_BIND_PER(value<TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING > (true, Time_type_type_tm_HMFSn_LD));
+                    ITU_T_BIND_PER(value<TIME_OF_DAY_AND_DIFF_AND_FRACTION > (true, Time_type_time_HMFSn_LD));
                     break;
                 }
                 default:
                 {
                 }
             }
-        }*/
+        }
 
     }
 }

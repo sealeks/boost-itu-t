@@ -3210,9 +3210,114 @@ namespace boost {
 
             ITU_T_ARCHIVE_FUNC;
         };
+        
+
+
+
+        
+        
+        
+
+        typedef HOURS_AND_FRACTION_ENCODING<0> HOURS_AND_FRACTION;
+        typedef HOURS_UTC_AND_FRACTION_ENCODING<0> HOURS_UTC_AND_FRACTION;
+        typedef HOURS_AND_DIFF_AND_FRACTION_ENCODING<0> HOURS_AND_DIFF_AND_FRACTION;
+        typedef MINUTES_AND_FRACTION_ENCODING<0> MINUTES_AND_FRACTION;
+        typedef MINUTES_UTC_AND_FRACTION_ENCODING<0> MINUTES_UTC_AND_FRACTION;
+        typedef MINUTES_AND_DIFF_AND_FRACTION_ENCODING<0> MINUTES_AND_DIFF_AND_FRACTION;
+        typedef TIME_OF_DAY_AND_FRACTION_ENCODING<0> TIME_OF_DAY_AND_FRACTION;
+        typedef TIME_OF_DAY_UTC_AND_FRACTION_ENCODING<0> TIME_OF_DAY_UTC_AND_FRACTION;
+        typedef TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING<0> TIME_OF_DAY_AND_DIFF_AND_FRACTION;
+
+
+        // sequence TIME-TYPE
+
+        struct TIME_TYPE {
+
+            struct Time_type;
+
+            enum Time_type_enum {
+
+                Time_type_null = 0,
+                Time_type_time_H_L,
+                Time_type_time_H_Z,
+                Time_type_time_H_LD,
+                Time_type_time_HM_L,
+                Time_type_time_HM_Z,
+                Time_type_time_HM_LD,
+                Time_type_time_HMS_L,
+                Time_type_time_HMS_Z,
+                Time_type_time_HMS_LD,
+                Time_type_time_HFn_L,
+                Time_type_time_HFn_Z,
+                Time_type_time_HFn_LD,
+                Time_type_time_HMFn_L,
+                Time_type_time_HMFn_Z,
+                Time_type_time_HMFn_LD,
+                Time_type_time_HMFSn_L,
+                Time_type_time_HMFSn_Z,
+                Time_type_time_HMFSn_LD,
+            };
+
+            struct Time_type : public ITU_T_CHOICE(Time_type_enum) {
+
+
+                ITU_T_CHOICE_CTORS(Time_type);
+
+                ITU_T_CHOICES_DECL(time_H_L, HOURS_ENCODING, Time_type_time_H_L); // primitive
+                ITU_T_CHOICES_DECL(time_H_Z, HOURS_UTC_ENCODING, Time_type_time_H_Z); // primitive
+                ITU_T_CHOICES_DECL(time_H_LD, HOURS_AND_DIFF_ENCODING, Time_type_time_H_LD); // primitive
+                ITU_T_CHOICES_DECL(time_HM_L, MINUTES_ENCODING, Time_type_time_HM_L); // primitive
+                ITU_T_CHOICES_DECL(time_HM_Z, MINUTES_UTC_ENCODING, Time_type_time_HM_Z); // primitive
+                ITU_T_CHOICES_DECL(time_HM_LD, MINUTES_AND_DIFF_ENCODING, Time_type_time_HM_LD); // primitive
+                ITU_T_CHOICES_DECL(time_HMS_L, TIME_OF_DAY_ENCODING, Time_type_time_HMS_L); // primitive
+                ITU_T_CHOICES_DECL(time_HMS_Z, TIME_OF_DAY_UTC_ENCODING, Time_type_time_HMS_Z); // primitive
+                ITU_T_CHOICES_DECL(time_HMS_LD, TIME_OF_DAY_AND_DIFF_ENCODING, Time_type_time_HMS_LD); // primitive
+                ITU_T_CHOICES_DECL(time_HFn_L, HOURS_AND_FRACTION, Time_type_time_HFn_L); // primitive
+                ITU_T_CHOICES_DECL(time_HFn_Z, HOURS_UTC_AND_FRACTION, Time_type_time_HFn_Z); // primitive
+                ITU_T_CHOICES_DECL(time_HFn_LD, HOURS_AND_DIFF_AND_FRACTION, Time_type_time_HFn_LD); // primitive
+                ITU_T_CHOICES_DECL(time_HMFn_L, MINUTES_AND_FRACTION, Time_type_time_HMFn_L); // primitive
+                ITU_T_CHOICES_DECL(time_HMFn_Z, MINUTES_UTC_AND_FRACTION, Time_type_time_HMFn_Z); // primitive
+                ITU_T_CHOICES_DECL(time_HMFn_LD, MINUTES_AND_DIFF_AND_FRACTION, Time_type_time_HMFn_LD); // primitive
+                ITU_T_CHOICES_DECL(time_HMFSn_L, TIME_OF_DAY_AND_FRACTION, Time_type_time_HMFSn_L); // primitive
+                ITU_T_CHOICES_DECL(time_HMFSn_Z, TIME_OF_DAY_UTC_AND_FRACTION, Time_type_time_HMFSn_Z); // primitive
+                ITU_T_CHOICES_DECL(time_HMFSn_LD, TIME_OF_DAY_AND_DIFF_AND_FRACTION, Time_type_time_HMFSn_LD); // primitive
+
+                ITU_T_ARCHIVE_FUNC;
+            };
+
+
+            TIME_TYPE();
+
+            TIME_TYPE(const Time_type& arg__time_type);
+
+            TIME_TYPE(const std::string & vl);
+
+            TIME_TYPE(const char* vl);
+
+            TIME_TYPE(const base_date & vl, Time_type_enum enm);
+
+            base_time_duration as_time();
+
+            std::string as_string();
+
+            void as_string(const std::string & v);           
+            
+            std::string format();
+
+            ITU_T_OPTIONAL_DECL(number_of_digits, integer_type);  //   Ic(  [ 1  ...    ]   
+            ITU_T_HOLDERH_DECL(time_type, Time_type);            
+            ITU_T_TIME_COUTTP_NCFN(TIME_TYPE);            
+            
+            ITU_T_ARCHIVE_FUNC;
+        };        
+        
+        
+        
+        
 
 
         ITU_T_ARCHIVE_X690_DECL(DATE_TYPE);
+        ITU_T_ARCHIVE_X690_DECL(TIME_TYPE);       
 
         ITU_T_ARCHIVE_X691_DECL(CENTURY_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(YEAR_ENCODING);
@@ -3239,12 +3344,15 @@ namespace boost {
         ITU_T_ARCHIVE_X691_DECL(DURATION::Fractional_part_type);
         ITU_T_ARCHIVE_X691_DECL(REC_DURATION_INTERVAL_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(DATE_TYPE);
-
+        ITU_T_ARCHIVE_X691_DECL(TIME_TYPE);
+        ITU_T_ARCHIVE_X691_DECL(TIME_TYPE::Time_type);       
+        
     }
 }
 
 ITU_T_CHOICE_REGESTRATE(boost::asn1::YEAR_ENCODING);
-ITU_T_CHOICE_REGESTRATE(boost::asn1::DATE_TYPE)
+ITU_T_CHOICE_REGESTRATE(boost::asn1::DATE_TYPE);
+ITU_T_CHOICE_REGESTRATE(boost::asn1::TIME_TYPE::Time_type);
 
 #ifdef _MSC_VER
 #pragma warning(pop)
