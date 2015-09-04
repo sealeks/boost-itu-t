@@ -1797,14 +1797,107 @@ namespace boost {
             as_string(vl);
         };
 
-        TIME_TYPE::TIME_TYPE(const base_date & vl, Time_type_enum enm) : time_type_() {
+        TIME_TYPE::TIME_TYPE(const base_time_duration & vl, Time_type_enum enm) : time_type_() {
+            if (!vl.is_special()) {
+                switch (enm) {
+                    case Time_type_time_H_L: time_type().time_H_L(HOURS_ENCODING(vl));
+                        break;
+                    case Time_type_time_H_Z: time_type().time_H_Z(HOURS_UTC_ENCODING(vl));
+                        break;
+                    case Time_type_time_H_LD: time_type().time_H_LD(HOURS_AND_DIFF_ENCODING(vl));
+                        break;
+                    case Time_type_time_HM_L: time_type().time_HM_L(MINUTES_ENCODING(vl));
+                        break;
+                    case Time_type_time_HM_Z: time_type().time_HM_Z(MINUTES_UTC_ENCODING(vl));
+                        break;
+                    case Time_type_time_HM_LD: time_type().time_HM_LD(MINUTES_AND_DIFF_ENCODING(vl));
+                        break;
+                    case Time_type_time_HMS_L: time_type().time_HMS_L(TIME_OF_DAY_ENCODING(vl));
+                        break;
+                    case Time_type_time_HMS_Z: time_type().time_HMS_Z(TIME_OF_DAY_UTC_ENCODING(vl));
+                        break;
+                    case Time_type_time_HMS_LD: time_type().time_HMS_LD(TIME_OF_DAY_AND_DIFF_ENCODING(vl));
+                        break;
+                    case Time_type_time_HFn_L: time_type().time_HFn_L(HOURS_AND_FRACTION(vl));
+                        break;
+                    case Time_type_time_HFn_Z: time_type().time_HFn_Z(HOURS_UTC_AND_FRACTION(vl));
+                        break;
+                    case Time_type_time_HFn_LD: time_type().time_HFn_LD(HOURS_AND_DIFF_AND_FRACTION(vl));
+                        break;
+                    case Time_type_time_HMFn_L: time_type().time_HMFn_L(MINUTES_AND_FRACTION(vl));
+                        break;
+                    case Time_type_time_HMFn_Z: time_type().time_HMFn_Z(MINUTES_UTC_AND_FRACTION(vl));
+                        break;
+                    case Time_type_time_HMFn_LD: time_type().time_HMFn_LD(MINUTES_AND_DIFF_AND_FRACTION(vl));
+                        break;
+                    case Time_type_time_HMFSn_L: time_type().time_HMFSn_L(TIME_OF_DAY_AND_FRACTION(vl));
+                        break;
+                    case Time_type_time_HMFSn_Z: time_type().time_HMFSn_Z(TIME_OF_DAY_UTC_AND_FRACTION(vl));
+                        break;
+                    case Time_type_time_HMFSn_LD: time_type().time_HMFSn_LD(TIME_OF_DAY_AND_DIFF_AND_FRACTION(vl));
+                        break;
+                    default:
+                    {
+                    }
+                }
+            }
         };
 
+
+
+        
+        
         base_time_duration TIME_TYPE::as_time() {
+            switch (time_type().type()) {
+                case Time_type_time_H_L: return time_type().time_H_L() ? time_type().time_H_L()->as_time(): base_time_duration();
+                case Time_type_time_H_Z: return time_type().time_H_Z() ? time_type().time_H_Z()->as_time(): base_time_duration();
+                case Time_type_time_H_LD: return time_type().time_H_LD() ? time_type().time_H_LD()->as_time(): base_time_duration();
+                case Time_type_time_HM_L: return time_type().time_HM_L() ? time_type().time_HM_L()->as_time(): base_time_duration();
+                case Time_type_time_HM_Z: return time_type().time_HM_Z() ? time_type().time_HM_Z()->as_time(): base_time_duration();
+                case Time_type_time_HM_LD: return time_type().time_HM_LD() ? time_type().time_HM_LD()->as_time(): base_time_duration();
+                case Time_type_time_HMS_L: return time_type().time_HMS_L() ? time_type().time_HMS_L()->as_time(): base_time_duration();
+                case Time_type_time_HMS_Z: return time_type().time_HMS_Z() ? time_type().time_HMS_Z()->as_time(): base_time_duration();
+                case Time_type_time_HMS_LD: return time_type().time_HMS_LD() ? time_type().time_HMS_LD()->as_time(): base_time_duration();
+                case Time_type_time_HFn_L: return time_type().time_HFn_L() ? time_type().time_HFn_L()->as_time(): base_time_duration();
+                case Time_type_time_HFn_Z: return time_type().time_HFn_Z() ? time_type().time_HFn_Z()->as_time(): base_time_duration();
+                case Time_type_time_HFn_LD: return time_type().time_HFn_LD() ? time_type().time_HFn_LD()->as_time(): base_time_duration();
+                case Time_type_time_HMFn_L: return time_type().time_HMFn_L() ? time_type().time_HMFn_L()->as_time(): base_time_duration();
+                case Time_type_time_HMFn_Z: return time_type().time_HMFn_Z() ? time_type().time_HMFn_Z()->as_time(): base_time_duration();
+                case Time_type_time_HMFn_LD: return time_type().time_HMFn_LD() ? time_type().time_HMFn_LD()->as_time(): base_time_duration();
+                case Time_type_time_HMFSn_L: return time_type().time_HMFSn_L() ? time_type().time_HMFSn_L()->as_time(): base_time_duration();
+                case Time_type_time_HMFSn_Z: return time_type().time_HMFSn_Z() ? time_type().time_HMFSn_Z()->as_time(): base_time_duration();
+                case Time_type_time_HMFSn_LD: return time_type().time_HMFSn_LD() ? time_type().time_HMFSn_LD()->as_time(): base_time_duration();
+                default:
+                {
+                }
+            }            
             return base_time_duration();
         };
 
         std::string TIME_TYPE::as_string() {
+            switch (time_type().type()) {
+                case Time_type_time_H_L: return time_type().time_H_L() ? time_type().time_H_L()->as_string(): "";
+                case Time_type_time_H_Z: return time_type().time_H_Z() ? time_type().time_H_Z()->as_string(): "";
+                case Time_type_time_H_LD: return time_type().time_H_LD() ? time_type().time_H_LD()->as_string(): "";
+                case Time_type_time_HM_L: return time_type().time_HM_L() ? time_type().time_HM_L()->as_string(): "";
+                case Time_type_time_HM_Z: return time_type().time_HM_Z() ? time_type().time_HM_Z()->as_string(): "";
+                case Time_type_time_HM_LD: return time_type().time_HM_LD() ? time_type().time_HM_LD()->as_string(): "";
+                case Time_type_time_HMS_L: return time_type().time_HMS_L() ? time_type().time_HMS_L()->as_string(): "";
+                case Time_type_time_HMS_Z: return time_type().time_HMS_Z() ? time_type().time_HMS_Z()->as_string(): "";
+                case Time_type_time_HMS_LD: return time_type().time_HMS_LD() ? time_type().time_HMS_LD()->as_string(): "";
+                case Time_type_time_HFn_L: return time_type().time_HFn_L() ? time_type().time_HFn_L()->as_string(): "";
+                case Time_type_time_HFn_Z: return time_type().time_HFn_Z() ? time_type().time_HFn_Z()->as_string(): "";
+                case Time_type_time_HFn_LD: return time_type().time_HFn_LD() ? time_type().time_HFn_LD()->as_string(): "";
+                case Time_type_time_HMFn_L: return time_type().time_HMFn_L() ? time_type().time_HMFn_L()->as_string(): "";
+                case Time_type_time_HMFn_Z: return time_type().time_HMFn_Z() ? time_type().time_HMFn_Z()->as_string(): "";
+                case Time_type_time_HMFn_LD: return time_type().time_HMFn_LD() ? time_type().time_HMFn_LD()->as_string(): "";
+                case Time_type_time_HMFSn_L: return time_type().time_HMFSn_L() ? time_type().time_HMFSn_L()->as_string(): "";
+                case Time_type_time_HMFSn_Z: return time_type().time_HMFSn_Z() ? time_type().time_HMFSn_Z()->as_string(): "";
+                case Time_type_time_HMFSn_LD: return time_type().time_HMFSn_LD() ? time_type().time_HMFSn_LD()->as_string(): "";
+                default:
+                {
+                }
+            }
             return "";
         };
 
@@ -1812,7 +1905,29 @@ namespace boost {
         };
 
         std::string TIME_TYPE::format() {
-            return "";
+            switch (time_type().type()) {
+                case Time_type_time_H_L: return time_type().time_H_L() ? time_type().time_H_L()->format(): "";
+                case Time_type_time_H_Z: return time_type().time_H_Z() ? time_type().time_H_Z()->format(): "";
+                case Time_type_time_H_LD: return time_type().time_H_LD() ? time_type().time_H_LD()->format(): "";
+                case Time_type_time_HM_L: return time_type().time_HM_L() ? time_type().time_HM_L()->format(): "";
+                case Time_type_time_HM_Z: return time_type().time_HM_Z() ? time_type().time_HM_Z()->format(): "";
+                case Time_type_time_HM_LD: return time_type().time_HM_LD() ? time_type().time_HM_LD()->format(): "";
+                case Time_type_time_HMS_L: return time_type().time_HMS_L() ? time_type().time_HMS_L()->format(): "";
+                case Time_type_time_HMS_Z: return time_type().time_HMS_Z() ? time_type().time_HMS_Z()->format(): "";
+                case Time_type_time_HMS_LD: return time_type().time_HMS_LD() ? time_type().time_HMS_LD()->format(): "";
+                case Time_type_time_HFn_L: return time_type().time_HFn_L() ? time_type().time_HFn_L()->format(): "";
+                case Time_type_time_HFn_Z: return time_type().time_HFn_Z() ? time_type().time_HFn_Z()->format(): "";
+                case Time_type_time_HFn_LD: return time_type().time_HFn_LD() ? time_type().time_HFn_LD()->format(): "";
+                case Time_type_time_HMFn_L: return time_type().time_HMFn_L() ? time_type().time_HMFn_L()->format(): "";
+                case Time_type_time_HMFn_Z: return time_type().time_HMFn_Z() ? time_type().time_HMFn_Z()->format(): "";
+                case Time_type_time_HMFn_LD: return time_type().time_HMFn_LD() ? time_type().time_HMFn_LD()->format(): "";
+                case Time_type_time_HMFSn_L: return time_type().time_HMFSn_L() ? time_type().time_HMFSn_L()->format(): "";
+                case Time_type_time_HMFSn_Z: return time_type().time_HMFSn_Z() ? time_type().time_HMFSn_Z()->format(): "";
+                case Time_type_time_HMFSn_LD: return time_type().time_HMFSn_LD() ? time_type().time_HMFSn_LD()->format(): "";
+                default:
+                {
+                }
+            }
         };        
 
         ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_H_L, time_H_L, HOURS_ENCODING, Time_type_time_H_L);

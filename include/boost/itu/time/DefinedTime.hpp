@@ -3294,7 +3294,7 @@ namespace boost {
 
             TIME_TYPE(const char* vl);
 
-            TIME_TYPE(const base_date & vl, Time_type_enum enm);
+            TIME_TYPE(const base_time_duration& vl, Time_type_enum enm);
 
             base_time_duration as_time();
 
