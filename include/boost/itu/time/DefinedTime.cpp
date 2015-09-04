@@ -98,6 +98,7 @@ namespace boost {
                 boost::algorithm::erase_last(vl, "\"");
                 boost::algorithm::erase_first(vl, "\"");
                 boost::algorithm::erase_first(vl, "-");
+                boost::algorithm::replace_all(vl, ".", ",");
                 return vl;
             }
 
@@ -125,7 +126,7 @@ namespace boost {
             std::size_t second_fraction_HF(integer_type f, std::size_t n) {
                 if (n > 1)
                     return ((static_cast<uint64_t> (f) * 36) /
-                        static_cast<uint64_t> (pow10(n - 2))) % 60;
+                            static_cast<uint64_t> (pow10(n - 2))) % 60;
                 return 0;
             }
 
@@ -265,7 +266,8 @@ namespace boost {
         base_date CENTURY_ENCODING::as_date() const {
             try {
                 return base_date(static_cast<int> (as_number())*100, 1, 1);
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date();
         }
@@ -277,7 +279,7 @@ namespace boost {
         void CENTURY_ENCODING::as_string(const std::string& v) {
             std::string vl = normalize_time_str(v);
             as_number(to_range<uint8_t>(string_to_def<int>(revrs_substr(vl, 1), 0, "0"),
-                    (uint8_t) 0, (uint8_t) 99));
+                                        (uint8_t) 0, (uint8_t) 99));
         }
 
 
@@ -344,7 +346,8 @@ namespace boost {
         base_date YEAR_ENCODING::as_date() const {
             try {
                 return base_date(static_cast<int> (as_number()), 1, 1);
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date();
         }
@@ -356,7 +359,7 @@ namespace boost {
         void YEAR_ENCODING::as_string(const std::string& v) {
             std::string vl = normalize_time_str(v);
             as_number(to_range<integer_type>(string_to_def<int>(vl, 0, "0"),
-                    (integer_type) 0, (integer_type) 9999));
+                                             (integer_type) 0, (integer_type) 9999));
         }
 
 
@@ -388,7 +391,8 @@ namespace boost {
         base_date YEAR_MONTH_ENCODING::as_date() const {
             try {
                 return base_date(static_cast<int> (year().as_number()), (int) month(), 1);
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date();
         }
@@ -441,7 +445,8 @@ namespace boost {
         base_date DATE_ENCODING::as_date() const {
             try {
                 return base_date(static_cast<int> (year().as_number()), (int) month(), (int) day());
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date();
         }
@@ -498,7 +503,8 @@ namespace boost {
         base_date DATE::as_date() const {
             try {
                 return base_date(static_cast<int> (year().as_number()), (int) month(), (int) day());
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date();
         }
@@ -553,7 +559,8 @@ namespace boost {
             try {
                 return base_date(static_cast<int> (year().as_number()), 1, 1) +
                         base_date_time::date_duration_type(day() ? day() - 1 : 0);
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date();
         }
@@ -608,7 +615,8 @@ namespace boost {
                 std::size_t dwst = (std::size_t)tmp.day_of_week();
                 return tmp + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
                         base_date_time::date_duration_type((week() > 1) ? (7 * (week() - 1)) : 0);
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date();
         }
@@ -669,7 +677,8 @@ namespace boost {
                 std::size_t dwst = (std::size_t)tmp.day_of_week();
                 return tmp + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
                         base_date_time::date_duration_type(((week() > 1) ? (7 * (week() - 1)) : 0) + ((day() > 1) ? (day() - 1) : 0));
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_date();
         }
@@ -725,7 +734,8 @@ namespace boost {
         base_time_duration HOURS_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (as_number()), 0, 0);
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_time_duration();
         }
@@ -772,7 +782,8 @@ namespace boost {
         base_time_duration HOURS_UTC_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (as_number()), 0, 0);
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_time_duration();
         }
@@ -889,7 +900,8 @@ namespace boost {
         base_time_duration HOURS_AND_DIFF_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (local_hours()), 0, 0);
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_time_duration();
         }
@@ -942,7 +954,8 @@ namespace boost {
         base_time_duration MINUTES_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()), 0);
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_time_duration();
         }
@@ -997,7 +1010,8 @@ namespace boost {
         base_time_duration MINUTES_UTC_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()), 0);
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_time_duration();
         }
@@ -1058,7 +1072,8 @@ namespace boost {
         base_time_duration MINUTES_AND_DIFF_ENCODING::as_time() const {
             try {
                 return local_time().as_time();
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_time_duration();
         }
@@ -1114,7 +1129,8 @@ namespace boost {
         base_time_duration TIME_OF_DAY_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()), static_cast<int> (seconds()));
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_time_duration();
         }
@@ -1172,7 +1188,8 @@ namespace boost {
         base_time_duration TIME_OF_DAY::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()), static_cast<int> (seconds()));
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_time_duration();
         }
@@ -1231,7 +1248,8 @@ namespace boost {
         base_time_duration TIME_OF_DAY_UTC_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()), static_cast<int> (seconds()));
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_time_duration();
         }
@@ -1294,7 +1312,8 @@ namespace boost {
         base_time_duration TIME_OF_DAY_AND_DIFF_ENCODING::as_time() const {
             try {
                 return local_time().as_time();
-            } catch (...) {
+            }
+            catch (...) {
             }
             return base_time_duration();
         }
@@ -1367,7 +1386,8 @@ namespace boost {
                     rslt += (to_string(*minutes()) + "M");
                 if (seconds())
                     rslt += (to_string(*seconds()) + "S");
-            } else {
+            }
+            else {
 
             }
             return rslt;
@@ -1483,7 +1503,8 @@ namespace boost {
                     rslt += (to_string(*minutes()) + "M");
                 if (seconds())
                     rslt += (to_string(*seconds()) + "S");
-            } else {
+            }
+            else {
 
             }
             return rslt;
@@ -1694,20 +1715,23 @@ namespace boost {
                             date_Y_Basic(YEAR_ENCODING(vl));
                         else
                             date_Y_L(ANY_YEAR(vl));
-                    } else {
+                    }
+                    else {
                         if (tmpl.size() == 3)
                             date_C_Basic(CENTURY_ENCODING(vl));
                         else
                             date_C_L(ANY_CENTURY(vl));
                     }
-                } else {
+                }
+                else {
                     // if (size-it)>3 YD                  
                     if ((tmpl.size() - it) > 3) {
                         if (it == 4)
                             date_YD_Basic(YEAR_DAY_ENCODING(vl));
                         else
                             date_YD_L(ANY_YEAR_DAY(vl));
-                    } else {
+                    }
+                    else {
                         std::string::size_type itf = tmpl.find_first_of('-');
                         std::string::size_type itl = tmpl.find_last_of('-');
                         if (itf != itl) {
@@ -1715,7 +1739,8 @@ namespace boost {
                                 date_YMD_Basic(DATE_ENCODING(vl));
                             else
                                 date_YMD_L(ANY_DATE(vl));
-                        } else {
+                        }
+                        else {
                             if (tmpl.size() == 4)
                                 date_YM_Basic(YEAR_MONTH_ENCODING(vl));
                             else
@@ -1723,14 +1748,16 @@ namespace boost {
                         }
                     }
                 }
-            } else {
+            }
+            else {
                 // if (size-it)>3 YWD else YW
                 if ((tmpl.size() - it) > 3) {
                     if (it == 4)
                         date_YWD_Basic(YEAR_WEEK_DAY_ENCODING(vl));
                     else
                         date_YWD_L(ANY_YEAR_WEEK_DAY(vl));
-                } else {
+                }
+                else {
                     if (it == 4)
                         date_YW_Basic(YEAR_WEEK_ENCODING(vl));
                     else
@@ -1777,8 +1804,8 @@ namespace boost {
         ITU_T_CHOICES_DEFN(DATE_TYPE::date_YWD_Basic, date_YWD_Basic, YEAR_WEEK_DAY_ENCODING, DATE_TYPE_date_YWD_Basic);
         ITU_T_CHOICES_DEFN(DATE_TYPE::date_YWD_L, date_YWD_L, ANY_YEAR_WEEK_DAY, DATE_TYPE_date_YWD_L);
 
-        
-        
+
+
 
         // sequence TIME-TYPE
 
@@ -1843,10 +1870,6 @@ namespace boost {
             }
         };
 
-
-
-        
-        
         base_time_duration TIME_TYPE::as_time() {
             switch (time_type().type()) {
                 case Time_type_time_H_L: return time_type().time_H_L() ? time_type().time_H_L()->as_time(): base_time_duration();
@@ -1870,7 +1893,7 @@ namespace boost {
                 default:
                 {
                 }
-            }            
+            }
             return base_time_duration();
         };
 
@@ -1901,7 +1924,86 @@ namespace boost {
             return "";
         };
 
-        void TIME_TYPE::as_string(const std::string & v) {
+        void TIME_TYPE::as_string(const std::string & vl) {
+            std::string tmpl = normalizeLR_time_str(vl);
+            std::string::size_type itpl = tmpl.find_last_of('-');
+            std::string::size_type itmn = tmpl.find_last_of('+');
+            bool dtp = ((itpl != std::string::npos) && (itpl)) || ((itmn != std::string::npos) && (itmn));
+            bool ztp = (tmpl.find_first_of('Z') != std::string::npos);
+            if (dtp) {
+                if (itpl != std::string::npos)
+                    tmpl = tmpl.substr(0, itpl);
+                else if (itmn != std::string::npos)
+                    tmpl = tmpl.substr(0, itmn);
+            }
+            std::string::size_type fit= (tmpl.find_last_of('.') != std::string::npos) ?
+                tmpl.find_last_of('.') : tmpl.find_last_of(',');            
+            bool ftp = (fit != std::string::npos);    
+            std::size_t fpart=0;
+            if (fit != std::string::npos) 
+                fpart=tmpl.size()-fit-1;
+            std::string::size_type itf = tmpl.find_first_of(':');
+            std::string::size_type itl = tmpl.find_last_of(':');
+            if ((itf == std::string::npos) && (itl == std::string::npos)) {
+                if (ftp) {
+                    if (fpart)
+                        number_of_digits(fpart);
+                    if (dtp)
+                        time_type().time_HFn_LD(HOURS_AND_DIFF_AND_FRACTION(vl));
+                    else if (ztp)
+                        time_type().time_HFn_Z(HOURS_UTC_AND_FRACTION(vl));
+                    else
+                        time_type().time_HFn_L(HOURS_AND_FRACTION(vl));
+                }
+                else {
+                    if (dtp)
+                        time_type().time_H_LD(HOURS_AND_DIFF_ENCODING(vl));
+                    else if (ztp)
+                        time_type().time_H_Z(HOURS_UTC_ENCODING(vl));
+                    else
+                        time_type().time_H_L(HOURS_ENCODING(vl));
+                }
+            }
+            else if (itf == itl) {
+                if (ftp) {
+                    if (fpart)
+                        number_of_digits(fpart);                    
+                    if (dtp)
+                        time_type().time_HMFn_LD(MINUTES_AND_DIFF_AND_FRACTION(vl));
+                    else if (ztp)
+                        time_type().time_HMFn_Z(MINUTES_UTC_AND_FRACTION(vl));
+                    else
+                        time_type().time_HMFn_L(MINUTES_AND_FRACTION(vl));
+                }
+                else {
+                    if (dtp)
+                        time_type().time_HM_LD(MINUTES_AND_DIFF_ENCODING(vl));
+                    else if (ztp)
+                        time_type().time_HM_Z(MINUTES_UTC_ENCODING(vl));
+                    else
+                        time_type().time_HM_L(MINUTES_ENCODING(vl));
+                }
+            }
+            else {
+                if (ftp) {
+                    if (fpart)
+                        number_of_digits(fpart);                    
+                    if (dtp)
+                        time_type().time_HMFSn_LD(TIME_OF_DAY_AND_DIFF_AND_FRACTION(vl));
+                    else if (ztp)
+                        time_type().time_HMFSn_Z(TIME_OF_DAY_UTC_AND_FRACTION(vl));
+                    else
+                        time_type().time_HMFSn_L(TIME_OF_DAY_AND_FRACTION(vl));
+                }
+                else {
+                    if (dtp)
+                        time_type().time_HMS_LD(TIME_OF_DAY_AND_DIFF_ENCODING(vl));
+                    else if (ztp)
+                        time_type().time_HMS_Z(TIME_OF_DAY_UTC_ENCODING(vl));
+                    else
+                        time_type().time_HMS_L(TIME_OF_DAY_ENCODING(vl));
+                }
+            }
         };
 
         std::string TIME_TYPE::format() {
@@ -1928,7 +2030,7 @@ namespace boost {
                 {
                 }
             }
-        };        
+        };
 
         ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_H_L, time_H_L, HOURS_ENCODING, Time_type_time_H_L);
         ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_H_Z, time_H_Z, HOURS_UTC_ENCODING, Time_type_time_H_Z);
@@ -1952,8 +2054,8 @@ namespace boost {
 
         ITU_T_OPTIONAL_DEFN(TIME_TYPE::number_of_digits, number_of_digits, integer_type);
         ITU_T_HOLDERH_DEFN(TIME_TYPE::time_type, time_type, TIME_TYPE::Time_type);
-        
-        
+
+
 
     }
 }
@@ -1991,7 +2093,7 @@ namespace boost {
             ITU_T_DEFINE_TIME_TYPE(DURATION);
             ITU_T_DEFINE_TIME_TYPE(REC_DURATION_INTERVAL_ENCODING);
             ITU_T_DEFINE_TIME_TYPE(DATE_TYPE);
-            ITU_T_DEFINE_TIME_TYPE(TIME_TYPE);            
+            ITU_T_DEFINE_TIME_TYPE(TIME_TYPE);
         }
     }
 }
