@@ -881,6 +881,20 @@ namespace boost {
             }
         }
 
+
+
+        // sequence DATE-TIME-ENC
+
+        template<> void DATE_TIME_ENC::serialize(boost::asn1::x691::output_coder& arch) {
+            ITU_T_BIND_PER(date_);
+            ITU_T_BIND_PER(time_);
+        }
+
+        template<> void DATE_TIME_ENC::serialize(boost::asn1::x691::input_coder& arch) {
+            ITU_T_BIND_PER(date_);
+            ITU_T_BIND_PER(time_);
+        }
+
     }
 }
 

@@ -1777,8 +1777,8 @@ namespace boost {
         ITU_T_CHOICES_DEFN(DATE_TYPE::date_YWD_Basic, date_YWD_Basic, YEAR_WEEK_DAY_ENCODING, DATE_TYPE_date_YWD_Basic);
         ITU_T_CHOICES_DEFN(DATE_TYPE::date_YWD_L, date_YWD_L, ANY_YEAR_WEEK_DAY, DATE_TYPE_date_YWD_L);
 
-        
-        
+
+
 
         // sequence TIME-TYPE
 
@@ -1843,10 +1843,6 @@ namespace boost {
             }
         };
 
-
-
-        
-        
         base_time_duration TIME_TYPE::as_time() {
             switch (time_type().type()) {
                 case Time_type_time_H_L: return time_type().time_H_L() ? time_type().time_H_L()->as_time(): base_time_duration();
@@ -1870,7 +1866,7 @@ namespace boost {
                 default:
                 {
                 }
-            }            
+            }
             return base_time_duration();
         };
 
@@ -1928,7 +1924,7 @@ namespace boost {
                 {
                 }
             }
-        };        
+        };
 
         ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_H_L, time_H_L, HOURS_ENCODING, Time_type_time_H_L);
         ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_H_Z, time_H_Z, HOURS_UTC_ENCODING, Time_type_time_H_Z);
@@ -1952,8 +1948,57 @@ namespace boost {
 
         ITU_T_OPTIONAL_DEFN(TIME_TYPE::number_of_digits, number_of_digits, integer_type);
         ITU_T_HOLDERH_DEFN(TIME_TYPE::time_type, time_type, TIME_TYPE::Time_type);
-        
-        
+
+
+
+
+
+        // sequence DATE-TIME-ENC
+
+        DATE_TIME_ENC::DATE_TIME_ENC() : date_(), time_() {
+        };
+
+        DATE_TIME_ENC::DATE_TIME_ENC(const DATE_TYPE& arg__date,
+                const TIME_TYPE& arg__time) :
+        date_(arg__date),
+        time_(arg__time) {
+        };
+
+        DATE_TIME_ENC::DATE_TIME_ENC(const std::string & vl) : date_(), time_() {
+            as_string(vl);
+        };
+
+        DATE_TIME_ENC::DATE_TIME_ENC(const char* vl) : date_(), time_() {
+            as_string(vl);
+        };
+
+        base_date_time DATE_TIME_ENC::as_date_time() {
+            return (date().as_date().is_special() || time().as_time().is_special()) ? (base_date_time()) :
+                    (base_date_time(date().as_date()) + time().as_time());
+        }
+
+        std::string DATE_TIME_ENC::as_string() {
+            return date().as_string() + "T" + time().as_string();
+        }
+
+        void DATE_TIME_ENC::as_string(const std::string & vl) {
+            std::string tmpl = normalizeLR_time_str(vl);
+            std::string::size_type it = tmpl.find_first_of('T');
+            if ((it != std::string::npos) && (it < tmpl.size())) {
+                date(DATE_TYPE(tmpl.substr(0, it)));
+                time(TIME_TYPE(tmpl.substr(it + 1)));
+            }
+        }
+
+        std::string DATE_TIME_ENC::format() {
+            return date().format() + "T" + time().format();
+        }
+
+
+        ITU_T_HOLDERH_DEFN(DATE_TIME_ENC::date, date, DATE_TYPE);
+        ITU_T_HOLDERH_DEFN(DATE_TIME_ENC::time, time, TIME_TYPE);
+
+
 
     }
 }
@@ -1991,7 +2036,7 @@ namespace boost {
             ITU_T_DEFINE_TIME_TYPE(DURATION);
             ITU_T_DEFINE_TIME_TYPE(REC_DURATION_INTERVAL_ENCODING);
             ITU_T_DEFINE_TIME_TYPE(DATE_TYPE);
-            ITU_T_DEFINE_TIME_TYPE(TIME_TYPE);            
+            ITU_T_DEFINE_TIME_TYPE(TIME_TYPE);
         }
     }
 }

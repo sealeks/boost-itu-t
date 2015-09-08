@@ -25,8 +25,8 @@ namespace boost {
         }
 
 
-    // sequence TIME-TYPE
-        
+        // sequence TIME-TYPE
+
         template<> void TIME_TYPE::serialize(boost::asn1::x690::output_coder& arch) {
             visible_string tmpval = as_string();
             ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
@@ -36,7 +36,21 @@ namespace boost {
             visible_string tmpval;
             ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
             as_string(std::string(tmpval.c_str()));
-        }       
+        }
+
+
+        // sequence TIME-TYPE
+
+        template<> void DATE_TIME_ENC::serialize(boost::asn1::x690::output_coder& arch) {
+            visible_string tmpval = as_string();
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+        }
+
+        template<> void DATE_TIME_ENC::serialize(boost::asn1::x690::input_coder& arch) {
+            visible_string tmpval;
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+            as_string(std::string(tmpval.c_str()));
+        }
 
     }
 }

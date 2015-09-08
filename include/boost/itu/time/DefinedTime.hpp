@@ -3210,13 +3210,13 @@ namespace boost {
 
             ITU_T_ARCHIVE_FUNC;
         };
-        
 
 
 
-        
-        
-        
+
+
+
+
 
         typedef HOURS_AND_FRACTION_ENCODING<0> HOURS_AND_FRACTION;
         typedef HOURS_UTC_AND_FRACTION_ENCODING<0> HOURS_UTC_AND_FRACTION;
@@ -3300,24 +3300,58 @@ namespace boost {
 
             std::string as_string();
 
-            void as_string(const std::string & v);           
-            
+            void as_string(const std::string & v);
+
             std::string format();
 
-            ITU_T_OPTIONAL_DECL(number_of_digits, integer_type);  //   Ic(  [ 1  ...    ]   
-            ITU_T_HOLDERH_DECL(time_type, Time_type);            
-            ITU_T_TIME_COUTTP_NCFN(TIME_TYPE);            
-            
+            ITU_T_OPTIONAL_DECL(number_of_digits, integer_type); //   Ic(  [ 1  ...    ]   
+            ITU_T_HOLDERH_DECL(time_type, Time_type);
+            ITU_T_TIME_COUTTP_NCFN(TIME_TYPE);
+
             ITU_T_ARCHIVE_FUNC;
-        };        
-        
-        
-        
-        
+        };
+
+
+
+
+
+
+
+        // sequence DATE-TIME-ENC
+
+        struct DATE_TIME_ENC {
+
+            DATE_TIME_ENC();
+
+            DATE_TIME_ENC(const DATE_TYPE& arg__date,
+                    const TIME_TYPE& arg__time);
+
+            DATE_TIME_ENC(const std::string & vl);
+
+            DATE_TIME_ENC(const char* vl);
+
+            base_date_time as_date_time();
+
+            std::string as_string();
+
+            void as_string(const std::string & v);
+
+            std::string format();
+
+            ITU_T_HOLDERH_DECL(date, DATE_TYPE);
+            ITU_T_HOLDERH_DECL(time, TIME_TYPE);
+
+            ITU_T_ARCHIVE_FUNC;
+        };
+
+
+
+
 
 
         ITU_T_ARCHIVE_X690_DECL(DATE_TYPE);
-        ITU_T_ARCHIVE_X690_DECL(TIME_TYPE);       
+        ITU_T_ARCHIVE_X690_DECL(TIME_TYPE);
+        ITU_T_ARCHIVE_X690_DECL(DATE_TIME_ENC);
 
         ITU_T_ARCHIVE_X691_DECL(CENTURY_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(YEAR_ENCODING);
@@ -3345,8 +3379,9 @@ namespace boost {
         ITU_T_ARCHIVE_X691_DECL(REC_DURATION_INTERVAL_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(DATE_TYPE);
         ITU_T_ARCHIVE_X691_DECL(TIME_TYPE);
-        ITU_T_ARCHIVE_X691_DECL(TIME_TYPE::Time_type);       
-        
+        ITU_T_ARCHIVE_X691_DECL(TIME_TYPE::Time_type);
+        ITU_T_ARCHIVE_X691_DECL(DATE_TIME_ENC);
+
     }
 }
 
