@@ -52,6 +52,18 @@ namespace boost {
             as_string(std::string(tmpval.c_str()));
         }
 
+
+        template<> void MIXED_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
+            visible_string tmpval = as_string();
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+        }
+
+        template<> void MIXED_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
+            visible_string tmpval;
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+            as_string(std::string(tmpval.c_str()));
+        }        
+        
     }
 }
 
