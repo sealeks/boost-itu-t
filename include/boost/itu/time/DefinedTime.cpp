@@ -2057,6 +2057,140 @@ namespace boost {
 
 
 
+
+
+        // sequence DATE-TIME-ENC
+
+        DATE_TIME_ENC::DATE_TIME_ENC() : date_(), time_() {
+        };
+
+        DATE_TIME_ENC::DATE_TIME_ENC(const DATE_TYPE& arg__date,
+                const TIME_TYPE& arg__time) :
+        date_(arg__date),
+        time_(arg__time) {
+        };
+
+        DATE_TIME_ENC::DATE_TIME_ENC(const std::string & vl) : date_(), time_() {
+            as_string(vl);
+        };
+
+        DATE_TIME_ENC::DATE_TIME_ENC(const char* vl) : date_(), time_() {
+            as_string(vl);
+        };
+
+        base_date_time DATE_TIME_ENC::as_date_time() {
+            return (date().as_date().is_special() || time().as_time().is_special()) ? (base_date_time()) :
+                    (base_date_time(date().as_date()) + time().as_time());
+        }
+
+        std::string DATE_TIME_ENC::as_string() {
+            return date().as_string() + "T" + time().as_string();
+        }
+
+        void DATE_TIME_ENC::as_string(const std::string & vl) {
+            std::string tmpl = normalizeLR_time_str(vl);
+            std::string::size_type it = tmpl.find_first_of('T');
+            if ((it != std::string::npos) && (it < tmpl.size())) {
+                date(DATE_TYPE(tmpl.substr(0, it)));
+                time(TIME_TYPE(tmpl.substr(it + 1)));
+            }
+        }
+
+        std::string DATE_TIME_ENC::format() {
+            return date().format() + "T" + time().format();
+        }
+
+
+        ITU_T_HOLDERH_DEFN(DATE_TIME_ENC::date, date, DATE_TYPE);
+        ITU_T_HOLDERH_DEFN(DATE_TIME_ENC::time, time, TIME_TYPE);
+
+
+
+
+
+
+
+
+
+        // choice MIXED-ENCODING
+
+        MIXED_ENCODING::MIXED_ENCODING(const std::string & vl) : ITU_T_CHOICE_CTORS_INHERITED(MIXED_ENCODING) {
+            as_string(vl);
+        }
+
+        MIXED_ENCODING::MIXED_ENCODING(const char* vl) {
+            as_string(vl);
+        }
+
+        std::string MIXED_ENCODING::as_string() {
+            return "";
+        }
+
+        void MIXED_ENCODING::as_string(const std::string & v) {
+
+        }
+
+        std::string MIXED_ENCODING::format() {
+            return "";
+        }
+
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_C_Basic, tm_C_Basic, CENTURY_ENCODING, mx_tm_C_Basic);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_C_L, tm_C_L, ANY_CENTURY, mx_tm_C_L);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_Y_Basic, tm_Y_Basic, YEAR_ENCODING, mx_tm_Y_Basic);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_Y_L, tm_Y_L, ANY_YEAR, mx_tm_Y_L);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_YM_Basic, tm_YM_Basic, YEAR_MONTH_ENCODING, mx_tm_YM_Basic);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_YM_L, tm_YM_L, ANY_YEAR_MONTH, mx_tm_YM_L);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_YMD_Basic, tm_YMD_Basic, DATE_ENCODING, mx_tm_YMD_Basic);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_YMD_L, tm_YMD_L, ANY_DATE, mx_tm_YMD_L);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_YD_Basic, tm_YD_Basic, YEAR_DAY_ENCODING, mx_tm_YD_Basic);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_YD_L, tm_YD_L, ANY_YEAR_DAY, mx_tm_YD_L);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_YW_Basic, tm_YW_Basic, YEAR_WEEK_ENCODING, mx_tm_YW_Basic);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_YW_L, tm_YW_L, ANY_YEAR_WEEK, mx_tm_YW_L);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_YWD_Basic, tm_YWD_Basic, YEAR_WEEK_DAY_ENCODING, mx_tm_YWD_Basic);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_YWD_L, tm_YWD_L, ANY_YEAR_WEEK_DAY, mx_tm_YWD_L);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_H_L, tm_H_L, HOURS_ENCODING, mx_tm_H_L);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_H_Z, tm_H_Z, HOURS_UTC_ENCODING, mx_tm_H_Z);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_H_LD, tm_H_LD, HOURS_AND_DIFF_ENCODING, mx_tm_H_LD);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_HM_L, tm_HM_L, MINUTES_ENCODING, mx_tm_HM_L);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_HM_Z, tm_HM_Z, MINUTES_UTC_ENCODING, mx_tm_HM_Z);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_HM_LD, tm_HM_LD, MINUTES_AND_DIFF_ENCODING, mx_tm_HM_LD);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_HMS_L, tm_HMS_L, TIME_OF_DAY_ENCODING, mx_tm_HMS_L);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_HMS_Z, tm_HMS_Z, TIME_OF_DAY_UTC_ENCODING, mx_tm_HMS_Z);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_HMS_LD, tm_HMS_LD, TIME_OF_DAY_AND_DIFF_ENCODING, mx_tm_HMS_LD);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_HFn_L, tm_HFn_L, HOURS_AND_FRACTION_ENC, mx_tm_HFn_L);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_HFn_Z, tm_HFn_Z, HOURS_UTC_AND_FRACTION_ENC, mx_tm_HFn_Z);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_HFn_LD, tm_HFn_LD, HOURS_AND_DIFF_AND_FRACTION_ENC, mx_tm_HFn_LD);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_HMFn_L, tm_HMFn_L, MINUTES_AND_FRACTION_ENC, mx_tm_HMFn_L);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_HMFn_Z, tm_HMFn_Z, MINUTES_UTC_AND_FRACTION_ENC, mx_tm_HMFn_Z);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_HMFn_LD, tm_HMFn_LD, MINUTES_AND_DIFF_AND_FRACTION_ENC, mx_tm_HMFn_LD);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_HMFSn_L, tm_HMFSn_L, TIME_OF_DAY_AND_FRACTION_ENC, mx_tm_HMFSn_L);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_HMFSn_Z, tm_HMFSn_Z, TIME_OF_DAY_UTC_AND_FRACTION_ENC, mx_tm_HMFSn_Z);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_HMFSn_LD, tm_HMFSn_LD, TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENC, mx_tm_HMFSn_LD);
+        ITU_T_CHOICEC_DEFN(MIXED_ENCODING::tm_DTT, tm_DTT, DATE_TIME_ENC, mx_tm_DTT);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_Pse_D, tm_Pse_D, START_END_DATE_INTERVAL_ENC, mx_tm_Pse_D);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_Pse_T, tm_Pse_T, START_END_TIME_INTERVAL_ENC, mx_tm_Pse_T);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_Pse_DT, tm_Pse_DT, START_END_DATE_TIME_INTERVAL_ENC, mx_tm_Pse_DT);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_DU, tm_DU, DURATION_INTERVAL_ENC, mx_tm_DU);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_Psi_D, tm_Psi_D, START_DATE_DURATION_INTERVAL_ENC, mx_tm_Psi_D);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_Psi_T, tm_Psi_T, START_TIME_DURATION_INTERVAL_ENC, mx_tm_Psi_T);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_Psi_DT, tm_Psi_DT, START_DATE_TIME_DURATION_INTERVAL_ENC, mx_tm_Psi_DT);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_Pde_D, tm_Pde_D, DURATION_END_DATE_INTERVAL_ENC, mx_tm_Pde_D);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_Pde_T, tm_Pde_T, DURATION_END_TIME_INTERVAL_ENC, mx_tm_Pde_T);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_Pde_DT, tm_Pde_DT, DURATION_END_DATE_TIME_INTERVAL_ENC, mx_tm_Pde_DT);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_Rse_D, tm_Rse_D, REC_START_END_DATE_INTERVAL_ENC, mx_tm_Rse_D);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_Rse_T, tm_Rse_T, REC_START_END_TIME_INTERVAL_ENC, mx_tm_Rse_T);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_Rse_DT, tm_Rse_DT, REC_START_END_DATE_TIME_INTERVAL_ENC, mx_tm_Rse_DT);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_RDU, tm_RDU, REC_DURATION_INTERVAL_ENC, mx_tm_RDU);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_Rsd_D, tm_Rsd_D, REC_START_DATE_DURATION_INTERVAL_ENC, mx_tm_Rsd_D);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_Rsd_T, tm_Rsd_T, REC_START_TIME_DURATION_INTERVAL_ENC, mx_tm_Rsd_T);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_Rsd_DT, tm_Rsd_DT, REC_START_DATE_TIME_DURATION_INTERVAL_ENC, mx_tm_Rsd_DT);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_Red_D, tm_Red_D, REC_DURATION_END_DATE_INTERVAL_ENC, mx_tm_Red_D);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_Red_T, tm_Red_T, REC_DURATION_END_TIME_INTERVAL_ENC, mx_tm_Red_T);
+        ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_Red_DT, tm_Red_DT, REC_DURATION_END_DATE_TIME_INTERVAL_ENC, mx_tm_Red_DT);
+
+
+
+
     }
 }
 
@@ -2094,6 +2228,8 @@ namespace boost {
             ITU_T_DEFINE_TIME_TYPE(REC_DURATION_INTERVAL_ENCODING);
             ITU_T_DEFINE_TIME_TYPE(DATE_TYPE);
             ITU_T_DEFINE_TIME_TYPE(TIME_TYPE);
+            ITU_T_DEFINE_TIME_TYPE(DATE_TIME_ENC);
+            ITU_T_DEFINE_TIME_TYPE(MIXED_ENCODING);
         }
     }
 }

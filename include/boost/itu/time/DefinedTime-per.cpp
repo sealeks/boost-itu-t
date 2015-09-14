@@ -881,6 +881,627 @@ namespace boost {
             }
         }
 
+
+
+        // sequence DATE-TIME-ENC
+
+        template<> void DATE_TIME_ENC::serialize(boost::asn1::x691::output_coder& arch) {
+            ITU_T_BIND_PER(date_);
+            ITU_T_BIND_PER(time_);
+        }
+
+        template<> void DATE_TIME_ENC::serialize(boost::asn1::x691::input_coder& arch) {
+            ITU_T_BIND_PER(date_);
+            ITU_T_BIND_PER(time_);
+        }
+
+
+
+        // choice MIXED-ENCODING
+
+        template<> void MIXED_ENCODING::serialize(boost::asn1::x691::output_coder& arch) {
+            switch (type()) {
+                case mx_tm_C_Basic:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(0, 52);
+                    ITU_T_BIND_PER(value<CENTURY_ENCODING > (false, mx_tm_C_Basic));
+                    break;
+                }
+                case mx_tm_C_L:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(1, 52);
+                    ITU_T_BIND_PER(value<ANY_CENTURY > (false, mx_tm_C_L));
+                    break;
+                }
+                case mx_tm_Y_Basic:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(2, 52);
+                    ITU_T_BIND_PER(value<YEAR_ENCODING > (false, mx_tm_Y_Basic));
+                    break;
+                }
+                case mx_tm_Y_L:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(3, 52);
+                    ITU_T_BIND_PER(value<ANY_YEAR > (false, mx_tm_Y_L));
+                    break;
+                }
+                case mx_tm_YM_Basic:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(4, 52);
+                    ITU_T_BIND_PER(value<YEAR_MONTH_ENCODING > (false, mx_tm_YM_Basic));
+                    break;
+                }
+                case mx_tm_YM_L:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(5, 52);
+                    ITU_T_BIND_PER(value<ANY_YEAR_MONTH > (false, mx_tm_YM_L));
+                    break;
+                }
+                case mx_tm_YMD_Basic:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(6, 52);
+                    ITU_T_BIND_PER(value<DATE_ENCODING > (false, mx_tm_YMD_Basic));
+                    break;
+                }
+                case mx_tm_YMD_L:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(7, 52);
+                    ITU_T_BIND_PER(value<ANY_DATE > (false, mx_tm_YMD_L));
+                    break;
+                }
+                case mx_tm_YD_Basic:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(8, 52);
+                    ITU_T_BIND_PER(value<YEAR_DAY_ENCODING > (false, mx_tm_YD_Basic));
+                    break;
+                }
+                case mx_tm_YD_L:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(9, 52);
+                    ITU_T_BIND_PER(value<ANY_YEAR_DAY > (false, mx_tm_YD_L));
+                    break;
+                }
+                case mx_tm_YW_Basic:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(10, 52);
+                    ITU_T_BIND_PER(value<YEAR_WEEK_ENCODING > (false, mx_tm_YW_Basic));
+                    break;
+                }
+                case mx_tm_YW_L:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(11, 52);
+                    ITU_T_BIND_PER(value<ANY_YEAR_WEEK > (false, mx_tm_YW_L));
+                    break;
+                }
+                case mx_tm_YWD_Basic:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(12, 52);
+                    ITU_T_BIND_PER(value<YEAR_WEEK_DAY_ENCODING > (false, mx_tm_YWD_Basic));
+                    break;
+                }
+                case mx_tm_YWD_L:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(13, 52);
+                    ITU_T_BIND_PER(value<ANY_YEAR_WEEK_DAY > (false, mx_tm_YWD_L));
+                    break;
+                }
+                case mx_tm_H_L:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(14, 52);
+                    ITU_T_BIND_PER(value<HOURS_ENCODING > (false, mx_tm_H_L));
+                    break;
+                }
+                case mx_tm_H_Z:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(15, 52);
+                    ITU_T_BIND_PER(value<HOURS_UTC_ENCODING > (false, mx_tm_H_Z));
+                    break;
+                }
+                case mx_tm_H_LD:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(16, 52);
+                    ITU_T_BIND_PER(value<HOURS_AND_DIFF_ENCODING > (false, mx_tm_H_LD));
+                    break;
+                }
+                case mx_tm_HM_L:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(17, 52);
+                    ITU_T_BIND_PER(value<MINUTES_ENCODING > (false, mx_tm_HM_L));
+                    break;
+                }
+                case mx_tm_HM_Z:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(18, 52);
+                    ITU_T_BIND_PER(value<MINUTES_UTC_ENCODING > (false, mx_tm_HM_Z));
+                    break;
+                }
+                case mx_tm_HM_LD:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(19, 52);
+                    ITU_T_BIND_PER(value<MINUTES_AND_DIFF_ENCODING > (false, mx_tm_HM_LD));
+                    break;
+                }
+                case mx_tm_HMS_L:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(20, 52);
+                    ITU_T_BIND_PER(value<TIME_OF_DAY_ENCODING > (false, mx_tm_HMS_L));
+                    break;
+                }
+                case mx_tm_HMS_Z:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(21, 52);
+                    ITU_T_BIND_PER(value<TIME_OF_DAY_UTC_ENCODING > (false, mx_tm_HMS_Z));
+                    break;
+                }
+                case mx_tm_HMS_LD:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(22, 52);
+                    ITU_T_BIND_PER(value<TIME_OF_DAY_AND_DIFF_ENCODING > (false, mx_tm_HMS_LD));
+                    break;
+                }
+                case mx_tm_HFn_L:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(23, 52);
+                    ITU_T_BIND_PER(value<HOURS_AND_FRACTION_ENC > (false, mx_tm_HFn_L));
+                    break;
+                }
+                case mx_tm_HFn_Z:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(24, 52);
+                    ITU_T_BIND_PER(value<HOURS_UTC_AND_FRACTION_ENC > (false, mx_tm_HFn_Z));
+                    break;
+                }
+                case mx_tm_HFn_LD:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(25, 52);
+                    ITU_T_BIND_PER(value<HOURS_AND_DIFF_AND_FRACTION_ENC > (false, mx_tm_HFn_LD));
+                    break;
+                }
+                case mx_tm_HMFn_L:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(26, 52);
+                    ITU_T_BIND_PER(value<MINUTES_AND_FRACTION_ENC > (false, mx_tm_HMFn_L));
+                    break;
+                }
+                case mx_tm_HMFn_Z:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(27, 52);
+                    ITU_T_BIND_PER(value<MINUTES_UTC_AND_FRACTION_ENC > (false, mx_tm_HMFn_Z));
+                    break;
+                }
+                case mx_tm_HMFn_LD:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(28, 52);
+                    ITU_T_BIND_PER(value<MINUTES_AND_DIFF_AND_FRACTION_ENC > (false, mx_tm_HMFn_LD));
+                    break;
+                }
+                case mx_tm_HMFSn_L:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(29, 52);
+                    ITU_T_BIND_PER(value<TIME_OF_DAY_AND_FRACTION_ENC > (false, mx_tm_HMFSn_L));
+                    break;
+                }
+                case mx_tm_HMFSn_Z:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(30, 52);
+                    ITU_T_BIND_PER(value<TIME_OF_DAY_UTC_AND_FRACTION_ENC > (false, mx_tm_HMFSn_Z));
+                    break;
+                }
+                case mx_tm_HMFSn_LD:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(31, 52);
+                    ITU_T_BIND_PER(value<TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENC > (false, mx_tm_HMFSn_LD));
+                    break;
+                }
+                case mx_tm_DTT:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(32, 52);
+                    ITU_T_BIND_PER(value<DATE_TIME_ENC > (false, mx_tm_DTT));
+                    break;
+                }
+                case mx_tm_Pse_D:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(33, 52);
+                    ITU_T_BIND_PER(value<START_END_DATE_INTERVAL_ENC > (false, mx_tm_Pse_D));
+                    break;
+                }
+                case mx_tm_Pse_T:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(34, 52);
+                    ITU_T_BIND_PER(value<START_END_TIME_INTERVAL_ENC > (false, mx_tm_Pse_T));
+                    break;
+                }
+                case mx_tm_Pse_DT:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(35, 52);
+                    ITU_T_BIND_PER(value<START_END_DATE_TIME_INTERVAL_ENC > (false, mx_tm_Pse_DT));
+                    break;
+                }
+                case mx_tm_DU:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(36, 52);
+                    ITU_T_BIND_PER(value<DURATION_INTERVAL_ENC > (false, mx_tm_DU));
+                    break;
+                }
+                case mx_tm_Psi_D:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(37, 52);
+                    ITU_T_BIND_PER(value<START_DATE_DURATION_INTERVAL_ENC > (false, mx_tm_Psi_D));
+                    break;
+                }
+                case mx_tm_Psi_T:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(38, 52);
+                    ITU_T_BIND_PER(value<START_TIME_DURATION_INTERVAL_ENC > (false, mx_tm_Psi_T));
+                    break;
+                }
+                case mx_tm_Psi_DT:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(39, 52);
+                    ITU_T_BIND_PER(value<START_DATE_TIME_DURATION_INTERVAL_ENC > (false, mx_tm_Psi_DT));
+                    break;
+                }
+                case mx_tm_Pde_D:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(40, 52);
+                    ITU_T_BIND_PER(value<DURATION_END_DATE_INTERVAL_ENC > (false, mx_tm_Pde_D));
+                    break;
+                }
+                case mx_tm_Pde_T:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(41, 52);
+                    ITU_T_BIND_PER(value<DURATION_END_TIME_INTERVAL_ENC > (false, mx_tm_Pde_T));
+                    break;
+                }
+                case mx_tm_Pde_DT:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(42, 52);
+                    ITU_T_BIND_PER(value<DURATION_END_DATE_TIME_INTERVAL_ENC > (false, mx_tm_Pde_DT));
+                    break;
+                }
+                case mx_tm_Rse_D:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(43, 52);
+                    ITU_T_BIND_PER(value<REC_START_END_DATE_INTERVAL_ENC > (false, mx_tm_Rse_D));
+                    break;
+                }
+                case mx_tm_Rse_T:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(44, 52);
+                    ITU_T_BIND_PER(value<REC_START_END_TIME_INTERVAL_ENC > (false, mx_tm_Rse_T));
+                    break;
+                }
+                case mx_tm_Rse_DT:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(45, 52);
+                    ITU_T_BIND_PER(value<REC_START_END_DATE_TIME_INTERVAL_ENC > (false, mx_tm_Rse_DT));
+                    break;
+                }
+                case mx_tm_RDU:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(46, 52);
+                    ITU_T_BIND_PER(value<REC_DURATION_INTERVAL_ENC > (false, mx_tm_RDU));
+                    break;
+                }
+                case mx_tm_Rsd_D:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(47, 52);
+                    ITU_T_BIND_PER(value<REC_START_DATE_DURATION_INTERVAL_ENC > (false, mx_tm_Rsd_D));
+                    break;
+                }
+                case mx_tm_Rsd_T:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(48, 52);
+                    ITU_T_BIND_PER(value<REC_START_TIME_DURATION_INTERVAL_ENC > (false, mx_tm_Rsd_T));
+                    break;
+                }
+                case mx_tm_Rsd_DT:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(49, 52);
+                    ITU_T_BIND_PER(value<REC_START_DATE_TIME_DURATION_INTERVAL_ENC > (false, mx_tm_Rsd_DT));
+                    break;
+                }
+                case mx_tm_Red_D:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(50, 52);
+                    ITU_T_BIND_PER(value<REC_DURATION_END_DATE_INTERVAL_ENC > (false, mx_tm_Red_D));
+                    break;
+                }
+                case mx_tm_Red_T:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(51, 52);
+                    ITU_T_BIND_PER(value<REC_DURATION_END_TIME_INTERVAL_ENC > (false, mx_tm_Red_T));
+                    break;
+                }
+                case mx_tm_Red_DT:
+                {
+                    ITU_T_SET_CONSTAINED_INDX(52, 52);
+                    ITU_T_BIND_PER(value<REC_DURATION_END_DATE_TIME_INTERVAL_ENC > (false, mx_tm_Red_DT));
+                    break;
+                }
+                default:
+                {
+                }
+            }
+        }
+
+        template<> void MIXED_ENCODING::serialize(boost::asn1::x691::input_coder& arch) {
+
+            ITU_T_GET_CONSTAINED_INDX(52);
+
+            switch (__indx__) {
+                case 0:
+                {
+                    ITU_T_BIND_PER(value<CENTURY_ENCODING > (true, mx_tm_C_Basic));
+                    break;
+                }
+                case 1:
+                {
+                    ITU_T_BIND_PER(value<ANY_CENTURY > (true, mx_tm_C_L));
+                    break;
+                }
+                case 2:
+                {
+                    ITU_T_BIND_PER(value<YEAR_ENCODING > (true, mx_tm_Y_Basic));
+                    break;
+                }
+                case 3:
+                {
+                    ITU_T_BIND_PER(value<ANY_YEAR > (true, mx_tm_Y_L));
+                    break;
+                }
+                case 4:
+                {
+                    ITU_T_BIND_PER(value<YEAR_MONTH_ENCODING > (true, mx_tm_YM_Basic));
+                    break;
+                }
+                case 5:
+                {
+                    ITU_T_BIND_PER(value<ANY_YEAR_MONTH > (true, mx_tm_YM_L));
+                    break;
+                }
+                case 6:
+                {
+                    ITU_T_BIND_PER(value<DATE_ENCODING > (true, mx_tm_YMD_Basic));
+                    break;
+                }
+                case 7:
+                {
+                    ITU_T_BIND_PER(value<ANY_DATE > (true, mx_tm_YMD_L));
+                    break;
+                }
+                case 8:
+                {
+                    ITU_T_BIND_PER(value<YEAR_DAY_ENCODING > (true, mx_tm_YD_Basic));
+                    break;
+                }
+                case 9:
+                {
+                    ITU_T_BIND_PER(value<ANY_YEAR_DAY > (true, mx_tm_YD_L));
+                    break;
+                }
+                case 10:
+                {
+                    ITU_T_BIND_PER(value<YEAR_WEEK_ENCODING > (true, mx_tm_YW_Basic));
+                    break;
+                }
+                case 11:
+                {
+                    ITU_T_BIND_PER(value<ANY_YEAR_WEEK > (true, mx_tm_YW_L));
+                    break;
+                }
+                case 12:
+                {
+                    ITU_T_BIND_PER(value<YEAR_WEEK_DAY_ENCODING > (true, mx_tm_YWD_Basic));
+                    break;
+                }
+                case 13:
+                {
+                    ITU_T_BIND_PER(value<ANY_YEAR_WEEK_DAY > (true, mx_tm_YWD_L));
+                    break;
+                }
+                case 14:
+                {
+                    ITU_T_BIND_PER(value<HOURS_ENCODING > (true, mx_tm_H_L));
+                    break;
+                }
+                case 15:
+                {
+                    ITU_T_BIND_PER(value<HOURS_UTC_ENCODING > (true, mx_tm_H_Z));
+                    break;
+                }
+                case 16:
+                {
+                    ITU_T_BIND_PER(value<HOURS_AND_DIFF_ENCODING > (true, mx_tm_H_LD));
+                    break;
+                }
+                case 17:
+                {
+                    ITU_T_BIND_PER(value<MINUTES_ENCODING > (true, mx_tm_HM_L));
+                    break;
+                }
+                case 18:
+                {
+                    ITU_T_BIND_PER(value<MINUTES_UTC_ENCODING > (true, mx_tm_HM_Z));
+                    break;
+                }
+                case 19:
+                {
+                    ITU_T_BIND_PER(value<MINUTES_AND_DIFF_ENCODING > (true, mx_tm_HM_LD));
+                    break;
+                }
+                case 20:
+                {
+                    ITU_T_BIND_PER(value<TIME_OF_DAY_ENCODING > (true, mx_tm_HMS_L));
+                    break;
+                }
+                case 21:
+                {
+                    ITU_T_BIND_PER(value<TIME_OF_DAY_UTC_ENCODING > (true, mx_tm_HMS_Z));
+                    break;
+                }
+                case 22:
+                {
+                    ITU_T_BIND_PER(value<TIME_OF_DAY_AND_DIFF_ENCODING > (true, mx_tm_HMS_LD));
+                    break;
+                }
+                case 23:
+                {
+                    ITU_T_BIND_PER(value<HOURS_AND_FRACTION_ENC > (true, mx_tm_HFn_L));
+                    break;
+                }
+                case 24:
+                {
+                    ITU_T_BIND_PER(value<HOURS_UTC_AND_FRACTION_ENC > (true, mx_tm_HFn_Z));
+                    break;
+                }
+                case 25:
+                {
+                    ITU_T_BIND_PER(value<HOURS_AND_DIFF_AND_FRACTION_ENC > (true, mx_tm_HFn_LD));
+                    break;
+                }
+                case 26:
+                {
+                    ITU_T_BIND_PER(value<MINUTES_AND_FRACTION_ENC > (true, mx_tm_HMFn_L));
+                    break;
+                }
+                case 27:
+                {
+                    ITU_T_BIND_PER(value<MINUTES_UTC_AND_FRACTION_ENC > (true, mx_tm_HMFn_Z));
+                    break;
+                }
+                case 28:
+                {
+                    ITU_T_BIND_PER(value<MINUTES_AND_DIFF_AND_FRACTION_ENC > (true, mx_tm_HMFn_LD));
+                    break;
+                }
+                case 29:
+                {
+                    ITU_T_BIND_PER(value<TIME_OF_DAY_AND_FRACTION_ENC > (true, mx_tm_HMFSn_L));
+                    break;
+                }
+                case 30:
+                {
+                    ITU_T_BIND_PER(value<TIME_OF_DAY_UTC_AND_FRACTION_ENC > (true, mx_tm_HMFSn_Z));
+                    break;
+                }
+                case 31:
+                {
+                    ITU_T_BIND_PER(value<TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENC > (true, mx_tm_HMFSn_LD));
+                    break;
+                }
+                case 32:
+                {
+                    ITU_T_BIND_PER(value<DATE_TIME_ENC > (true, mx_tm_DTT));
+                    break;
+                }
+                case 33:
+                {
+                    ITU_T_BIND_PER(value<START_END_DATE_INTERVAL_ENC > (true, mx_tm_Pse_D));
+                    break;
+                }
+                case 34:
+                {
+                    ITU_T_BIND_PER(value<START_END_TIME_INTERVAL_ENC > (true, mx_tm_Pse_T));
+                    break;
+                }
+                case 35:
+                {
+                    ITU_T_BIND_PER(value<START_END_DATE_TIME_INTERVAL_ENC > (true, mx_tm_Pse_DT));
+                    break;
+                }
+                case 36:
+                {
+                    ITU_T_BIND_PER(value<DURATION_INTERVAL_ENC > (true, mx_tm_DU));
+                    break;
+                }
+                case 37:
+                {
+                    ITU_T_BIND_PER(value<START_DATE_DURATION_INTERVAL_ENC > (true, mx_tm_Psi_D));
+                    break;
+                }
+                case 38:
+                {
+                    ITU_T_BIND_PER(value<START_TIME_DURATION_INTERVAL_ENC > (true, mx_tm_Psi_T));
+                    break;
+                }
+                case 39:
+                {
+                    ITU_T_BIND_PER(value<START_DATE_TIME_DURATION_INTERVAL_ENC > (true, mx_tm_Psi_DT));
+                    break;
+                }
+                case 40:
+                {
+                    ITU_T_BIND_PER(value<DURATION_END_DATE_INTERVAL_ENC > (true, mx_tm_Pde_D));
+                    break;
+                }
+                case 41:
+                {
+                    ITU_T_BIND_PER(value<DURATION_END_TIME_INTERVAL_ENC > (true, mx_tm_Pde_T));
+                    break;
+                }
+                case 42:
+                {
+                    ITU_T_BIND_PER(value<DURATION_END_DATE_TIME_INTERVAL_ENC > (true, mx_tm_Pde_DT));
+                    break;
+                }
+                case 43:
+                {
+                    ITU_T_BIND_PER(value<REC_START_END_DATE_INTERVAL_ENC > (true, mx_tm_Rse_D));
+                    break;
+                }
+                case 44:
+                {
+                    ITU_T_BIND_PER(value<REC_START_END_TIME_INTERVAL_ENC > (true, mx_tm_Rse_T));
+                    break;
+                }
+                case 45:
+                {
+                    ITU_T_BIND_PER(value<REC_START_END_DATE_TIME_INTERVAL_ENC > (true, mx_tm_Rse_DT));
+                    break;
+                }
+                case 46:
+                {
+                    ITU_T_BIND_PER(value<REC_DURATION_INTERVAL_ENC > (true, mx_tm_RDU));
+                    break;
+                }
+                case 47:
+                {
+                    ITU_T_BIND_PER(value<REC_START_DATE_DURATION_INTERVAL_ENC > (true, mx_tm_Rsd_D));
+                    break;
+                }
+                case 48:
+                {
+                    ITU_T_BIND_PER(value<REC_START_TIME_DURATION_INTERVAL_ENC > (true, mx_tm_Rsd_T));
+                    break;
+                }
+                case 49:
+                {
+                    ITU_T_BIND_PER(value<REC_START_DATE_TIME_DURATION_INTERVAL_ENC > (true, mx_tm_Rsd_DT));
+                    break;
+                }
+                case 50:
+                {
+                    ITU_T_BIND_PER(value<REC_DURATION_END_DATE_INTERVAL_ENC > (true, mx_tm_Red_D));
+                    break;
+                }
+                case 51:
+                {
+                    ITU_T_BIND_PER(value<REC_DURATION_END_TIME_INTERVAL_ENC > (true, mx_tm_Red_T));
+                    break;
+                }
+                case 52:
+                {
+                    ITU_T_BIND_PER(value<REC_DURATION_END_DATE_TIME_INTERVAL_ENC > (true, mx_tm_Red_DT));
+                    break;
+                }
+                default:
+                {
+                }
+            }
+        }
+
+
     }
 }
 
