@@ -126,7 +126,7 @@ namespace boost {
             std::size_t second_fraction_HF(integer_type f, std::size_t n) {
                 if (n > 1)
                     return ((static_cast<uint64_t> (f) * 36) /
-                            static_cast<uint64_t> (pow10(n - 2))) % 60;
+                        static_cast<uint64_t> (pow10(n - 2))) % 60;
                 return 0;
             }
 
@@ -266,8 +266,7 @@ namespace boost {
         base_date CENTURY_ENCODING::as_date() const {
             try {
                 return base_date(static_cast<int> (as_number())*100, 1, 1);
-            }
-            catch (...) {
+            } catch (...) {
             }
             return base_date();
         }
@@ -279,7 +278,7 @@ namespace boost {
         void CENTURY_ENCODING::as_string(const std::string& v) {
             std::string vl = normalize_time_str(v);
             as_number(to_range<uint8_t>(string_to_def<int>(revrs_substr(vl, 1), 0, "0"),
-                                        (uint8_t) 0, (uint8_t) 99));
+                    (uint8_t) 0, (uint8_t) 99));
         }
 
 
@@ -346,8 +345,7 @@ namespace boost {
         base_date YEAR_ENCODING::as_date() const {
             try {
                 return base_date(static_cast<int> (as_number()), 1, 1);
-            }
-            catch (...) {
+            } catch (...) {
             }
             return base_date();
         }
@@ -359,7 +357,7 @@ namespace boost {
         void YEAR_ENCODING::as_string(const std::string& v) {
             std::string vl = normalize_time_str(v);
             as_number(to_range<integer_type>(string_to_def<int>(vl, 0, "0"),
-                                             (integer_type) 0, (integer_type) 9999));
+                    (integer_type) 0, (integer_type) 9999));
         }
 
 
@@ -391,8 +389,7 @@ namespace boost {
         base_date YEAR_MONTH_ENCODING::as_date() const {
             try {
                 return base_date(static_cast<int> (year().as_number()), (int) month(), 1);
-            }
-            catch (...) {
+            } catch (...) {
             }
             return base_date();
         }
@@ -445,8 +442,7 @@ namespace boost {
         base_date DATE_ENCODING::as_date() const {
             try {
                 return base_date(static_cast<int> (year().as_number()), (int) month(), (int) day());
-            }
-            catch (...) {
+            } catch (...) {
             }
             return base_date();
         }
@@ -503,8 +499,7 @@ namespace boost {
         base_date DATE::as_date() const {
             try {
                 return base_date(static_cast<int> (year().as_number()), (int) month(), (int) day());
-            }
-            catch (...) {
+            } catch (...) {
             }
             return base_date();
         }
@@ -559,8 +554,7 @@ namespace boost {
             try {
                 return base_date(static_cast<int> (year().as_number()), 1, 1) +
                         base_date_time::date_duration_type(day() ? day() - 1 : 0);
-            }
-            catch (...) {
+            } catch (...) {
             }
             return base_date();
         }
@@ -615,8 +609,7 @@ namespace boost {
                 std::size_t dwst = (std::size_t)tmp.day_of_week();
                 return tmp + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
                         base_date_time::date_duration_type((week() > 1) ? (7 * (week() - 1)) : 0);
-            }
-            catch (...) {
+            } catch (...) {
             }
             return base_date();
         }
@@ -677,8 +670,7 @@ namespace boost {
                 std::size_t dwst = (std::size_t)tmp.day_of_week();
                 return tmp + base_date_time::date_duration_type((dwst > 4) ? (8 - dwst) : (1 - dwst)) +
                         base_date_time::date_duration_type(((week() > 1) ? (7 * (week() - 1)) : 0) + ((day() > 1) ? (day() - 1) : 0));
-            }
-            catch (...) {
+            } catch (...) {
             }
             return base_date();
         }
@@ -734,8 +726,7 @@ namespace boost {
         base_time_duration HOURS_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (as_number()), 0, 0);
-            }
-            catch (...) {
+            } catch (...) {
             }
             return base_time_duration();
         }
@@ -782,8 +773,7 @@ namespace boost {
         base_time_duration HOURS_UTC_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (as_number()), 0, 0);
-            }
-            catch (...) {
+            } catch (...) {
             }
             return base_time_duration();
         }
@@ -900,8 +890,7 @@ namespace boost {
         base_time_duration HOURS_AND_DIFF_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (local_hours()), 0, 0);
-            }
-            catch (...) {
+            } catch (...) {
             }
             return base_time_duration();
         }
@@ -954,8 +943,7 @@ namespace boost {
         base_time_duration MINUTES_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()), 0);
-            }
-            catch (...) {
+            } catch (...) {
             }
             return base_time_duration();
         }
@@ -1010,8 +998,7 @@ namespace boost {
         base_time_duration MINUTES_UTC_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()), 0);
-            }
-            catch (...) {
+            } catch (...) {
             }
             return base_time_duration();
         }
@@ -1072,8 +1059,7 @@ namespace boost {
         base_time_duration MINUTES_AND_DIFF_ENCODING::as_time() const {
             try {
                 return local_time().as_time();
-            }
-            catch (...) {
+            } catch (...) {
             }
             return base_time_duration();
         }
@@ -1129,8 +1115,7 @@ namespace boost {
         base_time_duration TIME_OF_DAY_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()), static_cast<int> (seconds()));
-            }
-            catch (...) {
+            } catch (...) {
             }
             return base_time_duration();
         }
@@ -1188,8 +1173,7 @@ namespace boost {
         base_time_duration TIME_OF_DAY::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()), static_cast<int> (seconds()));
-            }
-            catch (...) {
+            } catch (...) {
             }
             return base_time_duration();
         }
@@ -1248,8 +1232,7 @@ namespace boost {
         base_time_duration TIME_OF_DAY_UTC_ENCODING::as_time() const {
             try {
                 return base_time_duration(static_cast<int> (hours()), static_cast<int> (minutes()), static_cast<int> (seconds()));
-            }
-            catch (...) {
+            } catch (...) {
             }
             return base_time_duration();
         }
@@ -1312,8 +1295,7 @@ namespace boost {
         base_time_duration TIME_OF_DAY_AND_DIFF_ENCODING::as_time() const {
             try {
                 return local_time().as_time();
-            }
-            catch (...) {
+            } catch (...) {
             }
             return base_time_duration();
         }
@@ -1386,8 +1368,7 @@ namespace boost {
                     rslt += (to_string(*minutes()) + "M");
                 if (seconds())
                     rslt += (to_string(*seconds()) + "S");
-            }
-            else {
+            } else {
 
             }
             return rslt;
@@ -1503,8 +1484,7 @@ namespace boost {
                     rslt += (to_string(*minutes()) + "M");
                 if (seconds())
                     rslt += (to_string(*seconds()) + "S");
-            }
-            else {
+            } else {
 
             }
             return rslt;
@@ -1715,23 +1695,20 @@ namespace boost {
                             date_Y_Basic(YEAR_ENCODING(vl));
                         else
                             date_Y_L(ANY_YEAR(vl));
-                    }
-                    else {
+                    } else {
                         if (tmpl.size() == 3)
                             date_C_Basic(CENTURY_ENCODING(vl));
                         else
                             date_C_L(ANY_CENTURY(vl));
                     }
-                }
-                else {
+                } else {
                     // if (size-it)>3 YD                  
                     if ((tmpl.size() - it) > 3) {
                         if (it == 4)
                             date_YD_Basic(YEAR_DAY_ENCODING(vl));
                         else
                             date_YD_L(ANY_YEAR_DAY(vl));
-                    }
-                    else {
+                    } else {
                         std::string::size_type itf = tmpl.find_first_of('-');
                         std::string::size_type itl = tmpl.find_last_of('-');
                         if (itf != itl) {
@@ -1739,8 +1716,7 @@ namespace boost {
                                 date_YMD_Basic(DATE_ENCODING(vl));
                             else
                                 date_YMD_L(ANY_DATE(vl));
-                        }
-                        else {
+                        } else {
                             if (tmpl.size() == 4)
                                 date_YM_Basic(YEAR_MONTH_ENCODING(vl));
                             else
@@ -1748,16 +1724,14 @@ namespace boost {
                         }
                     }
                 }
-            }
-            else {
+            } else {
                 // if (size-it)>3 YWD else YW
                 if ((tmpl.size() - it) > 3) {
                     if (it == 4)
                         date_YWD_Basic(YEAR_WEEK_DAY_ENCODING(vl));
                     else
                         date_YWD_L(ANY_YEAR_WEEK_DAY(vl));
-                }
-                else {
+                } else {
                     if (it == 4)
                         date_YW_Basic(YEAR_WEEK_ENCODING(vl));
                     else
@@ -1965,8 +1939,7 @@ namespace boost {
                         time_type().time_HFn_Z(HOURS_UTC_AND_FRACTION(vl));
                     else
                         time_type().time_HFn_L(HOURS_AND_FRACTION(vl));
-                }
-                else {
+                } else {
                     if (dtp)
                         time_type().time_H_LD(HOURS_AND_DIFF_ENCODING(vl));
                     else if (ztp)
@@ -1974,8 +1947,7 @@ namespace boost {
                     else
                         time_type().time_H_L(HOURS_ENCODING(vl));
                 }
-            }
-            else if (itf == itl) {
+            } else if (itf == itl) {
                 if (ftp) {
                     if (fpart)
                         number_of_digits(fpart);
@@ -1985,8 +1957,7 @@ namespace boost {
                         time_type().time_HMFn_Z(MINUTES_UTC_AND_FRACTION(vl));
                     else
                         time_type().time_HMFn_L(MINUTES_AND_FRACTION(vl));
-                }
-                else {
+                } else {
                     if (dtp)
                         time_type().time_HM_LD(MINUTES_AND_DIFF_ENCODING(vl));
                     else if (ztp)
@@ -1994,8 +1965,7 @@ namespace boost {
                     else
                         time_type().time_HM_L(MINUTES_ENCODING(vl));
                 }
-            }
-            else {
+            } else {
                 if (ftp) {
                     if (fpart)
                         number_of_digits(fpart);
@@ -2005,8 +1975,7 @@ namespace boost {
                         time_type().time_HMFSn_Z(TIME_OF_DAY_UTC_AND_FRACTION(vl));
                     else
                         time_type().time_HMFSn_L(TIME_OF_DAY_AND_FRACTION(vl));
-                }
-                else {
+                } else {
                     if (dtp)
                         time_type().time_HMS_LD(TIME_OF_DAY_AND_DIFF_ENCODING(vl));
                     else if (ztp)
@@ -2156,6 +2125,64 @@ namespace boost {
         }
 
         std::string MIXED_ENCODING::as_string() {
+            switch (type()) {
+                case mx_tm_C_Basic: return tm_C_Basic() ? tm_C_Basic()->as_string(): "";
+                case mx_tm_C_L: return tm_C_L() ? tm_C_L()->as_string(): "";
+                case mx_tm_Y_Basic: return tm_Y_Basic() ? tm_Y_Basic()->as_string(): "";
+                case mx_tm_Y_L: return tm_Y_L() ? tm_Y_L()->as_string(): "";
+                case mx_tm_YM_Basic: return tm_YM_Basic() ? tm_YM_Basic()->as_string(): "";
+                case mx_tm_YM_L: return tm_YM_L() ? tm_YM_L()->as_string(): "";
+                case mx_tm_YMD_Basic: return tm_YMD_Basic() ? tm_YMD_Basic()->as_string(): "";
+                case mx_tm_YMD_L: return tm_YMD_L() ? tm_YMD_L()->as_string(): "";
+                case mx_tm_YD_Basic: return tm_YD_Basic() ? tm_YD_Basic()->as_string(): "";
+                case mx_tm_YD_L: return tm_YD_L() ? tm_YD_L()->as_string(): "";
+                case mx_tm_YW_Basic: return tm_YW_Basic() ? tm_YW_Basic()->as_string(): "";
+                case mx_tm_YW_L: return tm_YW_L() ? tm_YW_L()->as_string(): "";
+                case mx_tm_YWD_Basic: return tm_YWD_Basic() ? tm_YWD_Basic()->as_string(): "";
+                case mx_tm_YWD_L: return tm_YWD_L() ? tm_YWD_L()->as_string(): "";
+                case mx_tm_H_L: return tm_H_L() ? tm_H_L() ->as_string(): "";
+                case mx_tm_H_Z: return tm_H_Z() ? tm_H_Z()->as_string(): "";
+                case mx_tm_H_LD: return tm_H_LD() ? tm_H_LD()->as_string(): "";
+                case mx_tm_HM_L: return tm_HM_L() ? tm_HM_L()->as_string(): "";
+                case mx_tm_HM_Z: return tm_HM_Z() ? tm_HM_Z()->as_string(): "";
+                case mx_tm_HM_LD: return tm_HM_LD() ? tm_HM_LD()->as_string(): "";
+                case mx_tm_HMS_L: return tm_HMS_L() ? tm_HMS_L()->as_string(): "";
+                case mx_tm_HMS_Z: return tm_HMS_Z() ? tm_HMS_Z()->as_string(): "";
+                case mx_tm_HMS_LD: return tm_HMS_LD() ? tm_HMS_LD()->as_string(): "";
+                case mx_tm_HFn_L: return tm_HFn_L() ? tm_HFn_L()->as_string(): "";
+                case mx_tm_HFn_Z: return tm_HFn_Z() ? tm_HFn_Z()->as_string(): "";
+                case mx_tm_HFn_LD: return tm_HFn_LD() ? tm_HFn_LD()->as_string(): "";
+                case mx_tm_HMFn_L: return tm_HMFn_L() ? tm_HMFn_L()->as_string(): "";
+                case mx_tm_HMFn_Z: return tm_HMFn_Z() ? tm_HMFn_Z()->as_string(): "";
+                case mx_tm_HMFn_LD: return tm_HMFn_LD() ? tm_HMFn_LD()->as_string(): "";
+                case mx_tm_HMFSn_L: return tm_HMFSn_L() ? tm_HMFSn_L()->as_string(): "";
+                case mx_tm_HMFSn_Z: return tm_HMFSn_Z() ? tm_HMFSn_Z()->as_string(): "";
+                case mx_tm_HMFSn_LD: return tm_HMFSn_LD() ? tm_HMFSn_LD()->as_string(): "";
+                case mx_tm_DTT: return tm_DTT() ? tm_DTT()->as_string(): "";
+                case mx_tm_Pse_D: return tm_Pse_D() ? tm_Pse_D()->as_string(): "";
+                case mx_tm_Pse_T: return tm_Pse_T() ? tm_Pse_T()->as_string(): "";
+                case mx_tm_Pse_DT: return tm_Pse_DT() ? tm_Pse_DT()->as_string(): "";
+                case mx_tm_DU: return tm_DU() ? tm_DU()->as_string(): "";
+                case mx_tm_Psi_D: return tm_Psi_D() ? tm_Psi_D()->as_string(): "";
+                case mx_tm_Psi_T: return tm_Psi_T() ? tm_Psi_T()->as_string(): "";
+                case mx_tm_Psi_DT: return tm_Psi_DT() ? tm_Psi_DT()->as_string(): "";
+                case mx_tm_Pde_D: return tm_Pde_D() ? tm_Pde_D()->as_string(): "";
+                case mx_tm_Pde_T: return tm_Pde_T() ? tm_Pde_T()->as_string(): "";
+                case mx_tm_Pde_DT: return tm_Pde_DT() ? tm_Pde_DT() ->as_string(): "";
+                case mx_tm_Rse_D: return tm_Rse_D() ? tm_Rse_D()->as_string(): "";
+                case mx_tm_Rse_T: return tm_Rse_T() ? tm_Rse_T()->as_string(): "";
+                case mx_tm_Rse_DT: return tm_Rse_DT() ? tm_Rse_DT()->as_string(): "";
+                case mx_tm_RDU: return tm_RDU() ? tm_RDU()->as_string(): "";
+                case mx_tm_Rsd_D: return tm_Rsd_D() ? tm_Rsd_D()->as_string(): "";
+                case mx_tm_Rsd_T: return tm_Rsd_T() ? tm_Rsd_T()->as_string(): "";
+                case mx_tm_Rsd_DT: return tm_Rsd_DT() ? tm_Rsd_DT()->as_string(): "";
+                case mx_tm_Red_D: return tm_Red_D() ? tm_Red_D()->as_string(): "";
+                case mx_tm_Red_T: return tm_Red_T() ? tm_Red_T()->as_string(): "";
+                case mx_tm_Red_DT: return tm_Red_DT() ? tm_Red_DT()->as_string(): "";
+                default:
+                {
+                }
+            }
             return "";
         }
 
@@ -2164,6 +2191,64 @@ namespace boost {
         }
 
         std::string MIXED_ENCODING::format() {
+            switch (type()) {
+                case mx_tm_C_Basic: return tm_C_Basic() ? tm_C_Basic()->format(): "";
+                case mx_tm_C_L: return tm_C_L() ? tm_C_L()->format(): "";
+                case mx_tm_Y_Basic: return tm_Y_Basic() ? tm_Y_Basic()->format(): "";
+                case mx_tm_Y_L: return tm_Y_L() ? tm_Y_L()->format(): "";
+                case mx_tm_YM_Basic: return tm_YM_Basic() ? tm_YM_Basic()->format(): "";
+                case mx_tm_YM_L: return tm_YM_L() ? tm_YM_L()->format(): "";
+                case mx_tm_YMD_Basic: return tm_YMD_Basic() ? tm_YMD_Basic()->format(): "";
+                case mx_tm_YMD_L: return tm_YMD_L() ? tm_YMD_L()->format(): "";
+                case mx_tm_YD_Basic: return tm_YD_Basic() ? tm_YD_Basic()->format(): "";
+                case mx_tm_YD_L: return tm_YD_L() ? tm_YD_L()->format(): "";
+                case mx_tm_YW_Basic: return tm_YW_Basic() ? tm_YW_Basic()->format(): "";
+                case mx_tm_YW_L: return tm_YW_L() ? tm_YW_L()->format(): "";
+                case mx_tm_YWD_Basic: return tm_YWD_Basic() ? tm_YWD_Basic()->format(): "";
+                case mx_tm_YWD_L: return tm_YWD_L() ? tm_YWD_L()->format(): "";
+                case mx_tm_H_L: return tm_H_L() ? tm_H_L() ->format(): "";
+                case mx_tm_H_Z: return tm_H_Z() ? tm_H_Z()->format(): "";
+                case mx_tm_H_LD: return tm_H_LD() ? tm_H_LD()->format(): "";
+                case mx_tm_HM_L: return tm_HM_L() ? tm_HM_L()->format(): "";
+                case mx_tm_HM_Z: return tm_HM_Z() ? tm_HM_Z()->format(): "";
+                case mx_tm_HM_LD: return tm_HM_LD() ? tm_HM_LD()->format(): "";
+                case mx_tm_HMS_L: return tm_HMS_L() ? tm_HMS_L()->format(): "";
+                case mx_tm_HMS_Z: return tm_HMS_Z() ? tm_HMS_Z()->format(): "";
+                case mx_tm_HMS_LD: return tm_HMS_LD() ? tm_HMS_LD()->format(): "";
+                case mx_tm_HFn_L: return tm_HFn_L() ? tm_HFn_L()->format(): "";
+                case mx_tm_HFn_Z: return tm_HFn_Z() ? tm_HFn_Z()->format(): "";
+                case mx_tm_HFn_LD: return tm_HFn_LD() ? tm_HFn_LD()->format(): "";
+                case mx_tm_HMFn_L: return tm_HMFn_L() ? tm_HMFn_L()->format(): "";
+                case mx_tm_HMFn_Z: return tm_HMFn_Z() ? tm_HMFn_Z()->format(): "";
+                case mx_tm_HMFn_LD: return tm_HMFn_LD() ? tm_HMFn_LD()->format(): "";
+                case mx_tm_HMFSn_L: return tm_HMFSn_L() ? tm_HMFSn_L()->format(): "";
+                case mx_tm_HMFSn_Z: return tm_HMFSn_Z() ? tm_HMFSn_Z()->format(): "";
+                case mx_tm_HMFSn_LD: return tm_HMFSn_LD() ? tm_HMFSn_LD()->format(): "";
+                case mx_tm_DTT: return tm_DTT() ? tm_DTT()->format(): "";
+                case mx_tm_Pse_D: return tm_Pse_D() ? tm_Pse_D()->format(): "";
+                case mx_tm_Pse_T: return tm_Pse_T() ? tm_Pse_T()->format(): "";
+                case mx_tm_Pse_DT: return tm_Pse_DT() ? tm_Pse_DT()->format(): "";
+                case mx_tm_DU: return tm_DU() ? tm_DU()->format(): "";
+                case mx_tm_Psi_D: return tm_Psi_D() ? tm_Psi_D()->format(): "";
+                case mx_tm_Psi_T: return tm_Psi_T() ? tm_Psi_T()->format(): "";
+                case mx_tm_Psi_DT: return tm_Psi_DT() ? tm_Psi_DT()->format(): "";
+                case mx_tm_Pde_D: return tm_Pde_D() ? tm_Pde_D()->format(): "";
+                case mx_tm_Pde_T: return tm_Pde_T() ? tm_Pde_T()->format(): "";
+                case mx_tm_Pde_DT: return tm_Pde_DT() ? tm_Pde_DT() ->format(): "";
+                case mx_tm_Rse_D: return tm_Rse_D() ? tm_Rse_D()->format(): "";
+                case mx_tm_Rse_T: return tm_Rse_T() ? tm_Rse_T()->format(): "";
+                case mx_tm_Rse_DT: return tm_Rse_DT() ? tm_Rse_DT()->format(): "";
+                case mx_tm_RDU: return tm_RDU() ? tm_RDU()->format(): "";
+                case mx_tm_Rsd_D: return tm_Rsd_D() ? tm_Rsd_D()->format(): "";
+                case mx_tm_Rsd_T: return tm_Rsd_T() ? tm_Rsd_T()->format(): "";
+                case mx_tm_Rsd_DT: return tm_Rsd_DT() ? tm_Rsd_DT()->format(): "";
+                case mx_tm_Red_D: return tm_Red_D() ? tm_Red_D()->format(): "";
+                case mx_tm_Red_T: return tm_Red_T() ? tm_Red_T()->format(): "";
+                case mx_tm_Red_DT: return tm_Red_DT() ? tm_Red_DT()->format(): "";
+                default:
+                {
+                }
+            }
             return "";
         }
 

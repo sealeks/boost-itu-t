@@ -2481,11 +2481,11 @@ namespace boost {
                 ITU_T_BIND_PER(time_);
             }
 
-            std::string format() const {
+            std::string format() {
                 return date().format() + "T" + time().format();
             };
 
-            ITU_T_TIME_COUTTP_FN(DATE_TIME);
+            ITU_T_TIME_COUTTP_NCFN(DATE_TIME);
 
             ITU_T_TIME_X690_FN_ID_DECL(TYPE_DATE_TIME);
             ITU_T_ARCHIVE_FUNC;
@@ -2522,7 +2522,7 @@ namespace boost {
                 as_string(vl);
             };
 
-            std::string as_string() const {
+            std::string as_string() {
                 return start().as_string() + "/" + end().as_string();
             }
 
@@ -2545,14 +2545,14 @@ namespace boost {
                 ITU_T_BIND_PER(end_);
             }
 
-            std::string format() const {
+            std::string format() {
                 return start().format() + "/" + end().format();
             };
 
             ITU_T_HOLDERH_DECL(start, Tm_Type);
             ITU_T_HOLDERH_DECL(end, Tm_Type);
 
-            ITU_T_TIME_COUTTP_FN(START_END_INTERVAL_ENCODING);
+            ITU_T_TIME_COUTTP_NCFN(START_END_INTERVAL_ENCODING);
 
             ITU_T_TIME_X690_FN_DECL;
             ITU_T_ARCHIVE_FUNC;
@@ -2614,11 +2614,11 @@ namespace boost {
             ITU_T_OPTIONAL_DECL(seconds, integer_type); //   Ic(  [ 0  ...   63 ]   ...ext...) 
             ITU_T_OPTIONAL_DECL(fractional_part, Fractional_part_type);
 
-            std::string format() const {
+            std::string format() {
                 return "PnYnMnWnDTnHnMnS";
             };
 
-            ITU_T_TIME_COUTTP_FN(DURATION_INTERVAL_ENCODING);
+            ITU_T_TIME_COUTTP_NCFN(DURATION_INTERVAL_ENCODING);
 
             ITU_T_TIME_X690_FN_DECL;
             ITU_T_ARCHIVE_FUNC;
@@ -2683,11 +2683,11 @@ namespace boost {
             ITU_T_OPTIONAL_DECL(seconds, integer_type); //   Ic(  [ 0  ...   63 ]   ...ext...) 
             ITU_T_OPTIONAL_DECL(fractional_part, Fractional_part_type);
 
-            std::string format() const {
+            std::string format() {
                 return "PnYnMnWnDTnHnMnS";
             };
 
-            ITU_T_TIME_COUTTP_FN(DURATION);
+            ITU_T_TIME_COUTTP_NCFN(DURATION);
 
             ITU_T_TIME_X690_FN_ID_DECL(TYPE_DURATION);
             ITU_T_ARCHIVE_FUNC;
@@ -2723,7 +2723,7 @@ namespace boost {
                 as_string(vl);
             };
 
-            std::string as_string() const {
+            std::string as_string() {
                 return start().as_string() + "/" + duration().as_string();
             }
 
@@ -2746,14 +2746,14 @@ namespace boost {
                 ITU_T_BIND_PER(duration_);
             }
 
-            std::string format() const {
+            std::string format() {
                 return start().format() + "/" + duration().format();
             };
 
             ITU_T_HOLDERH_DECL(start, Tm_Type);
             ITU_T_HOLDERH_DECL(duration, DURATION);
 
-            ITU_T_TIME_COUTTP_FN(START_DURATION_INTERVAL_ENCODING);
+            ITU_T_TIME_COUTTP_NCFN(START_DURATION_INTERVAL_ENCODING);
 
             ITU_T_TIME_X690_FN_DECL;
             ITU_T_ARCHIVE_FUNC;
@@ -2791,7 +2791,7 @@ namespace boost {
                 as_string(vl);
             };
 
-            std::string as_string() const {
+            std::string as_string() {
                 return duration().as_string() + "/" + end().as_string();
             }
 
@@ -2814,14 +2814,14 @@ namespace boost {
                 ITU_T_BIND_PER(end_);
             }
 
-            std::string format() const {
+            std::string format() {
                 return duration().format() + "/" + end().format();
             };
 
             ITU_T_HOLDERH_DECL(duration, DURATION);
             ITU_T_HOLDERH_DECL(end, Tm_Type);
 
-            ITU_T_TIME_COUTTP_FN(DURATION_END_INTERVAL_ENCODING);
+            ITU_T_TIME_COUTTP_NCFN(DURATION_END_INTERVAL_ENCODING);
 
             ITU_T_TIME_X690_FN_DECL;
             ITU_T_ARCHIVE_FUNC;
@@ -2860,7 +2860,7 @@ namespace boost {
                 as_string(vl);
             };
 
-            std::string as_string() const {
+            std::string as_string() {
                 return "R" + ((recurrence() && *recurrence()) ? (time_detail::to_string(*recurrence())) : (std::string()))
                         + "/" + start().as_string() + "/" + end().as_string();
             }
@@ -2904,7 +2904,7 @@ namespace boost {
                 ITU_T_BIND_PER(end_);
             }
 
-            std::string format() const {
+            std::string format() {
                 return "Rn/" + start().format() + "/" + end().format();
             };
 
@@ -2912,7 +2912,7 @@ namespace boost {
             ITU_T_HOLDERH_DECL(start, Tm_Type);
             ITU_T_HOLDERH_DECL(end, Tm_Type);
 
-            ITU_T_TIME_COUTTP_FN(REC_START_END_INTERVAL_ENCODING);
+            ITU_T_TIME_COUTTP_NCFN(REC_START_END_INTERVAL_ENCODING);
 
             ITU_T_TIME_X690_FN_DECL;
             ITU_T_ARCHIVE_FUNC;
@@ -2939,14 +2939,14 @@ namespace boost {
 
             void as_string(const std::string& v);
 
-            std::string format() const {
+            std::string format() {
                 return "Rn/" + duration().format();
             };
 
             ITU_T_OPTIONAL_DECL(recurrence, integer_type);
             ITU_T_HOLDERH_DECL(duration, DURATION_INTERVAL_ENCODING);
 
-            ITU_T_TIME_COUTTP_FN(REC_DURATION_INTERVAL_ENCODING);
+            ITU_T_TIME_COUTTP_NCFN(REC_DURATION_INTERVAL_ENCODING);
 
             ITU_T_TIME_X690_FN_DECL;
             ITU_T_ARCHIVE_FUNC;
@@ -2987,7 +2987,7 @@ namespace boost {
                 as_string(vl);
             };
 
-            std::string as_string() const {
+            std::string as_string() {
                 return "R" + ((recurrence() && *recurrence()) ? (time_detail::to_string(*recurrence())) : (std::string()))
                         + "/" + start().as_string() + "/" + duration().as_string();
             }
@@ -3031,7 +3031,7 @@ namespace boost {
                 ITU_T_BIND_PER(duration_);
             }
 
-            std::string format() const {
+            std::string format() {
                 return "Rn/" + start().format() + "/" + duration().format();
             };
 
@@ -3039,7 +3039,7 @@ namespace boost {
             ITU_T_HOLDERH_DECL(start, Tm_Type);
             ITU_T_HOLDERH_DECL(duration, DURATION);
 
-            ITU_T_TIME_COUTTP_FN(REC_START_DURATION_INTERVAL_ENCODING);
+            ITU_T_TIME_COUTTP_NCFN(REC_START_DURATION_INTERVAL_ENCODING);
 
             ITU_T_TIME_X690_FN_DECL;
             ITU_T_ARCHIVE_FUNC;
@@ -3079,7 +3079,7 @@ namespace boost {
                 as_string(vl);
             };
 
-            std::string as_string() const {
+            std::string as_string() {
                 return "R" + ((recurrence() && *recurrence()) ? (time_detail::to_string(*recurrence())) : (std::string()))
                         + "/" + duration().as_string() + "/" + end().as_string();
             }
@@ -3123,7 +3123,7 @@ namespace boost {
                 ITU_T_BIND_PER(end_);
             }
 
-            std::string format() const {
+            std::string format() {
                 return "Rn/" + duration().format() + "/" + end().format();
             };
 
@@ -3131,7 +3131,7 @@ namespace boost {
             ITU_T_HOLDERH_DECL(duration, DURATION);
             ITU_T_HOLDERH_DECL(end, Tm_Type);
 
-            ITU_T_TIME_COUTTP_FN(REC_DURATION_END_INTERVAL_ENCODING);
+            ITU_T_TIME_COUTTP_NCFN(REC_DURATION_END_INTERVAL_ENCODING);
 
             ITU_T_TIME_X690_FN_DECL;
             ITU_T_ARCHIVE_FUNC;
@@ -3344,45 +3344,48 @@ namespace boost {
             ITU_T_ARCHIVE_FUNC;
         };
 
-        
-        
-        
-        
-        
+
+
+
+
+
 
         // sequence FRACTIONAL-TIME-TEML
-        template<typename T>        
-        struct FRACTIONAL_TIME_TEML{
-            
-            typedef T TIME_TP;
-            
-            FRACTIONAL_TIME_TEML() : number_of_digits_(), time_value_() {};
 
-            FRACTIONAL_TIME_TEML(const integer_type&  arg__number_of_digits,
-                 const TIME_TP&  arg__time_value) : 
-                 number_of_digits_(arg__number_of_digits), time_value_(arg__time_value) {};
-                 
+        template<typename T>
+        struct FRACTIONAL_TIME_TEML {
+
+            typedef T TIME_TP;
+
+            FRACTIONAL_TIME_TEML() : number_of_digits_(), time_value_() {
+            };
+
+            FRACTIONAL_TIME_TEML(const integer_type& arg__number_of_digits,
+                    const TIME_TP& arg__time_value) :
+            number_of_digits_(arg__number_of_digits), time_value_(arg__time_value) {
+            };
+
             FRACTIONAL_TIME_TEML(const std::string & vl) : number_of_digits_(), time_value_() {
                 as_string(vl);
             };
 
             FRACTIONAL_TIME_TEML(const char* vl) : number_of_digits_(), time_value_() {
-                as_string(vl);                
-            };   
-            
-            std::string as_string(){
-                 return time_value().as_string();               
+                as_string(vl);
+            };
+
+            std::string as_string() {
+                return time_value().as_string();
             }
 
-            void as_string(const std::string & vl){
+            void as_string(const std::string & vl) {
                 time_value().as_string(vl);
             }
-            
-            std::string format(){
+
+            std::string format() {
                 return time_value().format();
             }
 
-            ITU_T_HOLDERH_DECL(number_of_digits, integer_type);  //   Ic(  [ 1  ...    ]   
+            ITU_T_HOLDERH_DECL(number_of_digits, integer_type); //   Ic(  [ 1  ...    ]   
             ITU_T_HOLDERH_DECL(time_value, TIME_TP);
 
             ITU_T_TIME_COUTTP_NCFN(FRACTIONAL_TIME_TEML);
@@ -3406,12 +3409,12 @@ namespace boost {
                 visible_string tmpval;
                 ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
                 as_string(std::string(tmpval.c_str()));
-            }            
-            
+            }
+
             //ITU_T_TIME_X690_FN_DECL;            
             ITU_T_ARCHIVE_FUNC;
         };
-                
+
 
 
         typedef FRACTIONAL_TIME_TEML<HOURS_AND_FRACTION> HOURS_AND_FRACTION_ENC;
@@ -3443,14 +3446,16 @@ namespace boost {
         typedef REC_START_DURATION_INTERVAL_ENCODING<DATE_TIME_ENC> REC_START_DATE_TIME_DURATION_INTERVAL_ENC;
         typedef REC_DURATION_END_INTERVAL_ENCODING<DATE_TYPE> REC_DURATION_END_DATE_INTERVAL_ENC;
         typedef REC_DURATION_END_INTERVAL_ENCODING<TIME_TYPE> REC_DURATION_END_TIME_INTERVAL_ENC;
-        typedef REC_DURATION_END_INTERVAL_ENCODING<DATE_TIME_ENC> REC_DURATION_END_DATE_TIME_INTERVAL_ENC;        
-        
-        
-        
-        
+        typedef REC_DURATION_END_INTERVAL_ENCODING<DATE_TIME_ENC> REC_DURATION_END_DATE_TIME_INTERVAL_ENC;
+
+
+
+
         // choice MIXED-ENCODING
+
         enum MIXED_ENCODING_enum {
-            MIXED_ENCODING_null = 0, 
+
+            MIXED_ENCODING_null = 0,
             mx_tm_C_Basic,
             mx_tm_C_L,
             mx_tm_Y_Basic,
@@ -3503,10 +3508,11 @@ namespace boost {
             mx_tm_Rsd_DT,
             mx_tm_Red_D,
             mx_tm_Red_T,
-            mx_tm_Red_DT,}; 
- 
+            mx_tm_Red_DT,
+        };
+
         struct MIXED_ENCODING : public ITU_T_CHOICE(MIXED_ENCODING_enum) {
-            
+
 
 
             ITU_T_CHOICE_CTORS(MIXED_ENCODING);
@@ -3521,69 +3527,69 @@ namespace boost {
 
             std::string format();
 
-            ITU_T_CHOICES_DECL(tm_C_Basic, CENTURY_ENCODING, mx_tm_C_Basic);     // primitive
-            ITU_T_CHOICES_DECL(tm_C_L, ANY_CENTURY, mx_tm_C_L);     // primitive
-            ITU_T_CHOICES_DECL(tm_Y_Basic, YEAR_ENCODING, mx_tm_Y_Basic);     // primitive
-            ITU_T_CHOICES_DECL(tm_Y_L, ANY_YEAR, mx_tm_Y_L);     // primitive
-            ITU_T_CHOICES_DECL(tm_YM_Basic, YEAR_MONTH_ENCODING, mx_tm_YM_Basic);     // primitive
-            ITU_T_CHOICES_DECL(tm_YM_L, ANY_YEAR_MONTH, mx_tm_YM_L);     // primitive
-            ITU_T_CHOICES_DECL(tm_YMD_Basic, DATE_ENCODING, mx_tm_YMD_Basic);     // primitive
-            ITU_T_CHOICES_DECL(tm_YMD_L, ANY_DATE, mx_tm_YMD_L);     // primitive
-            ITU_T_CHOICES_DECL(tm_YD_Basic, YEAR_DAY_ENCODING, mx_tm_YD_Basic);     // primitive
-            ITU_T_CHOICES_DECL(tm_YD_L, ANY_YEAR_DAY, mx_tm_YD_L);     // primitive
-            ITU_T_CHOICES_DECL(tm_YW_Basic, YEAR_WEEK_ENCODING, mx_tm_YW_Basic);     // primitive
-            ITU_T_CHOICES_DECL(tm_YW_L, ANY_YEAR_WEEK, mx_tm_YW_L);     // primitive
-            ITU_T_CHOICES_DECL(tm_YWD_Basic, YEAR_WEEK_DAY_ENCODING, mx_tm_YWD_Basic);     // primitive
-            ITU_T_CHOICES_DECL(tm_YWD_L, ANY_YEAR_WEEK_DAY, mx_tm_YWD_L);     // primitive
-            ITU_T_CHOICES_DECL(tm_H_L, HOURS_ENCODING, mx_tm_H_L);     // primitive
-            ITU_T_CHOICES_DECL(tm_H_Z, HOURS_UTC_ENCODING, mx_tm_H_Z);     // primitive
-            ITU_T_CHOICES_DECL(tm_H_LD, HOURS_AND_DIFF_ENCODING, mx_tm_H_LD);     // primitive
-            ITU_T_CHOICES_DECL(tm_HM_L, MINUTES_ENCODING, mx_tm_HM_L);     // primitive
-            ITU_T_CHOICES_DECL(tm_HM_Z, MINUTES_UTC_ENCODING, mx_tm_HM_Z);     // primitive
-            ITU_T_CHOICES_DECL(tm_HM_LD, MINUTES_AND_DIFF_ENCODING, mx_tm_HM_LD);     // primitive
-            ITU_T_CHOICES_DECL(tm_HMS_L, TIME_OF_DAY_ENCODING, mx_tm_HMS_L);     // primitive
-            ITU_T_CHOICES_DECL(tm_HMS_Z, TIME_OF_DAY_UTC_ENCODING, mx_tm_HMS_Z);     // primitive
-            ITU_T_CHOICES_DECL(tm_HMS_LD, TIME_OF_DAY_AND_DIFF_ENCODING, mx_tm_HMS_LD);     // primitive
-            ITU_T_CHOICES_DECL(tm_HFn_L, HOURS_AND_FRACTION_ENC, mx_tm_HFn_L);     // primitive
-            ITU_T_CHOICES_DECL(tm_HFn_Z, HOURS_UTC_AND_FRACTION_ENC, mx_tm_HFn_Z);     // primitive
-            ITU_T_CHOICES_DECL(tm_HFn_LD, HOURS_AND_DIFF_AND_FRACTION_ENC, mx_tm_HFn_LD);     // primitive
-            ITU_T_CHOICES_DECL(tm_HMFn_L, MINUTES_AND_FRACTION_ENC, mx_tm_HMFn_L);     // primitive
-            ITU_T_CHOICES_DECL(tm_HMFn_Z, MINUTES_UTC_AND_FRACTION_ENC, mx_tm_HMFn_Z);     // primitive
-            ITU_T_CHOICES_DECL(tm_HMFn_LD, MINUTES_AND_DIFF_AND_FRACTION_ENC, mx_tm_HMFn_LD);     // primitive
-            ITU_T_CHOICES_DECL(tm_HMFSn_L, TIME_OF_DAY_AND_FRACTION_ENC, mx_tm_HMFSn_L);     // primitive
-            ITU_T_CHOICES_DECL(tm_HMFSn_Z, TIME_OF_DAY_UTC_AND_FRACTION_ENC, mx_tm_HMFSn_Z);     // primitive
-            ITU_T_CHOICES_DECL(tm_HMFSn_LD, TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENC, mx_tm_HMFSn_LD);     // primitive
-            ITU_T_CHOICEC_DECL(tm_DTT, DATE_TIME_ENC, mx_tm_DTT);     
-            ITU_T_CHOICES_DECL(tm_Pse_D, START_END_DATE_INTERVAL_ENC, mx_tm_Pse_D);     // primitive
-            ITU_T_CHOICES_DECL(tm_Pse_T, START_END_TIME_INTERVAL_ENC, mx_tm_Pse_T);     // primitive
-            ITU_T_CHOICES_DECL(tm_Pse_DT, START_END_DATE_TIME_INTERVAL_ENC, mx_tm_Pse_DT);     // primitive
-            ITU_T_CHOICES_DECL(tm_DU, DURATION_INTERVAL_ENC, mx_tm_DU);     // primitive
-            ITU_T_CHOICES_DECL(tm_Psi_D, START_DATE_DURATION_INTERVAL_ENC, mx_tm_Psi_D);     // primitive
-            ITU_T_CHOICES_DECL(tm_Psi_T, START_TIME_DURATION_INTERVAL_ENC, mx_tm_Psi_T);     // primitive
-            ITU_T_CHOICES_DECL(tm_Psi_DT, START_DATE_TIME_DURATION_INTERVAL_ENC, mx_tm_Psi_DT);     // primitive
-            ITU_T_CHOICES_DECL(tm_Pde_D, DURATION_END_DATE_INTERVAL_ENC, mx_tm_Pde_D);     // primitive
-            ITU_T_CHOICES_DECL(tm_Pde_T, DURATION_END_TIME_INTERVAL_ENC, mx_tm_Pde_T);     // primitive
-            ITU_T_CHOICES_DECL(tm_Pde_DT, DURATION_END_DATE_TIME_INTERVAL_ENC, mx_tm_Pde_DT);     // primitive
-            ITU_T_CHOICES_DECL(tm_Rse_D, REC_START_END_DATE_INTERVAL_ENC, mx_tm_Rse_D);     // primitive
-            ITU_T_CHOICES_DECL(tm_Rse_T, REC_START_END_TIME_INTERVAL_ENC, mx_tm_Rse_T);     // primitive
-            ITU_T_CHOICES_DECL(tm_Rse_DT, REC_START_END_DATE_TIME_INTERVAL_ENC, mx_tm_Rse_DT);     // primitive
-            ITU_T_CHOICES_DECL(tm_RDU, REC_DURATION_INTERVAL_ENC, mx_tm_RDU);     // primitive
-            ITU_T_CHOICES_DECL(tm_Rsd_D, REC_START_DATE_DURATION_INTERVAL_ENC, mx_tm_Rsd_D);     // primitive
-            ITU_T_CHOICES_DECL(tm_Rsd_T, REC_START_TIME_DURATION_INTERVAL_ENC, mx_tm_Rsd_T);     // primitive
-            ITU_T_CHOICES_DECL(tm_Rsd_DT, REC_START_DATE_TIME_DURATION_INTERVAL_ENC, mx_tm_Rsd_DT);     // primitive
-            ITU_T_CHOICES_DECL(tm_Red_D, REC_DURATION_END_DATE_INTERVAL_ENC, mx_tm_Red_D);     // primitive
-            ITU_T_CHOICES_DECL(tm_Red_T, REC_DURATION_END_TIME_INTERVAL_ENC, mx_tm_Red_T);     // primitive
-            ITU_T_CHOICES_DECL(tm_Red_DT, REC_DURATION_END_DATE_TIME_INTERVAL_ENC, mx_tm_Red_DT);     // primitive
+            ITU_T_CHOICES_DECL(tm_C_Basic, CENTURY_ENCODING, mx_tm_C_Basic); // primitive
+            ITU_T_CHOICES_DECL(tm_C_L, ANY_CENTURY, mx_tm_C_L); // primitive
+            ITU_T_CHOICES_DECL(tm_Y_Basic, YEAR_ENCODING, mx_tm_Y_Basic); // primitive
+            ITU_T_CHOICES_DECL(tm_Y_L, ANY_YEAR, mx_tm_Y_L); // primitive
+            ITU_T_CHOICES_DECL(tm_YM_Basic, YEAR_MONTH_ENCODING, mx_tm_YM_Basic); // primitive
+            ITU_T_CHOICES_DECL(tm_YM_L, ANY_YEAR_MONTH, mx_tm_YM_L); // primitive
+            ITU_T_CHOICES_DECL(tm_YMD_Basic, DATE_ENCODING, mx_tm_YMD_Basic); // primitive
+            ITU_T_CHOICES_DECL(tm_YMD_L, ANY_DATE, mx_tm_YMD_L); // primitive
+            ITU_T_CHOICES_DECL(tm_YD_Basic, YEAR_DAY_ENCODING, mx_tm_YD_Basic); // primitive
+            ITU_T_CHOICES_DECL(tm_YD_L, ANY_YEAR_DAY, mx_tm_YD_L); // primitive
+            ITU_T_CHOICES_DECL(tm_YW_Basic, YEAR_WEEK_ENCODING, mx_tm_YW_Basic); // primitive
+            ITU_T_CHOICES_DECL(tm_YW_L, ANY_YEAR_WEEK, mx_tm_YW_L); // primitive
+            ITU_T_CHOICES_DECL(tm_YWD_Basic, YEAR_WEEK_DAY_ENCODING, mx_tm_YWD_Basic); // primitive
+            ITU_T_CHOICES_DECL(tm_YWD_L, ANY_YEAR_WEEK_DAY, mx_tm_YWD_L); // primitive
+            ITU_T_CHOICES_DECL(tm_H_L, HOURS_ENCODING, mx_tm_H_L); // primitive
+            ITU_T_CHOICES_DECL(tm_H_Z, HOURS_UTC_ENCODING, mx_tm_H_Z); // primitive
+            ITU_T_CHOICES_DECL(tm_H_LD, HOURS_AND_DIFF_ENCODING, mx_tm_H_LD); // primitive
+            ITU_T_CHOICES_DECL(tm_HM_L, MINUTES_ENCODING, mx_tm_HM_L); // primitive
+            ITU_T_CHOICES_DECL(tm_HM_Z, MINUTES_UTC_ENCODING, mx_tm_HM_Z); // primitive
+            ITU_T_CHOICES_DECL(tm_HM_LD, MINUTES_AND_DIFF_ENCODING, mx_tm_HM_LD); // primitive
+            ITU_T_CHOICES_DECL(tm_HMS_L, TIME_OF_DAY_ENCODING, mx_tm_HMS_L); // primitive
+            ITU_T_CHOICES_DECL(tm_HMS_Z, TIME_OF_DAY_UTC_ENCODING, mx_tm_HMS_Z); // primitive
+            ITU_T_CHOICES_DECL(tm_HMS_LD, TIME_OF_DAY_AND_DIFF_ENCODING, mx_tm_HMS_LD); // primitive
+            ITU_T_CHOICES_DECL(tm_HFn_L, HOURS_AND_FRACTION_ENC, mx_tm_HFn_L); // primitive
+            ITU_T_CHOICES_DECL(tm_HFn_Z, HOURS_UTC_AND_FRACTION_ENC, mx_tm_HFn_Z); // primitive
+            ITU_T_CHOICES_DECL(tm_HFn_LD, HOURS_AND_DIFF_AND_FRACTION_ENC, mx_tm_HFn_LD); // primitive
+            ITU_T_CHOICES_DECL(tm_HMFn_L, MINUTES_AND_FRACTION_ENC, mx_tm_HMFn_L); // primitive
+            ITU_T_CHOICES_DECL(tm_HMFn_Z, MINUTES_UTC_AND_FRACTION_ENC, mx_tm_HMFn_Z); // primitive
+            ITU_T_CHOICES_DECL(tm_HMFn_LD, MINUTES_AND_DIFF_AND_FRACTION_ENC, mx_tm_HMFn_LD); // primitive
+            ITU_T_CHOICES_DECL(tm_HMFSn_L, TIME_OF_DAY_AND_FRACTION_ENC, mx_tm_HMFSn_L); // primitive
+            ITU_T_CHOICES_DECL(tm_HMFSn_Z, TIME_OF_DAY_UTC_AND_FRACTION_ENC, mx_tm_HMFSn_Z); // primitive
+            ITU_T_CHOICES_DECL(tm_HMFSn_LD, TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENC, mx_tm_HMFSn_LD); // primitive
+            ITU_T_CHOICEC_DECL(tm_DTT, DATE_TIME_ENC, mx_tm_DTT);
+            ITU_T_CHOICES_DECL(tm_Pse_D, START_END_DATE_INTERVAL_ENC, mx_tm_Pse_D); // primitive
+            ITU_T_CHOICES_DECL(tm_Pse_T, START_END_TIME_INTERVAL_ENC, mx_tm_Pse_T); // primitive
+            ITU_T_CHOICES_DECL(tm_Pse_DT, START_END_DATE_TIME_INTERVAL_ENC, mx_tm_Pse_DT); // primitive
+            ITU_T_CHOICES_DECL(tm_DU, DURATION_INTERVAL_ENC, mx_tm_DU); // primitive
+            ITU_T_CHOICES_DECL(tm_Psi_D, START_DATE_DURATION_INTERVAL_ENC, mx_tm_Psi_D); // primitive
+            ITU_T_CHOICES_DECL(tm_Psi_T, START_TIME_DURATION_INTERVAL_ENC, mx_tm_Psi_T); // primitive
+            ITU_T_CHOICES_DECL(tm_Psi_DT, START_DATE_TIME_DURATION_INTERVAL_ENC, mx_tm_Psi_DT); // primitive
+            ITU_T_CHOICES_DECL(tm_Pde_D, DURATION_END_DATE_INTERVAL_ENC, mx_tm_Pde_D); // primitive
+            ITU_T_CHOICES_DECL(tm_Pde_T, DURATION_END_TIME_INTERVAL_ENC, mx_tm_Pde_T); // primitive
+            ITU_T_CHOICES_DECL(tm_Pde_DT, DURATION_END_DATE_TIME_INTERVAL_ENC, mx_tm_Pde_DT); // primitive
+            ITU_T_CHOICES_DECL(tm_Rse_D, REC_START_END_DATE_INTERVAL_ENC, mx_tm_Rse_D); // primitive
+            ITU_T_CHOICES_DECL(tm_Rse_T, REC_START_END_TIME_INTERVAL_ENC, mx_tm_Rse_T); // primitive
+            ITU_T_CHOICES_DECL(tm_Rse_DT, REC_START_END_DATE_TIME_INTERVAL_ENC, mx_tm_Rse_DT); // primitive
+            ITU_T_CHOICES_DECL(tm_RDU, REC_DURATION_INTERVAL_ENC, mx_tm_RDU); // primitive
+            ITU_T_CHOICES_DECL(tm_Rsd_D, REC_START_DATE_DURATION_INTERVAL_ENC, mx_tm_Rsd_D); // primitive
+            ITU_T_CHOICES_DECL(tm_Rsd_T, REC_START_TIME_DURATION_INTERVAL_ENC, mx_tm_Rsd_T); // primitive
+            ITU_T_CHOICES_DECL(tm_Rsd_DT, REC_START_DATE_TIME_DURATION_INTERVAL_ENC, mx_tm_Rsd_DT); // primitive
+            ITU_T_CHOICES_DECL(tm_Red_D, REC_DURATION_END_DATE_INTERVAL_ENC, mx_tm_Red_D); // primitive
+            ITU_T_CHOICES_DECL(tm_Red_T, REC_DURATION_END_TIME_INTERVAL_ENC, mx_tm_Red_T); // primitive
+            ITU_T_CHOICES_DECL(tm_Red_DT, REC_DURATION_END_DATE_TIME_INTERVAL_ENC, mx_tm_Red_DT); // primitive
 
-            ITU_T_TIME_COUTTP_NCFN(MIXED_ENCODING);            
+            ITU_T_TIME_COUTTP_NCFN(MIXED_ENCODING);
             ITU_T_ARCHIVE_FUNC;
-        };         
+        };
 
 
         ITU_T_ARCHIVE_X690_DECL(DATE_TYPE);
         ITU_T_ARCHIVE_X690_DECL(TIME_TYPE);
         ITU_T_ARCHIVE_X690_DECL(DATE_TIME_ENC);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING);        
+        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING);
 
         ITU_T_ARCHIVE_X691_DECL(CENTURY_ENCODING);
         ITU_T_ARCHIVE_X691_DECL(YEAR_ENCODING);
@@ -3613,14 +3619,14 @@ namespace boost {
         ITU_T_ARCHIVE_X691_DECL(TIME_TYPE);
         ITU_T_ARCHIVE_X691_DECL(TIME_TYPE::Time_type);
         ITU_T_ARCHIVE_X691_DECL(DATE_TIME_ENC);
-        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING);    
+        ITU_T_ARCHIVE_X690_DECL(MIXED_ENCODING);
     }
 }
 
 ITU_T_CHOICE_REGESTRATE(boost::asn1::YEAR_ENCODING);
 ITU_T_CHOICE_REGESTRATE(boost::asn1::DATE_TYPE);
 ITU_T_CHOICE_REGESTRATE(boost::asn1::TIME_TYPE::Time_type);
-ITU_T_CHOICE_REGESTRATE(boost::asn1::MIXED_ENCODING);    
+ITU_T_CHOICE_REGESTRATE(boost::asn1::MIXED_ENCODING);
 
 #ifdef _MSC_VER
 #pragma warning(pop)
