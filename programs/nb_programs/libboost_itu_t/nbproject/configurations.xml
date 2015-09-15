@@ -24,7 +24,6 @@
           <itemPath>../../../include/boost/itu/rfc1006/rfc1006.hpp</itemPath>
         </logicalFolder>
         <logicalFolder name="time" displayName="time" projectFiles="true">
-          <itemPath>../../../include/boost/itu/time/DefinedTime-ber.cpp</itemPath>
           <itemPath>../../../include/boost/itu/time/DefinedTime-per.cpp</itemPath>
           <itemPath>../../../include/boost/itu/time/DefinedTime.cpp</itemPath>
           <itemPath>../../../include/boost/itu/time/DefinedTime.hpp</itemPath>
@@ -199,11 +198,6 @@
       <item path="../../../include/boost/itu/rfc1006/rfc1006.hpp"
             ex="false"
             tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include/boost/itu/time/DefinedTime-ber.cpp"
-            ex="false"
-            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/time/DefinedTime-per.cpp"
@@ -486,11 +480,6 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../../include/boost/itu/time/DefinedTime-ber.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
       <item path="../../../include/boost/itu/time/DefinedTime-per.cpp"
             ex="false"
             tool="1"
@@ -770,11 +759,6 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../../include/boost/itu/time/DefinedTime-ber.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
       <item path="../../../include/boost/itu/time/DefinedTime-per.cpp"
             ex="false"
             tool="1"
@@ -1050,11 +1034,6 @@
       <item path="../../../include/boost/itu/rfc1006/rfc1006.hpp"
             ex="false"
             tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include/boost/itu/time/DefinedTime-ber.cpp"
-            ex="false"
-            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/time/DefinedTime-per.cpp"
@@ -1339,11 +1318,6 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../../include/boost/itu/time/DefinedTime-ber.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
       <item path="../../../include/boost/itu/time/DefinedTime-per.cpp"
             ex="false"
             tool="1"
@@ -1623,11 +1597,6 @@
       <item path="../../../include/boost/itu/rfc1006/rfc1006.hpp"
             ex="false"
             tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include/boost/itu/time/DefinedTime-ber.cpp"
-            ex="false"
-            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/time/DefinedTime-per.cpp"
@@ -1910,11 +1879,6 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../../include/boost/itu/time/DefinedTime-ber.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
       <item path="../../../include/boost/itu/time/DefinedTime-per.cpp"
             ex="false"
             tool="1"
@@ -2191,11 +2155,6 @@
       <item path="../../../include/boost/itu/rfc1006/rfc1006.hpp"
             ex="false"
             tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include/boost/itu/time/DefinedTime-ber.cpp"
-            ex="false"
-            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/time/DefinedTime-per.cpp"

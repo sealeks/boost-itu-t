@@ -1789,6 +1789,17 @@ namespace boost {
             return "";
         }
 
+        template<> void DATE_TYPE::serialize(boost::asn1::x690::output_coder& arch) {
+            visible_string tmpval = as_string();
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+        }
+
+        template<> void DATE_TYPE::serialize(boost::asn1::x690::input_coder& arch) {
+            visible_string tmpval;
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+            as_string(std::string(tmpval.c_str()));
+        }
+
         ITU_T_CHOICES_DEFN(DATE_TYPE::date_C_Basic, date_C_Basic, CENTURY_ENCODING, DATE_TYPE_date_C_Basic);
         ITU_T_CHOICES_DEFN(DATE_TYPE::date_C_L, date_C_L, ANY_CENTURY, DATE_TYPE_date_C_L);
         ITU_T_CHOICES_DEFN(DATE_TYPE::date_Y_Basic, date_Y_Basic, YEAR_ENCODING, DATE_TYPE_date_Y_Basic);
@@ -1936,12 +1947,12 @@ namespace boost {
                 else if (itmn != std::string::npos)
                     tmpl = tmpl.substr(0, itmn);
             }
-            std::string::size_type fit= (tmpl.find_last_of('.') != std::string::npos) ?
-                tmpl.find_last_of('.') : tmpl.find_last_of(',');            
-            bool ftp = (fit != std::string::npos);    
-            std::size_t fpart=0;
-            if (fit != std::string::npos) 
-                fpart=tmpl.size()-fit-1;
+            std::string::size_type fit = (tmpl.find_last_of('.') != std::string::npos) ?
+                    tmpl.find_last_of('.') : tmpl.find_last_of(',');
+            bool ftp = (fit != std::string::npos);
+            std::size_t fpart = 0;
+            if (fit != std::string::npos)
+                fpart = tmpl.size() - fit - 1;
             std::string::size_type itf = tmpl.find_first_of(':');
             std::string::size_type itl = tmpl.find_last_of(':');
             if ((itf == std::string::npos) && (itl == std::string::npos)) {
@@ -1967,7 +1978,7 @@ namespace boost {
             else if (itf == itl) {
                 if (ftp) {
                     if (fpart)
-                        number_of_digits(fpart);                    
+                        number_of_digits(fpart);
                     if (dtp)
                         time_type().time_HMFn_LD(MINUTES_AND_DIFF_AND_FRACTION(vl));
                     else if (ztp)
@@ -1987,7 +1998,7 @@ namespace boost {
             else {
                 if (ftp) {
                     if (fpart)
-                        number_of_digits(fpart);                    
+                        number_of_digits(fpart);
                     if (dtp)
                         time_type().time_HMFSn_LD(TIME_OF_DAY_AND_DIFF_AND_FRACTION(vl));
                     else if (ztp)
@@ -2031,6 +2042,17 @@ namespace boost {
                 }
             }
         };
+
+        template<> void TIME_TYPE::serialize(boost::asn1::x690::output_coder& arch) {
+            visible_string tmpval = as_string();
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+        }
+
+        template<> void TIME_TYPE::serialize(boost::asn1::x690::input_coder& arch) {
+            visible_string tmpval;
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+            as_string(std::string(tmpval.c_str()));
+        }
 
         ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_H_L, time_H_L, HOURS_ENCODING, Time_type_time_H_L);
         ITU_T_CHOICES_DEFN(TIME_TYPE::Time_type::time_H_Z, time_H_Z, HOURS_UTC_ENCODING, Time_type_time_H_Z);
@@ -2100,6 +2122,17 @@ namespace boost {
             return date().format() + "T" + time().format();
         }
 
+        template<> void DATE_TIME_ENC::serialize(boost::asn1::x690::output_coder& arch) {
+            visible_string tmpval = as_string();
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+        }
+
+        template<> void DATE_TIME_ENC::serialize(boost::asn1::x690::input_coder& arch) {
+            visible_string tmpval;
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+            as_string(std::string(tmpval.c_str()));
+        }
+
 
         ITU_T_HOLDERH_DEFN(DATE_TIME_ENC::date, date, DATE_TYPE);
         ITU_T_HOLDERH_DEFN(DATE_TIME_ENC::time, time, TIME_TYPE);
@@ -2132,6 +2165,17 @@ namespace boost {
 
         std::string MIXED_ENCODING::format() {
             return "";
+        }
+
+        template<> void MIXED_ENCODING::serialize(boost::asn1::x690::output_coder& arch) {
+            visible_string tmpval = as_string();
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+        }
+
+        template<> void MIXED_ENCODING::serialize(boost::asn1::x690::input_coder& arch) {
+            visible_string tmpval;
+            ITU_T_BIND_IMPLICIT(tmpval, TYPE_TIME, UNIVERSAL_CLASS);
+            as_string(std::string(tmpval.c_str()));
         }
 
         ITU_T_CHOICES_DEFN(MIXED_ENCODING::tm_C_Basic, tm_C_Basic, CENTURY_ENCODING, mx_tm_C_Basic);
