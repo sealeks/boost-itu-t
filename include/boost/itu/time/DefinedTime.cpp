@@ -1963,7 +1963,6 @@ namespace boost {
 
 
 
-
         // choice DATE-TYPE
 
         DATE_TYPE::DATE_TYPE(const std::string& vl) : ITU_T_CHOICE_CTORS_INHERITED(DATE_TYPE) {

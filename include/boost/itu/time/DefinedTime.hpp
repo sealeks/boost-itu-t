@@ -2549,8 +2549,8 @@ namespace boost {
                 return start().format() + "/" + end().format();
             };
 
-            ITU_T_HOLDERH_DECL(start, Tm_Type);
-            ITU_T_HOLDERH_DECL(end, Tm_Type);
+            ITU_T_HOLDERH_T_DECL(start, Tm_Type);
+            ITU_T_HOLDERH_T_DECL(end, Tm_Type);
 
             ITU_T_TIME_COUTTP_NCFN(START_END_INTERVAL_ENCODING);
 
@@ -2750,8 +2750,8 @@ namespace boost {
                 return start().format() + "/" + duration().format();
             };
 
-            ITU_T_HOLDERH_DECL(start, Tm_Type);
-            ITU_T_HOLDERH_DECL(duration, DURATION);
+            ITU_T_HOLDERH_T_DECL(start, Tm_Type);
+            ITU_T_HOLDERH_T_DECL(duration, DURATION);
 
             ITU_T_TIME_COUTTP_NCFN(START_DURATION_INTERVAL_ENCODING);
 
@@ -2818,8 +2818,8 @@ namespace boost {
                 return duration().format() + "/" + end().format();
             };
 
-            ITU_T_HOLDERH_DECL(duration, DURATION);
-            ITU_T_HOLDERH_DECL(end, Tm_Type);
+            ITU_T_HOLDERH_T_DECL(duration, DURATION);
+            ITU_T_HOLDERH_T_DECL(end, Tm_Type);
 
             ITU_T_TIME_COUTTP_NCFN(DURATION_END_INTERVAL_ENCODING);
 
@@ -2908,9 +2908,9 @@ namespace boost {
                 return "Rn/" + start().format() + "/" + end().format();
             };
 
-            ITU_T_OPTIONAL_DECL(recurrence, integer_type);
-            ITU_T_HOLDERH_DECL(start, Tm_Type);
-            ITU_T_HOLDERH_DECL(end, Tm_Type);
+            ITU_T_OPTIONAL_T_DECL(recurrence, integer_type);
+            ITU_T_HOLDERH_T_DECL(start, Tm_Type);
+            ITU_T_HOLDERH_T_DECL(end, Tm_Type);
 
             ITU_T_TIME_COUTTP_NCFN(REC_START_END_INTERVAL_ENCODING);
 
@@ -3035,9 +3035,9 @@ namespace boost {
                 return "Rn/" + start().format() + "/" + duration().format();
             };
 
-            ITU_T_OPTIONAL_DECL(recurrence, integer_type);
-            ITU_T_HOLDERH_DECL(start, Tm_Type);
-            ITU_T_HOLDERH_DECL(duration, DURATION);
+            ITU_T_OPTIONAL_T_DECL(recurrence, integer_type);
+            ITU_T_HOLDERH_T_DECL(start, Tm_Type);
+            ITU_T_HOLDERH_T_DECL(duration, DURATION);
 
             ITU_T_TIME_COUTTP_NCFN(REC_START_DURATION_INTERVAL_ENCODING);
 
@@ -3127,9 +3127,9 @@ namespace boost {
                 return "Rn/" + duration().format() + "/" + end().format();
             };
 
-            ITU_T_OPTIONAL_DECL(recurrence, integer_type);
-            ITU_T_HOLDERH_DECL(duration, DURATION);
-            ITU_T_HOLDERH_DECL(end, Tm_Type);
+            ITU_T_OPTIONAL_T_DECL(recurrence, integer_type);
+            ITU_T_HOLDERH_T_DECL(duration, DURATION);
+            ITU_T_HOLDERH_T_DECL(end, Tm_Type);
 
             ITU_T_TIME_COUTTP_NCFN(REC_DURATION_END_INTERVAL_ENCODING);
 
@@ -3385,8 +3385,8 @@ namespace boost {
                 return time_value().format();
             }
 
-            ITU_T_HOLDERH_DECL(number_of_digits, integer_type); //   Ic(  [ 1  ...    ]   
-            ITU_T_HOLDERH_DECL(time_value, TIME_TP);
+            ITU_T_HOLDERH_T_DECL(number_of_digits, integer_type); //   Ic(  [ 1  ...    ]   
+            ITU_T_HOLDERH_T_DECL(time_value, TIME_TP);
 
             ITU_T_TIME_COUTTP_NCFN(FRACTIONAL_TIME_TEML);
 
