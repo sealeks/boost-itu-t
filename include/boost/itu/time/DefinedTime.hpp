@@ -2800,7 +2800,7 @@ namespace boost {
                 std::string::size_type it = vl.find_first_of('/');
                 std::string vll = (it == std::string::npos) ? vl : vl.substr(0, it);
                 std::string vlr = (it == std::string::npos) ? "" : vl.substr(it + 1);
-                duration(Tm_Type(vll));
+                duration(DURATION(vll));
                 end(Tm_Type(vlr));
             };
 
@@ -3559,7 +3559,7 @@ namespace boost {
             ITU_T_CHOICES_DECL(tm_HMFSn_L, TIME_OF_DAY_AND_FRACTION_ENC, mx_tm_HMFSn_L); // primitive
             ITU_T_CHOICES_DECL(tm_HMFSn_Z, TIME_OF_DAY_UTC_AND_FRACTION_ENC, mx_tm_HMFSn_Z); // primitive
             ITU_T_CHOICES_DECL(tm_HMFSn_LD, TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENC, mx_tm_HMFSn_LD); // primitive
-            ITU_T_CHOICEC_DECL(tm_DTT, DATE_TIME_ENC, mx_tm_DTT);
+            ITU_T_CHOICES_DECL(tm_DTT, DATE_TIME_ENC, mx_tm_DTT);
             ITU_T_CHOICES_DECL(tm_Pse_D, START_END_DATE_INTERVAL_ENC, mx_tm_Pse_D); // primitive
             ITU_T_CHOICES_DECL(tm_Pse_T, START_END_TIME_INTERVAL_ENC, mx_tm_Pse_T); // primitive
             ITU_T_CHOICES_DECL(tm_Pse_DT, START_END_DATE_TIME_INTERVAL_ENC, mx_tm_Pse_DT); // primitive
@@ -3583,6 +3583,11 @@ namespace boost {
 
             ITU_T_TIME_COUTTP_NCFN(MIXED_ENCODING);
             ITU_T_ARCHIVE_FUNC;
+
+            private:
+
+            void as_stringT(const std::string & v);
+            void as_stringD(const std::string & v);
         };
 
 
