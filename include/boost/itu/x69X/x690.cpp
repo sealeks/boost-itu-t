@@ -823,21 +823,37 @@ namespace boost {
 
         /////// external_type
 
+        template<> void external_type::serialize(boost::asn1::x690::output_coder& arch) {
+            ITU_T_BIND_TAG(direct_reference_);
+            ITU_T_BIND_TAG(indirect_reference_);
+            ITU_T_BIND_TAG(data_value_descriptor_);
+            ITU_T_BIND_CHOICE(encoding_);
+        }
+
+        template<> void external_type::serialize(boost::asn1::x690::input_coder& arch) {
+            ITU_T_BIND_TAG(direct_reference_);
+            ITU_T_BIND_TAG(indirect_reference_);
+            ITU_T_BIND_TAG(data_value_descriptor_);
+            ITU_T_BIND_CHOICE(encoding_);
+        }
+
+        // choice encoding
+
         template<> void external_type::Encoding_type::serialize(boost::asn1::x690::output_coder& arch) {
             switch (type()) {
                 case Encoding_type_single_ASN1_type:
                 {
-                    ITU_T_EXPLICIT_TAG(value<any_type > (false, Encoding_type_single_ASN1_type), 0);
+                    ITU_T_BIND_EXPLICIT(value<any_type > (false, Encoding_type_single_ASN1_type), 0, CONTEXT_CLASS);
                     break;
                 }
                 case Encoding_type_octet_aligned:
                 {
-                    ITU_T_IMPLICIT_TAG(value<octet_string > (false, Encoding_type_octet_aligned), 1);
+                    ITU_T_BIND_IMPLICIT(value<octet_string > (false, Encoding_type_octet_aligned), 1, CONTEXT_CLASS);
                     break;
                 }
                 case Encoding_type_arbitrary:
                 {
-                    ITU_T_IMPLICIT_TAG(value<bit_string > (false, Encoding_type_arbitrary), 2);
+                    ITU_T_BIND_IMPLICIT(value<bit_string > (false, Encoding_type_arbitrary), 2, CONTEXT_CLASS);
                     break;
                 }
                 default:
@@ -849,51 +865,27 @@ namespace boost {
         template<> void external_type::Encoding_type::serialize(boost::asn1::x690::input_coder& arch) {
             int __tag_id__ = arch.test_id();
             switch (arch.test_class()) {
-                case 0x0:
-                {
-                    switch (__tag_id__) {
-                        default:
-                        {
-                        }
-                    }
-                }
-                case 0x40:
-                {
-                    switch (__tag_id__) {
-                        default:
-                        {
-                        }
-                    }
-                }
                 case 0x80:
                 {
                     switch (__tag_id__) {
                         case 0:
                         {
-                            if (ITU_T_EXPLICIT_TAG(value<any_type > (true, Encoding_type_single_ASN1_type), 0)) return;
+                            if (ITU_T_BIND_EXPLICIT(value<any_type > (true, Encoding_type_single_ASN1_type), 0, CONTEXT_CLASS)) return;
                             else free();
                             break;
                         }
                         case 1:
                         {
-                            if (ITU_T_IMPLICIT_TAG(value<octet_string > (true, Encoding_type_octet_aligned), 1)) return;
+                            if (ITU_T_BIND_IMPLICIT(value<octet_string > (true, Encoding_type_octet_aligned), 1, CONTEXT_CLASS)) return;
                             else free();
                             break;
                         }
                         case 2:
                         {
-                            if (ITU_T_IMPLICIT_TAG(value<bit_string > (true, Encoding_type_arbitrary), 2)) return;
+                            if (ITU_T_BIND_IMPLICIT(value<bit_string > (true, Encoding_type_arbitrary), 2, CONTEXT_CLASS)) return;
                             else free();
                             break;
                         }
-                        default:
-                        {
-                        }
-                    }
-                }
-                case 0xC0:
-                {
-                    switch (__tag_id__) {
                         default:
                         {
                         }
@@ -905,19 +897,6 @@ namespace boost {
             }
         }
 
-        template<> void external_type::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_BIND_TAG(direct_reference_);
-            ITU_T_BIND_TAG(indirect_reference_);
-            ITU_T_BIND_TAG(data_value_descriptor_);
-            ITU_T_BIND_CHOICE(*encoding_);
-        }
-
-        template<> void external_type::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_BIND_TAG(direct_reference_);
-            ITU_T_BIND_TAG(indirect_reference_);
-            ITU_T_BIND_TAG(data_value_descriptor_);
-            ITU_T_BIND_CHOICE(*encoding_);
-        }
 
 
 
@@ -925,56 +904,48 @@ namespace boost {
         //////////////////////////////////////////////////////////
         //embeded_pdv
 
-        template<> void embeded_pdv::Identification_type::Syntaxes_type::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_IMPLICIT_TAG(*abstract_, 0);
-            ITU_T_IMPLICIT_TAG(*transfer_, 1);
+        template<> void embeded_pdv::serialize(boost::asn1::x690::output_coder& arch) {
+            ITU_T_BIND_CHOICE_TAG(identification_, 0, CONTEXT_CLASS);
+            ITU_T_BIND_IMPLICIT(data_value_, 1, CONTEXT_CLASS);
         }
 
-        template<> void embeded_pdv::Identification_type::Syntaxes_type::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_IMPLICIT_TAG(*abstract_, 0);
-            ITU_T_IMPLICIT_TAG(*transfer_, 1);
+        template<> void embeded_pdv::serialize(boost::asn1::x690::input_coder& arch) {
+            ITU_T_BIND_CHOICE_TAG(identification_, 0, CONTEXT_CLASS);
+            ITU_T_BIND_IMPLICIT(data_value_, 1, CONTEXT_CLASS);
         }
 
-        template<> void embeded_pdv::Identification_type::Context_negotiation_type::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_IMPLICIT_TAG(*presentation_context_id_, 0);
-            ITU_T_IMPLICIT_TAG(*transfer_syntax_, 1);
-        }
-
-        template<> void embeded_pdv::Identification_type::Context_negotiation_type::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_IMPLICIT_TAG(*presentation_context_id_, 0);
-            ITU_T_IMPLICIT_TAG(*transfer_syntax_, 1);
-        }
+        // choice identification
 
         template<> void embeded_pdv::Identification_type::serialize(boost::asn1::x690::output_coder& arch) {
             switch (type()) {
                 case Identification_type_syntaxes:
                 {
-                    ITU_T_IMPLICIT_TAG(value<Syntaxes_type > (false, Identification_type_syntaxes), 0);
+                    ITU_T_BIND_IMPLICIT(value<Syntaxes_type > (false, Identification_type_syntaxes), 0, CONTEXT_CLASS);
                     break;
                 }
                 case Identification_type_syntax:
                 {
-                    ITU_T_IMPLICIT_TAG(value<oid_type > (false, Identification_type_syntax), 1);
+                    ITU_T_BIND_IMPLICIT(value<oid_type > (false, Identification_type_syntax), 1, CONTEXT_CLASS);
                     break;
                 }
                 case Identification_type_presentation_context_id:
                 {
-                    ITU_T_IMPLICIT_TAG(value<int > (false, Identification_type_presentation_context_id), 2);
+                    ITU_T_BIND_IMPLICIT(value<integer_type > (false, Identification_type_presentation_context_id), 2, CONTEXT_CLASS);
                     break;
                 }
                 case Identification_type_context_negotiation:
                 {
-                    ITU_T_IMPLICIT_TAG(value<Context_negotiation_type > (false, Identification_type_context_negotiation), 3);
+                    ITU_T_BIND_IMPLICIT(value<Context_negotiation_type > (false, Identification_type_context_negotiation), 3, CONTEXT_CLASS);
                     break;
                 }
                 case Identification_type_transfer_syntax:
                 {
-                    ITU_T_IMPLICIT_TAG(value<oid_type > (false, Identification_type_transfer_syntax), 4);
+                    ITU_T_BIND_IMPLICIT(value<oid_type > (false, Identification_type_transfer_syntax), 4, CONTEXT_CLASS);
                     break;
                 }
                 case Identification_type_fixed:
                 {
-                    ITU_T_IMPLICIT_TAG(value<null_type > (false, Identification_type_fixed), 5);
+                    ITU_T_BIND_IMPLICIT(value<null_type > (false, Identification_type_fixed), 5, CONTEXT_CLASS);
                     break;
                 }
                 default:
@@ -986,69 +957,45 @@ namespace boost {
         template<> void embeded_pdv::Identification_type::serialize(boost::asn1::x690::input_coder& arch) {
             int __tag_id__ = arch.test_id();
             switch (arch.test_class()) {
-                case 0x0:
-                {
-                    switch (__tag_id__) {
-                        default:
-                        {
-                        }
-                    }
-                }
-                case 0x40:
-                {
-                    switch (__tag_id__) {
-                        default:
-                        {
-                        }
-                    }
-                }
                 case 0x80:
                 {
                     switch (__tag_id__) {
                         case 0:
                         {
-                            if (ITU_T_IMPLICIT_TAG(value<Syntaxes_type > (true, Identification_type_syntaxes), 0)) return;
+                            if (ITU_T_BIND_IMPLICIT(value<Syntaxes_type > (true, Identification_type_syntaxes), 0, CONTEXT_CLASS)) return;
                             else free();
                             break;
                         }
                         case 1:
                         {
-                            if (ITU_T_IMPLICIT_TAG(value<oid_type > (true, Identification_type_syntax), 1)) return;
+                            if (ITU_T_BIND_IMPLICIT(value<oid_type > (true, Identification_type_syntax), 1, CONTEXT_CLASS)) return;
                             else free();
                             break;
                         }
                         case 2:
                         {
-                            if (ITU_T_IMPLICIT_TAG(value<int > (true, Identification_type_presentation_context_id), 2)) return;
+                            if (ITU_T_BIND_IMPLICIT(value<integer_type > (true, Identification_type_presentation_context_id), 2, CONTEXT_CLASS)) return;
                             else free();
                             break;
                         }
                         case 3:
                         {
-                            if (ITU_T_IMPLICIT_TAG(value<Context_negotiation_type > (true, Identification_type_context_negotiation), 3)) return;
+                            if (ITU_T_BIND_IMPLICIT(value<Context_negotiation_type > (true, Identification_type_context_negotiation), 3, CONTEXT_CLASS)) return;
                             else free();
                             break;
                         }
                         case 4:
                         {
-                            if (ITU_T_IMPLICIT_TAG(value<oid_type > (true, Identification_type_transfer_syntax), 4)) return;
+                            if (ITU_T_BIND_IMPLICIT(value<oid_type > (true, Identification_type_transfer_syntax), 4, CONTEXT_CLASS)) return;
                             else free();
                             break;
                         }
                         case 5:
                         {
-                            if (ITU_T_IMPLICIT_TAG(value<null_type > (true, Identification_type_fixed), 5)) return;
+                            if (ITU_T_BIND_IMPLICIT(value<null_type > (true, Identification_type_fixed), 5, CONTEXT_CLASS)) return;
                             else free();
                             break;
                         }
-                        default:
-                        {
-                        }
-                    }
-                }
-                case 0xC0:
-                {
-                    switch (__tag_id__) {
                         default:
                         {
                         }
@@ -1060,70 +1007,80 @@ namespace boost {
             }
         }
 
-        template<> void embeded_pdv::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_CHOICE_TAG(*identification_, 0);
-            ITU_T_IMPLICIT_TAG(*data_value_, 1);
+        // sequence syntaxes
+
+        template<> void embeded_pdv::Identification_type::Syntaxes_type::serialize(boost::asn1::x690::output_coder& arch) {
+            ITU_T_BIND_IMPLICIT(abstract_, 0, CONTEXT_CLASS);
+            ITU_T_BIND_IMPLICIT(transfer_, 1, CONTEXT_CLASS);
         }
 
-        template<> void embeded_pdv::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_CHOICE_TAG(*identification_, 0);
-            ITU_T_IMPLICIT_TAG(*data_value_, 1);
+        template<> void embeded_pdv::Identification_type::Syntaxes_type::serialize(boost::asn1::x690::input_coder& arch) {
+            ITU_T_BIND_IMPLICIT(abstract_, 0, CONTEXT_CLASS);
+            ITU_T_BIND_IMPLICIT(transfer_, 1, CONTEXT_CLASS);
         }
+
+        // sequence context-negotiation
+
+        template<> void embeded_pdv::Identification_type::Context_negotiation_type::serialize(boost::asn1::x690::output_coder& arch) {
+            ITU_T_BIND_IMPLICIT(presentation_context_id_, 0, CONTEXT_CLASS);
+            ITU_T_BIND_IMPLICIT(transfer_syntax_, 1, CONTEXT_CLASS);
+        }
+
+        template<> void embeded_pdv::Identification_type::Context_negotiation_type::serialize(boost::asn1::x690::input_coder& arch) {
+            ITU_T_BIND_IMPLICIT(presentation_context_id_, 0, CONTEXT_CLASS);
+            ITU_T_BIND_IMPLICIT(transfer_syntax_, 1, CONTEXT_CLASS);
+        }
+
+
+
+
 
 
 
         //////////////////////////////////////////////////////////////
 
-        template<> void character_string::Identification_type::Syntaxes_type::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_IMPLICIT_TAG(*abstract_, 0);
-            ITU_T_IMPLICIT_TAG(*transfer_, 1);
+        template<> void character_string::serialize(boost::asn1::x690::output_coder& arch) {
+            ITU_T_BIND_CHOICE_TAG(identification_, 0, CONTEXT_CLASS);
+            ITU_T_BIND_IMPLICIT(data_value_, 1, CONTEXT_CLASS);
         }
 
-        template<> void character_string::Identification_type::Syntaxes_type::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_IMPLICIT_TAG(*abstract_, 0);
-            ITU_T_IMPLICIT_TAG(*transfer_, 1);
+        template<> void character_string::serialize(boost::asn1::x690::input_coder& arch) {
+            ITU_T_BIND_CHOICE_TAG(identification_, 0, CONTEXT_CLASS);
+            ITU_T_BIND_IMPLICIT(data_value_, 1, CONTEXT_CLASS);
         }
 
-        template<> void character_string::Identification_type::Context_negotiation_type::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_IMPLICIT_TAG(*presentation_context_id_, 0);
-            ITU_T_IMPLICIT_TAG(*transfer_syntax_, 1);
-        }
-
-        template<> void character_string::Identification_type::Context_negotiation_type::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_IMPLICIT_TAG(*presentation_context_id_, 0);
-            ITU_T_IMPLICIT_TAG(*transfer_syntax_, 1);
-        }
+        // choice identification
 
         template<> void character_string::Identification_type::serialize(boost::asn1::x690::output_coder& arch) {
             switch (type()) {
                 case Identification_type_syntaxes:
                 {
-                    ITU_T_IMPLICIT_TAG(value<Syntaxes_type > (false, Identification_type_syntaxes), 0);
+                    ITU_T_BIND_IMPLICIT(value<Syntaxes_type > (false, Identification_type_syntaxes), 0, CONTEXT_CLASS);
                     break;
                 }
                 case Identification_type_syntax:
                 {
-                    ITU_T_IMPLICIT_TAG(value<oid_type > (false, Identification_type_syntax), 1);
+                    ITU_T_BIND_IMPLICIT(value<oid_type > (false, Identification_type_syntax), 1, CONTEXT_CLASS);
                     break;
                 }
                 case Identification_type_presentation_context_id:
                 {
-                    ITU_T_IMPLICIT_TAG(value<int > (false, Identification_type_presentation_context_id), 2);
+                    ITU_T_BIND_IMPLICIT(value<integer_type > (false, Identification_type_presentation_context_id), 2, CONTEXT_CLASS);
                     break;
                 }
                 case Identification_type_context_negotiation:
                 {
-                    ITU_T_IMPLICIT_TAG(value<Context_negotiation_type > (false, Identification_type_context_negotiation), 3);
+                    ITU_T_BIND_IMPLICIT(value<Context_negotiation_type > (false, Identification_type_context_negotiation), 3, CONTEXT_CLASS);
                     break;
                 }
                 case Identification_type_transfer_syntax:
                 {
-                    ITU_T_IMPLICIT_TAG(value<oid_type > (false, Identification_type_transfer_syntax), 4);
+                    ITU_T_BIND_IMPLICIT(value<oid_type > (false, Identification_type_transfer_syntax), 4, CONTEXT_CLASS);
                     break;
                 }
                 case Identification_type_fixed:
                 {
-                    ITU_T_IMPLICIT_TAG(value<null_type > (false, Identification_type_fixed), 5);
+                    ITU_T_BIND_IMPLICIT(value<null_type > (false, Identification_type_fixed), 5, CONTEXT_CLASS);
                     break;
                 }
                 default:
@@ -1135,69 +1092,45 @@ namespace boost {
         template<> void character_string::Identification_type::serialize(boost::asn1::x690::input_coder& arch) {
             int __tag_id__ = arch.test_id();
             switch (arch.test_class()) {
-                case 0x0:
-                {
-                    switch (__tag_id__) {
-                        default:
-                        {
-                        }
-                    }
-                }
-                case 0x40:
-                {
-                    switch (__tag_id__) {
-                        default:
-                        {
-                        }
-                    }
-                }
                 case 0x80:
                 {
                     switch (__tag_id__) {
                         case 0:
                         {
-                            if (ITU_T_IMPLICIT_TAG(value<Syntaxes_type > (true, Identification_type_syntaxes), 0)) return;
+                            if (ITU_T_BIND_IMPLICIT(value<Syntaxes_type > (true, Identification_type_syntaxes), 0, CONTEXT_CLASS)) return;
                             else free();
                             break;
                         }
                         case 1:
                         {
-                            if (ITU_T_IMPLICIT_TAG(value<oid_type > (true, Identification_type_syntax), 1)) return;
+                            if (ITU_T_BIND_IMPLICIT(value<oid_type > (true, Identification_type_syntax), 1, CONTEXT_CLASS)) return;
                             else free();
                             break;
                         }
                         case 2:
                         {
-                            if (ITU_T_IMPLICIT_TAG(value<int > (true, Identification_type_presentation_context_id), 2)) return;
+                            if (ITU_T_BIND_IMPLICIT(value<integer_type > (true, Identification_type_presentation_context_id), 2, CONTEXT_CLASS)) return;
                             else free();
                             break;
                         }
                         case 3:
                         {
-                            if (ITU_T_IMPLICIT_TAG(value<Context_negotiation_type > (true, Identification_type_context_negotiation), 3)) return;
+                            if (ITU_T_BIND_IMPLICIT(value<Context_negotiation_type > (true, Identification_type_context_negotiation), 3, CONTEXT_CLASS)) return;
                             else free();
                             break;
                         }
                         case 4:
                         {
-                            if (ITU_T_IMPLICIT_TAG(value<oid_type > (true, Identification_type_transfer_syntax), 4)) return;
+                            if (ITU_T_BIND_IMPLICIT(value<oid_type > (true, Identification_type_transfer_syntax), 4, CONTEXT_CLASS)) return;
                             else free();
                             break;
                         }
                         case 5:
                         {
-                            if (ITU_T_IMPLICIT_TAG(value<null_type > (true, Identification_type_fixed), 5)) return;
+                            if (ITU_T_BIND_IMPLICIT(value<null_type > (true, Identification_type_fixed), 5, CONTEXT_CLASS)) return;
                             else free();
                             break;
                         }
-                        default:
-                        {
-                        }
-                    }
-                }
-                case 0xC0:
-                {
-                    switch (__tag_id__) {
                         default:
                         {
                         }
@@ -1209,15 +1142,31 @@ namespace boost {
             }
         }
 
-        template<> void character_string::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_CHOICE_TAG(*identification_, 0);
-            ITU_T_IMPLICIT_TAG(*string_value_, 1);
+        // sequence syntaxes
+
+        template<> void character_string::Identification_type::Syntaxes_type::serialize(boost::asn1::x690::output_coder& arch) {
+            ITU_T_BIND_IMPLICIT(abstract_, 0, CONTEXT_CLASS);
+            ITU_T_BIND_IMPLICIT(transfer_, 1, CONTEXT_CLASS);
         }
 
-        template<> void character_string::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_CHOICE_TAG(*identification_, 0);
-            ITU_T_IMPLICIT_TAG(*string_value_, 1);
+        template<> void character_string::Identification_type::Syntaxes_type::serialize(boost::asn1::x690::input_coder& arch) {
+            ITU_T_BIND_IMPLICIT(abstract_, 0, CONTEXT_CLASS);
+            ITU_T_BIND_IMPLICIT(transfer_, 1, CONTEXT_CLASS);
         }
+
+        // sequence context-negotiation
+
+        template<> void character_string::Identification_type::Context_negotiation_type::serialize(boost::asn1::x690::output_coder& arch) {
+            ITU_T_BIND_IMPLICIT(presentation_context_id_, 0, CONTEXT_CLASS);
+            ITU_T_BIND_IMPLICIT(transfer_syntax_, 1, CONTEXT_CLASS);
+        }
+
+        template<> void character_string::Identification_type::Context_negotiation_type::serialize(boost::asn1::x690::input_coder& arch) {
+            ITU_T_BIND_IMPLICIT(presentation_context_id_, 0, CONTEXT_CLASS);
+            ITU_T_BIND_IMPLICIT(transfer_syntax_, 1, CONTEXT_CLASS);
+        }
+
+
 
 #ifdef _MSC_VER
 #pragma warning(pop)

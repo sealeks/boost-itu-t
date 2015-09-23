@@ -698,25 +698,25 @@ namespace boost {
 
 
         typedef boost::posix_time::ptime base_date_time;
-        typedef boost::posix_time::microseconds base_microseconds;    
-        typedef base_date_time::date_type base_date;       
-        typedef base_date_time::date_duration_type base_duration;  
-        typedef base_date_time::time_duration_type  base_time_duration; 
-        
-        typedef boost::local_time::local_date_time   local_date_time;    
-        typedef local_date_time::date_type local_date;       
-        typedef local_date_time::date_duration_type local_duration;  
-        typedef local_date_time::time_duration_type  local_time_duration;         
+        typedef boost::posix_time::microseconds base_microseconds;
+        typedef base_date_time::date_type base_date;
+        typedef base_date_time::date_duration_type base_duration;
+        typedef base_date_time::time_duration_type base_time_duration;
+
+        typedef boost::local_time::local_date_time local_date_time;
+        typedef local_date_time::date_type local_date;
+        typedef local_date_time::date_duration_type local_duration;
+        typedef local_date_time::time_duration_type local_time_duration;
 
         inline base_date_time now_generator() {
             return boost::posix_time::microsec_clock::universal_time();
         }
-        
+
         /*inline local_date_time now_local_generator() {
             return boost::posix_time::local_microsec_clock();
-        }*/        
+        }*/
 
-        
+
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2143,12 +2143,8 @@ namespace boost {
 
             struct Encoding_type : public ITU_T_CHOICE(Encoding_type_enum) {
 
-                Encoding_type() : ITU_T_CHOICE(Encoding_type_enum) () {
-                }
 
-                template<typename T > Encoding_type(shared_ptr< T> vl, Encoding_type_enum enm) :
-                        ITU_T_CHOICE(Encoding_type_enum) (vl, static_cast<int> (enm)) {
-                }
+                ITU_T_CHOICE_CTORS(Encoding_type);
 
                 ITU_T_CHOICES_DECL(single_ASN1_type, any_type, Encoding_type_single_ASN1_type); // primitive
                 ITU_T_CHOICES_DECL(octet_aligned, octet_string, Encoding_type_octet_aligned); // primitive
@@ -2162,13 +2158,13 @@ namespace boost {
 
             external_type(const Encoding_type& arg__encoding);
 
-            external_type(shared_ptr< oid_type> arg__direct_reference,
-                    shared_ptr< int> arg__indirect_reference,
-                    shared_ptr< object_descriptor> arg__data_value_descriptor,
-                    shared_ptr< Encoding_type> arg__encoding);
+            external_type(ITU_T_SHARED(oid_type) arg__direct_reference,
+                    ITU_T_SHARED(integer_type) arg__indirect_reference,
+                    ITU_T_SHARED(object_descriptor) arg__data_value_descriptor,
+                    ITU_T_SHARED(Encoding_type) arg__encoding);
 
             ITU_T_OPTIONAL_DECL(direct_reference, oid_type);
-            ITU_T_OPTIONAL_DECL(indirect_reference, int);
+            ITU_T_OPTIONAL_DECL(indirect_reference, integer_type);
             ITU_T_OPTIONAL_DECL(data_value_descriptor, object_descriptor);
             ITU_T_HOLDERH_DECL(encoding, Encoding_type);
 
@@ -2209,6 +2205,9 @@ namespace boost {
                     Syntaxes_type(const oid_type& arg__abstract,
                             const oid_type& arg__transfer);
 
+                    Syntaxes_type(ITU_T_SHARED(oid_type) arg__abstract,
+                            ITU_T_SHARED(oid_type) arg__transfer);
+
                     ITU_T_HOLDERH_DECL(abstract, oid_type);
                     ITU_T_HOLDERH_DECL(transfer, oid_type);
 
@@ -2219,25 +2218,24 @@ namespace boost {
 
                     Context_negotiation_type();
 
-                    Context_negotiation_type(const int& arg__presentation_context_id,
+                    Context_negotiation_type(const integer_type& arg__presentation_context_id,
                             const oid_type& arg__transfer_syntax);
 
-                    ITU_T_HOLDERH_DECL(presentation_context_id, int);
+                    Context_negotiation_type(ITU_T_SHARED(integer_type) arg__presentation_context_id,
+                            ITU_T_SHARED(oid_type) arg__transfer_syntax);
+
+                    ITU_T_HOLDERH_DECL(presentation_context_id, integer_type);
                     ITU_T_HOLDERH_DECL(transfer_syntax, oid_type);
 
                     ITU_T_ARCHIVE_FUNC;
                 };
 
-                Identification_type() : ITU_T_CHOICE(Identification_type_enum) () {
-                }
 
-                template<typename T > Identification_type(shared_ptr< T> vl, Identification_type_enum enm) :
-                        ITU_T_CHOICE(Identification_type_enum) (vl, static_cast<int> (enm)) {
-                }
+                ITU_T_CHOICE_CTORS(Identification_type);
 
                 ITU_T_CHOICEC_DECL(syntaxes, Syntaxes_type, Identification_type_syntaxes);
                 ITU_T_CHOICES_DECL(syntax, oid_type, Identification_type_syntax); // primitive
-                ITU_T_CHOICES_DECL(presentation_context_id, int, Identification_type_presentation_context_id); // primitive
+                ITU_T_CHOICES_DECL(presentation_context_id, integer_type, Identification_type_presentation_context_id); // primitive
                 ITU_T_CHOICEC_DECL(context_negotiation, Context_negotiation_type, Identification_type_context_negotiation);
                 ITU_T_CHOICES_DECL(transfer_syntax, oid_type, Identification_type_transfer_syntax); // primitive
                 ITU_T_CHOICES_DECL(fixed, null_type, Identification_type_fixed); // primitive
@@ -2251,6 +2249,9 @@ namespace boost {
             embeded_pdv(const Identification_type& arg__identification,
                     const octet_string& arg__data_value);
 
+            embeded_pdv(ITU_T_SHARED(Identification_type) arg__identification,
+                    ITU_T_SHARED(octet_string) arg__data_value);
+
             ITU_T_HOLDERH_DECL(identification, Identification_type);
             ITU_T_HOLDERH_DECL(data_value, octet_string);
 
@@ -2262,7 +2263,6 @@ namespace boost {
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
-
 
         struct character_string {
 
@@ -2292,6 +2292,9 @@ namespace boost {
                     Syntaxes_type(const oid_type& arg__abstract,
                             const oid_type& arg__transfer);
 
+                    Syntaxes_type(ITU_T_SHARED(oid_type) arg__abstract,
+                            ITU_T_SHARED(oid_type) arg__transfer);
+
                     ITU_T_HOLDERH_DECL(abstract, oid_type);
                     ITU_T_HOLDERH_DECL(transfer, oid_type);
 
@@ -2302,25 +2305,24 @@ namespace boost {
 
                     Context_negotiation_type();
 
-                    Context_negotiation_type(const int& arg__presentation_context_id,
+                    Context_negotiation_type(const integer_type& arg__presentation_context_id,
                             const oid_type& arg__transfer_syntax);
 
-                    ITU_T_HOLDERH_DECL(presentation_context_id, int);
+                    Context_negotiation_type(ITU_T_SHARED(integer_type) arg__presentation_context_id,
+                            ITU_T_SHARED(oid_type) arg__transfer_syntax);
+
+                    ITU_T_HOLDERH_DECL(presentation_context_id, integer_type);
                     ITU_T_HOLDERH_DECL(transfer_syntax, oid_type);
 
                     ITU_T_ARCHIVE_FUNC;
                 };
 
-                Identification_type() : ITU_T_CHOICE(Identification_type_enum) () {
-                }
 
-                template<typename T > Identification_type(shared_ptr< T> vl, Identification_type_enum enm) :
-                        ITU_T_CHOICE(Identification_type_enum) (vl, static_cast<int> (enm)) {
-                }
+                ITU_T_CHOICE_CTORS(Identification_type);
 
                 ITU_T_CHOICEC_DECL(syntaxes, Syntaxes_type, Identification_type_syntaxes);
                 ITU_T_CHOICES_DECL(syntax, oid_type, Identification_type_syntax); // primitive
-                ITU_T_CHOICES_DECL(presentation_context_id, int, Identification_type_presentation_context_id); // primitive
+                ITU_T_CHOICES_DECL(presentation_context_id, integer_type, Identification_type_presentation_context_id); // primitive
                 ITU_T_CHOICEC_DECL(context_negotiation, Context_negotiation_type, Identification_type_context_negotiation);
                 ITU_T_CHOICES_DECL(transfer_syntax, oid_type, Identification_type_transfer_syntax); // primitive
                 ITU_T_CHOICES_DECL(fixed, null_type, Identification_type_fixed); // primitive
@@ -2332,13 +2334,17 @@ namespace boost {
             character_string();
 
             character_string(const Identification_type& arg__identification,
-                    const octet_string& arg__string_value);
+                    const octet_string& arg__data_value);
+
+            character_string(ITU_T_SHARED(Identification_type) arg__identification,
+                    ITU_T_SHARED(octet_string) arg__data_value);
 
             ITU_T_HOLDERH_DECL(identification, Identification_type);
-            ITU_T_HOLDERH_DECL(string_value, octet_string);
+            ITU_T_HOLDERH_DECL(data_value, octet_string);
 
             ITU_T_ARCHIVE_FUNC;
         };
+
 
         ITU_T_INTERNAL_REGESTRATE(character_string, TYPE_CHARACTERSTRING)
 
