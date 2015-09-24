@@ -119,8 +119,7 @@ namespace x680 {
                     >> PDV_])[phx::bind(&type_deff, sprt::_val, t_EMBEDDED_PDV)]
                     | (qi::lexeme[OBJECT_ >> +qi::space 
                     >> IDENTIFIER_])[phx::bind(&type_deff, sprt::_val, t_OBJECT_IDENTIFIER)]
-                    | (qi::lexeme[DATE_ >> +qi::space 
-                    >> TIME_])[phx::bind(&type_deff, sprt::_val, t_DATE_TIME)]
+                    | (qi::lexeme[DATE_TIME_])[phx::bind(&type_deff, sprt::_val, t_DATE_TIME)]
                     | (distinct(qi::alnum | '-')[simple_typer[phx::bind(&type_deff, sprt::_val, sprt::_1)]])
                     )
                     >> -(Constraints[phx::bind(&type_constraints, sprt::_val, sprt::_1)]);

@@ -197,10 +197,11 @@ namespace x680 {
             return "integer_type";
         }
 
-        std::string builtin_str(defined_type tp, integer_constraints_ptr intconstr = integer_constraints_ptr()) {
+        std::string builtin_str(defined_type tp, type_atom_ptr typ = type_atom_ptr()) {
             switch (tp) {
                 case t_BOOLEAN: return "bool";
-                case t_INTEGER: return builtin_int_str(intconstr); //"int";
+                case t_INTEGER: return builtin_int_str(typ ?
+                    (typ->integer_constraint()) : integer_constraints_ptr()); //"int";
                 case t_BIT_STRING: return "bit_string";
                 case t_OCTET_STRING: return "octet_string";
                 case t_NULL: return "null_type";
@@ -225,11 +226,11 @@ namespace x680 {
                 case t_UniversalString: return "universal_string";
                 case t_CHARACTER_STRING: return "character_string";
                 case t_BMPString: return "bmp_string";
-                case t_TIME:
-                case t_TIME_OF_DAY:
-                case t_DATE:
-                case t_DATE_TIME:
-                case t_DURATION: return "printable_string";
+                case t_TIME: return "MIXED_ENCODING";
+                case t_TIME_OF_DAY: return "TIME_OF_DAY";
+                case t_DATE: return "DATE";
+                case t_DATE_TIME:  return "DATE_TIME";
+                case t_DURATION: return "DURATION";
                 case t_RELATIVE_OID_IRI: return "reloid_iri_type";
                 case t_OID_IRI: return "oid_iri_type";
                 case t_ANY: return "any_type";
@@ -252,8 +253,7 @@ namespace x680 {
                     return nameupper(type_str(ppas)+(ppas->builtin() == t_SEQUENCE_OF ? "_sequence_of" : "_set_of"));
                 return nameupper(nameconvert(self->islocaldeclare() ? (self->name() + "_type") : self->name()) + postfix);
             } else
-                return self->islocaldefined() ? builtin_str(self->builtin(), self->type() ?
-                    (self->type()->integer_constraint()) : integer_constraints_ptr()) : nameupper(nameconvert(self->name()));
+                return self->islocaldefined() ? builtin_str(self->builtin(), self->type()) : nameupper(nameconvert(self->name()));
             return "";
         }
 
@@ -261,8 +261,7 @@ namespace x680 {
             if (typeassignment_entity_ptr tpas = typeassignment_from_type(self))
                 return type_str(tpas, native);
             if (self->isprimitive())
-                return builtin_str(self->root_builtin(), self ?
-                    (self->integer_constraint()) : integer_constraints_ptr());
+                return builtin_str(self->root_builtin(), self);
             return "?type?";
         }
 
@@ -291,8 +290,7 @@ namespace x680 {
             if (typeassignment_entity_ptr tpas = typeassignment_from_type(self))
                 return fulltype_str(tpas, withns);
             if (self->isprimitive())
-                return builtin_str(self->root_builtin(), self ?
-                    (self->integer_constraint()) : integer_constraints_ptr());
+                return builtin_str(self->root_builtin(), self);
             return "?type?";
         }
 
@@ -315,8 +313,7 @@ namespace x680 {
             } else if (self->isstructure())
                 return type_str(self, true);
             else
-                return builtin_str(self->builtin(), self->type() ?
-                    (self->type()->integer_constraint()) : integer_constraints_ptr());
+                return builtin_str(self->builtin(), self->type());
 
             return "?type?";
         }
@@ -332,7 +329,7 @@ namespace x680 {
                     return "?type?";
 
                 else
-                    return builtin_str(self->builtin(), self->integer_constraint());
+                    return builtin_str(self->builtin(), self);
             }
             return "?type?";
         }
