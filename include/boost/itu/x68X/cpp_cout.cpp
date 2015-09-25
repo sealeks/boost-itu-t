@@ -110,7 +110,7 @@ namespace x680 {
 
 
 
-        const std::string FHHEADER = "#include <boost/itu/asn1/asnbase.hpp>\n#include <boost/itu/x69X/x690.hpp>\n#include <boost/itu/x69X/x691.hpp>\n\n#ifdef _MSC_VER\n#pragma warning(push)\n#pragma warning(disable: 4065)\n#endif\n\n";
+        const std::string FHHEADER = "#include <boost/itu/asn1/asnbase.hpp>\n#include <boost/itu/x69X/x690.hpp>\n#include <boost/itu/x69X/x691.hpp>\n#include <boost/itu/time/DefinedTime.hpp>\n\n#ifdef _MSC_VER\n#pragma warning(push)\n#pragma warning(disable: 4065)\n#endif\n\n";
         const std::string FHBOTTOM = "\n\n#ifdef _MSC_VER\n#pragma warning(pop)\n#endif\n\n#endif";
         const std::string CHHEADER = "\n#ifdef _MSC_VER\n#pragma warning(push)\n#pragma warning(disable: 4065)\n#endif\n\n";
         const std::string CHBOTTOM = "\n\n#ifdef _MSC_VER\n#pragma warning(pop)\n#endif\n";
@@ -197,11 +197,166 @@ namespace x680 {
             return "integer_type";
         }
 
+        static std::string find_constraint_proeries(const stringconstraint_atom::proprtymap_type& self, const std::string& fnd) {
+            for (stringconstraint_atom::proprtymap_type::const_iterator it = self.begin();
+                    it != self.end(); ++it) {
+                if (fnd == it->first)
+                    return it->second;
+            }
+            return "";
+        }
+
+        static std::string builtin_TM_str(stringconstraint_atom_ptr self) {
+            std::string rslt = find_constraint_proeries(self->propertys(), "Local-or-UTC");
+            bool Zt = (rslt == "Z");
+            bool LDt = (rslt == "LD");
+            if (Zt || LDt || (rslt == "L")) {
+                rslt = find_constraint_proeries(self->propertys(), "Time");
+                if (!rslt.empty()) {
+                    std::size_t tcnt = 0;
+                    if (rslt.size() >= 3) {
+                        if (rslt.substr(0, 3) == "HMS")
+                            tcnt = 3;
+                        else if (rslt.substr(0, 2) == "HM")
+                            tcnt = 2;
+                        else if (rslt.substr(0, 2) == "H")
+                            tcnt = 1;
+                    } else if (rslt.size() >= 2) {
+                        if (rslt.substr(0, 2) == "HM")
+                            tcnt = 2;
+                        else if (rslt.substr(0, 2) == "H")
+                            tcnt = 1;
+                    } else if (rslt.size() >= 1) {
+                        if (rslt.substr(0, 2) == "H")
+                            tcnt = 1;
+                    }
+                    if (tcnt) {
+                        std::string::size_type fit = rslt.find_first_of('F');
+                        std::string digcnt = (fit != std::string::npos) ? ("<" + rslt.substr(fit + 1) + " >") : "";
+                        if (fit == std::string::npos) {
+                            if (tcnt == 1)
+                                return Zt ? "HOURS_UTC_ENCODING" :
+                                    (LDt ? "HOURS_AND_DIFF_ENCODING" : "HOURS_ENCODING");
+                            else if (tcnt == 2)
+                                return Zt ? "MINUTES_UTC_ENCODING" :
+                                    (LDt ? "MINUTES_AND_DIFF_ENCODING" : "MINUTES_ENCODING");
+                            else if (tcnt == 3)
+                                return Zt ? "TIME_OF_DAY_UTC_ENCODING" :
+                                    (LDt ? "TIME_OF_DAY_AND_DIFF_ENCODING" : "TIME_OF_DAY_ENCODING");
+                        } else {
+                            if (tcnt == 1)
+                                return (Zt ? "HOURS_UTC_AND_FRACTION_ENCODING" :
+                                    (LDt ? "HOURS_AND_DIFF_AND_FRACTION_ENCODING" : "HOURS_AND_FRACTION_ENCODING")) + digcnt;
+                            else if (tcnt == 2)
+                                return (Zt ? "MINUTES_UTC_AND_FRACTION_ENCODING" :
+                                    (LDt ? "MINUTES_AND_DIFF_AND_FRACTION_ENCODING" : "MINUTES_AND_FRACTION_ENCODING")) + digcnt;
+                            else if (tcnt == 3)
+                                return (Zt ? "TIME_OF_DAY_UTC_AND_FRACTION_ENCODING" :
+                                    (LDt ? "TIME_OF_DAY_AND_DIFF_AND_FRACTION_ENCODING" : "TIME_OF_DAY_AND_FRACTION_ENCODING")) + digcnt;
+                        }
+                    }
+                }
+            }
+            return "";
+        }
+
+        static std::string builtin_DT_str(stringconstraint_atom_ptr self) {
+            std::string rslt = find_constraint_proeries(self->propertys(), "Year");
+            bool norm_year = ((rslt == "Basic") || (rslt == "Proleptic"));
+            std::string digcnt = ((rslt.size() > 1) && (rslt[0] == 'L')) ? ("<" + rslt.substr(1) + " >") : "";
+            rslt = find_constraint_proeries(self->propertys(), "Date");
+            if (!rslt.empty()) {
+                if (rslt == "C")
+                    return norm_year ? "CENTURY_ENCODING" : ("ANY_CENTURY_ENCODING" + digcnt);
+                else if (rslt == "Y")
+                    return norm_year ? "YEAR_ENCODING" : ("ANY_YEAR_ENCODING" + digcnt);
+                else if (rslt == "YM")
+                    return norm_year ? "YEAR_MONTH_ENCODING" : ("ANY_YEAR_MONTH_ENCODING" + digcnt);
+                else if (rslt == "YD")
+                    return norm_year ? "YEAR_DAY_ENCODING" : ("ANY_YEAR_DAY_ENCODING" + digcnt);
+                else if (rslt == "YW")
+                    return norm_year ? "YEAR_WEEK_ENCODING" : ("ANY_YEAR_WEEK_ENCODING" + digcnt);
+                else if (rslt == "YWD")
+                    return norm_year ? "YEAR_WEEK_DAY_ENCODING" : ("ANY_YEAR_WEEK_DAY_ENCODING" + digcnt);
+            }
+            return "";
+        }
+
+        static std::string builtin_time_str(stringconstraint_atom_ptr self) {
+            if (self && !self->propertys().empty()) {
+                std::string rslt = find_constraint_proeries(self->propertys(), "Basic");
+                if (!rslt.empty()) {
+                    if (rslt == "Date") {
+                        return builtin_DT_str(self);
+                    } else if (rslt == "Time") {
+                        return builtin_TM_str(self);
+                    } else if (rslt == "Date-Time") {
+                        std::string rsltT = builtin_TM_str(self);
+                        std::string rsltD = builtin_DT_str(self);
+                        if (!rsltT.empty() && !rsltD.empty()) {
+                            return "DATE_TIME_ENCODING<" + rsltD + ", " + rsltT + " >";
+                        }
+                    } else if ((rslt == "Interval") || (rslt == "Rec-Interval")) {
+                        bool recT = (rslt == "Rec-Interval");
+                        rslt = find_constraint_proeries(self->propertys(), "SE-point");
+                        bool seT = (rslt == "Time");
+                        bool seD = (rslt == "Date");
+                        if (seT || seD || (rslt == "Date-Time")) {
+                            std::string rsltP = "";
+                            if (seT)
+                                rsltP = builtin_TM_str(self);
+                            else if (seD)
+                                rsltP = builtin_DT_str(self);
+                            else {
+                                std::string rsltT = builtin_TM_str(self);
+                                std::string rsltD = builtin_DT_str(self);
+                                if (!rsltT.empty() && !rsltD.empty())
+                                    rsltP = "DATE_TIME_ENCODING<" + rsltD + ", " + rsltT + " > ";
+                            }
+                            if (!rsltP.empty()) {
+                                rslt = find_constraint_proeries(self->propertys(), "Interval-type");
+                                if (rslt == "SE")
+                                    return std::string(recT ? "REC_" : "") + "START_END_INTERVAL_ENCODING< " + rsltP + " >";
+                                else if (rslt == "SD")
+                                    return std::string(recT ? "REC_" : "") + "START_DURATION_INTERVAL_ENCODING< " + rsltP + " >";
+                                else if (rslt == "DE")
+                                    return std::string(recT ? "REC_" : "") + "DURATION_END_INTERVAL_ENCODING< " + rsltP + " >";
+                            }
+                        } else {
+                            rslt = find_constraint_proeries(self->propertys(), "Interval-type");
+                            if (rslt == "D") {
+                                return recT ? "REC_DURATION_INTERVAL_ENCODING" : "DURATION_INTERVAL_ENCODING";
+                            }
+                        }
+                    }
+                }
+            }
+            return "";
+        }
+
+        static std::string builtins_time_str(type_atom_ptr typ) {
+            std::set<std::string> rsltset;
+            if (typ && !typ->constraints().empty()) {
+                for (constraints_atom_vct::const_iterator its = typ->constraints().begin(); its != typ->constraints().end(); ++its) {
+                    if (!(*its)->constraintline().empty()) {
+                        for (constraint_atom_vct::const_iterator it = (*its)->constraintline().begin(); it != (*its)->constraintline().end(); ++it) {
+                            if ((*it)->cotstrtype() == cns_PropertySettings) {
+                                std::string rslt = builtin_time_str((*it)->as_property());
+                                if (!rslt.empty())
+                                    rsltset.insert(rslt);
+                            }
+                        }
+                    }
+                }
+            }
+            return (rsltset.size() != 1) ? "MIXED_ENCODING" : (*rsltset.begin());
+        }
+
         std::string builtin_str(defined_type tp, type_atom_ptr typ = type_atom_ptr()) {
             switch (tp) {
                 case t_BOOLEAN: return "bool";
                 case t_INTEGER: return builtin_int_str(typ ?
-                    (typ->integer_constraint()) : integer_constraints_ptr()); //"int";
+                            (typ->integer_constraint()) : integer_constraints_ptr()); //"int";
                 case t_BIT_STRING: return "bit_string";
                 case t_OCTET_STRING: return "octet_string";
                 case t_NULL: return "null_type";
@@ -226,10 +381,10 @@ namespace x680 {
                 case t_UniversalString: return "universal_string";
                 case t_CHARACTER_STRING: return "character_string";
                 case t_BMPString: return "bmp_string";
-                case t_TIME: return "MIXED_ENCODING";
+                case t_TIME: return builtins_time_str(typ);
                 case t_TIME_OF_DAY: return "TIME_OF_DAY";
                 case t_DATE: return "DATE";
-                case t_DATE_TIME:  return "DATE_TIME";
+                case t_DATE_TIME: return "DATE_TIME";
                 case t_DURATION: return "DURATION";
                 case t_RELATIVE_OID_IRI: return "reloid_iri_type";
                 case t_OID_IRI: return "oid_iri_type";
@@ -265,7 +420,7 @@ namespace x680 {
             return "?type?";
         }
 
-        std::string fulltype_str(basic_entity_ptr self, bool withns, const std::string& delim) {
+        std::string fulltype_str(basic_entity_ptr self, bool withns, const std::string & delim) {
             if ((self->as_typeassigment()) || (self->as_module())) {
                 if (self->as_module()) {
                     return withns ? nameconvert(self->name()) : "";
@@ -409,7 +564,7 @@ namespace x680 {
             return rslt.empty() ? "0" : rslt;
         }
 
-        static std::string string_to_literal(const std::string& vl) {
+        static std::string string_to_literal(const std::string & vl) {
             std::string rslt;
             if (!vl.empty())
                 for (std::string::const_iterator it = vl.begin(); it != vl.end(); ++it)
@@ -417,7 +572,7 @@ namespace x680 {
             return rslt;
         }
 
-        static std::string string_to_literal(const std::wstring& vl) {
+        static std::string string_to_literal(const std::wstring & vl) {
             std::string rslt;
             if (!vl.empty())
                 for (std::wstring::const_iterator it = vl.begin(); it != vl.end(); ++it)
@@ -451,7 +606,7 @@ namespace x680 {
             return "?wstr?";
         }
 
-        std::string value_utfchar_str(const quadruple& self) {
+        std::string value_utfchar_str(const quadruple & self) {
             uint32_t tmp = 128 * self.group + 256 * self.plane + 256 * self.row + self.cell;
             std::string rslt;
             if (boost::asn1::quadrople_to_str(tmp, rslt))
@@ -516,7 +671,7 @@ namespace x680 {
             return false;
         }
 
-        bool value_bits_str(value_atom_ptr self, std::vector<std::string>& rslt, std::size_t& sz) {
+        bool value_bits_str(value_atom_ptr self, std::vector<std::string>& rslt, std::size_t & sz) {
             self = value_skip_defined(self);
             if (self && self->get_value<bstring_initer>()) {
                 boost::shared_ptr<bstring_initer> lst = self->get_value<bstring_initer>();
@@ -568,7 +723,7 @@ namespace x680 {
             return rslt;
         }
 
-        std::string valueassmnt_str(type_atom_ptr tp, value_atom_ptr vl, const std::string& nm) {
+        std::string valueassmnt_str(type_atom_ptr tp, value_atom_ptr vl, const std::string & nm) {
             std::vector<std::string> vstr;
             std::size_t numbt = 0;
             switch (tp->root_builtin()) {
@@ -592,6 +747,11 @@ namespace x680 {
                 case t_GeneralizedTime:
                 case t_GeneralString:
                 case t_ObjectDescriptor:
+                case t_TIME:
+                case t_TIME_OF_DAY:
+                case t_DATE:
+                case t_DATE_TIME:
+                case t_DURATION:
                 case t_IA5String: return value_chars8_str(vl, tp->root_builtin() == t_IA5String);
                 case t_BMPString:
                 case t_UniversalString: return value_utfchars_str(vl);
@@ -605,7 +765,7 @@ namespace x680 {
             return "?";
         }
 
-        std::string valueassmnt_str_ext(type_atom_ptr tp, value_atom_ptr vl, const std::string& nm) {
+        std::string valueassmnt_str_ext(type_atom_ptr tp, value_atom_ptr vl, const std::string & nm) {
             std::string rslt;
             std::vector<std::string> arr;
             bool isreff = tp->isrefferrence();
@@ -964,7 +1124,7 @@ namespace x680 {
                     tp + "& arch)";
         }
 
-        std::string nested_init_str(type_atom_ptr self, const std::string& nm) {
+        std::string nested_init_str(type_atom_ptr self, const std::string & nm) {
             type_atom_ptr next = self->textualy_type();
             if (!next || next == self || !next->reff())
                 return (next && next->tag() && next->isrefferrence()) ? (fromtype_str(next) + "(" + nm + ")") : nm;
@@ -1609,7 +1769,7 @@ namespace x680 {
             }
         }
 
-        static std::string calculate_valuename_static(typeval_manager_ptr self, const typeasmt_value_atom_vct& seq) {
+        static std::string calculate_valuename_static(typeval_manager_ptr self, const typeasmt_value_atom_vct & seq) {
             std::string rslt = nameconvert(self->valueassignment()->name());
             for (typeasmt_value_atom_vct::const_iterator it = seq.begin(); it != seq.end(); ++it)
                 rslt += ("__" + (it->typeassignment() ? nameconvert(it->typeassignment()->name()) : "?"));
